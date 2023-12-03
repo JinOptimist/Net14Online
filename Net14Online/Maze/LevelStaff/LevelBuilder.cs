@@ -1,4 +1,5 @@
 ﻿using Maze.Cells;
+using System.Drawing;
 
 namespace Maze.LevelStaff
 {
@@ -29,38 +30,37 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-
-        private void BuildGroundV1()
+        private void BuildGroundRandom()
         {
-            int[] specificX = { 2, 4, 6 };
-            int[] specificY = { 3, 7, 9 };
-            foreach (int x in specificX)
+            for (int i = 0; i < 15; i++)
             {
-                foreach (int y in specificY)
-                {
-                    var existingCell = _level.Cells.First(cell => cell.CoordinateX == x && cell.CoordinateY == y);
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
 
-                    if (existingCell == null)
-                    {
-                        var ground = new Ground(x, y, _level);
-                        _level.Cells.Add(ground);
-                    }
-                }
+                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
+                var ground = new Ground(randomX, randomY, _level);
+
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(ground);
             }
-            //!!Код закомменчен в связи с заданием, ветка task_2, 30.11.2023!!
-            //for (int i = 0; i < 15; i++)
-            //{
-            //    var randomX = _random.Next(_level.Width);
-            //    var randomY = _random.Next(_level.Height);
-
-            //    var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
-            //    var ground = new Ground(randomX, randomY, _level);
-
-            //    _level.Cells.Remove(randomWall);
-            //    _level.Cells.Add(ground);
-            //}
         }
-
+        private void BuildGroundV2()
+        {
+            var points = new List<Point>();
+            points.Add(new Point(2, 3));
+            points.Add(new Point(4, 7));
+            points.Add(new Point(6, 9));
+            foreach (var point in points)
+                { 
+                    var existingCell = _level.Cells.First(cell => cell.CoordinateX == point.X && cell.CoordinateY == point.Y);
+                    var ground = new Ground(point.X, point.Y, _level);
+                    _level.Cells.Remove(existingCell);
+                    _level.Cells.Add(ground);
+                }
+                    
+        }
+            
+        
         private void BuildWall()
         {
             for (int x = 0; x < _level.Width; x++)
@@ -73,25 +73,22 @@ namespace Maze.LevelStaff
                 }
             }
         }
-        private void Diamond() 
+        private void BuildDiamond() 
         {
-            foreach (var ground in _level.Cells)
+            foreach (var cell in _level.Cells)
             {
-                int[] moveX = { 1, 0, -1 };
-                int[] moveY = { 0, 1, -1 };
+                var moveX = new[] { 1, 0, -1 };
+                var moveY = new[] { 0, 1, -1 };
                 foreach (int x in moveX)
                 { 
                     foreach(int y in moveY)
                     {
-                        int newX = ground.CoordinateX + x;
-                        int newY = ground.CoordinateY + y;
-                        var existingCell = _level.Cells.First(cell => cell.CoordinateX == x && cell.CoordinateY == y);
-
-                        if (existingCell == null)
-                        {
-                            var diamond = new Diamond(newX, newY, _level); 
-                            _level.Cells.Add(diamond);
-                        }
+                        int newX = cell.CoordinateX + x;
+                        int newY = cell.CoordinateY + y;
+                        var existingCell = _level.Cells.First(cell => cell.CoordinateX == newX && cell.CoordinateY == newY);
+                        var diamond = new Diamond(newX, newY, _level);
+                        _level.Cells.Remove(existingCell);
+                        _level.Cells.Add(diamond);
                     }
                     
                 }

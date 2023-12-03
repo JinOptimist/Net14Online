@@ -13,6 +13,6 @@ namespace Maze.Cells
         {
         }
 
-        public override string Symbol => "<_>";
+        public override string Symbol => "@";
     }
 }
