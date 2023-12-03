@@ -13,6 +13,6 @@ namespace Maze.Cells
         {
         }
 
-        public override string Symbol => "🌛";
+        public override string Symbol => ")";
     }
 }
