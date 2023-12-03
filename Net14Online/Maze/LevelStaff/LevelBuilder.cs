@@ -29,7 +29,7 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-        public Level BuildV1(int width = 10, int height = 5, int seedForRandom = -1, int numberOfSecrets = 2)
+        public Level BuildV17(int width = 10, int height = 5, int seedForRandom = -1, int numberOfSecrets = 2)
         {
             if (seedForRandom > 0)
                 _random = new Random(seedForRandom);
