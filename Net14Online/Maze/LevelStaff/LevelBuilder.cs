@@ -45,6 +45,21 @@ namespace Maze.LevelStaff
             }
         }
 
+        private void BuildGroundV26()
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
+
+                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
+                var ground = new Ground(randomX, randomY, _level);
+
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(ground);
+            }
+        }
+
         private void BuildWall()
         {
             for (int x = 0; x < _level.Width; x++)
