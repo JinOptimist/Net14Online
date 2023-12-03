@@ -24,6 +24,7 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
+            BuildPuddle();
             BuildGroundRandom();
 
             return _level;
@@ -55,6 +56,24 @@ namespace Maze.LevelStaff
 
                     _level.Cells.Add(cell);
                 }
+            }
+        }
+        private void BuildPuddle()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                
+                for (int k = 0; k < _level.Height; k++)
+                {
+                    Console.SetCursorPosition(_level.Height - k, k + 1);
+                    for (int j = 0; j <= k * 2; j++)
+                    {
+                        var cell = new PuddleV10(j, k, _level);
+                        _level.Cells.Add(cell);
+                    }
+                    Console.WriteLine();
+                }
+
             }
         }
     }
