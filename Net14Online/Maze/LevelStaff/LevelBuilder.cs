@@ -25,6 +25,8 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
+            BuildGroundV2();
+            BuildDiamond();
             BuildGroundRandom();
 
             return _level;
@@ -47,20 +49,20 @@ namespace Maze.LevelStaff
         private void BuildGroundV2()
         {
             var points = new List<Point>();
-            points.Add(new Point(2, 3));
-            points.Add(new Point(4, 7));
-            points.Add(new Point(6, 9));
+            points.Add(new Point(1, 2));
+            points.Add(new Point(3, 3));
+            points.Add(new Point(2, 4));
             foreach (var point in points)
-                { 
-                    var existingCell = _level.Cells.First(cell => cell.CoordinateX == point.X && cell.CoordinateY == point.Y);
-                    var ground = new Ground(point.X, point.Y, _level);
-                    _level.Cells.Remove(existingCell);
-                    _level.Cells.Add(ground);
-                }
-                    
+            {
+                var existingCell = _level.Cells.First(cell => cell.CoordinateX == point.X && cell.CoordinateY == point.Y);
+                var ground = new Ground(point.X, point.Y, _level);
+                _level.Cells.Remove(existingCell);
+                _level.Cells.Add(ground);
+            }
+
         }
-            
-        
+
+
         private void BuildWall()
         {
             for (int x = 0; x < _level.Width; x++)
@@ -73,27 +75,41 @@ namespace Maze.LevelStaff
                 }
             }
         }
-        private void BuildDiamond() 
+        private void BuildDiamond()
         {
-            foreach (var cell in _level.Cells)
             {
-                var moveX = new[] { 1, 0, -1 };
-                var moveY = new[] { 0, 1, -1 };
-                foreach (int x in moveX)
-                { 
-                    foreach(int y in moveY)
+                var cellPoints = new List<Point>
                     {
-                        int newX = cell.CoordinateX + x;
-                        int newY = cell.CoordinateY + y;
-                        var existingCell = _level.Cells.First(cell => cell.CoordinateX == newX && cell.CoordinateY == newY);
-                        var diamond = new Diamond(newX, newY, _level);
-                        _level.Cells.Remove(existingCell);
-                        _level.Cells.Add(diamond);
+                        new Point(1, 1),
+                        new Point(1, 2),
+                        new Point(4, 1)
+                    };
+
+                foreach (var point in cellPoints)
+                {
+                    int[] moveX = { 0, 1, 1 };
+                    int[] moveY = { 1, 0, 3 };
+
+                    foreach (int x in moveX)
+                    {
+                        foreach (int y in moveY)
+                        {
+                            int newX = point.X + x;
+                            int newY = point.Y + y;
+
+                            var existingCell = _level.Cells.FirstOrDefault(cell => cell.CoordinateX == newX && cell.CoordinateY == newY);
+
+                            if (existingCell != null)
+                            {
+                                var diamond = new Diamond(newX, newY, _level);
+                                _level.Cells.Remove(existingCell);
+                                _level.Cells.Add(diamond);
+                            }
+                        }
                     }
-                    
                 }
-                
             }
         }
     }
 }
+
