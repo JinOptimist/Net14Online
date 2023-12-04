@@ -1,4 +1,7 @@
 ﻿using Maze.Cells;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 
 namespace Maze.LevelStaff
 {
@@ -6,6 +9,7 @@ namespace Maze.LevelStaff
     {
         private Level _level;
         private Random _random;
+        private BaseCell random;
 
         public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1)
         {
@@ -25,7 +29,7 @@ namespace Maze.LevelStaff
 
             BuildWall();
             BuildGroundRandom();
-
+            BildGoldMyRandom();
             return _level;
         }
 
@@ -57,5 +61,52 @@ namespace Maze.LevelStaff
                 }
             }
         }
-    }
+
+        
+
+        private void BildGoldMyRandom()
+        {
+            for (int i = 0; i <25; i++)
+            {
+                var  goldx = _random.Next(_level.Width);
+                if ( goldx > _level.Width / 2)
+                {
+                    goldx = goldx - i / 2 - 1;
+                }
+                else if ( goldx < _level.Width / 2)
+                {
+                     goldx += 5;
+                }
+                var goldy = _random.Next(_level.Height);
+                if (goldy > _level.Height / 2)
+                {
+                    goldy = goldy - i    / 2 - 1;
+                }
+                else
+                {
+                    goldy += 3;
+                }
+
+                var randomgoldx = _level.Cells.First(x => x.CoordinateX == goldx && x.CoordinateY == goldy);
+                var gold = new Gold(goldx, goldy, _level);
+                _level.Cells.Remove(randomgoldx);
+                _level.Cells.Add(gold);
+
+
+
+
+            }
+            
+             
+
+            
+            
+            
+
+
+
+
+        }
+
+    } 
 }
