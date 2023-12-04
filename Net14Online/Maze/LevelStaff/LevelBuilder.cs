@@ -8,7 +8,7 @@ namespace Maze.LevelStaff
         private Level _level;
         private Random _random;
 
-        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1)
+        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2)
         {
             if (seedForRandom > 0)
             {
@@ -25,6 +25,23 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
+            BuildGroundV2();
+            BuildDiamond();
+            BuildGroundRandom();
+            BuildCoin(coinCount);
+
+            return _level;
+        }
+        public Level BuildV11(int width = 10, int height = 5)
+        {
+
+            _level = new Level();
+
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildRing();
             BuildMoonV26();
 
 
@@ -52,6 +69,48 @@ namespace Maze.LevelStaff
             BuildCage();
 
             return _level;
+        }
+
+        public Level BuildV7(int width = 10, int height = 5, int seedForRandom = -1)
+        {
+            if (seedForRandom > 0)
+            {
+                _random = new Random(seedForRandom);
+            }
+            else
+            {
+                _random = new Random();
+            }
+
+            _level = new Level();
+
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildGroundRandomV7();
+            AddBerriesV7(3);
+
+            return _level;
+        }
+
+        private void BuildRing()
+        {           
+                var corX = 0;
+                var corY = 0;
+
+                for (int j = 0; j < 5; j++) 
+                {
+                    var randomWall = _level.Cells.First(x => x.CoordinateX == corX && x.CoordinateY == corY);
+                    var ground = new Ring(corX, corY, _level);
+
+                    _level.Cells.Remove(randomWall);
+                    _level.Cells.Add(ground);
+
+                    corX += 2;
+                    corY += 1;
+                }
+            
         }
         private void BuildGroundRandom()
         {
@@ -110,6 +169,55 @@ namespace Maze.LevelStaff
             }
         }
 
+
+        private void AddGroundCellV7(int x, int y)
+        {
+            var wallToRemove = _level.Cells.First(cell => cell.CoordinateX == x && cell.CoordinateY == y);
+            var ground = new Ground(x, y, _level);
+
+            _level.Cells.Remove(wallToRemove);
+            _level.Cells.Add(ground);
+        }
+
+        private void BuildGroundRandomV7()
+        {
+            for (int y = 1; y < _level.Height-1; y=y+2)
+            {
+                for (int x = 1; x < _level.Width-1; x++)
+                {
+                    AddGroundCellV7(x, y);
+                }
+            }
+            for (int y = 2; y < _level.Height - 1; y = y+4)
+            {
+                AddGroundCellV7(1, y);
+            }
+            for (int y = 4; y < _level.Height - 1; y = y + 4)
+            {
+                AddGroundCellV7(_level.Width-2, y);
+            }
+        }
+
+        private void AddBerriesV7(int numberOfBerries)
+        {
+            int berriesAdded = 0;
+            while (berriesAdded < numberOfBerries)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
+                var cellToRemove = _level.Cells.First(cell => cell.CoordinateX == randomX && cell.CoordinateY == randomY);
+                if (cellToRemove.Symbol == ".")
+                {
+                    var berry = new Berry(randomX, randomY, _level);
+
+                    _level.Cells.Remove(cellToRemove);
+                    _level.Cells.Add(berry);
+                    berriesAdded++;
+                }
+            }
+            
+        }
+
         private void BuildGroundV18()
         {
             for (int y = 0; y < _level.Height; y++)
@@ -146,6 +254,22 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(cage);
             }
 
+        }
+
+        private void BuildCoin(int coinCount)
+        {
+            for (int i = 0; i < coinCount; i++)
+            {
+                var grounds = _level.Cells
+                    .Where(x => x is Ground)
+                    .ToList();
+                var randomGroundIndex = _random.Next(grounds.Count);
+                var randomGround = grounds[randomGroundIndex];
+
+                var coin = new Coin(randomGround.CoordinateX, randomGround.CoordinateY, _level);
+                _level.Cells.Remove(randomGround);
+                _level.Cells.Add(coin);
+            }
         }
 
         private void BuildDiamond()
