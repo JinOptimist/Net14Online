@@ -79,9 +79,9 @@ namespace Maze.LevelStaff
                 }
             }
         }
-        private void BuildTrapRandom(int TrapsCount)
+        private void BuildTrapRandom(int trapsCount)
         {
-            for (int i = 0; i < TrapsCount; i++)
+            for (int i = 0; i < trapsCount; i++)
             {
                 var randomX = _random.Next(_level.Width);
                 var randomY = _random.Next(_level.Height);
