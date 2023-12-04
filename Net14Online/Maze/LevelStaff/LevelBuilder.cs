@@ -7,7 +7,7 @@ namespace Maze.LevelStaff
         private Level _level;
         private Random _random;
 
-        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1)
+        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2)
         {
             if (seedForRandom > 0)
             {
@@ -25,10 +25,26 @@ namespace Maze.LevelStaff
 
             BuildWall();
             BuildGroundRandom();
+            BuildCoin(coinCount);
 
             return _level;
         }
 
+        private void BuildCoin(int coinCount)
+        {
+            for (int i = 0; i < coinCount; i++)
+            {
+                var grounds = _level.Cells
+                    .Where(x => x is Ground)
+                    .ToList();
+                var randomGroundIndex = _random.Next(grounds.Count);
+                var randomGround = grounds[randomGroundIndex];
+
+                var coin = new Coin(randomGround.CoordinateX, randomGround.CoordinateY, _level);
+                _level.Cells.Remove(randomGround);
+                _level.Cells.Add(coin);
+            }
+        }
 
         private void BuildGroundRandom()
         {
