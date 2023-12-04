@@ -1,5 +1,5 @@
 ﻿using Maze.Cells;
-using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace Maze.LevelStaff
 {
@@ -33,12 +33,15 @@ namespace Maze.LevelStaff
         public Level BuildV17(int width = 10, int height = 5, int seedForRandom = -1, int numberOfSecrets = 2)
         {
             if (seedForRandom > 0)
+            {
                 _random = new Random(seedForRandom);
+            }
             else
+            {
                 _random = new Random();
+            }
 
             _level = new Level();
-
             _level.Width = width;
             _level.Height = height;
 
@@ -63,9 +66,9 @@ namespace Maze.LevelStaff
             }
         }
 
-        private void ChangeWallCell((int x, int y) position, BaseCell newCell)
+        private void ChangeWallCell(Point position, BaseCell newCell)
         {
-            var wallCell = _level.Cells.SingleOrDefault(x => x.CoordinateX == position.x && x.CoordinateY == position.y && x is Wall);
+            var wallCell = _level.Cells.SingleOrDefault(x => x.CoordinateX == position.X && x.CoordinateY == position.Y && x is Wall);
 
             if (wallCell != null)
             {
@@ -93,15 +96,19 @@ namespace Maze.LevelStaff
             {
                 var randomX = _random.Next(1, _level.Width - 1);
                 var randomY = _random.Next(1, _level.Height - 1);
-                Secret secret = InitializeSecret((randomX, randomY));
-                BuildPaths((_level.Width / 2, _level.Height / 2), (secret.CoordinateX, secret.CoordinateY));
+                Point position = new Point(randomX, randomY);
+                Secret secret = AddSecret(position);
+
+                Point startPathPosition = new Point(_level.Width / 2, _level.Height / 2);
+                Point endPathPosition = new Point(secret.CoordinateX, secret.CoordinateY);
+                BuildPaths(startPathPosition, endPathPosition);
             }
         }
 
-        private Secret InitializeSecret((int x, int y) position)
+        private Secret AddSecret(Point position)
         {
-            var oldCell = _level.Cells.First(x => x.CoordinateX == position.x && x.CoordinateY == position.y);
-            var secret = new Secret(position.x, position.y, _level);
+            var oldCell = _level.Cells.First(x => x.CoordinateX == position.X && x.CoordinateY == position.Y);
+            var secret = new Secret(position.X, position.Y, _level);
 
             _level.Cells.Remove(oldCell);
             _level.Cells.Add(secret);
@@ -109,30 +116,40 @@ namespace Maze.LevelStaff
             return secret;
         }
 
-        private void BuildPaths((int x, int y) startPosition, (int x, int y) endPosition)
+        private void BuildPaths(Point startPosition, Point endPosition)
         {
-            ChangeWallCell((startPosition.x, startPosition.y), new Ground(startPosition.x, startPosition.y, _level));
+            ChangeWallCell(startPosition, new Ground(startPosition.X, startPosition.Y, _level));
 
             int direction = 0;
-            if ((direction = GetDirection((startPosition.x, endPosition.x))) != 0)
+            if ((direction = GetDirection(startPosition.X, endPosition.X)) != 0)
             {
-                BuildPaths((startPosition.x + direction, startPosition.y), (endPosition.x, endPosition.y));
+                startPosition.X += direction;
+                BuildPaths(startPosition, endPosition);
                 return;
             }
 
-            if ((direction = GetDirection((startPosition.y, endPosition.y))) != 0)
+            if ((direction = GetDirection(startPosition.Y, endPosition.Y)) != 0)
             {
-                BuildPaths((startPosition.x, startPosition.y + direction), (endPosition.x, endPosition.y));
+                startPosition.Y += direction;
+                BuildPaths(startPosition, endPosition);
                 return;
             }
         }
 
-        private int GetDirection((int startPos, int endPos) position)
+        private int GetDirection(int startPosition, int endPosition)
         {
-            int direction = 0;
-            if (position.startPos != position.endPos)
-                direction = position.startPos < position.endPos ? 1 : -1;
-            return direction;
+            if (startPosition < endPosition)
+            {
+                return 1;
+            }
+
+            if (startPosition > endPosition)
+            {
+                return -1;
+            }
+
+            return 0;
         }
     }
 }
+
