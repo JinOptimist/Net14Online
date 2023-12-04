@@ -58,7 +58,7 @@ namespace Maze.LevelStaff
             }
         }
 
-        private void BuildGroundTask16()
+        private List<Ground> BuildGroundTask16()
         {
             var startX = 0;
             var startY = _random.Next(_level.Height);
@@ -67,7 +67,7 @@ namespace Maze.LevelStaff
             do
             {
                 int randY;
-                if (startY > 0 || startY <= _level.Height)
+                if (startY > 0 && startY <= _level.Height)
                 {
                     randY = _random.Next(-1, 2);
                     startY = startY + randY;
@@ -94,7 +94,7 @@ namespace Maze.LevelStaff
             }
             while (startX < _level.Width);
 
-            House.ChangeGroundToHouse(grounds, _level);
+            return grounds;
         }
     }
 }
