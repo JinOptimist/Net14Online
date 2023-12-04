@@ -57,12 +57,9 @@ namespace Maze.LevelStaff
             int x1 = _random.Next(_level.Width);
             int y1 = _random.Next(_level.Height);
 
-            int x2, y2;
-            do
-            {
-                x2 = _random.Next(_level.Width);
-                y2 = _random.Next(_level.Height);
-            } while (x2 == x1 && y2 == y1); 
+            int x2 = _random.Next(_level.Width);
+            int y2 = _random.Next(_level.Height);
+           
 
            
             var sun1 = new Sun(x1, y1, _level);
