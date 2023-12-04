@@ -49,6 +49,75 @@ namespace Maze.LevelStaff
             return _level;
         }
 
+        public Level BuildV38(int width = 15, int height = 15)
+        {
+            _random = new Random();
+            _level = new Level()
+            {
+                Height = height,
+                Width = width
+            };
+            BuildWall();
+            SetStartAndFinish(_level);
+            var start = _level.Cells.SingleOrDefault(x=> x is Ground && x.CoordinateX == 0);
+            var finish = _level.Cells.SingleOrDefault(x=> x is Ground && x.CoordinateX == _level.Width - 1);
+            
+            GenerateRandomWay(_level, start, finish);
+
+            return _level;
+        }
+
+        private void GenerateRandomWay(Level level, BaseCell? start, BaseCell? finish)
+        {
+            
+            var point = new Ground(start.CoordinateX, start.CoordinateY, level);
+            var isFollowTheX = true;
+           
+             while (point.CoordinateX < finish.CoordinateX)
+            {
+                if (isFollowTheX)
+                {
+                    var randomStep = _random.Next(3);
+
+                    for (int i = 0; i <= randomStep; i++)
+                    {
+                        var nextPoint = new Ground(point.CoordinateX + 1, point.CoordinateY, level);
+                        var cell = level.Cells.FirstOrDefault(cell => cell.CoordinateX == nextPoint.CoordinateX && cell.CoordinateY == nextPoint.CoordinateY);
+                        level.Cells.Remove(cell);
+                        level.Cells.Add(nextPoint);
+                        point = nextPoint;
+                    }
+                    isFollowTheX = false;
+                }
+
+                else
+                {
+                    var randomStep = _random.Next(3);
+
+                    for (int i = 0; i <= randomStep; i++)
+                    {
+                        if (point.CoordinateY > finish.CoordinateY)
+                        {
+                            var nextPoint = new Ground(point.CoordinateX, point.CoordinateY - 1, level);
+                            var cell = level.Cells.FirstOrDefault(cell => cell.CoordinateX == nextPoint.CoordinateX && cell.CoordinateY == nextPoint.CoordinateY);
+                            point = nextPoint;
+                            level.Cells.Remove(cell);
+                        }
+                        else
+                        {
+                            var nextPoint = new Ground(point.CoordinateX, point.CoordinateY + 1, level);
+                            var cell = level.Cells.FirstOrDefault(cell => cell.CoordinateX == nextPoint.CoordinateX && cell.CoordinateY == nextPoint.CoordinateY);
+                            point = nextPoint;
+                            level.Cells.Remove(cell);
+                        }
+                        level.Cells.Add(point);
+                    }
+
+                    isFollowTheX = true;
+                }
+            };
+        }
+
         public Level BuildV18(int width = 10, int height = 5, int seedForRandom = -1)
         {
             if (seedForRandom > 0)
@@ -329,7 +398,7 @@ namespace Maze.LevelStaff
         {
             var grounds = level.Cells.Where(x => x.Symbol == ".").ToList(); // Where(x => x is Ground)
 
-            var pitCount = _random.Next(grounds.Count/2);
+            var pitCount = _random.Next(grounds.Count / 2);
 
             for (int i = 0; i < pitCount; i++)
             {
@@ -341,6 +410,34 @@ namespace Maze.LevelStaff
                 level.Cells.Remove(ground);
                 level.Cells.Add(pit);
             }
+        }
+
+        private void SetStartAndFinish(Level level)
+        {
+            var startCoordinateX = 0;
+            var startCoordinateY = _random.Next(level.Height);
+
+            var finishCoordinateX = level.Width - 1;
+            var finishCoordinateY = _random.Next(level.Height);
+
+            var start = new Ground(startCoordinateX, startCoordinateY, level);
+            var finish = new Ground(finishCoordinateX, finishCoordinateY, level);
+
+            var startCell = level.Cells.FirstOrDefault(cell => cell.CoordinateX == startCoordinateX && cell.CoordinateY == startCoordinateY);
+            if (startCell == null)
+            {
+
+            }
+            level.Cells.Remove(startCell);
+            level.Cells.Add(start);
+
+            var finishCell = level.Cells.FirstOrDefault(cell => cell.CoordinateX == finish.CoordinateX && cell.CoordinateY == finish.CoordinateY);
+            if (finishCell == null)
+            {
+
+            }
+            level.Cells.Remove(finishCell);
+            level.Cells.Add(finish);
         }
     }
 }
