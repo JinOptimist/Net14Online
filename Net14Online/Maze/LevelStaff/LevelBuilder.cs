@@ -24,7 +24,7 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            BuildRing();
+            BuildGroundRandom();
 
             return _level;
         }
@@ -44,23 +44,35 @@ namespace Maze.LevelStaff
 
 
         private void BuildRing()
-        {
-            for (int i = 0; i < 15; i++)
-            {
-                var randomX = 0;
-                var randomY = 0;
+        {           
+                var corX = 0;
+                var corY = 0;
 
                 for (int j = 0; j < 5; j++) 
                 {
-                    var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
-                    var ground = new Ring(randomX, randomY, _level);
+                    var randomWall = _level.Cells.First(x => x.CoordinateX == corX && x.CoordinateY == corY);
+                    var ground = new Ring(corX, corY, _level);
 
                     _level.Cells.Remove(randomWall);
                     _level.Cells.Add(ground);
 
-                    randomX += 2;
-                    randomY += 1;
+                    corX += 2;
+                    corY += 1;
                 }
+            
+        }
+        private void BuildGroundRandom()
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
+
+                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
+                var ground = new Ground(randomX, randomY, _level);
+
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(ground);
             }
         }
 
