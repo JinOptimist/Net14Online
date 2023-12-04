@@ -1,4 +1,5 @@
 ﻿using Maze.Cells;
+using System.Text.RegularExpressions;
 
 namespace Maze.LevelStaff
 {
@@ -62,18 +63,14 @@ namespace Maze.LevelStaff
             }
         }
 
-        private void BuildGround((int x, int y) position)
+        private void ChangeWallCell((int x, int y) position, BaseCell newCell)
         {
-            if (position.x < 0 || position.y < 0)
-                return;
+            var wallCell = _level.Cells.SingleOrDefault(x => x.CoordinateX == position.x && x.CoordinateY == position.y && x is Wall);
 
-            var oldCell = _level.Cells.FirstOrDefault(x => x.CoordinateX == position.x && x.CoordinateY == position.y);
-            var ground = new Ground(position.x, position.y, _level);
-
-            if (oldCell is Wall)
+            if (wallCell != null)
             {
-                _level.Cells.Remove(oldCell);
-                _level.Cells.Add(ground);
+                _level.Cells.Remove(wallCell);
+                _level.Cells.Add(newCell);
             }
         }
 
@@ -114,7 +111,7 @@ namespace Maze.LevelStaff
 
         private void BuildPaths((int x, int y) startPosition, (int x, int y) endPosition)
         {
-            BuildGround((startPosition.x, startPosition.y));
+            ChangeWallCell((startPosition.x, startPosition.y), new Ground(startPosition.x, startPosition.y, _level));
 
             int direction = 0;
             if ((direction = GetDirection((startPosition.x, endPosition.x))) != 0)
