@@ -13,7 +13,7 @@ namespace Maze.Cells
         {
         }
 
-        public override string Symbol => "H";
+        public override string Symbol => "^";
 
         public static void ChangeGroundToHouse(List<Ground> grounds, Level level)
         {
