@@ -53,7 +53,7 @@ namespace Maze.LevelStaff
             var randomStep = 2;
             do
             {
-                SetWallsV4(randomX, randomY);
+                SetGroundV4(randomX, randomY);
 
                 randomX += _random.Next(randomStep);
                 randomY += _random.Next(randomStep);
@@ -66,7 +66,7 @@ namespace Maze.LevelStaff
             }
             while (!FindExitV4(randomX, randomY));
 
-            SetWallsV4(randomX, randomY);
+            SetGroundV4(randomX, randomY);
 
         }
 
@@ -89,7 +89,7 @@ namespace Maze.LevelStaff
             }
         }
 
-        private void SetWallsV4(int x, int y)
+        private void SetGroundV4(int x, int y)
         {
 
             var randomWall = _level.Cells.FirstOrDefault(c => c.CoordinateX == x && c.CoordinateY == y);
