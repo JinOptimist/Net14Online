@@ -24,10 +24,52 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            BuildGroundRandom();
+            BuildFountain();
+            BuildGroundV6();
 
             return _level;
         }
+
+        private void BuildGroundV6()
+        {
+            for (int i = 0; i < _level.Width; i++)
+            {
+                for (int j = 0; j < _level.Height; j++)
+                {
+                    if (i == 0 || j == _level.Height - 1)
+                    {
+                        var positionX = i;
+                        var positionY = j;
+                       
+                        var randomWall = _level.Cells.First(x => x.CoordinateX == positionX && x.CoordinateY == positionY);
+                        var ground = new Ground(positionX, positionY, _level);
+
+                        _level.Cells.Remove(randomWall);
+                        _level.Cells.Add(ground);
+                        
+                    }
+                }
+            }
+        }
+
+        private void BuildFountain()
+        {
+            var centreInWidth = _level.Width / 2;
+            var centreInHeight = _level.Height / 2;
+
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    var randomWall = _level.Cells.First(x => x.CoordinateX == centreInWidth + i && x.CoordinateY == centreInHeight + i);
+                    var ground = new Ground(centreInWidth + i, centreInHeight + i, _level);
+
+                    _level.Cells.Remove(randomWall);
+                    _level.Cells.Add(ground); 
+                }
+            }
+        }
+        
 
 
         private void BuildGroundRandom()
