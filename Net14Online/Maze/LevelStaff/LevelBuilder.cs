@@ -24,9 +24,9 @@ namespace Maze.LevelStaff
             _level.Width = width;
             _level.Height = height;
 
-            BuildWall();
+            BuildWall();  
             BuildGroundV4();
-
+            BuildHeartsV4();
             return _level;
         }
 
@@ -53,12 +53,12 @@ namespace Maze.LevelStaff
             var randomStep = 2;
             do
             {
-                SetWalls(randomX, randomY);
+                SetWallsV4(randomX, randomY);
 
                 randomX += _random.Next(randomStep);
                 randomY += _random.Next(randomStep);
 
-                if(randomX == 0)
+                if (randomX == 0)
                 {
                     randomX++;
                 }
@@ -66,34 +66,52 @@ namespace Maze.LevelStaff
             }
             while (!FindExitV4(randomX, randomY));
 
-            SetWalls(randomX, randomY);
-            
+            SetWallsV4(randomX, randomY);
+
         }
 
-        private void SetWalls(int x, int y)
+        private void BuildHeartsV4()
         {
-            try
+            var maxHearts = 2;
+            var heartsCounter = 0;
+            for(int i = 0; i < _level.Cells.Count; i++)
             {
-                var randomWall = _level.Cells.First(c => c.CoordinateX == x && c.CoordinateY == y);
-                var ground = new Ground(x, y, _level);
+                if (_level.Cells[i] is Ground && heartsCounter < maxHearts)
+                {
+                    var cell = _level.Cells[i];
+                    
+                    var heart = new Heart(cell.CoordinateX, cell.CoordinateY, _level);
+                    _level.Cells.Remove(cell);
+                    _level.Cells.Add(heart);            
 
-                _level.Cells.Remove(randomWall);
-                _level.Cells.Add(ground);
+                    heartsCounter++;
+                }
             }
-            catch
+        }
+
+        private void SetWallsV4(int x, int y)
+        {
+
+            var randomWall = _level.Cells.FirstOrDefault(c => c.CoordinateX == x && c.CoordinateY == y);
+            if (randomWall is null)
             {
                 return;
             }
+            var ground = new Ground(x, y, _level);
+
+            _level.Cells.Remove(randomWall);
+            _level.Cells.Add(ground);
+
         }
 
         private bool FindExitV4(int x, int y)
         {
-            if(x == _level.Width - 1 || x == 0)
+            if (x == _level.Width - 1 || x == 0)
             {
                 return true;
             }
 
-            if(y == _level.Height - 1 || y == 0)
+            if (y == _level.Height - 1 || y == 0)
             {
                 return true;
             }
