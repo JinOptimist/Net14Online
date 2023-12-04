@@ -110,6 +110,22 @@ namespace Maze.LevelStaff
                 }
             }
         }
+        private void BuildChest() //сокровищница на уровне в случайном месте. Предполагатеся что можно будет пробиться к ней через стены
+        {
+            var randomX = Math.Abs(_random.Next(_level.Width));
+            var randomY = Math.Abs(_random.Next(_level.Height));
+
+            for (int x = randomX; x < randomX + 2; x++)
+            {
+                for (int y = randomY; y < randomY + 2; y++)
+                {
+                    var randomCell = _level.Cells.First(cell => cell.CoordinateX == x && cell.CoordinateY == y);
+                    var cellChest = new Chest(x, y, _level);
+                    _level.Cells.Remove(randomCell);
+                    _level.Cells.Add(cellChest);
+                }
+            }
+        }
     }
 }
 
