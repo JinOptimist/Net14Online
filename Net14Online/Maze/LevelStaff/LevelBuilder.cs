@@ -28,6 +28,7 @@ namespace Maze.LevelStaff
             BuildGroundV2();
             BuildDiamond();
             BuildGroundRandom();
+            BuildPit(_level);
             BuildCoin(coinCount);
 
             return _level;
@@ -95,22 +96,22 @@ namespace Maze.LevelStaff
         }
 
         private void BuildRing()
-        {           
-                var corX = 0;
-                var corY = 0;
+        {
+            var corX = 0;
+            var corY = 0;
 
-                for (int j = 0; j < 5; j++) 
-                {
-                    var randomWall = _level.Cells.First(x => x.CoordinateX == corX && x.CoordinateY == corY);
-                    var ground = new Ring(corX, corY, _level);
+            for (int j = 0; j < 5; j++)
+            {
+                var randomWall = _level.Cells.First(x => x.CoordinateX == corX && x.CoordinateY == corY);
+                var ground = new Ring(corX, corY, _level);
 
-                    _level.Cells.Remove(randomWall);
-                    _level.Cells.Add(ground);
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(ground);
 
-                    corX += 2;
-                    corY += 1;
-                }
-            
+                corX += 2;
+                corY += 1;
+            }
+
         }
         private void BuildGroundRandom()
         {
@@ -181,20 +182,20 @@ namespace Maze.LevelStaff
 
         private void BuildGroundRandomV7()
         {
-            for (int y = 1; y < _level.Height-1; y=y+2)
+            for (int y = 1; y < _level.Height - 1; y = y + 2)
             {
-                for (int x = 1; x < _level.Width-1; x++)
+                for (int x = 1; x < _level.Width - 1; x++)
                 {
                     AddGroundCellV7(x, y);
                 }
             }
-            for (int y = 2; y < _level.Height - 1; y = y+4)
+            for (int y = 2; y < _level.Height - 1; y = y + 4)
             {
                 AddGroundCellV7(1, y);
             }
             for (int y = 4; y < _level.Height - 1; y = y + 4)
             {
-                AddGroundCellV7(_level.Width-2, y);
+                AddGroundCellV7(_level.Width - 2, y);
             }
         }
 
@@ -215,7 +216,7 @@ namespace Maze.LevelStaff
                     berriesAdded++;
                 }
             }
-            
+
         }
 
         private void BuildGroundV18()
@@ -321,6 +322,24 @@ namespace Maze.LevelStaff
                     _level.Cells.Remove(randomCell);
                     _level.Cells.Add(cellChest);
                 }
+            }
+        }
+
+        private void BuildPit(Level level)
+        {
+            var grounds = level.Cells.Where(x => x.Symbol == ".").ToList(); // Where(x => x is Ground)
+
+            var pitCount = _random.Next(grounds.Count/2);
+
+            for (int i = 0; i < pitCount; i++)
+            {
+                var randomGroundIndex = _random.Next(grounds.Count);
+                var ground = grounds[randomGroundIndex];
+
+                var pit = new Pit(ground.CoordinateX, ground.CoordinateY, level);
+
+                level.Cells.Remove(ground);
+                level.Cells.Add(pit);
             }
         }
     }
