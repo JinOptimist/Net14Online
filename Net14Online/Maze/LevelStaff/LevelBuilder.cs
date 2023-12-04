@@ -80,6 +80,7 @@ namespace Maze.LevelStaff
                 _level.Cells.Remove(existingCell);
                 _level.Cells.Add(ground);
             }
+        }
 
         private void BuildMoonV26()
         {
