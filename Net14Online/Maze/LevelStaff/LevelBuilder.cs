@@ -1,4 +1,5 @@
 ﻿using Maze.Cells;
+using System;
 
 namespace Maze.LevelStaff
 {
@@ -24,11 +25,10 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            BuildGroundRandom();
+            BuildGroundV4();
 
             return _level;
         }
-
 
         private void BuildGroundRandom()
         {
@@ -43,6 +43,62 @@ namespace Maze.LevelStaff
                 _level.Cells.Remove(randomWall);
                 _level.Cells.Add(ground);
             }
+        }
+
+        private void BuildGroundV4()
+        {
+            var randomY = _random.Next(_level.Height);
+            var randomX = 0;
+
+            var randomStep = 2;
+            do
+            {
+                SetWalls(randomX, randomY);
+
+                randomX += _random.Next(randomStep);
+                randomY += _random.Next(randomStep);
+
+                if(randomX == 0)
+                {
+                    randomX++;
+                }
+
+            }
+            while (!FindExitV4(randomX, randomY));
+
+            SetWalls(randomX, randomY);
+            
+        }
+
+        private void SetWalls(int x, int y)
+        {
+            try
+            {
+                var randomWall = _level.Cells.First(c => c.CoordinateX == x && c.CoordinateY == y);
+                var ground = new Ground(x, y, _level);
+
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(ground);
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private bool FindExitV4(int x, int y)
+        {
+            if(x == _level.Width - 1 || x == 0)
+            {
+                return true;
+            }
+
+            if(y == _level.Height - 1 || y == 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void BuildWall()
