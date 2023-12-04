@@ -25,10 +25,10 @@ namespace Maze.LevelStaff
 
             BuildWall();
             BuildGroundRandom();
-            BuildTrapRandom(trapsCount);
 
             return _level;
         }
+
         public Level BuildV8(int width = 10, int height = 5, int trapsCount = 0, int seedForRandom = -1)
         {
             if (seedForRandom > 0)
@@ -66,7 +66,6 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(ground);
             }
         }
-
         private void BuildWall()
         {
             for (int x = 0; x < _level.Width; x++)
@@ -79,6 +78,7 @@ namespace Maze.LevelStaff
                 }
             }
         }
+
         private void BuildTrapRandom(int trapsCount)
         {
             for (int i = 0; i < trapsCount; i++)
