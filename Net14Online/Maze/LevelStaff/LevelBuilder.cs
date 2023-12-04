@@ -1,4 +1,5 @@
 ﻿using Maze.Cells;
+using System.Drawing;
 
 namespace Maze.LevelStaff
 {
@@ -24,11 +25,12 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
+            BuildGroundV2();
+            BuildDiamond();
             BuildGroundRandom();
 
             return _level;
         }
-
 
         private void BuildGroundRandom()
         {
@@ -44,6 +46,22 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(ground);
             }
         }
+        private void BuildGroundV2()
+        {
+            var points = new List<Point>();
+            points.Add(new Point(1, 2));
+            points.Add(new Point(3, 3));
+            points.Add(new Point(2, 4));
+            foreach (var point in points)
+            {
+                var existingCell = _level.Cells.First(cell => cell.CoordinateX == point.X && cell.CoordinateY == point.Y);
+                var ground = new Ground(point.X, point.Y, _level);
+                _level.Cells.Remove(existingCell);
+                _level.Cells.Add(ground);
+            }
+
+        }
+
 
         private void BuildWall()
         {
@@ -54,6 +72,41 @@ namespace Maze.LevelStaff
                     var cell = new Wall(x, y, _level);
 
                     _level.Cells.Add(cell);
+                }
+            }
+        }
+        private void BuildDiamond()
+        {
+            {
+                var cellPoints = new List<Point>
+                    {
+                        new Point(1, 1),
+                        new Point(1, 2),
+                        new Point(4, 1)
+                    };
+
+                foreach (var point in cellPoints)
+                {
+                    int[] moveX = { 0, 1, 1 };
+                    int[] moveY = { 1, 0, 3 };
+
+                    foreach (int x in moveX)
+                    {
+                        foreach (int y in moveY)
+                        {
+                            int newX = point.X + x;
+                            int newY = point.Y + y;
+
+                            var existingCell = _level.Cells.FirstOrDefault(cell => cell.CoordinateX == newX && cell.CoordinateY == newY);
+
+                            if (existingCell != null)
+                            {
+                                var diamond = new Diamond(newX, newY, _level);
+                                _level.Cells.Remove(existingCell);
+                                _level.Cells.Add(diamond);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -75,3 +128,4 @@ namespace Maze.LevelStaff
         }
     }
 }
+
