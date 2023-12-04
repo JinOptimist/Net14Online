@@ -2,7 +2,7 @@
 using Maze.LevelStaff;
 
 var builder = new LevelBuilder();
-var level = builder.BuildV7(21, 21);
+var level = builder.BuildV18(12, 7);
 
 // player push the button
 
