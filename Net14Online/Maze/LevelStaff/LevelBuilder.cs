@@ -24,10 +24,10 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            //BuildGroundRandom();
+            BuildGroundRandom();
             BuildGroundOnBorder();
             BuildExclamationHorizontal();
-            //BuildExclamationRandom();
+            
             
 
             return _level;
@@ -41,20 +41,7 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(exclamation);
             }
         }
-        /*private void BuildExclamationRandom()
-        {
-            for (int i = 0; i < 5; i++)  // Измените количество ячеек "!" по необходимости
-            {
-                var randomX = _random.Next(_level.Width);
-                var randomY = _random.Next(_level.Height);
-
-                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
-                var exclamation = new Exclamation(randomX, randomY, _level);
-
-                _level.Cells.Remove(randomWall);
-                _level.Cells.Add(exclamation);
-            }
-        }*/
+        
         private void BuildGroundOnBorder()
         {
             
@@ -85,7 +72,7 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(ground);
             }
         }
-        /*private void BuildGroundRandom()
+        private void BuildGroundRandom()
         {
             for (int i = 0; i < 15; i++)
             {
@@ -98,7 +85,7 @@ namespace Maze.LevelStaff
                 _level.Cells.Remove(randomWall);
                 _level.Cells.Add(ground);
             }
-        }*/
+        }
 
         private void BuildWall()
         {
