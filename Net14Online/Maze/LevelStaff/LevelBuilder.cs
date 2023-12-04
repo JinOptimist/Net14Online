@@ -7,7 +7,7 @@ namespace Maze.LevelStaff
         private Level _level;
         private Random _random;
 
-        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1)
+        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int trapsCount = 0)
         {
             if (seedForRandom > 0)
             {
@@ -25,10 +25,32 @@ namespace Maze.LevelStaff
 
             BuildWall();
             BuildGroundRandom();
+            BuildTrapRandom(trapsCount);
 
             return _level;
         }
+        public Level BuildV8(int width = 10, int height = 5, int trapsCount = 0, int seedForRandom = -1)
+        {
+            if (seedForRandom > 0)
+            {
+                _random = new Random(seedForRandom);
+            }
+            else
+            {
+                _random = new Random();
+            }
 
+            _level = new Level();
+
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildGroundRandom();
+            BuildTrapRandom(trapsCount);
+
+            return _level;
+        }
 
         private void BuildGroundRandom()
         {
@@ -55,6 +77,20 @@ namespace Maze.LevelStaff
 
                     _level.Cells.Add(cell);
                 }
+            }
+        }
+        private void BuildTrapRandom(int TrapsCount)
+        {
+            for (int i = 0; i < TrapsCount; i++)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
+
+                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
+                var trap = new Trap(randomX, randomY, _level);
+
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(trap);
             }
         }
     }
