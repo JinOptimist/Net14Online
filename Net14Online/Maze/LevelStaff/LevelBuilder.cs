@@ -61,11 +61,11 @@ namespace Maze.LevelStaff
             {
                 for (int j = 0; j < 2; j++)
                 {
-                    var randomWall = _level.Cells.First(x => x.CoordinateX == centreInWidth + i && x.CoordinateY == centreInHeight + i);
-                    var ground = new Ground(centreInWidth + i, centreInHeight + i, _level);
+                    var wall = _level.Cells.First(x => x.CoordinateX == centreInWidth + i && x.CoordinateY == centreInHeight + j);
+                    var fountain = new Fountain(centreInWidth + i, centreInHeight + j, _level);
 
-                    _level.Cells.Remove(randomWall);
-                    _level.Cells.Add(ground); 
+                    _level.Cells.Remove(wall);
+                    _level.Cells.Add(fountain); 
                 }
             }
         }
