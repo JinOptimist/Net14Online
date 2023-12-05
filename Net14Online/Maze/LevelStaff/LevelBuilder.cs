@@ -155,6 +155,29 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(moon);
             }
         }
+        public Level BuildV_10(int width = 10, int height = 5, int seedForRandom = -1)
+        {
+            if (seedForRandom > 0)
+            {
+                _random = new Random(seedForRandom);
+            }
+            else
+            {
+                _random = new Random();
+            }
+
+            _level = new Level();
+
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildGroundV2();           
+            BuildGroundRandom();           
+            AddPuddleV_10(5);
+
+            return _level;
+        }
 
         private void BuildWall()
         {
@@ -322,6 +345,25 @@ namespace Maze.LevelStaff
                     _level.Cells.Add(cellChest);
                 }
             }
+        }
+        private void AddPuddleV_10(int puddles)
+        {
+            int puddlesAdded = 0;
+            while (puddlesAdded < puddles)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
+                var cellToRemove = _level.Cells.First(cell => cell.CoordinateX == randomX && cell.CoordinateY == randomY);
+                if (cellToRemove.Symbol == ".")
+                {
+                    var puddle = new Puddle(randomX, randomY, _level);
+
+                    _level.Cells.Remove(cellToRemove);
+                    _level.Cells.Add(puddle);
+                    puddlesAdded++;
+                }
+            }
+
         }
     }
 }
