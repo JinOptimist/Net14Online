@@ -1,4 +1,5 @@
 ﻿using Maze.Cells;
+using System.Drawing;
 
 namespace Maze.LevelStaff
 {
@@ -7,7 +8,7 @@ namespace Maze.LevelStaff
         private Level _level;
         private Random _random;
 
-        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1)
+        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2)
         {
             if (seedForRandom > 0)
             {
@@ -27,6 +28,22 @@ namespace Maze.LevelStaff
             BuildGroundV2();
             BuildDiamond();
             BuildGroundRandom();
+            BuildCoin(coinCount);
+
+            return _level;
+        }
+        public Level BuildV11(int width = 10, int height = 5)
+        {
+
+            _level = new Level();
+
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildRing();
+            BuildMoonV26();
+
 
             return _level;
         }
@@ -77,7 +94,24 @@ namespace Maze.LevelStaff
             return _level;
         }
 
+        private void BuildRing()
+        {           
+                var corX = 0;
+                var corY = 0;
 
+                for (int j = 0; j < 5; j++) 
+                {
+                    var randomWall = _level.Cells.First(x => x.CoordinateX == corX && x.CoordinateY == corY);
+                    var ground = new Ring(corX, corY, _level);
+
+                    _level.Cells.Remove(randomWall);
+                    _level.Cells.Add(ground);
+
+                    corX += 2;
+                    corY += 1;
+                }
+            
+        }
         private void BuildGroundRandom()
         {
             for (int i = 0; i < 15; i++)
@@ -105,7 +139,21 @@ namespace Maze.LevelStaff
                 _level.Cells.Remove(existingCell);
                 _level.Cells.Add(ground);
             }
+        }
 
+        private void BuildMoonV26()
+        {
+            var radius = Math.Min(_level.Width, _level.Height) / 2;
+            for (int i = -radius; i < radius; i++)
+            {
+                int X = _level.Width / 2;
+                int Y = _level.Height / 2 + i;
+                X += (int)Math.Sqrt(Math.Pow(radius, 2) - Math.Pow(i, 2));
+                var randomWall = _level.Cells.First(x => x.CoordinateX == X && x.CoordinateY == Y);
+                var moon = new Moon(X, Y, _level);
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(moon);
+            }
         }
 
         private void BuildWall()
@@ -120,8 +168,6 @@ namespace Maze.LevelStaff
                 }
             }
         }
-    }
-}
 
 
         private void AddGroundCellV7(int x, int y)
