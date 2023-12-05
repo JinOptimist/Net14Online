@@ -1,4 +1,5 @@
 ﻿using Maze.Cells;
+using Maze.Cells.Creatures;
 
 namespace Maze.LevelStaff
 {
@@ -7,5 +8,6 @@ namespace Maze.LevelStaff
         public int Width { get; set; }
         public int Height { get; set; }
         public List<BaseCell> Cells { get; set; } = new List<BaseCell>();
+        public Hero Hero { get; set; }
     }
 }

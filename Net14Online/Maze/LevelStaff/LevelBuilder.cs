@@ -1,4 +1,5 @@
 ﻿using Maze.Cells;
+using Maze.Cells.Creatures;
 using System.Drawing;
 
 namespace Maze.LevelStaff
@@ -25,12 +26,21 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            BuildGroundV2();
+            BuildGroundV18();
             BuildDiamond();
-            BuildGroundRandom();
             BuildCoin(coinCount);
+            BuildHero();
 
             return _level;
+        }
+
+        private void BuildHero()
+        {
+            var ground = _level.Cells.First(x => x is Ground);
+
+            var hero = new Hero(ground.CoordinateX, ground.CoordinateY, _level);
+
+            _level.Hero = hero;
         }
 
         public Level BuildV18(int width = 10, int height = 5, int seedForRandom = -1)
