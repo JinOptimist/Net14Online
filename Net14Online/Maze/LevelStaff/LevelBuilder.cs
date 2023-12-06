@@ -179,6 +179,45 @@ namespace Maze.LevelStaff
             }
         }
 
+        private List<Ground> BuildGroundTask16()
+        {
+            var startX = 0;
+            var startY = _random.Next(_level.Height);
+            List<Ground> grounds = new List<Ground>();
+
+            do
+            {
+                int randY;
+                if (startY > 0 && startY <= _level.Height)
+                {
+                    randY = _random.Next(-1, 2);
+                    startY = startY + randY;
+                }
+                if (startY == _level.Height)
+                {
+                    randY = 1;
+                    startY = startY - randY;
+                }
+                if (startY == 0)
+                {
+                    randY = 1;
+                    startY = startY + randY;
+                }
+
+                var randomWall = _level.Cells.First(x => x.CoordinateX == startX && x.CoordinateY == startY);
+                var ground = new Ground(startX, startY, _level);
+
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(ground);
+
+                grounds.Add(ground);
+                startX++;
+            }
+            while (startX < _level.Width);
+
+            return grounds;
+        }
+
 
         private void AddGroundCellV7(int x, int y)
         {
