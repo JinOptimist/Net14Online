@@ -16,6 +16,7 @@ namespace Maze.LevelStaff
 
             BuildWall();
             BuildGroundRandom();
+            BuildPortal();
 
             return _level;
         }
@@ -77,6 +78,24 @@ namespace Maze.LevelStaff
                     _level.Cells.Add(cell);
                 }
             }
+        }
+
+        private void BuildPortal()
+        {
+            int x = 0;
+            int y = 0;
+            if ((_level.Width - 3) % 4 == 0 || (_level.Width - 4) % 4 == 0)
+            {
+                x = _level.Width - 2;
+                y = 1;               
+            }
+            else if((_level.Width - 5) % 4 == 0 || (_level.Width - 6) % 4 == 0)
+            {
+                x = _level.Width - 2;
+                y = _level.Height - 2;               
+            }
+            var cell = new Portal(x, y, _level);
+            _level.Cells.Add(cell);
         }
     }
 }
