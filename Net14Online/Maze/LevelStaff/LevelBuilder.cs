@@ -27,14 +27,16 @@ namespace Maze.LevelStaff
 
             BuildWall();
             BuildGroundV18();
+            BuildGroundOnBorder();
+
             BuildDiamond();
             BuildCoin(coinCount);
+            BuildRing();
+            BuildMoonV26();
+            BuildExclamationHorizontal();
+
             BuildHero();
 
-            BuildGroundRandom();
-            BuildGroundOnBorder();
-            BuildExclamationHorizontal();
-            
             return _level;
         }
 
@@ -50,24 +52,31 @@ namespace Maze.LevelStaff
         
         private void BuildGroundOnBorder()
         {
-            
+
             for (int i = 0; i < _level.Width; i++)
             {
                 var ground = new Ground(i, 0, _level);
                 _level.Cells.Add(ground);
             }
-
-            _level = new Level();
-
-            _level.Width = width;
-            _level.Height = height;
-
-            BuildWall();
-            BuildRing();
-            BuildMoonV26();
+            for (int i = 1; i < _level.Height; i++)
+            {
+                var ground = new Ground(_level.Width - 1, i, _level);
+                _level.Cells.Add(ground);
+            }
 
 
-            return _level;
+            for (int i = _level.Width - 2; i >= 0; i--)
+            {
+                var ground = new Ground(i, _level.Height - 1, _level);
+                _level.Cells.Add(ground);
+            }
+
+
+            for (int i = _level.Height - 2; i > 0; i--)
+            {
+                var ground = new Ground(0, i, _level);
+                _level.Cells.Add(ground);
+            }
         }
 
         private void BuildHero()
