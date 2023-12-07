@@ -25,7 +25,8 @@ namespace Maze.Cells
 
         public override bool Step(BaseCreature creature)
         {
-            throw new NotImplementedException();
+            creature.Hp *= 2;
+            return true;
         }
     }
 }
