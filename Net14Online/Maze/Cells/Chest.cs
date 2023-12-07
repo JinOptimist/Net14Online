@@ -3,13 +3,13 @@ using Maze.LevelStaff;
 
 namespace Maze.Cells
 {
-    public class Wall : BaseCell
+    internal class Chest : BaseCell
     {
-        public Wall(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Chest(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
         {
         }
 
-        public override string Symbol => "#";
+        public override string Symbol => "4"; //Symbol 4 = [Ch]est
 
         public override bool Step(BaseCreature creature)
         {
