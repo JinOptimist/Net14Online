@@ -35,10 +35,9 @@ namespace Maze.LevelStaff
             BuildGroundOnBorder();
             BuildExclamationHorizontal();
             
-            
-
             return _level;
         }
+
         private void BuildExclamationHorizontal()
         {
             
@@ -143,27 +142,6 @@ namespace Maze.LevelStaff
                     corY += 1;
                 }
             
-        }
-            
-            for (int i = 1; i < _level.Height; i++)
-            {
-                var ground = new Ground(_level.Width - 1, i, _level);
-                _level.Cells.Add(ground);
-            }
-
-            
-            for (int i = _level.Width - 2; i >= 0; i--)
-            {
-                var ground = new Ground(i, _level.Height - 1, _level);
-                _level.Cells.Add(ground);
-            }
-
-            
-            for (int i = _level.Height - 2; i > 0; i--)
-            {
-                var ground = new Ground(0, i, _level);
-                _level.Cells.Add(ground);
-            }
         }
         private void BuildGroundRandom()
         {
