@@ -62,51 +62,36 @@ namespace Maze.LevelStaff
             }
         }
 
-        
 
+        private void GetPrint(int goldx, int goldy)
+        {
+            var randomgoldx = _level.Cells.First(x => x.CoordinateX == goldx && x.CoordinateY == goldy);
+            var gold = new Gold(goldx, goldy, _level);
+            _level.Cells.Remove(randomgoldx);
+            _level.Cells.Add(gold);
+        }
         private void BildGoldMyRandom()
         {
-            for (int i = 0; i <25; i++)
+            var goldx = _level.Height;
+            var goldy = _level.Width;
+            for (var i = 1; i < goldx-1 ; i=i+5)
             {
-                var  goldx = _random.Next(_level.Width);
-                if ( goldx > _level.Width / 2)
+                for (var j = 1; j < goldy-1 ; j++)
                 {
-                    goldx = goldx - i / 2 - 1;
+                    GetPrint(i, j);
                 }
-                else if ( goldx < _level.Width / 2)
-                {
-                     goldx += 5;
-                }
-                var goldy = _random.Next(_level.Height);
-                if (goldy > _level.Height / 2)
-                {
-                    goldy = goldy - i    / 2 - 1;
-                }
-                else
-                {
-                    goldy += 3;
-                }
-
-                var randomgoldx = _level.Cells.First(x => x.CoordinateX == goldx && x.CoordinateY == goldy);
-                var gold = new Gold(goldx, goldy, _level);
-                _level.Cells.Remove(randomgoldx);
-                _level.Cells.Add(gold);
-
-
-
 
             }
-            
-             
+            for (var i = 1; i < goldx - 1; i = i + 4)
+            {
+                for (var j = 1; j < goldy - 1; j++)
+                {
+                    GetPrint(j, i);
+                }
 
-            
-            
-            
-
-
-
+            }
 
         }
 
-    } 
+    }
 }
