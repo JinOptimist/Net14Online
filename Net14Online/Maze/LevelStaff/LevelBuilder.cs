@@ -39,6 +39,30 @@ namespace Maze.LevelStaff
 
             return _level;
         }
+
+        public Level BuildV7(int width = 10, int height = 5, int seedForRandom = -1)
+        {
+            if (seedForRandom > 0)
+            {
+                _random = new Random(seedForRandom);
+            }
+            else
+            {
+                _random = new Random();
+            }
+
+            _level = new Level();
+
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildGroundRandomV7();
+            AddBerriesV7(3);
+
+            return _level;
+        }
+
         public Level BuildV11(int width = 10, int height = 5)
         {
 
@@ -51,6 +75,29 @@ namespace Maze.LevelStaff
             BuildRing();
             BuildMoonV26();
 
+
+            return _level;
+        }
+
+        public Level BuildV17(int width = 10, int height = 5, int seedForRandom = -1, int numberOfSecrets = 5, int numberOfCoins = 3)
+        {
+            if (seedForRandom > 0)
+            {
+                _random = new Random(seedForRandom);
+            }
+            else
+            {
+                _random = new Random();
+            }
+
+            _level = new Level();
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildSecret(numberOfSecrets, new Coin(0, 0, _level), new Diamond(0, 0, _level));
+            BuildCoin(numberOfCoins);
+            BuildHero();
 
             return _level;
         }
@@ -78,47 +125,19 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-        public Level BuildV7(int width = 10, int height = 5, int seedForRandom = -1)
+        private void BuildWall()
         {
-            if (seedForRandom > 0)
+            for (int x = 0; x < _level.Width; x++)
             {
-                _random = new Random(seedForRandom);
+                for (int y = 0; y < _level.Height; y++)
+                {
+                    var cell = new Wall(x, y, _level);
+
+                    _level.Cells.Add(cell);
+                }
             }
-            else
-            {
-                _random = new Random();
-            }
-
-            _level = new Level();
-
-            _level.Width = width;
-            _level.Height = height;
-
-            BuildWall();
-            BuildGroundRandomV7();
-            AddBerriesV7(3);
-
-            return _level;
         }
 
-        private void BuildRing()
-        {
-            var corX = 0;
-            var corY = 0;
-
-            for (int j = 0; j < 5; j++)
-            {
-                var randomWall = _level.Cells.First(x => x.CoordinateX == corX && x.CoordinateY == corY);
-                var ring = new Ring(corX, corY, _level);
-
-                _level.Cells.Remove(randomWall);
-                _level.Cells.Add(ring);
-
-                corX += 2;
-                corY += 1;
-            }
-
-        }
         private void BuildGroundRandom()
         {
             for (int i = 0; i < 15; i++)
@@ -133,6 +152,7 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(ground);
             }
         }
+
         private void BuildGroundV2()
         {
             var points = new List<Point>();
@@ -148,32 +168,32 @@ namespace Maze.LevelStaff
             }
         }
 
-        private void BuildMoonV26()
+        private void BuildGroundRandomV7()
         {
-            var radius = Math.Min(_level.Width, _level.Height) / 2;
-            for (int i = -radius; i < radius; i++)
+            for (int y = 1; y < _level.Height - 1; y = y + 2)
             {
-                int X = _level.Width / 2;
-                int Y = _level.Height / 2 + i;
-                X += (int)Math.Sqrt(Math.Pow(radius, 2) - Math.Pow(i, 2));
-                var randomWall = _level.Cells.First(x => x.CoordinateX == X && x.CoordinateY == Y);
-                var moon = new Moon(X, Y, _level);
-                _level.Cells.Remove(randomWall);
-                _level.Cells.Add(moon);
+                for (int x = 1; x < _level.Width - 1; x++)
+                {
+                    AddGroundCellV7(x, y);
+                }
+            }
+            for (int y = 2; y < _level.Height - 1; y = y + 4)
+            {
+                AddGroundCellV7(1, y);
+            }
+            for (int y = 4; y < _level.Height - 1; y = y + 4)
+            {
+                AddGroundCellV7(_level.Width - 2, y);
             }
         }
 
-        private void BuildWall()
+        private void AddGroundCellV7(int x, int y)
         {
-            for (int x = 0; x < _level.Width; x++)
-            {
-                for (int y = 0; y < _level.Height; y++)
-                {
-                    var cell = new Wall(x, y, _level);
+            var wallToRemove = _level.Cells.First(cell => cell.CoordinateX == x && cell.CoordinateY == y);
+            var ground = new Ground(x, y, _level);
 
-                    _level.Cells.Add(cell);
-                }
-            }
+            _level.Cells.Remove(wallToRemove);
+            _level.Cells.Add(ground);
         }
 
         private List<Ground> BuildGroundTask16()
@@ -215,54 +235,6 @@ namespace Maze.LevelStaff
             return grounds;
         }
 
-        private void AddGroundCellV7(int x, int y)
-        {
-            var wallToRemove = _level.Cells.First(cell => cell.CoordinateX == x && cell.CoordinateY == y);
-            var ground = new Ground(x, y, _level);
-
-            _level.Cells.Remove(wallToRemove);
-            _level.Cells.Add(ground);
-        }
-
-        private void BuildGroundRandomV7()
-        {
-            for (int y = 1; y < _level.Height - 1; y = y + 2)
-            {
-                for (int x = 1; x < _level.Width - 1; x++)
-                {
-                    AddGroundCellV7(x, y);
-                }
-            }
-            for (int y = 2; y < _level.Height - 1; y = y + 4)
-            {
-                AddGroundCellV7(1, y);
-            }
-            for (int y = 4; y < _level.Height - 1; y = y + 4)
-            {
-                AddGroundCellV7(_level.Width - 2, y);
-            }
-        }
-
-        private void AddBerriesV7(int numberOfBerries)
-        {
-            int berriesAdded = 0;
-            while (berriesAdded < numberOfBerries)
-            {
-                var randomX = _random.Next(_level.Width);
-                var randomY = _random.Next(_level.Height);
-                var cellToRemove = _level.Cells.First(cell => cell.CoordinateX == randomX && cell.CoordinateY == randomY);
-                if (cellToRemove.Symbol == ".")
-                {
-                    var berry = new Berry(randomX, randomY, _level);
-
-                    _level.Cells.Remove(cellToRemove);
-                    _level.Cells.Add(berry);
-                    berriesAdded++;
-                }
-            }
-
-        }
-
         private void BuildGroundV18()
         {
             for (int y = 0; y < _level.Height; y++)
@@ -288,6 +260,25 @@ namespace Maze.LevelStaff
             }
         }
 
+        private void BuildRing()
+        {
+            var corX = 0;
+            var corY = 0;
+
+            for (int j = 0; j < 5; j++)
+            {
+                var randomWall = _level.Cells.First(x => x.CoordinateX == corX && x.CoordinateY == corY);
+                var ring = new Ring(corX, corY, _level);
+
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(ring);
+
+                corX += 2;
+                corY += 1;
+            }
+
+        }
+
         private void BuildCage()
         {
             var cells = _level.Cells.Where(c => c.Symbol == "." && (c.CoordinateX == _level.Width - 1 || c.CoordinateX == 0)).ToList();
@@ -299,6 +290,41 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(cage);
             }
 
+        }
+
+        private void AddBerriesV7(int numberOfBerries)
+        {
+            int berriesAdded = 0;
+            while (berriesAdded < numberOfBerries)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
+                var cellToRemove = _level.Cells.First(cell => cell.CoordinateX == randomX && cell.CoordinateY == randomY);
+                if (cellToRemove.Symbol == ".")
+                {
+                    var berry = new Berry(randomX, randomY, _level);
+
+                    _level.Cells.Remove(cellToRemove);
+                    _level.Cells.Add(berry);
+                    berriesAdded++;
+                }
+            }
+
+        }
+
+        private void BuildMoonV26()
+        {
+            var radius = Math.Min(_level.Width, _level.Height) / 2;
+            for (int i = -radius; i < radius; i++)
+            {
+                int X = _level.Width / 2;
+                int Y = _level.Height / 2 + i;
+                X += (int)Math.Sqrt(Math.Pow(radius, 2) - Math.Pow(i, 2));
+                var randomWall = _level.Cells.First(x => x.CoordinateX == X && x.CoordinateY == Y);
+                var moon = new Moon(X, Y, _level);
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(moon);
+            }
         }
 
         private void BuildCoin(int coinCount)
@@ -373,6 +399,32 @@ namespace Maze.LevelStaff
             }
         }
 
+        private void BuildSecret(int numberOfSecrets, params BaseCell[] cellsForSecret)
+        {
+            for (int i = 0; i < numberOfSecrets; i++)
+            {
+                var randomX = _random.Next(1, _level.Width - 1);
+                var randomY = _random.Next(1, _level.Height - 1);
+                Point position = new Point(randomX, randomY);
+                Secret secret = AddSecret(position, ConsoleColor.DarkMagenta, cellsForSecret);
+
+                Point startPathPosition = new Point(_level.Width / 2, _level.Height / 2);
+                Point endPathPosition = new Point(secret.CoordinateX, secret.CoordinateY);
+                BuildPaths(startPathPosition, endPathPosition);
+            }
+        }
+
+        private Secret AddSecret(Point position, ConsoleColor color, params BaseCell[] cellsForSecret)
+        {
+            var oldCell = _level.Cells.First(x => x.CoordinateX == position.X && x.CoordinateY == position.Y);
+            var secret = new Secret(position.X, position.Y, _level, color, cellsForSecret);
+
+            _level.Cells.Remove(oldCell);
+            _level.Cells.Add(secret);
+
+            return secret;
+        }
+
         private void BuildHero()
         {
             var ground = _level.Cells.First(x => x is Ground);
@@ -382,5 +434,50 @@ namespace Maze.LevelStaff
             _level.Hero = hero;
         }
 
+        private void BuildPaths(Point startPosition, Point endPosition)
+        {
+            ChangeWallCell(startPosition, new Ground(startPosition.X, startPosition.Y, _level));
+
+            int direction = 0;
+            if ((direction = GetDirection(startPosition.X, endPosition.X)) != 0)
+            {
+                startPosition.X += direction;
+                BuildPaths(startPosition, endPosition);
+                return;
+            }
+
+            if ((direction = GetDirection(startPosition.Y, endPosition.Y)) != 0)
+            {
+                startPosition.Y += direction;
+                BuildPaths(startPosition, endPosition);
+                return;
+            }
+        }
+
+        private void ChangeWallCell(Point position, BaseCell newCell)
+        {
+            var wallCell = _level.Cells.SingleOrDefault(x => x.CoordinateX == position.X && x.CoordinateY == position.Y && x is Wall);
+
+            if (wallCell != null)
+            {
+                _level.Cells.Remove(wallCell);
+                _level.Cells.Add(newCell);
+            }
+        }
+
+        private int GetDirection(int startPosition, int endPosition)
+        {
+            if (startPosition < endPosition)
+            {
+                return 1;
+            }
+
+            if (startPosition > endPosition)
+            {
+                return -1;
+            }
+
+            return 0;
+        }
     }
 }
