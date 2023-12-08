@@ -15,7 +15,11 @@ namespace Maze.LevelStaff
 
             Console.ReadLine();
         }
-
+        /// <summary>
+        /// Вы можете указать символ и цвет, который будет закреплен за этим символом
+        /// Примечание: при использовании этого метода не нужно изменять саму структуру ячеек
+        /// </summary>
+        /// <param name="cell"></param>
         public void ColorDetectionBySymbol(Cells.BaseCell cell)
         {
 
@@ -25,12 +29,12 @@ namespace Maze.LevelStaff
                     Console.ForegroundColor = ConsoleColor.DarkBlue;
                     break;
                 case "#":
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.ForegroundColor = ConsoleColor.White;
                     break;
                 case ".":
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     break;
-
+               
                 default:
                     Console.ResetColor();
                     break;
