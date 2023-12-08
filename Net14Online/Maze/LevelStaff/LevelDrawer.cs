@@ -12,11 +12,6 @@
 
             Console.ReadLine();
         }
-        public void ReadColor(Level level)
-        {
-           
-
-            Console.ReadLine();
-        }
+       
     }
 }
