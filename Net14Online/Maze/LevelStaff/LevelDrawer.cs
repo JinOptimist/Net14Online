@@ -24,6 +24,12 @@ namespace Maze.LevelStaff
                 case "O":
                     Console.ForegroundColor = ConsoleColor.DarkBlue;
                     break;
+                case "#":
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    break;
+                case ".":
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    break;
 
                 default:
                     Console.ResetColor();
