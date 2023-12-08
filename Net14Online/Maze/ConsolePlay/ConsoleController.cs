@@ -10,9 +10,11 @@ namespace Maze.ConsolePlay
         {
             var builder = new LevelBuilder();
             var drawer = new LevelDrawer();
+            var drawerStatistics = new DrawerStatistics();
 
             _level = builder.BuildV0(30, 20);
             drawer.Draw(_level);
+            drawerStatistics.DrawerStatisticsHero(_level.Hero);
 
             var isGameOver = false;
             while (!isGameOver)
@@ -41,6 +43,7 @@ namespace Maze.ConsolePlay
                         break;
                 }
                 drawer.Draw(_level);
+               drawerStatistics.DrawerStatisticsHero(_level.Hero);
             }
         }
 
