@@ -1,6 +1,4 @@
-﻿using Maze.Cells.Creatures;
-
-namespace Maze.LevelStaff
+﻿namespace Maze.LevelStaff
 {
     public class LevelDrawer
     {

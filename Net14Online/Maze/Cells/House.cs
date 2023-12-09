@@ -1,6 +1,5 @@
 ﻿using Maze.Cells.Creatures;
 using Maze.LevelStaff;
-using System.Reflection.Emit;
 
 namespace Maze.Cells
 {
