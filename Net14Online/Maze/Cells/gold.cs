@@ -1,7 +1,9 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Cells.Creatures;
+using Maze.LevelStaff;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +11,7 @@ namespace Maze.Cells
 {
      public  class Gold : BaseCell
     {
+
         private Gold goldx;
         private Gold goldy;
         private Level level;
@@ -20,5 +23,10 @@ namespace Maze.Cells
 
 
         public override string Symbol => "+";
+
+        public override bool Step(BaseCreature creature)
+        {
+            return true;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Maze.Cells;
+using Maze.Cells.Creatures;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
@@ -30,9 +31,16 @@ namespace Maze.LevelStaff
             BuildWall();
             BuildGroundRandom();
             BildGoldMyRandom();
+            BuilHeroRandom();
             return _level;
         }
+        private void BuilHeroRandom() 
+        { 
+            var cell = _level.Cells.First (x =>x is Gold);
+            var hero  = new Hero (cell.CoordinateX,cell.CoordinateY,_level);
+            _level.Hero = hero;
 
+        }
 
         private void BuildGroundRandom()
         {
@@ -74,9 +82,9 @@ namespace Maze.LevelStaff
         {
             var goldx = _level.Height;
             var goldy = _level.Width;
-            for (var i = 1; i < goldx-1 ; i=i+5)
+            for (var i = 1; i < goldx - 1; i = i + 4)
             {
-                for (var j = 1; j < goldy-1 ; j++)
+                for (var j = 1; j < goldy - 1; j++)
                 {
                     GetPrint(i, j);
                 }
