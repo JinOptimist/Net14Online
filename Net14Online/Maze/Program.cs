@@ -1,9 +1,8 @@
 ﻿using Maze.ConsolePlay;
 using Maze.LevelStaff;
-using System.Reflection.Metadata.Ecma335;
 
 var builder = new LevelBuilder();
-var level = builder.BuildV0(10,10);
+var level = builder.BuildV0(15,15);
 
 // player push the button
 var consoleController = new ConsoleController();

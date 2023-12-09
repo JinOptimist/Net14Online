@@ -3,13 +3,12 @@ using Maze.LevelStaff;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Maze.Cells
 {
-     public  class Gold : BaseCell
+    public  class Gold : BaseCell
     {
 
         private Gold goldx;
@@ -20,7 +19,6 @@ namespace Maze.Cells
         {
 
         }
-
 
         public override string Symbol => "+";
 
