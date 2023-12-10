@@ -17,6 +17,9 @@ namespace Maze.LevelStaff
             ColorDetectionBySymbol(level.Hero);
             Console.Write(level.Hero.Symbol);
 
+            PrintHP(level.Hero.Hp, 10);
+            Console.CursorVisible = false;
+
             //Console.ReadLine();
         }
         /// <summary>
@@ -45,12 +48,33 @@ namespace Maze.LevelStaff
                 default:
                     Console.ResetColor();
                     break;
+            }          
+        }
+        public void PrintHP(int value, int maxValue)
+        {
+            ConsoleColor defaultColor = Console.BackgroundColor;
+
+            string bar = "";
+
+            for (int i = 0; i < value; i++)
+            {
+                bar += " ";
             }
-        
 
-        
+            Console.SetCursorPosition(0, 20);
+            Console.Write('[');
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.Write(bar);
+            Console.BackgroundColor = defaultColor;
 
-            
+
+            bar = "";
+
+            for (int i = value; i < maxValue; i++)
+            {
+                bar += " ";
+            }
+            Console.Write(bar + ']');
         }
     }
 }
