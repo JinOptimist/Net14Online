@@ -94,18 +94,7 @@ namespace Maze.LevelStaff
                 {
                     GetPrint(j, i);
                 }
-
             }
-            
-             
-
-            
-            
-            
-
-
-
-
         }
     }
 }
