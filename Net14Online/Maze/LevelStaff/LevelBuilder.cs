@@ -9,7 +9,7 @@ namespace Maze.LevelStaff
         private Level _level;
         private Random _random;
 
-        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3)
+        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5)
         {
             if (seedForRandom > 0)
             {
@@ -34,8 +34,8 @@ namespace Maze.LevelStaff
             BuildMoonV26();
             AddBerriesV7(berriesCount);
             BuildCage();
-
             BuildHero();
+            BuildTrapRandom(trapsCount);
 
             return _level;
         }
