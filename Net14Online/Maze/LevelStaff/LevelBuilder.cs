@@ -380,11 +380,7 @@ namespace Maze.LevelStaff
             var hero = new Hero(ground.CoordinateX, ground.CoordinateY, _level);
 
             _level.Hero = hero;
-        }
-
-            }
-        }
-
+        } 
         private void BuildTrapRandom(int trapsCount)
         {
             for (int i = 0; i < trapsCount; i++)
