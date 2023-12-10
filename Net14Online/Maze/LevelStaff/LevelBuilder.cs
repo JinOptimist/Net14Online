@@ -32,10 +32,10 @@ namespace Maze.LevelStaff
             BuilHeroRandom();
             return _level;
         }
-        private void BuilHeroRandom() 
-        { 
-            var cell = _level.Cells.First (x =>x is Gold);
-            var hero  = new Hero (cell.CoordinateX,cell.CoordinateY,_level);
+        private void BuilHeroRandom()
+        {
+            var cell = _level.Cells.First(x => x is Gold);
+            var hero = new Hero(cell.CoordinateX, cell.CoordinateY, _level);
             _level.Hero = hero;
 
         }
@@ -96,21 +96,19 @@ namespace Maze.LevelStaff
                 }
 
             }
+            
+             
 
-        }
-        private void BuildTrapRandom(int trapsCount)
-        {
-            for (int i = 0; i < trapsCount; i++)
-            {
-                var randomX = _random.Next(_level.Width);
-                var randomY = _random.Next(_level.Height);
+            
+            
+            
 
-                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
-                var trap = new Trap(randomX, randomY, _level);
 
-                _level.Cells.Remove(randomWall);
-                _level.Cells.Add(trap);
-            }
+
+
         }
     }
 }
+
+      
+    
