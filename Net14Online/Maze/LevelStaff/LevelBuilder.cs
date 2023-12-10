@@ -23,8 +23,6 @@ namespace Maze.LevelStaff
                 Console.WriteLine("Only number in range 1-3 allowed");
             }
 
-            string name = "Alex";
-
             switch (typeBuilder)
             {
                 case 1:
