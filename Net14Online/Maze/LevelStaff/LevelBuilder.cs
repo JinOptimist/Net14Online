@@ -319,44 +319,42 @@ namespace Maze.LevelStaff
 
         private void BuildDiamond()
         {
-            {
-                var cellPoints = new List<Point>
+
+            var cellPoints = new List<Point>
                     {
                         new Point(1, 1),
                         new Point(1, 2),
                         new Point(4, 1)
                     };
 
-                foreach (var point in cellPoints)
+            foreach (var point in cellPoints)
+            {
+                int[] moveX = { 0, 1, 1 };
+                int[] moveY = { 1, 0, 3 };
+
+                foreach (int x in moveX)
                 {
-                    int[] moveX = { 0, 1, 1 };
-                    int[] moveY = { 1, 0, 3 };
-
-                    foreach (int x in moveX)
+                    foreach (int y in moveY)
                     {
-                        foreach (int y in moveY)
+                        int newX = point.X + x;
+                        int newY = point.Y + y;
+
+                        var existingCell = _level.Cells.FirstOrDefault(cell => cell.CoordinateX == newX && cell.CoordinateY == newY);
+
+                        if (existingCell != null)
                         {
-                            int newX = point.X + x;
-                            int newY = point.Y + y;
-
-                            var existingCell = _level.Cells.FirstOrDefault(cell => cell.CoordinateX == newX && cell.CoordinateY == newY);
-
-                            if (existingCell != null)
-                            {
-                                var diamond = new Diamond(newX, newY, _level);
-                                _level.Cells.Remove(existingCell);
-                                _level.Cells.Add(diamond);
-                            }
+                            var diamond = new Diamond(newX, newY, _level);
+                            _level.Cells.Remove(existingCell);
+                            _level.Cells.Add(diamond);
                         }
                     }
                 }
             }
         }
-
         /// <summary>
         /// сокровищница на уровне в случайном месте. Предполагатеся что можно будет пробиться к ней через стены
         /// </summary>
-        private void BuildChest() 
+        private void BuildChest()
         {
             var randomX = Math.Abs(_random.Next(_level.Width));
             var randomY = Math.Abs(_random.Next(_level.Height));
@@ -380,7 +378,7 @@ namespace Maze.LevelStaff
             var hero = new Hero(ground.CoordinateX, ground.CoordinateY, _level);
 
             _level.Hero = hero;
-        } 
+        }
         private void BuildTrapRandom(int trapsCount)
         {
             for (int i = 0; i < trapsCount; i++)
@@ -397,3 +395,6 @@ namespace Maze.LevelStaff
         }
     }
 }
+
+      
+    
