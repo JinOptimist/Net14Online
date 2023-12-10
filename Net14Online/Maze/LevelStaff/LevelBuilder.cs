@@ -9,7 +9,7 @@ namespace Maze.LevelStaff
         private Level _level;
         private Random _random;
 
-        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3)
+        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5)
         {
             if (seedForRandom > 0)
             {
@@ -34,8 +34,8 @@ namespace Maze.LevelStaff
             BuildMoonV26();
             AddBerriesV7(berriesCount);
             BuildCage();
-
             BuildHero();
+            BuildTrapRandom(trapsCount);
 
             return _level;
         }
@@ -380,7 +380,20 @@ namespace Maze.LevelStaff
             var hero = new Hero(ground.CoordinateX, ground.CoordinateY, _level);
 
             _level.Hero = hero;
-        }
+        } 
+        private void BuildTrapRandom(int trapsCount)
+        {
+            for (int i = 0; i < trapsCount; i++)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
 
+                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
+                var trap = new Trap(randomX, randomY, _level);
+
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(trap);
+            }
+        }
     }
 }
