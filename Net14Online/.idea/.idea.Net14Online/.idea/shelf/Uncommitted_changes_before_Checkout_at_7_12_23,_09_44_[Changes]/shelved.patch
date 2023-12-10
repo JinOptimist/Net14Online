@@ -1,0 +1,43 @@
+Index: Maze/ConsolePlay/ConsoleController.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using Maze.LevelStaff;\nusing System.Reflection.Emit;\n\nnamespace Maze.ConsolePlay\n{\n    public class ConsoleController\n    {\n        private Level _level;\n        public void Play()\n        {\n            var builder = new LevelBuilder();\n            var drawer = new LevelDrawer();\n\n            _level = builder.BuildV0(12, 7);\n            drawer.Draw(_level);\n\n            var isGameOver = false;\n            while (!isGameOver)\n            {\n                var key = Console.ReadKey();\n                switch (key.Key)\n                {\n                    case ConsoleKey.A:\n                    case ConsoleKey.LeftArrow:\n                        Step(Direction.Left);\n                        break;\n                    case ConsoleKey.D:\n                    case ConsoleKey.RightArrow:\n                        Step(Direction.Right);\n                        break;\n                    case ConsoleKey.W:\n                    case ConsoleKey.UpArrow:\n                        Step(Direction.Up);\n                        break;\n                    case ConsoleKey.S:\n                    case ConsoleKey.DownArrow:\n                        Step(Direction.Down);\n                        break;\n                    case ConsoleKey.Escape:\n                        isGameOver = true;\n                        break;\n                }\n                drawer.Draw(_level);\n            }\n        }\n\n        private void Step(Direction direction)\n        {\n            var destinationX = _level.Hero.CoordinateX;\n            var destinationY = _level.Hero.CoordinateY;\n\n            switch (direction)\n            {\n                case Direction.Left:\n                    destinationX--;\n                    break;\n                case Direction.Right:\n                    destinationX++;\n                    break;\n                case Direction.Up:\n                    destinationY--;\n                    break;\n                case Direction.Down:\n                    destinationY++;\n                    break;\n            }\n\n            var destinationCell = _level.Cells\n                .SingleOrDefault(x => x.CoordinateX == destinationX && x.CoordinateY == destinationY);\n\n            if (destinationCell == null)\n            {\n                return;\n            }\n\n            if (destinationCell.Step(_level.Hero))\n            {\n                _level.Hero.CoordinateX = destinationX;\n                _level.Hero.CoordinateY = destinationY;\n            }\n        }\n    }\n}\n
+===================================================================
+diff --git a/Maze/ConsolePlay/ConsoleController.cs b/Maze/ConsolePlay/ConsoleController.cs
+--- a/Maze/ConsolePlay/ConsoleController.cs	
++++ b/Maze/ConsolePlay/ConsoleController.cs	
+@@ -1,5 +1,6 @@
+ using Maze.LevelStaff;
+ using System.Reflection.Emit;
++using Maze.Cells.Creatures;
+ 
+ namespace Maze.ConsolePlay
+ {
+@@ -10,10 +11,14 @@
+         {
+             var builder = new LevelBuilder();
+             var drawer = new LevelDrawer();
++            var drawerStatisticsHero = new DrawerStatisticsHero();
++
+ 
+             _level = builder.BuildV0(12, 7);
++           
+             drawer.Draw(_level);
+-
++            drawerStatisticsHero.DrawerStatistics(_level.Hero);
++            
+             var isGameOver = false;
+             while (!isGameOver)
+             {
+@@ -39,8 +44,10 @@
+                     case ConsoleKey.Escape:
+                         isGameOver = true;
+                         break;
+-                }
++                } 
++              
+                 drawer.Draw(_level);
++                drawerStatisticsHero.DrawerStatistics(_level.Hero);
+             }
+         }
+ 
