@@ -3,13 +3,14 @@ using Maze.LevelStaff;
 
 namespace Maze.Cells
 {
-    public class Ring : BaseCell
+    public  class Gold : BaseCell
     {
-        public Ring(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Gold(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
         {
+
         }
 
-        public override string Symbol => "o";
+        public override string Symbol => "+";
 
         public override bool Step(BaseCreature creature)
         {

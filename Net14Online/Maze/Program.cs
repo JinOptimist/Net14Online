@@ -1,12 +1,6 @@
-﻿
-using Maze.LevelStaff;
-
-var builder = new LevelBuilder();
-//var level = builder.BuildV0(12, 7);
-var level = builder.BuildV_10(12, 7);
+﻿using Maze.ConsolePlay;
 
 // player push the button
-
-var drawer = new LevelDrawer();
-drawer.Draw(level);
+var consoleController = new ConsoleController();
+consoleController.Play();
 

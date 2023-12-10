@@ -13,7 +13,10 @@ namespace Maze.LevelStaff
                 Console.Write(cell.Symbol);
             }
 
-            Console.ReadLine();
+            Console.SetCursorPosition(level.Hero.CoordinateX, level.Hero.CoordinateY);
+            Console.Write(level.Hero.Symbol);
+
+            //Console.ReadLine();
         }
         /// <summary>
         /// Вы можете указать символ и цвет, который будет закреплен за этим символом

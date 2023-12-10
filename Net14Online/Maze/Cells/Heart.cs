@@ -1,4 +1,5 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Cells.Creatures;
+using Maze.LevelStaff;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,11 @@ namespace Maze.Cells
 
         public Heart(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
         {
+        }
+
+        public override bool Step(BaseCreature creature)
+        {
+            throw new NotImplementedException();
         }
     }
 }
