@@ -4,14 +4,14 @@ namespace Maze.LevelStaff;
 
 public class DrawerStatistics
 {
-    public void DrawerStatisticsHero(BaseCreature baseCreature)
+    public void DrawerStatisticsHero(Level level)
     {
-        Console.SetCursorPosition(0,baseCreature.Level.Height);
+        Console.SetCursorPosition(0,level.Height);
         
-        Console.WriteLine($"HP Hero:{baseCreature.Hp}");
-        Console.WriteLine($"Money Hero:{baseCreature.Money}");
+        Console.WriteLine($"HP Hero:{level.Hero.Hp}");
+        Console.WriteLine($"Money Hero:{level.Hero.Money}");
        
-        Console.SetCursorPosition(baseCreature.Level.Hero.CoordinateX,baseCreature.Level.Hero.CoordinateY);
-        Console.Write(baseCreature.Level.Hero.Symbol);
+        Console.SetCursorPosition(level.Hero.CoordinateX,level.Hero.CoordinateY);
+        Console.Write(level.Hero.Symbol);
     }
 }
