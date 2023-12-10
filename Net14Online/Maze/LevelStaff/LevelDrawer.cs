@@ -14,6 +14,7 @@ namespace Maze.LevelStaff
             }
 
             Console.SetCursorPosition(level.Hero.CoordinateX, level.Hero.CoordinateY);
+            ColorDetectionBySymbol(level.Hero);
             Console.Write(level.Hero.Symbol);
 
             //Console.ReadLine();
@@ -37,7 +38,10 @@ namespace Maze.LevelStaff
                 case ".":
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     break;
-               
+                case "H":
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    break;
+
                 default:
                     Console.ResetColor();
                     break;
