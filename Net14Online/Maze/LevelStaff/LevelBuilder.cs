@@ -38,7 +38,6 @@ namespace Maze.LevelStaff
             var hero = new Hero(cell.CoordinateX, cell.CoordinateY, _level);
             _level.Hero = hero;
 
-        }
 
         private void BuildGroundRandom()
         {
@@ -98,6 +97,3 @@ namespace Maze.LevelStaff
         }
     }
 }
-
-      
-    

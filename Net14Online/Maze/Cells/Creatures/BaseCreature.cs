@@ -9,7 +9,6 @@ namespace Maze.Cells.Creatures
 
         public BaseCreature(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
         {
-          
         }
     }
 }
