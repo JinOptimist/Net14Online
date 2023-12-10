@@ -3,7 +3,7 @@ using Maze.LevelStaff;
 
 namespace Maze.Cells
 {
-    public  class Gold : BaseCell
+    public class Gold : BaseCell
     {
         public Gold(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
         {

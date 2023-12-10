@@ -11,7 +11,7 @@ namespace Maze.ConsolePlay
             var builder = new LevelBuilder();
             var drawer = new LevelDrawer();
 
-            _level = builder.BuildV0(15, 15);
+            _level = builder.BuildV0(16, 16);
             drawer.Draw(_level);
 
             var isGameOver = false;
