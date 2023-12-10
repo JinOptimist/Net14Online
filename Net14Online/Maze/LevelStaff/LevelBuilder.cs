@@ -76,8 +76,8 @@ namespace Maze.LevelStaff
             }
         }
         private void BuildDiamond()
-        {
-            {
+        { 
+        
                 var cellPoints = new List<Point>
                     {
                         new Point(1, 1),
@@ -111,5 +111,5 @@ namespace Maze.LevelStaff
             }
         }
     }
-}
+
 
