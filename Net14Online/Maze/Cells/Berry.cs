@@ -3,16 +3,17 @@ using Maze.LevelStaff;
 
 namespace Maze.Cells
 {
-    public class Ground : BaseCell
+    public class Berry : BaseCell
     {
-        public Ground(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Berry(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
         {
         }
 
-        public override string Symbol => ".";
+        public override string Symbol => "@";
 
         public override bool Step(BaseCreature creature)
         {
+            creature.Hp++;
             return true;
         }
     }

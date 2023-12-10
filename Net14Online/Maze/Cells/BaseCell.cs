@@ -1,4 +1,5 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Cells.Creatures;
+using Maze.LevelStaff;
 
 namespace Maze.Cells
 {
@@ -16,5 +17,7 @@ namespace Maze.Cells
         public Level Level { get; }
 
         public abstract string Symbol { get; }
+
+        public abstract bool Step(BaseCreature creature);
     }
 }

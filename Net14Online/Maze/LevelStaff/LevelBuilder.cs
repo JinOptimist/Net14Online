@@ -1,4 +1,6 @@
 ﻿using Maze.Cells;
+using Maze.Cells.Creatures;
+using System.Drawing;
 
 namespace Maze.LevelStaff
 {
@@ -6,6 +8,7 @@ namespace Maze.LevelStaff
     {
         private Level _level;
         private Random _random;
+        private BaseCell random;
 
        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1)
         {
@@ -25,10 +28,17 @@ namespace Maze.LevelStaff
 
             BuildWall();
             BuildGroundRandom();
-
+            BildGoldMyRandom();
+            BuilHeroRandom();
             return _level;
         }
+        private void BuilHeroRandom()
+        {
+            var cell = _level.Cells.First(x => x is Gold);
+            var hero = new Hero(cell.CoordinateX, cell.CoordinateY, _level);
+            _level.Hero = hero;
 
+<<<<<<< HEAD
         public Level BuildV5(int width = 10, int height = 5, int seedForRandom = -1)
         {
             if (seedForRandom > 0)
@@ -39,6 +49,9 @@ namespace Maze.LevelStaff
             {
                 _random = new Random();
             }
+=======
+        }
+>>>>>>> main
 
             _level = new Level();
             _level.Width = width;
@@ -122,6 +135,35 @@ namespace Maze.LevelStaff
                     var cell = new Wall(x, y, _level);
 
                     _level.Cells.Add(cell);
+                }
+            }
+        }
+
+
+        private void GetPrint(int goldx, int goldy)
+        {
+            var randomgoldx = _level.Cells.First(x => x.CoordinateX == goldx && x.CoordinateY == goldy);
+            var gold = new Gold(goldx, goldy, _level);
+            _level.Cells.Remove(randomgoldx);
+            _level.Cells.Add(gold);
+        }
+        private void BildGoldMyRandom()
+        {
+            var goldx = _level.Height;
+            var goldy = _level.Width;
+            for (var i = 1; i < goldx - 1; i = i + 4)
+            {
+                for (var j = 1; j < goldy - 1; j++)
+                {
+                    GetPrint(i, j);
+                }
+
+            }
+            for (var i = 1; i < goldx - 1; i = i + 4)
+            {
+                for (var j = 1; j < goldy - 1; j++)
+                {
+                    GetPrint(j, i);
                 }
             }
         }
