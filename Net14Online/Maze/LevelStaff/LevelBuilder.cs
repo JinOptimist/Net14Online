@@ -27,19 +27,12 @@ namespace Maze.LevelStaff
 
             BuildWall();
             BuildGroundV18();
-            BuildDiamond();
-            BuildCoin(coinCount);
             BuildRing();
-            BuildChest();
-            BuildMoonV26();
-            AddBerriesV7(berriesCount);
-            BuildCage();
             BuildHero();
-            BuildTrapRandom(trapsCount);
 
             return _level;
         }
-        public Level BuildV11(int width = 10, int height = 5)
+        public Level BuildV11(int width = 20, int height = 10)
         {
 
             _level = new Level();
@@ -103,22 +96,27 @@ namespace Maze.LevelStaff
 
         private void BuildRing()
         {
-            var corX = 0;
-            var corY = 0;
+            var random = new Random();
 
-            for (int j = 0; j < 5; j++)
+            for (int j = 0; j < 10; j++)
             {
-                var randomWall = _level.Cells.First(x => x.CoordinateX == corX && x.CoordinateY == corY);
-                var ring = new Ring(corX, corY, _level);
+                var emptyCells = _level.Cells.Where(cell => cell.Symbol == ".").ToList();
 
-                _level.Cells.Remove(randomWall);
+                if (emptyCells.Count == 0)
+                {
+                    break;
+                }
+
+                var randomEmptyCell = emptyCells[random.Next(emptyCells.Count)];
+
+                // Pass _level to the constructor of Ring
+                var ring = new Ring(randomEmptyCell.CoordinateX, randomEmptyCell.CoordinateY, _level, 1);
+
+                _level.Cells.Remove(randomEmptyCell);
                 _level.Cells.Add(ring);
-
-                corX += 2;
-                corY += 1;
             }
-
         }
+
         private void BuildGroundRandom()
         {
             for (int i = 0; i < 15; i++)
