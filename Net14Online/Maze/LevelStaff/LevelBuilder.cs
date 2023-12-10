@@ -322,9 +322,9 @@ namespace Maze.LevelStaff
 
             var cellPoints = new List<Point>
                     {
-                        new Point(1, 1),
-                        new Point(1, 2),
-                        new Point(4, 1)
+                        new Point(9, 4),
+                        new Point(7, 3),
+                        new Point(10, 6)
                     };
 
             foreach (var point in cellPoints)
