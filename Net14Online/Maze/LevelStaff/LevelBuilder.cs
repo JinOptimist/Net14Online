@@ -88,9 +88,9 @@ namespace Maze.LevelStaff
                 }
 
             }
-            for (var i = 1; i < goldx - 1; i = i + 4)
+            for (var i = 1; i< goldx - 1; i = i + 4)
             {
-                for (var j = 1; j < goldy - 1; j++)
+                for (var j = 1; j< goldy - 1; j++)
                 {
                     GetPrint(j, i);
                 }
