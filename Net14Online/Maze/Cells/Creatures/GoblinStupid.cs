@@ -21,6 +21,11 @@ namespace Maze.Cells.Creatures
 
         public override bool Step(BaseCreature creature)
         {
+            if (creature is GoblinStupid)
+            {
+                return false;
+            }
+
             creature.Hp--;
             return false;
         }

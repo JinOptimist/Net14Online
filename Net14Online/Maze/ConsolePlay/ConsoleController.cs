@@ -44,7 +44,7 @@ namespace Maze.ConsolePlay
                 drawer.Draw(_level);
             }
         }
-
+        
         private void Step(Direction direction)
         {
             var destinationX = _level.Hero.CoordinateX;

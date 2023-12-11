@@ -141,11 +141,9 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            BuildGroundV18();
             BuildRing();
             BuildMoonV26();
 
-            BuildHero();
 
             return _level;
         }
@@ -192,29 +190,47 @@ namespace Maze.LevelStaff
             BuildWall();
             BuildGroundRandomV7();
             AddBerriesV7(3);
-            BuildHero();
 
             return _level;
         }
 
         private void BuildRing()
         {
-            var corX = 0;
-            var corY = 0;
+            var random = new Random();
 
-            for (int j = 0; j < 5; j++)
+            for (int j = 0; j < 10; j++)
             {
-                var randomWall = _level.Cells.First(x => x.CoordinateX == corX && x.CoordinateY == corY);
-                var ring = new Ring(corX, corY, _level);
+                var emptyCells = _level.Cells.Where(cell => cell.Symbol == ".").ToList();
 
-                _level.Cells.Remove(randomWall);
+                if (emptyCells.Count == 0)
+                {
+                    break;
+                }
+
+                var randomEmptyCell = emptyCells[random.Next(emptyCells.Count)];
+
+                // Pass _level to the constructor of Ring
+                var ring = new Ring(randomEmptyCell.CoordinateX, randomEmptyCell.CoordinateY, _level, 1);
+
+                _level.Cells.Remove(randomEmptyCell);
                 _level.Cells.Add(ring);
-
-                corX += 2;
-                corY += 1;
             }
         }
 
+        private void BuildGroundRandom()
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
+
+                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
+                var ground = new Ground(randomX, randomY, _level);
+
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(ground);
+            }
+        }
 
         private void BuildSun(int SunCount)
         {
@@ -425,9 +441,9 @@ namespace Maze.LevelStaff
 
             var cellPoints = new List<Point>
                     {
-                        new Point(9, 4),
-                        new Point(7, 3),
-                        new Point(10, 6)
+                        new Point(1, 1),
+                        new Point(1, 2),
+                        new Point(4, 1)
                     };
 
             foreach (var point in cellPoints)
