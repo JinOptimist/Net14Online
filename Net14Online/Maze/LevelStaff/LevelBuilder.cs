@@ -117,6 +117,7 @@ namespace Maze.LevelStaff
                 corX += 2;
                 corY += 1;
             }
+        }
         public Level BuildV5(int width = 10, int height = 5, int seedForRandom = -1)
         {
             if (seedForRandom > 0)
@@ -186,7 +187,7 @@ namespace Maze.LevelStaff
 
             //не знаю почему не соединяет данные точки землёй
         }
-        }
+        
         private void BuildGroundRandom()
         {
             for (int i = 0; i < 15; i++)
