@@ -1,5 +1,6 @@
-﻿using Maze.LevelStaff;
-using System.Reflection.Emit;
+﻿using Maze.Cells;
+using Maze.Cells.Creatures;
+using Maze.LevelStaff;
 
 namespace Maze.ConsolePlay
 {
@@ -68,17 +69,27 @@ namespace Maze.ConsolePlay
             var destinationCell = _level.Cells
                 .SingleOrDefault(x => x.CoordinateX == destinationX && x.CoordinateY == destinationY);
 
+            MoveCreature(_level.Hero, destinationCell);
+
+            foreach (var creature in _level.Creatures)
+            {
+                var cell = creature.ChooseCellToStep();
+                MoveCreature(creature, cell);
+            }
+        }
+
+        private void MoveCreature(BaseCreature creature, BaseCell destinationCell)
+        {
             if (destinationCell == null)
             {
                 return;
             }
 
-            if (destinationCell.Step(_level.Hero))
+            if (destinationCell.Step(creature))
             {
-                _level.Hero.CoordinateX = destinationX;
-                _level.Hero.CoordinateY = destinationY;
+                creature.CoordinateX = destinationCell.CoordinateX;
+                creature.CoordinateY = destinationCell.CoordinateY;
             }
-            
         }
     }
 }

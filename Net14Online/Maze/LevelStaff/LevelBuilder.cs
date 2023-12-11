@@ -8,6 +8,7 @@ namespace Maze.LevelStaff
     {
         private Level _level;
         private Random _random;
+        private const bool SHOW_MAZE_GENERATION_SLOWLY = false;
 
         public Level ChoiseLevelBuilder()
         {
@@ -22,6 +23,8 @@ namespace Maze.LevelStaff
             {
                 Console.WriteLine("Only number in range 1-3 allowed");
             }
+
+            Console.Clear();
 
             switch (typeBuilder)
             {
@@ -43,8 +46,14 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-       
-        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5, int SunCount = 2)
+
+        public Level BuildV0(int width = 10,
+            int height = 5,
+            int seedForRandom = -1,
+            int coinCount = 2,
+            int berriesCount = 3,
+            int trapsCount = 5,
+            int sunCount = 2)
         {
             if (seedForRandom > 0)
             {
@@ -61,20 +70,68 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            BuildGroundV18();
+            BuildGroundSmart();
             BuildDiamond();
             BuildCoin(coinCount);
-            BuildRing();
-            BuildChest();
+            //BuildRing();
+            //BuildChest();
             BuildMoonV26();
             AddBerriesV7(berriesCount);
             BuildCage();
-            BuildHero();
             BuildTrapRandom(trapsCount);
-            BuildSun(SunCount);
+            BuildSun(sunCount);
+
+            //Generate creature
+            BuildHero();
+            BuildGoblinStupid(coinCount);
 
             return _level;
         }
+
+        private void BuildGoblinStupid(int goblinCount)
+        {
+            for (int i = 0; i < goblinCount; i++)
+            {
+                var coins = _level.Cells.OfType<Coin>().ToList();
+                var randomIndex = _random.Next(coins.Count);
+                var coin = coins[randomIndex];
+                var goblin = new GoblinStupid(coin.CoordinateX, coin.CoordinateY, _level);
+                _level.Creatures.Add(goblin);
+            }
+        }
+
+        private void BuildGroundSmart()
+        {
+            var markToDestroy = new List<BaseCell>();
+
+            var randomIndex = _random.Next(_level.Cells.Count);
+            var randomWall = _level.Cells[randomIndex];
+            markToDestroy.Add(randomWall);
+
+            while (markToDestroy.Any())
+            {
+                if (SHOW_MAZE_GENERATION_SLOWLY)
+                {
+                    var drawer = new LevelDrawer();
+                    drawer.Draw(_level);
+                    Thread.Sleep(200);
+                }
+
+                randomIndex = _random.Next(markToDestroy.Count);
+                randomWall = markToDestroy[randomIndex];
+
+                _level.ReplaceToGround(randomWall);
+                markToDestroy.Remove(randomWall);
+
+                var nearest = _level.GetNearCells<Wall>(randomWall);
+                markToDestroy.AddRange(nearest);
+
+                markToDestroy = markToDestroy
+                    .Where(cell => _level.GetNearCells<Ground>(cell).Count() < 2)
+                    .ToList();
+            }
+        }
+
         public Level BuildV11(int width = 10, int height = 5)
         {
 
@@ -157,7 +214,7 @@ namespace Maze.LevelStaff
                 corY += 1;
             }
         }
-   
+
 
         private void BuildSun(int SunCount)
         {
@@ -178,7 +235,7 @@ namespace Maze.LevelStaff
                 }
             }
         }
-        
+
         private void BuildGroundV2()
         {
             var points = new List<Point>();
@@ -442,5 +499,5 @@ namespace Maze.LevelStaff
     }
 }
 
-      
-    
+
+

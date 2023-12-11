@@ -10,8 +10,18 @@
                 Console.Write(cell.Symbol);
             }
 
-            Console.SetCursorPosition(level.Hero.CoordinateX, level.Hero.CoordinateY);
-            Console.Write(level.Hero.Symbol);
+            foreach (var creature in level.Creatures)
+            {
+                Console.SetCursorPosition(creature.CoordinateX, creature.CoordinateY);
+                Console.Write(creature.Symbol);
+            }
+
+            if (level.Hero != null)
+            {
+                Console.SetCursorPosition(level.Hero.CoordinateX, level.Hero.CoordinateY);
+                Console.Write(level.Hero.Symbol);
+            }
+
 
             //Console.ReadLine();
         }
