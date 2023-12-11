@@ -139,7 +139,6 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-<<<<<<<<< Temporary merge branch 1
         private void BuildSunS()
         {
 
