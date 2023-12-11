@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace Maze.Cells
 {
-    public class Heart : BaseCell
+    internal class Sun : BaseCell
     {
-        public override string Symbol => "♥";
-
-        public Heart(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Sun(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
         {
         }
 
+        public override string Symbol => "*";
+
         public override bool Step(BaseCreature creature)
         {
-            creature.Hp++;
+            creature.Money += 5;
             return true;
         }
     }

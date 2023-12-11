@@ -1,4 +1,5 @@
 ﻿using Maze.Cells;
+using Maze.Cells.Creatures;
 using System.Drawing;
 
 namespace Maze.LevelStaff
@@ -8,7 +9,42 @@ namespace Maze.LevelStaff
         private Level _level;
         private Random _random;
 
-        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2)
+        public Level ChoiseLevelBuilder()
+        {
+            int typeBuilder;
+            Console.WriteLine("Choise Level Builder");
+
+            Console.WriteLine("1 - Base level Buildev0");
+            Console.WriteLine("2 - Base level Buildev11");
+            Console.WriteLine("3 - Base level Buildev7");
+
+            while (!int.TryParse(Console.ReadLine(), out typeBuilder))
+            {
+                Console.WriteLine("Only number in range 1-3 allowed");
+            }
+
+            switch (typeBuilder)
+            {
+                case 1:
+                    _level = BuildV0(40, 30);
+                    break;
+                case 2:
+                    _level = BuildV11(30, 20);
+                    break;
+                case 3:
+                    _level = BuildV7(30, 20);
+                    break;
+                default:
+                    _level = BuildV0(30, 20);
+                    break;
+            }
+
+
+            return _level;
+        }
+
+       
+        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5, int SunCount = 2)
         {
             if (seedForRandom > 0)
             {
@@ -25,11 +61,17 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            BuildGroundV2();
+            BuildGroundV18();
             BuildDiamond();
-            BuildGroundRandom();
-            BuildPit(_level);
             BuildCoin(coinCount);
+            BuildRing();
+            BuildChest();
+            BuildMoonV26();
+            AddBerriesV7(berriesCount);
+            BuildCage();
+            BuildHero();
+            BuildTrapRandom(trapsCount);
+            BuildSun(SunCount);
 
             return _level;
         }
@@ -42,9 +84,11 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
+            BuildGroundV18();
             BuildRing();
             BuildMoonV26();
 
+            BuildHero();
 
             return _level;
         }
@@ -160,6 +204,7 @@ namespace Maze.LevelStaff
             BuildWall();
             BuildGroundRandomV7();
             AddBerriesV7(3);
+            BuildHero();
 
             return _level;
         }
@@ -172,30 +217,37 @@ namespace Maze.LevelStaff
             for (int j = 0; j < 5; j++)
             {
                 var randomWall = _level.Cells.First(x => x.CoordinateX == corX && x.CoordinateY == corY);
-                var ground = new Ring(corX, corY, _level);
+                var ring = new Ring(corX, corY, _level);
 
                 _level.Cells.Remove(randomWall);
-                _level.Cells.Add(ground);
+                _level.Cells.Add(ring);
 
                 corX += 2;
                 corY += 1;
             }
-
         }
-        private void BuildGroundRandom()
+   
+
+        private void BuildSun(int SunCount)
         {
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < SunCount; i++)
             {
-                var randomX = _random.Next(_level.Width);
-                var randomY = _random.Next(_level.Height);
+                var groundCells = _level.Cells.Where(cell => cell is Ground).ToList();
 
-                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
-                var ground = new Ground(randomX, randomY, _level);
+                if (groundCells.Count > 0)
+                {
 
-                _level.Cells.Remove(randomWall);
-                _level.Cells.Add(ground);
+                    var randomGroundIndex = _random.Next(groundCells.Count);
+                    var randomGround = groundCells[randomGroundIndex];
+
+
+                    var sun = new Sun(randomGround.CoordinateX, randomGround.CoordinateY, _level);
+                    _level.Cells.Remove(randomGround);
+                    _level.Cells.Add(sun);
+                }
             }
         }
+        
         private void BuildGroundV2()
         {
             var points = new List<Point>();
@@ -239,6 +291,44 @@ namespace Maze.LevelStaff
             }
         }
 
+        private List<Ground> BuildGroundTask16()
+        {
+            var startX = 0;
+            var startY = _random.Next(_level.Height);
+            List<Ground> grounds = new List<Ground>();
+
+            do
+            {
+                int randY;
+                if (startY > 0 && startY <= _level.Height)
+                {
+                    randY = _random.Next(-1, 2);
+                    startY = startY + randY;
+                }
+                if (startY == _level.Height)
+                {
+                    randY = 1;
+                    startY = startY - randY;
+                }
+                if (startY == 0)
+                {
+                    randY = 1;
+                    startY = startY + randY;
+                }
+
+                var randomWall = _level.Cells.First(x => x.CoordinateX == startX && x.CoordinateY == startY);
+                var ground = new Ground(startX, startY, _level);
+
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(ground);
+
+                grounds.Add(ground);
+                startX++;
+            }
+            while (startX < _level.Width);
+
+            return grounds;
+        }
 
         private void AddGroundCellV7(int x, int y)
         {
@@ -344,40 +434,42 @@ namespace Maze.LevelStaff
 
         private void BuildDiamond()
         {
-            {
-                var cellPoints = new List<Point>
+
+            var cellPoints = new List<Point>
                     {
-                        new Point(1, 1),
-                        new Point(1, 2),
-                        new Point(4, 1)
+                        new Point(9, 4),
+                        new Point(7, 3),
+                        new Point(10, 6)
                     };
 
-                foreach (var point in cellPoints)
+            foreach (var point in cellPoints)
+            {
+                int[] moveX = { 0, 1, 1 };
+                int[] moveY = { 1, 0, 3 };
+
+                foreach (int x in moveX)
                 {
-                    int[] moveX = { 0, 1, 1 };
-                    int[] moveY = { 1, 0, 3 };
-
-                    foreach (int x in moveX)
+                    foreach (int y in moveY)
                     {
-                        foreach (int y in moveY)
+                        int newX = point.X + x;
+                        int newY = point.Y + y;
+
+                        var existingCell = _level.Cells.FirstOrDefault(cell => cell.CoordinateX == newX && cell.CoordinateY == newY);
+
+                        if (existingCell != null)
                         {
-                            int newX = point.X + x;
-                            int newY = point.Y + y;
-
-                            var existingCell = _level.Cells.FirstOrDefault(cell => cell.CoordinateX == newX && cell.CoordinateY == newY);
-
-                            if (existingCell != null)
-                            {
-                                var diamond = new Diamond(newX, newY, _level);
-                                _level.Cells.Remove(existingCell);
-                                _level.Cells.Add(diamond);
-                            }
+                            var diamond = new Diamond(newX, newY, _level);
+                            _level.Cells.Remove(existingCell);
+                            _level.Cells.Add(diamond);
                         }
                     }
                 }
             }
         }
-        private void BuildChest() //сокровищница на уровне в случайном месте. Предполагатеся что можно будет пробиться к ней через стены
+        /// <summary>
+        /// сокровищница на уровне в случайном месте. Предполагатеся что можно будет пробиться к ней через стены
+        /// </summary>
+        private void BuildChest()
         {
             var randomX = Math.Abs(_random.Next(_level.Width));
             var randomY = Math.Abs(_random.Next(_level.Height));
@@ -393,51 +485,8 @@ namespace Maze.LevelStaff
                 }
             }
         }
-
-        private void BuildPit(Level level)
-        {
-            var grounds = level.Cells.Where(x => x.Symbol == ".").ToList(); // Where(x => x is Ground)
-
-            var pitCount = _random.Next(grounds.Count / 2);
-
-            for (int i = 0; i < pitCount; i++)
-            {
-                var randomGroundIndex = _random.Next(grounds.Count);
-                var ground = grounds[randomGroundIndex];
-
-                var pit = new Pit(ground.CoordinateX, ground.CoordinateY, level);
-
-                level.Cells.Remove(ground);
-                level.Cells.Add(pit);
-            }
-        }
-
-        private void SetStartAndFinish(Level level)
-        {
-            var startCoordinateX = 0;
-            var startCoordinateY = _random.Next(level.Height);
-
-            var finishCoordinateX = level.Width - 1;
-            var finishCoordinateY = _random.Next(level.Height);
-
-            var start = new Ground(startCoordinateX, startCoordinateY, level);
-            var finish = new Ground(finishCoordinateX, finishCoordinateY, level);
-
-            var startCell = level.Cells.FirstOrDefault(cell => cell.CoordinateX == startCoordinateX && cell.CoordinateY == startCoordinateY);
-            if (startCell == null)
-            {
-
-            }
-            level.Cells.Remove(startCell);
-            level.Cells.Add(start);
-
-            var finishCell = level.Cells.FirstOrDefault(cell => cell.CoordinateX == finish.CoordinateX && cell.CoordinateY == finish.CoordinateY);
-            if (finishCell == null)
-            {
-
-            }
-            level.Cells.Remove(finishCell);
-            level.Cells.Add(finish);
-        }
     }
 }
+
+      
+    
