@@ -69,8 +69,8 @@ namespace Maze.LevelStaff
             BuildMoonV26();
             AddBerriesV7(berriesCount);
             BuildCage();
-            BuildHero();
-            BuildTrapRandom(trapsCount);
+            //BuildHero();
+            //BuildTrapRandom(trapsCount);
             BuildSun(SunCount);
 
             return _level;
@@ -88,7 +88,7 @@ namespace Maze.LevelStaff
             BuildRing();
             BuildMoonV26();
 
-            BuildHero();
+            //BuildHero();
 
             return _level;
         }
@@ -102,7 +102,6 @@ namespace Maze.LevelStaff
                 Width = width
             };
             BuildWall();
-            SetStartAndFinish(_level);
             var start = _level.Cells.SingleOrDefault(x=> x is Ground && x.CoordinateX == 0);
             var finish = _level.Cells.SingleOrDefault(x=> x is Ground && x.CoordinateX == _level.Width - 1);
             
@@ -204,7 +203,7 @@ namespace Maze.LevelStaff
             BuildWall();
             BuildGroundRandomV7();
             AddBerriesV7(3);
-            BuildHero();
+            //BuildHero();
 
             return _level;
         }
