@@ -27,7 +27,7 @@ namespace Maze.LevelStaff
 
             BuildWall();
             BuildGroundV18();
-            BuildGroundOnBorder();
+            BuildV25();
 
             BuildDiamond();
             BuildCoin(coinCount);
@@ -50,7 +50,7 @@ namespace Maze.LevelStaff
             }
         }
         
-        private void BuildGroundOnBorder()
+        private void BuildV25()
         {
 
             for (int i = 0; i < _level.Width; i++)
