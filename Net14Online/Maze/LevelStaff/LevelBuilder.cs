@@ -9,42 +9,7 @@ namespace Maze.LevelStaff
         private Level _level;
         private Random _random;
 
-        public Level ChoiseLevelBuilder()
-        {
-            int typeBuilder;
-            Console.WriteLine("Choise Level Builder");
-
-            Console.WriteLine("1 - Base level Buildev0");
-            Console.WriteLine("2 - Base level Buildev11");
-            Console.WriteLine("3 - Base level Buildev7");
-
-            while (!int.TryParse(Console.ReadLine(), out typeBuilder))
-            {
-                Console.WriteLine("Only number in range 1-3 allowed");
-            }
-
-            switch (typeBuilder)
-            {
-                case 1:
-                    _level = BuildV0(40, 30);
-                    break;
-                case 2:
-                    _level = BuildV11(30, 20);
-                    break;
-                case 3:
-                    _level = BuildV7(30, 20);
-                    break;
-                default:
-                    _level = BuildV0(30, 20);
-                    break;
-            }
-
-
-            return _level;
-        }
-
-       
-        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5, int SunCount = 2)
+        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5)
         {
             if (seedForRandom > 0)
             {
@@ -62,20 +27,12 @@ namespace Maze.LevelStaff
 
             BuildWall();
             BuildGroundV18();
-            BuildDiamond();
-            BuildCoin(coinCount);
             BuildRing();
-            BuildChest();
-            BuildMoonV26();
-            AddBerriesV7(berriesCount);
-            BuildCage();
             BuildHero();
-            BuildTrapRandom(trapsCount);
-            BuildSun(SunCount);
 
             return _level;
         }
-        public Level BuildV11(int width = 10, int height = 5)
+        public Level BuildV11(int width = 20, int height = 10)
         {
 
             _level = new Level();
@@ -84,11 +41,9 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            BuildGroundV18();
             BuildRing();
             BuildMoonV26();
 
-            BuildHero();
 
             return _level;
         }
@@ -135,50 +90,47 @@ namespace Maze.LevelStaff
             BuildWall();
             BuildGroundRandomV7();
             AddBerriesV7(3);
-            BuildHero();
 
             return _level;
         }
 
         private void BuildRing()
         {
-            var corX = 0;
-            var corY = 0;
+            var random = new Random();
 
-            for (int j = 0; j < 5; j++)
+            for (int j = 0; j < 10; j++)
             {
-                var randomWall = _level.Cells.First(x => x.CoordinateX == corX && x.CoordinateY == corY);
-                var ring = new Ring(corX, corY, _level);
+                var emptyCells = _level.Cells.Where(cell => cell.Symbol == ".").ToList();
+
+                if (emptyCells.Count == 0)
+                {
+                    break;
+                }
+
+                var randomEmptyCell = emptyCells[random.Next(emptyCells.Count)];
+
+                // Pass _level to the constructor of Ring
+                var ring = new Ring(randomEmptyCell.CoordinateX, randomEmptyCell.CoordinateY, _level, 1);
+
+                _level.Cells.Remove(randomEmptyCell);
+                _level.Cells.Add(ring);
+            }
+        }
+
+        private void BuildGroundRandom()
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
+
+                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
+                var ground = new Ground(randomX, randomY, _level);
 
                 _level.Cells.Remove(randomWall);
-                _level.Cells.Add(ring);
-
-                corX += 2;
-                corY += 1;
+                _level.Cells.Add(ground);
             }
         }
-   
-
-        private void BuildSun(int SunCount)
-        {
-            for (int i = 0; i < SunCount; i++)
-            {
-                var groundCells = _level.Cells.Where(cell => cell is Ground).ToList();
-
-                if (groundCells.Count > 0)
-                {
-
-                    var randomGroundIndex = _random.Next(groundCells.Count);
-                    var randomGround = groundCells[randomGroundIndex];
-
-
-                    var sun = new Sun(randomGround.CoordinateX, randomGround.CoordinateY, _level);
-                    _level.Cells.Remove(randomGround);
-                    _level.Cells.Add(sun);
-                }
-            }
-        }
-        
         private void BuildGroundV2()
         {
             var points = new List<Point>();
@@ -368,9 +320,9 @@ namespace Maze.LevelStaff
 
             var cellPoints = new List<Point>
                     {
-                        new Point(9, 4),
-                        new Point(7, 3),
-                        new Point(10, 6)
+                        new Point(1, 1),
+                        new Point(1, 2),
+                        new Point(4, 1)
                     };
 
             foreach (var point in cellPoints)

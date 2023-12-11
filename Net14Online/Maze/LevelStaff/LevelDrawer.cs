@@ -1,4 +1,6 @@
-﻿namespace Maze.LevelStaff
+﻿using Maze.Cells.Creatures;
+
+namespace Maze.LevelStaff
 {
     public class LevelDrawer
     {
@@ -12,6 +14,14 @@
 
             Console.SetCursorPosition(level.Hero.CoordinateX, level.Hero.CoordinateY);
             Console.Write(level.Hero.Symbol);
+
+
+            Console.SetCursorPosition(level.Width, level.Height + 1);
+            Console.WriteLine();
+            Console.WriteLine($"Hero has {level.Hero.Money} dollars");
+            Console.WriteLine($"Hero has {level.Hero.Hp} head points");
+            Console.WriteLine($"Hero has {level.Hero.Age} years");
+
 
             //Console.ReadLine();
         }
