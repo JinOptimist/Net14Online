@@ -154,8 +154,77 @@ namespace Maze.LevelStaff
                 corX += 2;
                 corY += 1;
             }
-
         }
+        public Level BuildV5(int width = 10, int height = 5, int seedForRandom = -1)
+        {
+            if (seedForRandom > 0)
+            {
+                _random = new Random(seedForRandom);
+            }
+            else
+            {
+                _random = new Random();
+            }
+
+            _level = new Level();
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildSunS();
+
+            return _level;
+        }
+
+        private void BuildSunS()
+        {
+
+           
+            int x1 = _random.Next(_level.Width);
+            int y1 = _random.Next(_level.Height);
+
+            int x2 = _random.Next(_level.Width);
+            int y2 = _random.Next(_level.Height);
+           
+
+           
+            var sun1 = new Sun(x1, y1, _level);
+            var sun2 = new Sun(x2, y2, _level);
+
+           
+            _level.Cells.Add(sun1);
+            _level.Cells.Add(sun2);
+
+     
+            ConnectSuns(sun1, sun2);
+        }
+        private void ConnectSuns(Sun startSun, Sun endSun)
+        {
+            int currentX = startSun.CoordinateX;
+            int currentY = startSun.CoordinateY;
+            // не уверен в правильности этого цикла вообще
+            while (currentX != endSun.CoordinateX || currentY != endSun.CoordinateY)
+            {
+                if (_level.Cells.All(cell => cell.CoordinateX != currentX || cell.CoordinateY != currentY || cell is Ground))
+                {
+                    var ground = new Ground(currentX, currentY, _level);
+                    _level.Cells.Add(ground);
+                }
+
+                if (currentX != endSun.CoordinateX)
+                {
+                    currentX += Math.Sign(endSun.CoordinateX - startSun.CoordinateX);
+                }
+
+                if (currentY != endSun.CoordinateY)
+                {
+                    currentY += Math.Sign(endSun.CoordinateY - startSun.CoordinateY);
+                }
+            }
+
+            //не знаю почему не соединяет данные точки землёй
+        }
+        
         private void BuildGroundRandom()
         {
             for (int i = 0; i < 15; i++)
@@ -356,44 +425,42 @@ namespace Maze.LevelStaff
 
         private void BuildDiamond()
         {
-            {
-                var cellPoints = new List<Point>
+
+            var cellPoints = new List<Point>
                     {
-                        new Point(1, 1),
-                        new Point(1, 2),
-                        new Point(4, 1)
+                        new Point(9, 4),
+                        new Point(7, 3),
+                        new Point(10, 6)
                     };
 
-                foreach (var point in cellPoints)
+            foreach (var point in cellPoints)
+            {
+                int[] moveX = { 0, 1, 1 };
+                int[] moveY = { 1, 0, 3 };
+
+                foreach (int x in moveX)
                 {
-                    int[] moveX = { 0, 1, 1 };
-                    int[] moveY = { 1, 0, 3 };
-
-                    foreach (int x in moveX)
+                    foreach (int y in moveY)
                     {
-                        foreach (int y in moveY)
+                        int newX = point.X + x;
+                        int newY = point.Y + y;
+
+                        var existingCell = _level.Cells.FirstOrDefault(cell => cell.CoordinateX == newX && cell.CoordinateY == newY);
+
+                        if (existingCell != null)
                         {
-                            int newX = point.X + x;
-                            int newY = point.Y + y;
-
-                            var existingCell = _level.Cells.FirstOrDefault(cell => cell.CoordinateX == newX && cell.CoordinateY == newY);
-
-                            if (existingCell != null)
-                            {
-                                var diamond = new Diamond(newX, newY, _level);
-                                _level.Cells.Remove(existingCell);
-                                _level.Cells.Add(diamond);
-                            }
+                            var diamond = new Diamond(newX, newY, _level);
+                            _level.Cells.Remove(existingCell);
+                            _level.Cells.Add(diamond);
                         }
                     }
                 }
             }
         }
-
         /// <summary>
         /// сокровищница на уровне в случайном месте. Предполагатеся что можно будет пробиться к ней через стены
         /// </summary>
-        private void BuildChest() 
+        private void BuildChest()
         {
             var randomX = Math.Abs(_random.Next(_level.Width));
             var randomY = Math.Abs(_random.Next(_level.Height));
@@ -417,7 +484,7 @@ namespace Maze.LevelStaff
             var hero = new Hero(ground.CoordinateX, ground.CoordinateY, _level);
 
             _level.Hero = hero;
-        } 
+        }
         private void BuildTrapRandom(int trapsCount)
         {
             for (int i = 0; i < trapsCount; i++)
@@ -434,3 +501,6 @@ namespace Maze.LevelStaff
         }
     }
 }
+
+      
+    

@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Net14OnlineConsole": {
+      "commandName": "Project"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    }
+  }
+}

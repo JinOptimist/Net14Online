@@ -78,6 +78,7 @@ namespace Maze.ConsolePlay
                 _level.Hero.CoordinateX = destinationX;
                 _level.Hero.CoordinateY = destinationY;
             }
+            
         }
     }
 }
