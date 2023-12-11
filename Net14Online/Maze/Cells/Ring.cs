@@ -6,27 +6,25 @@ namespace Maze.Cells
 {
     public class Ring : BaseCell
     {
-        private int moneyCount;
-        private bool isUsed;
+        private int _moneyCount;
+        private bool _isUsed;
 
         public Ring(int coordinateX, int coordinateY, Level level, int moneyCount) : base(coordinateX, coordinateY, level)
         {
-            this.moneyCount = moneyCount;
-            isUsed = false;
+            _isUsed = false;
         }
 
-        public override string Symbol => isUsed ? " " : "o";
+        public override string Symbol => _isUsed ? " " : "o";
 
         public override bool Step(BaseCreature creature)
         {
-            if (creature is Hero && !isUsed)
+            if (creature is Hero && !_isUsed)
             {
-                
-                ((Hero)creature).Money += 5;
-                ((Hero)creature).Hp += 5;
-                ((Hero)creature).Age += 5;
+                creature.Money += 5;
+                creature.Hp += 5;
+                creature.Age += 5;
 
-                isUsed = true;
+               _isUsed = true;
             }
             return true;
         }
