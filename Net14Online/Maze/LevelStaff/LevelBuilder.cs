@@ -222,6 +222,11 @@ namespace Maze.LevelStaff
             }
         }
 
+        public void BuildGroundCoolGeneration()
+        {
+            return;
+        }
+
         private List<Ground> BuildGroundTask16()
         {
             var startX = 0;
