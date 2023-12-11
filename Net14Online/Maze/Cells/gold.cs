@@ -23,6 +23,8 @@ namespace Maze.Cells
 
 
         public override string Symbol => "+";
+
+
         public override bool Step(BaseCreature creature)
         {
             return true;

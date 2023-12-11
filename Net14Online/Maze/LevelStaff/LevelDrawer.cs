@@ -7,7 +7,7 @@
             foreach (var cell in level.Cells)
             {
                 Console.SetCursorPosition(cell.CoordinateX, cell.CoordinateY);
-                Console.Write(cell.Symbol);
+                cell.DrawAlexandrGlazko();
             }
 
             Console.SetCursorPosition(level.Hero.CoordinateX, level.Hero.CoordinateY);
