@@ -9,6 +9,41 @@ namespace Maze.LevelStaff
         private Level _level;
         private Random _random;
 
+        public Level ChoiseLevelBuilder()
+        {
+            int typeBuilder;
+            Console.WriteLine("Choise Level Builder");
+
+            Console.WriteLine("1 - Base level Buildev0");
+            Console.WriteLine("2 - Base level Buildev11");
+            Console.WriteLine("3 - Base level Buildev7");
+
+            while (!int.TryParse(Console.ReadLine(), out typeBuilder))
+            {
+                Console.WriteLine("Only number in range 1-3 allowed");
+            }
+
+            switch (typeBuilder)
+            {
+                case 1:
+                    _level = BuildV0(40, 30);
+                    break;
+                case 2:
+                    _level = BuildV11(30, 20);
+                    break;
+                case 3:
+                    _level = BuildV7(30, 20);
+                    break;
+                default:
+                    _level = BuildV0(30, 20);
+                    break;
+            }
+
+
+            return _level;
+        }
+
+        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5)
         public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5, int SunCount = 2)
         {
             if (seedForRandom > 0)
@@ -49,9 +84,11 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
+            BuildGroundV18();
             BuildRing();
             BuildMoonV26();
 
+            BuildHero();
 
             return _level;
         }
@@ -98,6 +135,7 @@ namespace Maze.LevelStaff
             BuildWall();
             BuildGroundRandomV7();
             AddBerriesV7(3);
+            BuildHero();
 
             return _level;
         }
@@ -141,7 +179,20 @@ namespace Maze.LevelStaff
             }
         }
         
-      
+        private void BuildGroundRandom()
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
+
+                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
+                var ground = new Ground(randomX, randomY, _level);
+
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(ground);
+            }
+        }
         private void BuildGroundV2()
         {
             var points = new List<Point>();
@@ -331,9 +382,9 @@ namespace Maze.LevelStaff
 
             var cellPoints = new List<Point>
                     {
-                        new Point(1, 1),
-                        new Point(1, 2),
-                        new Point(4, 1)
+                        new Point(9, 4),
+                        new Point(7, 3),
+                        new Point(10, 6)
                     };
 
             foreach (var point in cellPoints)
