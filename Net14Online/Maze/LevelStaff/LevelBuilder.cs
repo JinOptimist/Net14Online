@@ -43,7 +43,8 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5)
+       
+        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5, int SunCount = 2)
         {
             if (seedForRandom > 0)
             {
@@ -70,6 +71,7 @@ namespace Maze.LevelStaff
             BuildCage();
             BuildHero();
             BuildTrapRandom(trapsCount);
+            BuildSun(SunCount);
 
             return _level;
         }
@@ -155,90 +157,28 @@ namespace Maze.LevelStaff
                 corY += 1;
             }
         }
-        public Level BuildV5(int width = 10, int height = 5, int seedForRandom = -1)
+   
+
+        private void BuildSun(int SunCount)
         {
-            if (seedForRandom > 0)
+            for (int i = 0; i < SunCount; i++)
             {
-                _random = new Random(seedForRandom);
-            }
-            else
-            {
-                _random = new Random();
-            }
+                var groundCells = _level.Cells.Where(cell => cell is Ground).ToList();
 
-            _level = new Level();
-            _level.Width = width;
-            _level.Height = height;
-
-            BuildWall();
-            BuildSunS();
-
-            return _level;
-        }
-
-        private void BuildSunS()
-        {
-
-           
-            int x1 = _random.Next(_level.Width);
-            int y1 = _random.Next(_level.Height);
-
-            int x2 = _random.Next(_level.Width);
-            int y2 = _random.Next(_level.Height);
-           
-
-           
-            var sun1 = new Sun(x1, y1, _level);
-            var sun2 = new Sun(x2, y2, _level);
-
-           
-            _level.Cells.Add(sun1);
-            _level.Cells.Add(sun2);
-
-     
-            ConnectSuns(sun1, sun2);
-        }
-        private void ConnectSuns(Sun startSun, Sun endSun)
-        {
-            int currentX = startSun.CoordinateX;
-            int currentY = startSun.CoordinateY;
-            // не уверен в правильности этого цикла вообще
-            while (currentX != endSun.CoordinateX || currentY != endSun.CoordinateY)
-            {
-                if (_level.Cells.All(cell => cell.CoordinateX != currentX || cell.CoordinateY != currentY || cell is Ground))
+                if (groundCells.Count > 0)
                 {
-                    var ground = new Ground(currentX, currentY, _level);
-                    _level.Cells.Add(ground);
-                }
 
-                if (currentX != endSun.CoordinateX)
-                {
-                    currentX += Math.Sign(endSun.CoordinateX - startSun.CoordinateX);
-                }
+                    var randomGroundIndex = _random.Next(groundCells.Count);
+                    var randomGround = groundCells[randomGroundIndex];
 
-                if (currentY != endSun.CoordinateY)
-                {
-                    currentY += Math.Sign(endSun.CoordinateY - startSun.CoordinateY);
+
+                    var sun = new Sun(randomGround.CoordinateX, randomGround.CoordinateY, _level);
+                    _level.Cells.Remove(randomGround);
+                    _level.Cells.Add(sun);
                 }
             }
-
-            //не знаю почему не соединяет данные точки землёй
         }
         
-        private void BuildGroundRandom()
-        {
-            for (int i = 0; i < 15; i++)
-            {
-                var randomX = _random.Next(_level.Width);
-                var randomY = _random.Next(_level.Height);
-
-                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
-                var ground = new Ground(randomX, randomY, _level);
-
-                _level.Cells.Remove(randomWall);
-                _level.Cells.Add(ground);
-            }
-        }
         private void BuildGroundV2()
         {
             var points = new List<Point>();
