@@ -43,7 +43,7 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-        public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5)
+       
         public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5, int SunCount = 2)
         {
             if (seedForRandom > 0)
