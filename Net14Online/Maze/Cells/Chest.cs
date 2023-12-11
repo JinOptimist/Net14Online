@@ -13,7 +13,22 @@ namespace Maze.Cells
 
         public override bool Step(BaseCreature creature)
         {
-            return false;
+            var rnd = new Random(100);
+            var MimicOrNot = rnd.Next(0, 100);
+
+            if (MimicOrNot < 20)
+            {
+                creature.Hp -= 2;
+            }
+            else
+            {
+                creature.Money += 10;
+            }
+            var ground = new Ground(CoordinateX, CoordinateY, Level);
+            Level.ReplaceCell(this, ground);
+            return true;
+        }
+
         }
     }
 }
