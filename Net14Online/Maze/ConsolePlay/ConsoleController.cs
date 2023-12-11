@@ -11,7 +11,7 @@ namespace Maze.ConsolePlay
             var builder = new LevelBuilder();
             var drawer = new LevelDrawer();
 
-            _level = builder.BuildV0(30, 20);
+            _level = builder.ChoiseLevelBuilder();
             drawer.Draw(_level);
 
             var isGameOver = false;
@@ -78,6 +78,7 @@ namespace Maze.ConsolePlay
                 _level.Hero.CoordinateX = destinationX;
                 _level.Hero.CoordinateY = destinationY;
             }
+            
         }
     }
 }

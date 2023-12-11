@@ -8,23 +8,17 @@ using System.Threading.Tasks;
 
 namespace Maze.Cells
 {
-     public  class Gold : BaseCell
+    internal class Sun : BaseCell
     {
-        public Gold(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Sun(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
         {
-
         }
 
+        public override string Symbol => "*";
 
-
-
-
-
-
-
-        public override string Symbol => "+";
         public override bool Step(BaseCreature creature)
         {
+            creature.Money += 5;
             return true;
         }
     }
