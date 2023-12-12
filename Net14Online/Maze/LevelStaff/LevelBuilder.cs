@@ -43,7 +43,7 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-       
+
         public Level BuildV0(int width = 10, int height = 5, int seedForRandom = -1, int coinCount = 2, int berriesCount = 3, int trapsCount = 5, int SunCount = 2)
         {
             if (seedForRandom > 0)
@@ -115,7 +115,6 @@ namespace Maze.LevelStaff
 
             return _level;
         }
-
         public Level BuildV7(int width = 10, int height = 5, int seedForRandom = -1)
         {
             if (seedForRandom > 0)
@@ -157,7 +156,7 @@ namespace Maze.LevelStaff
                 corY += 1;
             }
         }
-   
+
 
         private void BuildSun(int SunCount)
         {
@@ -178,7 +177,7 @@ namespace Maze.LevelStaff
                 }
             }
         }
-        
+
         private void BuildGroundV2()
         {
             var points = new List<Point>();
@@ -416,15 +415,6 @@ namespace Maze.LevelStaff
                 }
             }
         }
-
-        private void BuildHero()
-        {
-            var ground = _level.Cells.First(x => x is Ground);
-
-            var hero = new Hero(ground.CoordinateX, ground.CoordinateY, _level);
-
-            _level.Hero = hero;
-        }
         private void BuildTrapRandom(int trapsCount)
         {
             for (int i = 0; i < trapsCount; i++)
@@ -439,8 +429,97 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(trap);
             }
         }
+        public Level BuildV58(int width = 10, int height = 5, int seedForRandom = -1)
+        {
+            if (seedForRandom > 0)
+            {
+                _random = new Random(seedForRandom);
+            }
+            else
+            {
+                _random = new Random();
+            }
+
+            _level = new Level();
+
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildGroundSilver();
+            BuldSilverRandom();
+            BuildHeroSilver();
+            return _level;
+        }
+        private void BuildHero()
+        {
+            var ground = _level.Cells.First(x => x is Ground);
+
+            var hero = new Hero(ground.CoordinateX, ground.CoordinateY, _level);
+
+            _level.Hero = hero;
+        }
+        private void BuildHeroSilver()
+        {
+            var silver = _level.Cells.First(x => x is Silver);
+
+            var hero = new Hero(silver.CoordinateX, silver.CoordinateY, _level);
+
+            _level.Hero = hero;
+        }
+
+        private void BuildGroundSilver()
+        {
+            var rondomvalue = _random.Next(15);
+            for (int i = 0; i < rondomvalue; i++)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
+
+                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
+                var ground = new Ground(randomX, randomY, _level);
+
+                _level.Cells.Remove(randomWall);
+                _level.Cells.Add(ground);
+            }
+
+        }
+        private void GetPrint(int X, int Y)
+        {
+            var silverprint = _level.Cells.First(x => x.CoordinateX == X && x.CoordinateY == Y);
+            var silver = new Silver(X, Y, _level);
+            _level.Cells.Remove(silverprint);
+            _level.Cells.Add(silver);
+        }
+        private void BuldSilverRandom()
+        {
+            var silvex = _level.Height;
+            var silvery = _level.Width;
+            for (var i = 1; i < silvex - 1; i = i + 4)
+            {
+                for (var j = 1; j < silvery - 1; j++)
+                {
+                    GetPrint(i, j);
+                }
+
+            }
+
+            for (var i = 1; i < silvex - 1; i = i + 4)
+            {
+                for (var j = 1; j < silvery - 1; j++)
+                {
+                    GetPrint(j, i);
+                }
+
+            }
+
+            for (var i = 1; i < silvex - 1; i = i + 4)
+            {
+                for (var j = 1; j < silvery - 1; j++)
+                {
+                    GetPrint(j, j);
+                }
+            }
+        }
     }
 }
-
-      
-    
