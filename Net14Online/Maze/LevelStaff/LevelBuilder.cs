@@ -436,41 +436,31 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(coin);
             }
         }
-
         private void BuildDiamond()
         {
+            var potentialDeadEnds = new List<BaseCell>();
 
-            var cellPoints = new List<Point>
-                    {
-                        new Point(1, 1),
-                        new Point(1, 2),
-                        new Point(4, 1)
-                    };
-
-            foreach (var point in cellPoints)
+            // Находим клетки, которые могут быть потенциальными тупиками
+            foreach (var cell in _level.Cells)
             {
-                int[] moveX = { 0, 1, 1 };
-                int[] moveY = { 1, 0, 3 };
+                var nearestWalls = _level.GetNearCells<Wall>(cell);
+                var nearestGrounds = _level.GetNearCells<Ground>(cell);
 
-                foreach (int x in moveX)
+                if (nearestGrounds.Count == 1 && nearestWalls.Count == 3)
                 {
-                    foreach (int y in moveY)
-                    {
-                        int newX = point.X + x;
-                        int newY = point.Y + y;
-
-                        var existingCell = _level.Cells.FirstOrDefault(cell => cell.CoordinateX == newX && cell.CoordinateY == newY);
-
-                        if (existingCell != null)
-                        {
-                            var diamond = new Diamond(newX, newY, _level);
-                            _level.Cells.Remove(existingCell);
-                            _level.Cells.Add(diamond);
-                        }
-                    }
+                    potentialDeadEnds.Add(cell);
                 }
             }
-        }
+
+            // Размещаем алмазы на месте тупиков
+            foreach (var deadEnd in potentialDeadEnds)
+            {
+                var diamond = new Diamond(deadEnd.CoordinateX, deadEnd.CoordinateY, _level);
+                _level.Cells.Remove(deadEnd); // Удаляем тупик
+                _level.Cells.Add(diamond); // Размещаем алмаз на его месте
+            }
+        }       
+
         /// <summary>
         /// сокровищница на уровне в случайном месте. Предполагатеся что можно будет пробиться к ней через стены
         /// </summary>
