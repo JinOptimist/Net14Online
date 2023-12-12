@@ -18,6 +18,7 @@ namespace Maze.LevelStaff
             Console.WriteLine("1 - Base level Buildev0");
             Console.WriteLine("2 - Base level Buildev11");
             Console.WriteLine("3 - Base level Buildev7");
+            Console.WriteLine("4 - Base level Buildev10");
 
             while (!int.TryParse(Console.ReadLine(), out typeBuilder))
             {
@@ -37,6 +38,9 @@ namespace Maze.LevelStaff
                 case 3:
                     _level = BuildV7(30, 20);
                     break;
+                case 4:
+                    _level = BuildV10(30, 20);
+                    break;
                 default:
                     _level = BuildV0(30, 20);
                     break;
@@ -44,9 +48,7 @@ namespace Maze.LevelStaff
 
 
             return _level;
-        }
-
-
+        }       
         public Level BuildV0(int width = 10,
             int height = 5,
             int seedForRandom = -1,
@@ -530,7 +532,48 @@ namespace Maze.LevelStaff
                     puddlesAdded++;
                 }
             }
+        }
+        public Level BuildV10(int width = 10,
+             int height = 5,
+             int seedForRandom = -1,
+             int coinCount = 2,
+             int puddleCount = 5)
+        {
+            if (seedForRandom > 0)
+            {
+                _random = new Random(seedForRandom);
+            }
+            else
+            {
+                _random = new Random();
+            }
 
+            _level = new Level();
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildGroundSmart();
+            BuildCoin(coinCount);
+            BuildPuddleV_10();
+
+            //Generate creature
+            BuildHero();
+            BuildGoblinStupid(coinCount);
+            BuildSnake(puddleCount);
+
+            return _level;
+        }
+        private void BuildSnake(int snakeCount)
+        {
+            for (int i = 0; i < snakeCount; i++)
+            {
+                var puddles = _level.Cells.OfType<Puddle>().ToList();
+                var randomIndex = _random.Next(puddles.Count);
+                var puddle = puddles[randomIndex];
+                var snake = new Snake(puddle.CoordinateX, puddle.CoordinateY, _level);
+                _level.Creatures.Add(snake);
+            }
         }
     }
 }
