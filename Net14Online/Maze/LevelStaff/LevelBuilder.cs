@@ -80,6 +80,7 @@ namespace Maze.LevelStaff
             BuildCage();
             BuildTrapRandom(trapsCount);
             BuildSun(sunCount);
+            BuildPuddleV_10();
 
             //Generate creature
             BuildHero();
@@ -511,6 +512,25 @@ namespace Maze.LevelStaff
                 _level.Cells.Remove(randomWall);
                 _level.Cells.Add(trap);
             }
+        }
+        private void BuildPuddleV_10(int puddles= 1)
+        {
+            int puddlesAdded = 0;
+            while (puddlesAdded < puddles)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
+                var cellToRemove = _level.Cells.First(cell => cell.CoordinateX == randomX && cell.CoordinateY == randomY);
+                if (cellToRemove.Symbol == ".")
+                {
+                    var puddle = new Puddle(randomX, randomY, _level);
+
+                    _level.Cells.Remove(cellToRemove);
+                    _level.Cells.Add(puddle);
+                    puddlesAdded++;
+                }
+            }
+
         }
     }
 }
