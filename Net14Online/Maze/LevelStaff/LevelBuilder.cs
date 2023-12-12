@@ -1,11 +1,15 @@
 ﻿using Maze.Cells;
-using System;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 
 namespace Maze.LevelStaff
 {
     public class LevelBuilder
     {
         private Level _level;
+        private Random _random;
+        private BaseCell random;
 
         public Level BuildV0(int width = 10, int height = 5)
         {
@@ -16,6 +20,7 @@ namespace Maze.LevelStaff
 
             BuildWall();
             BuildGroundRandom();
+            BildGoldMyRandom();
             BuildPortal();
 
             return _level;
@@ -97,5 +102,37 @@ namespace Maze.LevelStaff
             var cell = new Portal(x, y, _level);
             _level.Cells.Add(cell);
         }
+
+
+        private void GetPrint(int goldx, int goldy)
+        {
+            var randomgoldx = _level.Cells.First(x => x.CoordinateX == goldx && x.CoordinateY == goldy);
+            var gold = new Gold(goldx, goldy, _level);
+            _level.Cells.Remove(randomgoldx);
+            _level.Cells.Add(gold);
+        }
+        private void BildGoldMyRandom()
+        {
+            var goldx = _level.Height;
+            var goldy = _level.Width;
+            for (var i = 1; i < goldx-1 ; i=i+5)
+            {
+                for (var j = 1; j < goldy-1 ; j++)
+                {
+                    GetPrint(i, j);
+                }
+
+            }
+            for (var i = 1; i < goldx - 1; i = i + 4)
+            {
+                for (var j = 1; j < goldy - 1; j++)
+                {
+                    GetPrint(j, i);
+                }
+
+            }
+
+        }
+
     }
 }

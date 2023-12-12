@@ -3,9 +3,9 @@ using Maze.LevelStaff;
 
 namespace Maze.Cells
 {
-    public class Portal : BaseCell
+    internal class Diamond: BaseCell 
     {
-        public Portal(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Diamond(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
         {
         }
 
@@ -13,7 +13,8 @@ namespace Maze.Cells
 
         public override bool Step(BaseCreature creature)
         {
-            return false;
+            creature.Money += 10;
+            return true;
         }
     }
 }
