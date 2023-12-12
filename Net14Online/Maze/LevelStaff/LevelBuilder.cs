@@ -51,6 +51,7 @@ namespace Maze.LevelStaff
             int height = 5,
             int seedForRandom = -1,
             int coinCount = 2,
+            int diamondCount = 1,
             int berriesCount = 3,
             int trapsCount = 5,
             int sunCount = 2)
@@ -85,7 +86,7 @@ namespace Maze.LevelStaff
             //Generate creature
             BuildHero();
             BuildGoblinStupid(coinCount);
-
+            BuildMinotaur(diamondCount);
             return _level;
         }
 
@@ -459,8 +460,21 @@ namespace Maze.LevelStaff
                 _level.Cells.Remove(deadEnd); // Удаляем тупик
                 _level.Cells.Add(diamond); // Размещаем алмаз на его месте
             }
-        }       
-
+        }
+        /// <summary>
+        /// Создание Минотавра рядом с алмазами
+        /// </summary>
+        private void BuildMinotaur(int minotaurCount)
+        {
+            for (int i = 0; i < minotaurCount; i++)
+            {
+                var diamonds = _level.Cells.OfType<Diamond>().ToList();
+                var randomIndex = _random.Next(diamonds.Count);
+                var diamond = diamonds[randomIndex];
+                var minotaur = new Minotaur(diamond.CoordinateX, diamond.CoordinateY, _level);
+                _level.Creatures.Add(minotaur);
+            }
+        }
         /// <summary>
         /// сокровищница на уровне в случайном месте. Предполагатеся что можно будет пробиться к ней через стены
         /// </summary>
