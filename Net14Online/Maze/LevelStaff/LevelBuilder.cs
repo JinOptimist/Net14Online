@@ -53,7 +53,8 @@ namespace Maze.LevelStaff
             int coinCount = 2,
             int berriesCount = 3,
             int trapsCount = 5,
-            int sunCount = 2)
+            int sunCount = 2,
+            int ringCount = 2)
         {
             if (seedForRandom > 0)
             {
@@ -73,7 +74,7 @@ namespace Maze.LevelStaff
             BuildGroundSmart();
             BuildDiamond();
             BuildCoin(coinCount);
-            //BuildRing();
+            BuildRing(ringCount);
             //BuildChest();
             BuildMoonV26();
             AddBerriesV7(berriesCount);
@@ -141,7 +142,6 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            BuildRing();
             BuildMoonV26();
 
 
@@ -194,11 +194,11 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-        private void BuildRing()
+        private void BuildRing(int ringCount)
         {
             var random = new Random();
 
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < ringCount; j++)
             {
                 var emptyCells = _level.Cells.Where(cell => cell.Symbol == ".").ToList();
 
