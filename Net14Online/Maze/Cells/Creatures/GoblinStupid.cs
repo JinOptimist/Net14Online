@@ -6,11 +6,10 @@ namespace Maze.Cells.Creatures
     {
         private Random _random = new Random();
 
-        public GoblinStupid(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
-        {
-        }
+        public const ConsoleColor DEFAULT_COLOR = ConsoleColor.DarkGreen;
 
-        public GoblinStupid(int coordinateX, int coordinateY, Level level, ConsoleColor color) : base(coordinateX, coordinateY, level, color)
+        public GoblinStupid(int coordinateX, int coordinateY, Level level) 
+            : base(coordinateX, coordinateY, level, DEFAULT_COLOR)
         {
         }
 
