@@ -22,7 +22,7 @@ namespace Maze.LevelStaff
 
             while (!int.TryParse(Console.ReadLine(), out typeBuilder))
             {
-                Console.WriteLine("Only number in range 1-3 allowed");
+                Console.WriteLine("Only number in range 1-4 allowed");
             }
 
             Console.Clear();
