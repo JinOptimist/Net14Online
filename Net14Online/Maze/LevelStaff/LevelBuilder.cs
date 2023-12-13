@@ -81,7 +81,8 @@ namespace Maze.LevelStaff
             BuildTrapRandom(trapsCount);
             BuildSun(sunCount);
             BuildPuddleV_10();
-
+            BuildFountain();
+            
             //Generate creature
             BuildHero();
             BuildGoblinStupid(coinCount);
@@ -130,6 +131,29 @@ namespace Maze.LevelStaff
                 markToDestroy = markToDestroy
                     .Where(cell => _level.GetNearCells<Ground>(cell).Count() < 2)
                     .ToList();
+            }
+        }
+
+        private void BuildFountain()
+        {
+            var countCrossroads = new List<BaseCell>();
+
+            foreach (var cell in _level.Cells)
+            {
+                var cellsGround = _level.GetNearCells<Ground>(cell);
+                var cellsWall = _level.GetNearCells<Wall>(cell);
+
+                if (cellsGround.Count == 3 && cellsWall.Count == 1)
+                {
+                    countCrossroads.Add(cell);
+                }
+            }
+
+            foreach (var cell in countCrossroads)
+            {
+                var fountain = new Fountain(cell.CoordinateX, cell.CoordinateY, _level);
+                    _level.Cells.Remove(cell);
+                    _level.Cells.Add(fountain);
             }
         }
 

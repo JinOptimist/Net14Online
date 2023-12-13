@@ -21,6 +21,14 @@ namespace Maze.LevelStaff
             var ground = new Ground(cell.CoordinateX, cell.CoordinateY, this);
             ReplaceCell(cell, ground);
         }
+        
+        public void ReplaceToFountain(BaseCell cell)
+        {
+            var fountain = new Fountain(cell.CoordinateX, cell.CoordinateY, this);
+            ReplaceCell(cell, fountain);
+        }
+        
+        
 
         public List<OneOfCellType> GetNearCells<OneOfCellType>(BaseCell currentCell)
            where OneOfCellType : BaseCell
