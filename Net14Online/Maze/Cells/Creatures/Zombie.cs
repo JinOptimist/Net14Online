@@ -6,7 +6,7 @@ namespace Maze.Cells.Creatures
     {
         public override string Symbol => "Z";
 
-        public Zombie(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Zombie(int coordinateX, int coordinateY, Level level, ConsoleColor color) : base(coordinateX, coordinateY, level, ConsoleColor.DarkGreen)
         {
 
         }

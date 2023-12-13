@@ -546,6 +546,15 @@ namespace Maze.LevelStaff
             _level.Hero = hero;
         }
 
+        private void BuildZombie()
+        {
+            var grounds = _level.Cells.Where(x => x is Ground).ToList();
+            var numberOfGround = _random.Next(grounds.Count());
+            var cellOfRespawn = grounds[numberOfGround];
+
+            var zombie = new Zombie(cellOfRespawn.CoordinateX, cellOfRespawn.CoordinateY, _level, ConsoleColor.DarkGreen);
+        }
+
         private void BuildTrapRandom(int trapsCount)
         {
             for (int i = 0; i < trapsCount; i++)
