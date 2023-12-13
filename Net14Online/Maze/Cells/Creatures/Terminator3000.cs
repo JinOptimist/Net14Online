@@ -9,9 +9,7 @@ namespace Maze.Cells.Creatures
 {
     public class Terminator3000 : BaseCreature
     {
-        public Terminator3000(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
-        {
-        }
+        
         public Terminator3000(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.Gray) : base(coordinateX, coordinateY, level, color)
         {
         }
