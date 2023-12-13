@@ -11,7 +11,7 @@ namespace Maze.Cells.Creatures
         {
         }
 
-        public BaseCreature(int coordinateX, int coordinateY, Level level, ConsoleColor color) : base(coordinateX, coordinateY, level, color)
+        public BaseCreature(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.Gray) : base(coordinateX, coordinateY, level, color)
         {
         }
     }
