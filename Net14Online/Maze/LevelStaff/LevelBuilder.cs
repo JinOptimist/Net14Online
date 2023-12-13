@@ -84,9 +84,20 @@ namespace Maze.LevelStaff
             //Generate creature
             BuildHero();
             BuildGoblinStupid(coinCount);
+            BuildGhost();
 
             return _level;
         }
+
+        private void BuildGhost()
+        {
+            var groundCell = _level.Cells.OfType<Ground>().ToList();
+            var randomIndex = _random.Next(groundCell.Count);
+            var cell = groundCell[randomIndex];
+            var ghost = new Ghost(cell.CoordinateX, cell.CoordinateY, _level);
+            _level.Creatures.Add(ghost);
+        }
+    
 
         public Level BuildV7(int width = 10, int height = 5, int seedForRandom = -1)
         {
