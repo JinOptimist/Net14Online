@@ -1,4 +1,5 @@
 ﻿using Maze.Cells.Creatures;
+using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 using System;
 
@@ -16,7 +17,7 @@ namespace Maze.Cells
 
         public override string Symbol => _isUsed ? " " : "o";
 
-        public override bool Step(BaseCreature creature)
+        public override bool Step(IBaseCreature creature)
         {
             if (creature is Hero && !_isUsed)
             {
