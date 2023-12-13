@@ -19,8 +19,7 @@ namespace Maze.Cells.Creatures
         public override BaseCell ChooseCellToStep()
         {
             var _random = new Random();
-            var cells = Level.GetNearCells<BaseCell>(this);
-            cells = cells.Except(cells.OfType<Wall>()).ToList();
+            var cells = Level.Cells.Where(x => x is not Wall).ToList();
             var randomInex = _random.Next(cells.Count);
             var cell = cells[randomInex];
             return cell;
