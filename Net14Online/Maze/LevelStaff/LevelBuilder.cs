@@ -543,5 +543,27 @@ namespace Maze.LevelStaff
                 }
             }
         }
+
+        private void BuildThief()
+        {
+            var cellX = (_level.Width - _level.Hero.CoordinateX) / 2;
+            var cellY = (_level.Height - _level.Hero.CoordinateY) / 2;
+
+            var currentCell = _level.Cells.FirstOrDefault(c => c.CoordinateX == cellX && c.CoordinateY == cellY && c is Ground);
+
+            if (currentCell != null)
+            {
+                var thief = new Thief(currentCell.CoordinateX, currentCell.CoordinateY, _level);
+                _level.Creatures.Add(thief);
+            }
+            else
+            {
+                var cell = _level.GetNearCells<BaseCell>(currentCell).Where(c => !(c is Wall)).First();
+
+                var thief = new Thief(cell.CoordinateX, cell.CoordinateY, _level);
+                _level.Creatures.Add(thief);
+            }
+        }
+
     }
 }
