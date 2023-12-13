@@ -77,7 +77,8 @@ namespace Maze.LevelStaff
             //BuildChest();
             BuildMoonV26();
             AddBerriesV7(berriesCount);
-            BuildCage();
+            PlaceCages();
+            //BuildCage();
             BuildTrapRandom(trapsCount);
             BuildSun(sunCount);
             BuildPuddleV_10();
@@ -531,6 +532,32 @@ namespace Maze.LevelStaff
                 }
             }
 
+        }
+
+        private void PlaceCages()
+        {
+            var potentialCages = new List<BaseCell>();
+            var random = new Random();
+
+            foreach (var cell in _level.Cells)
+            {
+                var groundsNear = _level.GetNearCells<Ground>(cell);
+
+                if (groundsNear.Count == 4)
+                {
+                    potentialCages.Add(cell);
+                }
+            }
+
+            for (int i = 0; i < 20; i++)
+            {
+                var randomIndex = random.Next(potentialCages.Count);
+                var crossroad = potentialCages[randomIndex];
+                var Cage = new Cage(crossroad.CoordinateX, crossroad.CoordinateY, _level);
+
+                _level.Cells.Remove(crossroad);
+                _level.Cells.Add(Cage);
+            }
         }
     }
 }
