@@ -5,7 +5,12 @@ namespace Maze.Cells.Creatures
     public class GoblinStupid : BaseCreature
     {
         private Random _random = new Random();
+
         public GoblinStupid(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        {
+        }
+
+        public GoblinStupid(int coordinateX, int coordinateY, Level level, ConsoleColor color) : base(coordinateX, coordinateY, level, color)
         {
         }
 
