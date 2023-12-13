@@ -85,6 +85,7 @@ namespace Maze.LevelStaff
             BuildHero();
             BuildGoblinStupid(coinCount);
             BuildCentaur();
+            BuildTerminatorV92(2);
 
             return _level;
         }
@@ -134,6 +135,18 @@ namespace Maze.LevelStaff
                 var ground = grounds[randomIndex];
                 var centaur = new Centaur(ground.CoordinateX, ground.CoordinateY, _level, ConsoleColor.Red);
                 _level.Creatures.Add(centaur);
+            }
+        }
+
+        private void BuildTerminatorV92(int termitantorCount)
+        {
+            for (int i = 0; i < termitantorCount; i++)
+            {
+                var coins = _level.Cells.OfType<Coin>().ToList();
+                var randomIndex = _random.Next(coins.Count);
+                var coin = coins[randomIndex];
+                var terminator = new Terminator3000(coin.CoordinateX, coin.CoordinateY, _level, ConsoleColor.Yellow);
+                _level.Creatures.Add(terminator);
             }
         }
 
