@@ -658,7 +658,6 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            BuildGroundSilver();
             BuldSilverRandom();
             BuildHeroSilver();
             return _level;
@@ -671,21 +670,7 @@ namespace Maze.LevelStaff
 
             _level.Hero = hero;
         }
-        private void BuildGroundSilver()
-        {
-            var rondomvalue = _random.Next(15);
-            for (int i = 0; i < rondomvalue; i++)
-            {
-                var randomX = _random.Next(_level.Width);
-                var randomY = _random.Next(_level.Height);
-                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
-                var ground = new Ground(randomX, randomY, _level);
-                _level.Cells.Remove(randomWall);
-                _level.Cells.Add(ground);
-            }
-
-        }
-        private void GetPrint(int X, int Y)
+        private void HeroPlace (int X, int Y)
         {
             var silverprint = _level.Cells.First(x => x.CoordinateX == X && x.CoordinateY == Y);
             var silver = new Silver(X, Y, _level);
@@ -700,7 +685,7 @@ namespace Maze.LevelStaff
             {
                 for (var j = 1; j < silvery - 1; j++)
                 {
-                    GetPrint(i, j);
+                    HeroPlace(i, j);
                 }
 
             }
@@ -709,14 +694,14 @@ namespace Maze.LevelStaff
             {
                 for (var j = 1; j < silvery - 1; j++)
                 {
-                    GetPrint(j, i);
+                    HeroPlace(j, i);
                 }
             }
             for (var i = 1; i < silvex - 1; i = i + 4)
             {
                 for (var j = 1; j < silvery - 1; j++)
                 {
-                    GetPrint(j, j);
+                    HeroPlace(j, j);
                 }
             }
         }
