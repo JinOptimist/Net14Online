@@ -39,7 +39,7 @@ namespace Maze.Cells.Creatures
             creature.Hp = creature.Hp < 2 ? 0 : creature.Hp - 2;
             creature.Money = creature.Money < 1 ? 0 : creature.Money - 1;
 
-            return true;
+            return false;
         }
     }
 }
