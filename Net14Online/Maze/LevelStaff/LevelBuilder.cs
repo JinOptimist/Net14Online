@@ -119,7 +119,7 @@ namespace Maze.LevelStaff
                 var coins = _level.Cells.OfType<Coin>().ToList();
                 var randomIndex = _random.Next(coins.Count);
                 var coin = coins[randomIndex];
-                var goblin = new GoblinStupid(coin.CoordinateX, coin.CoordinateY, _level, ConsoleColor.DarkGreen);
+                var goblin = new GoblinStupid(coin.CoordinateX, coin.CoordinateY, _level);
                 _level.Creatures.Add(goblin);
             }
         }
