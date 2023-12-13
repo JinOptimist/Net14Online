@@ -1,5 +1,6 @@
 ﻿using Maze.Cells;
 using Maze.Cells.Creatures;
+using Maze.Helper;
 using System.Drawing;
 
 namespace Maze.LevelStaff
@@ -117,9 +118,7 @@ namespace Maze.LevelStaff
         {
             for (int i = 0; i < goblinCount; i++)
             {
-                var coins = _level.Cells.OfType<Coin>().ToList();
-                var randomIndex = _random.Next(coins.Count);
-                var coin = coins[randomIndex];
+                var coin = _level.GetRandomCell<Coin>();
                 var goblin = new GoblinStupid(coin.CoordinateX, coin.CoordinateY, _level);
                 _level.Creatures.Add(goblin);
             }
@@ -129,9 +128,7 @@ namespace Maze.LevelStaff
         {
             for (int i = 0; i < centaurCount; i++)
             {
-                var grounds = _level.Cells.OfType<Ground>().ToList();
-                var randomIndex = _random.Next(grounds.Count);
-                var ground = grounds[randomIndex];
+                var ground = _level.GetRandomCell<Ground>();
                 var centaur = new Centaur(ground.CoordinateX, ground.CoordinateY, _level, ConsoleColor.Red);
                 _level.Creatures.Add(centaur);
             }
@@ -141,8 +138,7 @@ namespace Maze.LevelStaff
         {
             var markToDestroy = new List<BaseCell>();
 
-            var randomIndex = _random.Next(_level.Cells.Count);
-            var randomWall = _level.Cells[randomIndex];
+            var randomWall = _level.GetRandomCell();
             markToDestroy.Add(randomWall);
 
             while (markToDestroy.Any())
@@ -154,8 +150,7 @@ namespace Maze.LevelStaff
                     Thread.Sleep(200);
                 }
 
-                randomIndex = _random.Next(markToDestroy.Count);
-                randomWall = markToDestroy[randomIndex];
+                randomWall = markToDestroy.GetRandom();
 
                 _level.ReplaceToGround(randomWall);
                 markToDestroy.Remove(randomWall);
@@ -248,11 +243,9 @@ namespace Maze.LevelStaff
         {
             for (int i = 0; i < 15; i++)
             {
-                var randomX = _random.Next(_level.Width);
-                var randomY = _random.Next(_level.Height);
+                var randomWall = _level.GetRandomCell();
 
-                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
-                var ground = new Ground(randomX, randomY, _level);
+                var ground = new Ground(randomWall.CoordinateX, randomWall.CoordinateY, _level);
 
                 _level.Cells.Remove(randomWall);
                 _level.Cells.Add(ground);
@@ -267,10 +260,7 @@ namespace Maze.LevelStaff
 
                 if (groundCells.Count > 0)
                 {
-
-                    var randomGroundIndex = _random.Next(groundCells.Count);
-                    var randomGround = groundCells[randomGroundIndex];
-
+                    var randomGround = groundCells.GetRandom();
 
                     var sun = new Sun(randomGround.CoordinateX, randomGround.CoordinateY, _level);
                     _level.Cells.Remove(randomGround);
@@ -426,8 +416,7 @@ namespace Maze.LevelStaff
 
             for (int i = 0; i < pitCount; i++)
             {
-                var randomGroundIndex = _random.Next(grounds.Count);
-                var ground = grounds[randomGroundIndex];
+                var ground = grounds.GetRandom();
 
                 var pit = new Pit(ground.CoordinateX, ground.CoordinateY, level);
 
@@ -441,12 +430,10 @@ namespace Maze.LevelStaff
             int berriesAdded = 0;
             while (berriesAdded < numberOfBerries)
             {
-                var randomX = _random.Next(_level.Width);
-                var randomY = _random.Next(_level.Height);
-                var cellToRemove = _level.Cells.First(cell => cell.CoordinateX == randomX && cell.CoordinateY == randomY);
+                var cellToRemove = _level.GetRandomCell();
                 if (cellToRemove.Symbol == ".")
                 {
-                    var berry = new Berry(randomX, randomY, _level);
+                    var berry = new Berry(cellToRemove.CoordinateX, cellToRemove.CoordinateY, _level);
 
                     _level.Cells.Remove(cellToRemove);
                     _level.Cells.Add(berry);
@@ -475,11 +462,7 @@ namespace Maze.LevelStaff
         {
             for (int i = 0; i < coinCount; i++)
             {
-                var grounds = _level.Cells
-                    .Where(x => x is Ground)
-                    .ToList();
-                var randomGroundIndex = _random.Next(grounds.Count);
-                var randomGround = grounds[randomGroundIndex];
+                var randomGround = _level.GetRandomCell<Ground>();
 
                 var coin = new Coin(randomGround.CoordinateX, randomGround.CoordinateY, _level);
                 _level.Cells.Remove(randomGround);
@@ -581,13 +564,10 @@ namespace Maze.LevelStaff
         {
             for (int i = 0; i < trapsCount; i++)
             {
-                var randomX = _random.Next(_level.Width);
-                var randomY = _random.Next(_level.Height);
+                var randomCell = _level.GetRandomCell();
+                var trap = new Trap(randomCell.CoordinateX, randomCell.CoordinateY, _level);
 
-                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
-                var trap = new Trap(randomX, randomY, _level);
-
-                _level.Cells.Remove(randomWall);
+                _level.Cells.Remove(randomCell);
                 _level.Cells.Add(trap);
             }
         }
@@ -597,12 +577,10 @@ namespace Maze.LevelStaff
             int puddlesAdded = 0;
             while (puddlesAdded < puddles)
             {
-                var randomX = _random.Next(_level.Width);
-                var randomY = _random.Next(_level.Height);
-                var cellToRemove = _level.Cells.First(cell => cell.CoordinateX == randomX && cell.CoordinateY == randomY);
+                var cellToRemove = _level.GetRandomCell();
                 if (cellToRemove.Symbol == ".")
                 {
-                    var puddle = new Puddle(randomX, randomY, _level);
+                    var puddle = new Puddle(cellToRemove.CoordinateX, cellToRemove.CoordinateY, _level);
 
                     _level.Cells.Remove(cellToRemove);
                     _level.Cells.Add(puddle);

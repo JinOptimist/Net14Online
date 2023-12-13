@@ -1,4 +1,5 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Helper;
+using Maze.LevelStaff;
 
 namespace Maze.Cells.Creatures
 {
@@ -18,9 +19,7 @@ namespace Maze.Cells.Creatures
         public override BaseCell ChooseCellToStep()
         {
             var cells = Level.GetNearCells<BaseCell>(this);
-            var randomInex = _random.Next(cells.Count);
-            var cell = cells[randomInex];
-            return cell;
+            return cells.GetRandom();
         }
 
         public override bool Step(BaseCreature creature)
