@@ -5,15 +5,6 @@ namespace Maze.Cells
 {
     public class House : BaseCell
     {
-        /// <summary>
-        /// Property for indicating objects of class House by Color
-        /// </summary>
-        public static ConsoleColor HouseColor { get; } = ConsoleColor.White;
-        /// <summary>
-        /// Property for indicating objects of class BaseCell by Color. It depends on landscape of current map and should get value from closed cells.
-        /// </summary>
-        public ConsoleColor CellColor { get; set; }
-
         public House(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
         {
         }
@@ -31,40 +22,17 @@ namespace Maze.Cells
 
                     level.Cells.Remove(randomGround);
                     level.Cells.Add(house);
-                }             
+                }
             }
         }
 
         public override bool Step(BaseCreature creature)
         {
-            creature.Hp *= 2;
-            return true;
-        }
-
-        public static void SetHouseColor(BaseCell cell, ConsoleColor consoleColor)
-        {
-            if (cell is House)
+            if (creature is Hero)
             {
-                Console.SetCursorPosition(cell.CoordinateX, cell.CoordinateY);
-                Console.ForegroundColor = HouseColor;
-                Console.BackgroundColor = consoleColor;
+                creature.Hp *= 2;
             }
-        }
-        /// <summary>
-        /// Just in case when somebody needs to check object color of class House and may be use it
-        /// </summary>
-        /// <returns></returns>
-        public ConsoleColor GetCurrentObjectColor()
-        {
-            return HouseColor;
-        }
-        /// <summary>
-        /// Just in case when somebody needs to check cell color of class House and may be use or change it
-        /// </summary>
-        /// <returns></returns>
-        public ConsoleColor GetCurrentCellColor()
-        {
-            return CellColor;
+            return true;
         }
     }
 }
