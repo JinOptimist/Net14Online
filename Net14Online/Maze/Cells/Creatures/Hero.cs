@@ -18,5 +18,10 @@ namespace Maze.Cells.Creatures
         {
             throw new NotImplementedException();
         }
+
+        public override BaseCell ChooseCellToStep()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

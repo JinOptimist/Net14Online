@@ -9,11 +9,13 @@ namespace Maze.Cells
         {
         }
 
-        public override string Symbol => "@";
+        public override string Symbol => "=";
 
         public override bool Step(BaseCreature creature)
         {
             creature.Money += 10;
+            var ground = new Ground(CoordinateX, CoordinateY, Level);
+            Level.ReplaceCell(this,ground);
             return true;
         }
     }
