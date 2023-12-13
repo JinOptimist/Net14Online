@@ -8,12 +8,10 @@ namespace Maze.Cells.Creatures
         public int Hp { get; set; } = 1;
         public int Age { get; set; } = 10;
 
-        public BaseCreature(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
-        {
-        }
-
         public BaseCreature(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.Gray) : base(coordinateX, coordinateY, level, color)
         {
         }
+
+        public abstract BaseCell ChooseCellToStep();
     }
 }
