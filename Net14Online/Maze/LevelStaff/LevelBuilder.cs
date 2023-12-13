@@ -405,6 +405,24 @@ namespace Maze.LevelStaff
 
         }
 
+        private void BuildPit(Level level)
+        {
+            var grounds = level.Cells.Where(x => x is Ground).ToList();
+
+            var pitCount = _random.Next(grounds.Count / 2);
+
+            for (int i = 0; i < pitCount; i++)
+            {
+                var randomGroundIndex = _random.Next(grounds.Count);
+                var ground = grounds[randomGroundIndex];
+
+                var pit = new Pit(ground.CoordinateX, ground.CoordinateY, level);
+
+                level.Cells.Remove(ground);
+                level.Cells.Add(pit);
+            }
+        }
+
         private void AddBerriesV7(int numberOfBerries)
         {
             int berriesAdded = 0;
