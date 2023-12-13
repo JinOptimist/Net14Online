@@ -53,7 +53,8 @@ namespace Maze.LevelStaff
             int coinCount = 2,
             int berriesCount = 3,
             int trapsCount = 5,
-            int sunCount = 2)
+            int sunCount = 2,
+            int chestCount = 2)
         {
             if (seedForRandom > 0)
             {
@@ -74,7 +75,7 @@ namespace Maze.LevelStaff
             BuildDiamond();
             BuildCoin(coinCount);
             //BuildRing();
-            //BuildChest();
+            BuildChest(chestCount);
             BuildMoonV26();
             AddBerriesV7(berriesCount);
             BuildCage();
@@ -470,21 +471,21 @@ namespace Maze.LevelStaff
         /// <summary>
         /// сокровищница на уровне в случайном месте. Предполагатеся что можно будет пробиться к ней через стены
         /// </summary>
-        private void BuildChest()
+        private void BuildChest(int chestCount)
         {
-            var randomX = Math.Abs(_random.Next(_level.Width));
-            var randomY = Math.Abs(_random.Next(_level.Height));
+            var impasseForChest = _level.Cells.OfType<Ground>().ToList();
 
-            for (int x = randomX; x < randomX + 2; x++)
-            {
-                for (int y = randomY; y < randomY + 2; y++)
+            impasseForChest = impasseForChest
+                .Where(cell => _level.GetNearCells<Wall>(cell).Count() >= 2)
+                .ToList();
+
+                for (int i = 0; i < chestCount; i++)
                 {
-                    var randomCell = _level.Cells.First(cell => cell.CoordinateX == x && cell.CoordinateY == y);
-                    var cellChest = new Chest(x, y, _level);
-                    _level.Cells.Remove(randomCell);
-                    _level.Cells.Add(cellChest);
-                }
-            }
+                    var randomIndex = _random.Next(impasseForChest.Count);
+                    var randomGround = _level.Cells[randomIndex];
+                    var chest = new Chest(randomGround.CoordinateX, randomGround.CoordinateY,_level);
+                    _level.ReplaceCell(randomGround, chest);
+                }               
         }
 
         private void BuildHero()
