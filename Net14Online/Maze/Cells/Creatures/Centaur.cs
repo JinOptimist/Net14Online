@@ -13,11 +13,7 @@ namespace Maze.Cells.Creatures
 
         private  Random _random = new Random();
 
-        public Centaur(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
-        {
-        }
-
-        public Centaur(int coordinateX, int coordinateY, Level level, ConsoleColor color) : base(coordinateX, coordinateY, level, color)
+        public Centaur(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.Red) : base(coordinateX, coordinateY, level, color)
         {
         }
 
@@ -31,13 +27,14 @@ namespace Maze.Cells.Creatures
 
         public override bool Step(BaseCreature creature)
         {
-            if(creature is not Hero)
+            var hero = creature as Hero;
+            if (hero is null)
             {
                 return false;
             }
 
-            creature.Hp = creature.Hp < 2 ? 0 : creature.Hp - 2;
-            creature.Money = creature.Money < 1 ? 0 : creature.Money - 1;
+            hero.Hp = hero.Hp < 2 ? 0 : hero.Hp - 2;
+            hero.Money = hero.Money < 1 ? 0 : hero.Money - 1;
 
             return false;
         }
