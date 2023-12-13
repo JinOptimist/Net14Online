@@ -296,11 +296,10 @@ namespace Maze.LevelStaff
             }
         }
 
-        private List<Ground> BuildGroundTask16()
+        private void BuildGroundTask16()
         {
             var startX = 0;
             var startY = _random.Next(_level.Height);
-            List<Ground> grounds = new List<Ground>();
 
             do
             {
@@ -327,12 +326,9 @@ namespace Maze.LevelStaff
                 _level.Cells.Remove(randomWall);
                 _level.Cells.Add(ground);
 
-                grounds.Add(ground);
                 startX++;
             }
             while (startX < _level.Width);
-
-            return grounds;
         }
 
         private void AddGroundCellV7(int x, int y)
@@ -532,8 +528,20 @@ namespace Maze.LevelStaff
             }
 
         }
+
+        private void ChangeGroundToHouse()
+        {
+            for (int i = 0; i < _level.Cells.Count; i = i + 4)
+            {
+                if (_level.Cells[i] is Ground)
+                {
+                    var randomGround = _level.Cells.First(x => x.CoordinateX == _level.Cells[i].CoordinateX && x.CoordinateY == _level.Cells[i].CoordinateY);
+                    House house = new House(_level.Cells[i].CoordinateX, _level.Cells[i].CoordinateY, _level);
+
+                    _level.Cells.Remove(randomGround);
+                    _level.Cells.Add(house);
+                }
+            }
+        }
     }
 }
-
-
-
