@@ -528,10 +528,6 @@ namespace Maze.LevelStaff
             }
 
         }
-    }
-}
-
-
 
         private void ChangeGroundToHouse()
         {
@@ -547,6 +543,5 @@ namespace Maze.LevelStaff
                 }
             }
         }
-
     }
 }
