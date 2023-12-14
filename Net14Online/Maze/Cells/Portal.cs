@@ -13,7 +13,7 @@ namespace Maze.Cells
 
         public override bool Step(BaseCreature creature)
         {
-            return false;
+            return true;
         }
     }
 }

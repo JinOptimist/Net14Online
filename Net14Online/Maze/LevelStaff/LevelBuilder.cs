@@ -81,7 +81,7 @@ namespace Maze.LevelStaff
             BuildTrapRandom(trapsCount);
             BuildSun(sunCount);
             BuildPuddleV_10();
-
+            BuildPortal();
             //Generate creature
             BuildHero();
             BuildGoblinStupid(coinCount);
@@ -168,6 +168,7 @@ namespace Maze.LevelStaff
             BuildWall();
             BuildGroundV18();
             BuildCage();
+            
 
             return _level;
         }
@@ -410,6 +411,21 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(cage);
             }
 
+        }
+        private void BuildPortal()
+        {
+            var cells = _level.Cells.Where(c => c.Symbol == "." && (c.CoordinateX == 1 || c.CoordinateX == _level.Width - 1 || c.CoordinateY == 1 || c.CoordinateY == _level.Height - 1)).ToList();
+            var randomNumIteration = _random.Next(2, cells.Count);
+            var i = 0;
+            while(i < randomNumIteration)
+            {
+                var randomCellIndex = _random.Next(cells.Count);
+                var randomCell = cells[randomCellIndex];
+                var portal = new Portal(randomCell.CoordinateX, randomCell.CoordinateY, _level);
+                _level.Cells.Remove(randomCell);
+                _level.Cells.Add(portal);
+                i++;
+            }
         }
 
         private void BuildCoin(int coinCount)
