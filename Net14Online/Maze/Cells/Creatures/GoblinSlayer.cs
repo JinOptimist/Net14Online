@@ -19,7 +19,7 @@ namespace Maze.Cells.Creatures
 
         public override IBaseCell ChooseCellToStep()
         {
-            var cells = Level.GetNearCells<IBaseCell>(this);
+            var cells = Level.GetNearCells<Ground>(this);
             return cells.GetRandom();
         }
 
