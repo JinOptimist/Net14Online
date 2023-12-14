@@ -642,6 +642,12 @@ namespace Maze.LevelStaff
                 BuildPaths(startPosition, endPosition);
                 return;
             }
+            if ((direction = GetDirection(startPosition.Y, endPosition.Y)) != 0)
+            {
+                startPosition.Y += direction;
+                BuildPaths(startPosition, endPosition);
+                return;
+            }
         }
         public Level BuildV10(int width = 10,
              int height = 5,
@@ -658,12 +664,7 @@ namespace Maze.LevelStaff
                 _random = new Random();
             }
 
-            if ((direction = GetDirection(startPosition.Y, endPosition.Y)) != 0)
-            {
-                startPosition.Y += direction;
-                BuildPaths(startPosition, endPosition);
-                return;
-            }
+           
             _level = new Level();
             _level.Width = width;
             _level.Height = height;

@@ -10,7 +10,7 @@ namespace Maze.Cells.Creatures
     public class Snake : BaseCreature
     {
         private Random _random = new Random();
-        public Snake(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Snake(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.DarkBlue) : base(coordinateX, coordinateY, level,color)
         {
         }
 
@@ -26,7 +26,7 @@ namespace Maze.Cells.Creatures
 
         public override bool Step(BaseCreature creature)
         {
-            if (creature is GoblinStupid)
+            if (creature is Snake)
             {
                 return false;
             }
