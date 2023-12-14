@@ -31,8 +31,15 @@ namespace Maze.Cells.Creatures
             {
                 return false;
             }
+            var hero = creature as Hero;
+            if (hero is null)
+            {
+                return false;
+            }
 
-            creature.Hp -= 1;
+            hero.Hp = hero.Hp < 1 ? 0 : hero.Hp - 1;
+            hero.Money = hero.Money < 1 ? 0 : hero.Money - 2;
+
             return false;
         }
     }
