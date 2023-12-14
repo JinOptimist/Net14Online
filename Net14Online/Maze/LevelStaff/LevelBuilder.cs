@@ -1,4 +1,5 @@
 ﻿using Maze.Cells;
+using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures;
 using Maze.Helper;
 using System.Drawing;
@@ -81,7 +82,7 @@ namespace Maze.LevelStaff
             BuildTrapRandom(trapsCount);
             BuildSun(sunCount);
             BuildPuddleV_10();
-
+            BuildMinotaur();
             //Generate creature
             BuildHero();
             BuildGoblinStupid(coinCount);
@@ -485,36 +486,32 @@ namespace Maze.LevelStaff
 
         private void BuildDiamond()
         {
-
-            var cellPoints = new List<Point>
-                    {
-                        new Point(1, 1),
-                        new Point(1, 2),
-                        new Point(4, 1)
-                    };
-
-            foreach (var point in cellPoints)
+            var potentialDeadEnds = new List<IBaseCell>();
+            // Находим клетки, которые могут быть потенциальными тупиками
+            foreach (var cell in _level.Cells) 
             {
-                int[] moveX = { 0, 1, 1 };
-                int[] moveY = { 1, 0, 3 };
-
-                foreach (int x in moveX)
+                var nearestWalls = _level.GetNearCells<Wall>(cell);
+                if (nearestWalls.Count == 3) 
                 {
-                    foreach (int y in moveY)
-                    {
-                        int newX = point.X + x;
-                        int newY = point.Y + y;
-
-                        var existingCell = _level.Cells.FirstOrDefault(cell => cell.CoordinateX == newX && cell.CoordinateY == newY);
-
-                        if (existingCell != null)
-                        {
-                            var diamond = new Diamond(newX, newY, _level);
-                            _level.Cells.Remove(existingCell);
-                            _level.Cells.Add(diamond);
-                        }
-                    }
+                    potentialDeadEnds.Add(cell);
                 }
+                
+            }
+            foreach (var deadEnd in potentialDeadEnds)
+            {
+                var diamond = new Diamond(deadEnd.CoordinateX, deadEnd.CoordinateY, _level);
+                _level.Cells.Remove(deadEnd);
+                _level.Cells.Add(diamond);
+            }
+        }
+        private void BuildMinotaur(int minotaurCount=4)
+        {
+            for (int i = 0; i < minotaurCount; i++)
+            {var coin = _level.GetRandomCell<Diamond>();
+                var diamonds = _level.Cells.OfType<Diamond>().ToList();
+                var diamond = _level.GetRandomCell<Diamond>();
+                var minotaur = new Minotaur(diamond.CoordinateX, diamond.CoordinateY, _level, ConsoleColor.Magenta);
+                _level.Creatures.Add(minotaur);
             }
         }
 

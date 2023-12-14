@@ -2,24 +2,21 @@
 using Maze.LevelStaff;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Maze.Cells.Creatures
 {
-
-    public class Thief : BaseCreature
+    public class Minotaur : BaseCreature
     {
-        private int _robMoney = 10;
-
         private Random _random = new Random();
-
-        public Thief(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Minotaur(int coordinateX, int coordinateY, Level level, ConsoleColor color) : base(coordinateX, coordinateY, level, color)
         {
         }
 
-        public override string Symbol => "t";
+        public override string Symbol => "M";
 
         public override BaseCell ChooseCellToStep()
         {
@@ -28,21 +25,15 @@ namespace Maze.Cells.Creatures
             var cell = cells[randomInex];
             return cell;
         }
-
         public override bool Step(IBaseCreature creature)
         {
-            if (creature is Hero)
+            if (creature is Minotaur)
             {
-                if (creature.Money > _robMoney)
-                {
-                    creature.Money -= 10;
-                }
-                else
-                {
-                    creature.Money = 0;
-                }
+                return false;
             }
-            return true;
+
+            creature.Hp -= 1;
+            return false;
         }
     }
 }
