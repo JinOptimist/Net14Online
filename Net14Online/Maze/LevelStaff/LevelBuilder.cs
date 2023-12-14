@@ -507,8 +507,7 @@ namespace Maze.LevelStaff
         private void BuildMinotaur(int minotaurCount=4)
         {
             for (int i = 0; i < minotaurCount; i++)
-            {var coin = _level.GetRandomCell<Diamond>();
-                var diamonds = _level.Cells.OfType<Diamond>().ToList();
+            {
                 var diamond = _level.GetRandomCell<Diamond>();
                 var minotaur = new Minotaur(diamond.CoordinateX, diamond.CoordinateY, _level, ConsoleColor.Magenta);
                 _level.Creatures.Add(minotaur);
