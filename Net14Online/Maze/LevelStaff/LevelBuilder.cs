@@ -78,7 +78,8 @@ namespace Maze.LevelStaff
             BuildMoonV26();
             AddBerriesV7(berriesCount);
             BuildCage();
-            BuildTrapRandom(trapsCount);
+            //BuildTrapRandom(trapsCount);
+            BuildTrapsAroundCoins(trapsCount);
             BuildSun(sunCount);
             BuildPuddleV_10();
 
@@ -582,6 +583,22 @@ namespace Maze.LevelStaff
 
                 _level.Cells.Remove(randomCell);
                 _level.Cells.Add(trap);
+            }
+        }
+        private void BuildTrapsAroundCoins(int trapsCount)
+        {
+            for (int i = 0; i < trapsCount; i++)
+            {
+                var coin = _level.GetRandomCell<Coin>();
+                var nearestCell = _level.GetNearCells<Ground>(coin).FirstOrDefault();
+
+                if (nearestCell != null) 
+                {
+                    var trap = new Trap(nearestCell.CoordinateX, nearestCell.CoordinateY, _level);
+
+                    _level.Cells.Remove(nearestCell);
+                    _level.Cells.Add(trap);
+                }
             }
         }
 
