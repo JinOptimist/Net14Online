@@ -1,0 +1,41 @@
+﻿using Maze.Cells.CellInterfaces;
+using Maze.Cells.Creatures.Interfaces;
+using Maze.Helper;
+using Maze.LevelStaff;
+using System.Linq.Expressions;
+
+namespace Maze.Cells.Creatures
+{
+    public class GoblinSlayer : BaseCreature
+    {
+        public const ConsoleColor DEFAULT_COLOR = ConsoleColor.Magenta;
+
+        public GoblinSlayer(int coordinateX, int coordinateY, ILevel level) 
+            : base(coordinateX, coordinateY, level, DEFAULT_COLOR)
+        {
+        }
+
+        public override string Symbol => "S";
+
+        public override IBaseCell ChooseCellToStep()
+        {
+            var cells = Level.GetNearCells<IBaseCell>(this);
+            return cells.GetRandom();
+        }
+
+        public override bool Step(IBaseCreature creature)
+        {
+            switch (creature)
+            {
+                case GoblinStupid:
+                    creature.Hp--;
+                    break;
+                case Hero:
+                    creature.Money--;
+                    break;
+            }
+
+            return false;
+        }
+    }
+}
