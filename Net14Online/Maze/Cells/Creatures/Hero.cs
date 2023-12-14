@@ -1,4 +1,6 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Cells.CellInterfaces;
+using Maze.Cells.Creatures.Interfaces;
+using Maze.LevelStaff;
 
 namespace Maze.Cells.Creatures
 {
@@ -10,12 +12,16 @@ namespace Maze.Cells.Creatures
         {
         }
 
-        public override bool Step(BaseCreature creature)
+        public Hero(int coordinateX, int coordinateY, Level level, ConsoleColor color) : base(coordinateX, coordinateY, level, color)
+        {
+        }
+
+        public override bool Step(IBaseCreature creature)
         {
             throw new NotImplementedException();
         }
 
-        public override BaseCell ChooseCellToStep()
+        public override IBaseCell ChooseCellToStep()
         {
             throw new NotImplementedException();
         }

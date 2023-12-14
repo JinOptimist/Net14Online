@@ -1,32 +1,39 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Cells.CellInterfaces;
+using Maze.Cells.Creatures.Interfaces;
+using Maze.Helper;
+using Maze.LevelStaff;
 
 namespace Maze.Cells.Creatures
 {
     public class GoblinStupid : BaseCreature
     {
-        private Random _random = new Random();
-        public GoblinStupid(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public const ConsoleColor DEFAULT_COLOR = ConsoleColor.DarkGreen;
+
+        public GoblinStupid(int coordinateX, int coordinateY, ILevel level) 
+            : base(coordinateX, coordinateY, level, DEFAULT_COLOR)
         {
         }
 
         public override string Symbol => "g";
 
-        public override BaseCell ChooseCellToStep()
+        public override IBaseCell ChooseCellToStep()
         {
-            var cells = Level.GetNearCells<BaseCell>(this);
-            var randomInex = _random.Next(cells.Count);
-            var cell = cells[randomInex];
-            return cell;
+            var cells = Level.GetNearCells<IBaseCell>(this);
+            return cells.GetRandom();
         }
 
-        public override bool Step(BaseCreature creature)
+        public override bool Step(IBaseCreature creature)
         {
             if (creature is GoblinStupid)
             {
                 return false;
             }
 
-            creature.Hp--;
+            if (creature.Hp > 0)
+            {
+                creature.Hp--;
+            }
+            
             return false;
         }
     }

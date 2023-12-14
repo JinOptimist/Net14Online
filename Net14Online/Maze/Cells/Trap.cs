@@ -1,4 +1,5 @@
 ﻿using Maze.Cells.Creatures;
+using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ namespace Maze.Cells
 
         public override string Symbol => "^";
 
-        public override bool Step(BaseCreature creature)
+        public override bool Step(IBaseCreature creature)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }
