@@ -1,4 +1,7 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Cells.CellInterfaces;
+using Maze.Cells.Creatures.Interfaces;
+using Maze.Helper;
+using Maze.LevelStaff;
 using System;
 
 namespace Maze.Cells.Creatures
@@ -17,18 +20,14 @@ namespace Maze.Cells.Creatures
 
         public override string Symbol => "S";
 
-        public override BaseCell ChooseCellToStep()
+        public override IBaseCell ChooseCellToStep()
         {
-            var cells = Level.GetNearCells<Ground>(this);
-            if (cells.Count == 0)
-                return null;
-            var cell = cells[0];
-            return cell;
+            var cells = Level.GetNearCells<IBaseCell>(this);
+            return cells.GetRandom();
         }
 
-        public override bool Step(BaseCreature creature)
+        public override bool Step(IBaseCreature creature)
         {
-            Console.WriteLine(creature);
             if (creature is Hero)
             {
                 Color = DEFAULT_ATTACK_COLOR;
