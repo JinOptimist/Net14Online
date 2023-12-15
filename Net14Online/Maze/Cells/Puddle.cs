@@ -9,24 +9,18 @@ using System.Threading.Tasks;
 
 namespace Maze.Cells
 {
-     public  class Gold : BaseCell
-    {
-        public Gold(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
-        {
 
+    public class Puddle : BaseCell
+    {
+        public Puddle(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        {
         }
 
+        public override string Symbol => "O";
 
-
-
-
-
-
-
-        public override string Symbol => "+";
         public override bool Step(IBaseCreature creature)
         {
-            return true;
+            return false;
         }
     }
 }
