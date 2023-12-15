@@ -97,7 +97,7 @@ namespace Maze.LevelStaff
                 var grounds = _level.Cells.OfType<Ground>().ToList();
                 var randomIndex = _random.Next(grounds.Count);
                 var ground = grounds[randomIndex];
-                var goodMonster = new GoodMonster(ground.CoordinateX, ground.CoordinateY, _level);
+                var goodMonster = new GoodMonster(ground.CoordinateX, ground.CoordinateY, _level,ConsoleColor.Yellow);
                 _level.Creatures.Add(goodMonster);
             }
         }
