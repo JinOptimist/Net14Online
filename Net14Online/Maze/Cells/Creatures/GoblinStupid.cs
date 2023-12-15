@@ -7,6 +7,8 @@ namespace Maze.Cells.Creatures
 {
     public class GoblinStupid : BaseCreature
     {
+        private Random _random = new Random();
+        
         public const ConsoleColor DEFAULT_COLOR = ConsoleColor.DarkGreen;
 
         public GoblinStupid(int coordinateX, int coordinateY, ILevel level) 
