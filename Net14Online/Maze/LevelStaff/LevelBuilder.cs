@@ -88,8 +88,23 @@ namespace Maze.LevelStaff
             BuildGoblinStupid(coinCount);
             BuildCentaur();
             BuildTerminatorV92(2);
-
+            BuildGoodMonster();
+            
+            
             return _level;
+        }
+
+        private void BuildGoodMonster()
+        {
+            var countGoodMonster = _level.Height / 2;
+            for (int i = 0; i < countGoodMonster; i++)
+            {
+                var grounds = _level.Cells.OfType<Ground>().ToList();
+                var randomIndex = _random.Next(grounds.Count);
+                var ground = grounds[randomIndex];
+                var goodMonster = new GoodMonster(ground.CoordinateX, ground.CoordinateY, _level);
+                _level.Creatures.Add(goodMonster);
+            }
         }
 
         public Level BuildV7(int width = 10, int height = 5, int seedForRandom = -1)
