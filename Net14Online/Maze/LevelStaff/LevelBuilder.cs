@@ -74,7 +74,7 @@ namespace Maze.LevelStaff
             BuildGroundSmart();
             BuildDiamond();
             BuildCoin(coinCount);
-            BuildRing(ringCount);
+            BuildRing(ringCount);           
             //BuildChest();
             BuildMoonV26();
             AddBerriesV7(berriesCount);
@@ -85,9 +85,26 @@ namespace Maze.LevelStaff
             //Generate creature
             BuildHero();
             BuildGoblinStupid(coinCount);
+            BuildElf(ringCount);
 
             return _level;
         }
+        private void BuildElf(int ringCount)
+        {
+            for (int i = 0; i < ringCount; i++)
+            {
+                var rings = _level.Cells.OfType<Ring>().ToList();
+                if (rings.Count > 0)
+                {
+                    var randomIndex = _random.Next(rings.Count);
+                    var ring = rings[randomIndex];
+
+                    var elf = new Elf(ring.CoordinateX, ring.CoordinateY, _level);
+                    _level.Creatures.Add(elf);
+                }
+            }
+        }
+
 
         private void BuildGoblinStupid(int goblinCount)
         {
@@ -210,7 +227,7 @@ namespace Maze.LevelStaff
                 var randomEmptyCell = emptyCells[random.Next(emptyCells.Count)];
 
                 // Pass _level to the constructor of Ring
-                var ring = new Ring(randomEmptyCell.CoordinateX, randomEmptyCell.CoordinateY, _level, 1);
+                var ring = new Ring(randomEmptyCell.CoordinateX, randomEmptyCell.CoordinateY, _level);
 
                 _level.Cells.Remove(randomEmptyCell);
                 _level.Cells.Add(ring);
