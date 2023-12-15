@@ -18,6 +18,7 @@ namespace Maze.LevelStaff
             Console.WriteLine("1 - Base level Buildev0");
             Console.WriteLine("2 - Base level Buildev11");
             Console.WriteLine("3 - Base level Buildev7");
+            Console.WriteLine("4 - Base level Buildev17");
 
             while (!int.TryParse(Console.ReadLine(), out typeBuilder))
             {
@@ -36,6 +37,9 @@ namespace Maze.LevelStaff
                     break;
                 case 3:
                     _level = BuildV7(30, 20);
+                    break;
+                case 4:
+                    _level = BuildV17(30, 20);
                     break;
                 default:
                     _level = BuildV0(30, 20);
@@ -111,7 +115,6 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-
         private void BuildGoblinStupid(int goblinCount)
         {
             for (int i = 0; i < goblinCount; i++)
@@ -119,8 +122,20 @@ namespace Maze.LevelStaff
                 var coins = _level.Cells.OfType<Coin>().ToList();
                 var randomIndex = _random.Next(coins.Count);
                 var coin = coins[randomIndex];
-                var goblin = new GoblinStupid(coin.CoordinateX, coin.CoordinateY, _level, ConsoleColor.DarkGreen);
+                var goblin = new GoblinStupid(coin.CoordinateX, coin.CoordinateY, _level);
                 _level.Creatures.Add(goblin);
+            }
+        }
+
+        private void BuildSlime(int slimeCount)
+        {
+            for (int i = 0; i < slimeCount; i++)
+            {
+                var grounds = _level.Cells.OfType<Ground>().ToList();
+                var randomIndex = _random.Next(grounds.Count);
+                var ground = grounds[randomIndex];
+                var slime = new Slime(ground.CoordinateX, ground.CoordinateY, _level);
+                _level.Creatures.Add(slime);
             }
         }
 
@@ -172,7 +187,8 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-        public Level BuildV17(int width = 10, int height = 5, int seedForRandom = -1, int numberOfSecrets = 5, int numberOfCoins = 3)
+        public Level BuildV17(int width = 10, int height = 5, int seedForRandom = -1,
+            int secretsCount = 5, int coinsCount = 3, int slimeCount = 2)
         {
             if (seedForRandom > 0)
             {
@@ -188,10 +204,10 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            BuildSecret(numberOfSecrets, new Coin(0, 0, _level), new Diamond(0, 0, _level));
-            BuildCoin(numberOfCoins);
+            BuildSecret(secretsCount, new Coin(0, 0, _level), new Diamond(0, 0, _level));
+            BuildCoin(coinsCount);
             BuildHero();
-
+            BuildSlime(slimeCount);
             return _level;
         }
 
@@ -541,7 +557,7 @@ namespace Maze.LevelStaff
         {
             var ground = _level.Cells.First(x => x is Ground);
 
-            var hero = new Hero(ground.CoordinateX, ground.CoordinateY, _level, ConsoleColor.DarkYellow);
+            var hero = new Hero(ground.CoordinateX, ground.CoordinateY, _level);
 
             _level.Hero = hero;
         }

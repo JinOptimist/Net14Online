@@ -10,10 +10,6 @@ namespace Maze.Cells.Creatures
         {
         }
 
-        public Hero(int coordinateX, int coordinateY, Level level, ConsoleColor color) : base(coordinateX, coordinateY, level, color)
-        {
-        }
-
         public override bool Step(BaseCreature creature)
         {
             throw new NotImplementedException();
