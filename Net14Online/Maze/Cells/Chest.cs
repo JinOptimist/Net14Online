@@ -1,4 +1,5 @@
 ﻿using Maze.Cells.Creatures;
+using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 
 namespace Maze.Cells
@@ -11,7 +12,7 @@ namespace Maze.Cells
 
         public override string Symbol => "4"; //Symbol 4 = [Ch]est
 
-        public override bool Step(BaseCreature creature)
+        public override bool Step(IBaseCreature creature)
         {
             return false;
         }

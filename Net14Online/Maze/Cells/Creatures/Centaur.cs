@@ -1,4 +1,6 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Cells.CellInterfaces;
+using Maze.Cells.Creatures.Interfaces;
+using Maze.LevelStaff;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,7 @@ namespace Maze.Cells.Creatures
         {
         }
 
-        public override BaseCell ChooseCellToStep()
+        public override IBaseCell ChooseCellToStep()
         {
             var cells = Level.GetNearCells<Ground>(this);
             var random = _random.Next(cells.Count);
@@ -25,7 +27,7 @@ namespace Maze.Cells.Creatures
             return cells[random];
         }
 
-        public override bool Step(BaseCreature creature)
+        public override bool Step(IBaseCreature creature)
         {
             var hero = creature as Hero;
             if (hero is null)
