@@ -93,6 +93,7 @@ namespace Maze.LevelStaff
             BuildCentaur();
             BuildTerminatorV92(2);
             BuildGoodMonster();
+            BuildSnake();
 
 
             return _level;
@@ -696,7 +697,7 @@ namespace Maze.LevelStaff
 
             return _level;
         }
-        private void BuildSnake(int snakeCount)
+        private void BuildSnake(int snakeCount=1)
         {
             for (int i = 0; i < snakeCount; i++)
             {

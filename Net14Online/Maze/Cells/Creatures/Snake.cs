@@ -1,4 +1,5 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Cells.Creatures.Interfaces;
+using Maze.LevelStaff;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,15 +25,19 @@ namespace Maze.Cells.Creatures
             return cell;
         }
 
-        public override bool Step(BaseCreature creature)
+        public override bool Step(IBaseCreature creature)
         {
             if (creature is Snake)
             {
                 return false;
             }
 
-            creature.Hp--;
+            if (creature.Hp > 0)
+            {
+                creature.Hp--;
+            }
+
             return false;
-        }
+        }     
     }
 }
