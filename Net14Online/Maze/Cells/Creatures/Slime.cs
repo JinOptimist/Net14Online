@@ -6,13 +6,13 @@ using System;
 
 namespace Maze.Cells.Creatures
 {
-    internal class Slime : BaseCreature
+    public class Slime : BaseCreature
     {
         public const ConsoleColor DEFAULT_ATTACK_COLOR = ConsoleColor.Red;
 
         private ConsoleColor startColor;
 
-        public Slime(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.Blue) 
+        public Slime(int coordinateX, int coordinateY, ILevel level, ConsoleColor color = ConsoleColor.Blue) 
             : base(coordinateX, coordinateY, level, color)
         {
             startColor = color;
