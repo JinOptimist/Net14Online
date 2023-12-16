@@ -24,7 +24,7 @@ namespace Maze.LevelStaff
 
             while (!int.TryParse(Console.ReadLine(), out typeBuilder))
             {
-                Console.WriteLine("Only number in range 1-3 allowed");
+                Console.WriteLine("Only number in range 1-4 allowed");
             }
 
             Console.Clear();
@@ -93,6 +93,7 @@ namespace Maze.LevelStaff
             BuildCentaur();
             BuildTerminatorV92(2);
             BuildGoodMonster();
+            BuildSnake();
 
 
             return _level;
@@ -657,12 +658,54 @@ namespace Maze.LevelStaff
                 BuildPaths(startPosition, endPosition);
                 return;
             }
-
             if ((direction = GetDirection(startPosition.Y, endPosition.Y)) != 0)
             {
                 startPosition.Y += direction;
                 BuildPaths(startPosition, endPosition);
                 return;
+            }
+        }
+        public Level BuildV10(int width = 10,
+             int height = 5,
+             int seedForRandom = -1,
+             int coinCount = 2,
+             int puddleCount = 5)
+        {
+            if (seedForRandom > 0)
+            {
+                _random = new Random(seedForRandom);
+            }
+            else
+            {
+                _random = new Random();
+            }
+
+           
+            _level = new Level();
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildGroundSmart();
+            BuildCoin(coinCount);
+            BuildPuddleV_10();
+
+            //Generate creature
+            BuildHero();
+            BuildGoblinStupid(coinCount);
+            BuildSnake(puddleCount);
+
+            return _level;
+        }
+        private void BuildSnake(int snakeCount=1)
+        {
+            for (int i = 0; i < snakeCount; i++)
+            {
+                var puddles = _level.Cells.OfType<Puddle>().ToList();
+                var randomIndex = _random.Next(puddles.Count);
+                var puddle = puddles[randomIndex];
+                var snake = new Snake(puddle.CoordinateX, puddle.CoordinateY, _level);
+                _level.Creatures.Add(snake);
             }
         }
 
