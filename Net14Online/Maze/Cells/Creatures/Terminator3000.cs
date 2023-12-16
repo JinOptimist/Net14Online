@@ -1,4 +1,6 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Cells.CellInterfaces;
+using Maze.Cells.Creatures.Interfaces;
+using Maze.LevelStaff;
 
 
 namespace Maze.Cells.Creatures
@@ -12,7 +14,7 @@ namespace Maze.Cells.Creatures
 
         public override string Symbol => "(";
 
-        public override BaseCell ChooseCellToStep()
+        public override IBaseCell ChooseCellToStep()
         {
             var _random = new Random();
             var cells = Level.GetNearCells<BaseCell>(this).Where(x => x is not Wall).ToList(); 
@@ -22,7 +24,7 @@ namespace Maze.Cells.Creatures
 
         }
 
-        public override bool Step(BaseCreature creature)
+        public override bool Step(IBaseCreature creature)
         {
             if (creature is Terminator3000)
             {
