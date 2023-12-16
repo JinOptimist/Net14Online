@@ -1,9 +1,5 @@
 ﻿using Maze.LevelStaff;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Maze.Cells.Creatures
 {
@@ -19,7 +15,7 @@ namespace Maze.Cells.Creatures
         public override BaseCell ChooseCellToStep()
         {
             var _random = new Random();
-            var cells = Level.Cells.Where(x => x is not Wall).ToList();
+            var cells = Level.GetNearCells<BaseCell>(this).Where(x => x is not Wall).ToList(); 
             var randomInex = _random.Next(cells.Count);
             var cell = cells[randomInex];
             return cell;
@@ -34,7 +30,7 @@ namespace Maze.Cells.Creatures
             }
 
             creature.Money /= 3;
-            return false;
+            return true;
         }
     }
 }
