@@ -3,20 +3,19 @@ using Maze.LevelStaff;
 
 namespace Maze.Cells
 {
-    internal class Chest : BaseCell
+    public class Chest : BaseCell
     {
-        public Chest(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Chest(int coordinateX, int coordinateY, Level level, bool mimicOrNot) : base(coordinateX, coordinateY, level)
         {
         }
 
         public override string Symbol => "4"; //Symbol 4 = [Ch]est
 
+        public bool mimicorNot { get; private set; }
+
         public override bool Step(BaseCreature creature)
         {
-            var rnd = new Random(100);
-            var MimicOrNot = rnd.Next(0, 100);
-
-            if (MimicOrNot < 20)
+            if (mimicorNot)
             {
                 creature.Hp -= 2;
             }

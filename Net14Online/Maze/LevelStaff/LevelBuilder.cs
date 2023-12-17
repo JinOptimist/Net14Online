@@ -474,7 +474,12 @@ namespace Maze.LevelStaff
         private void BuildChest(int chestCount)
         {
             var impasseForChest = _level.Cells.OfType<Ground>().ToList();
-
+            var probabilityMimic = _random.Next(0, 100);
+            bool mimicOrNot = false;
+            if (probabilityMimic <=20)
+            {
+                mimicOrNot = true;
+            }
             impasseForChest = impasseForChest
                 .Where(cell => _level.GetNearCells<Wall>(cell).Count() >= 2)
                 .ToList();
@@ -483,7 +488,7 @@ namespace Maze.LevelStaff
                 {
                     var randomIndex = _random.Next(impasseForChest.Count);
                     var randomGround = _level.Cells[randomIndex];
-                    var chest = new Chest(randomGround.CoordinateX, randomGround.CoordinateY,_level);
+                    var chest = new Chest(randomGround.CoordinateX, randomGround.CoordinateY,_level, mimicOrNot);
                     _level.ReplaceCell(randomGround, chest);
                 }               
         }
