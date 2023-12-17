@@ -96,9 +96,19 @@ namespace Maze.LevelStaff
             BuildTerminatorV92(2);
             BuildGoodMonster();
             BuildSnake();
+            BuildGhost();
 
 
             return _level;
+        }
+
+        private void BuildGhost()
+        {
+            var groundCell = _level.Cells.OfType<Ground>().ToList();
+            var randomIndex = _random.Next(groundCell.Count);
+            var cell = groundCell[randomIndex];
+            var ghost = new Ghost(cell.CoordinateX, cell.CoordinateY, _level);
+            _level.Creatures.Add(ghost);
         }
 
         private void BuildGoodMonster()
