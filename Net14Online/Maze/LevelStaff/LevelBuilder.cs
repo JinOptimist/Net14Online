@@ -3,6 +3,7 @@ using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures;
 using Maze.Helper;
 using System.Drawing;
+using System.Net.Sockets;
 
 namespace Maze.LevelStaff
 {
@@ -53,12 +54,13 @@ namespace Maze.LevelStaff
         }
 
         public Level BuildV0(int width = 10,
-             int height = 5,
-             int seedForRandom = -1,
-             int coinCount = 2,
-             int berriesCount = 3,
-             int trapsCount = 5,
-             int sunCount = 2)
+            int height = 5,
+            int seedForRandom = -1,
+            int coinCount = 2,
+            int berriesCount = 3,
+            int trapsCount = 5,
+            int sunCount = 2,
+            int chestCount = 2)
         {
             if (seedForRandom > 0)
             {
@@ -79,7 +81,7 @@ namespace Maze.LevelStaff
             BuildDiamond();
             BuildCoin(coinCount);
             //BuildRing();
-            //BuildChest();
+            BuildChest(chestCount);
             BuildMoonV26();
             AddBerriesV7(berriesCount);
             BuildCage();
@@ -572,25 +574,29 @@ namespace Maze.LevelStaff
 
             return secret;
         }
-
-        /// <summary>
-        /// сокровищница на уровне в случайном месте. Предполагатеся что можно будет пробиться к ней через стены
-        /// </summary>
-        private void BuildChest()
+        private void BuildChest(int chestCount)
         {
-            var randomX = Math.Abs(_random.Next(_level.Width));
-            var randomY = Math.Abs(_random.Next(_level.Height));
-
-            for (int x = randomX; x < randomX + 2; x++)
+            var impasseForChest = _level.Cells.OfType<Ground>().ToList();
+            var probabilityMimic = _random.Next(0, 100);
+            bool mimicOrNot = false;
+            var color = ConsoleColor.Green;
+            if (probabilityMimic >=20)
             {
-                for (int y = randomY; y < randomY + 2; y++)
-                {
-                    var randomCell = _level.Cells.First(cell => cell.CoordinateX == x && cell.CoordinateY == y);
-                    var cellChest = new Chest(x, y, _level);
-                    _level.Cells.Remove(randomCell);
-                    _level.Cells.Add(cellChest);
-                }
+                mimicOrNot = true;
+                color = ConsoleColor.Red;
             }
+            impasseForChest = impasseForChest
+                .Where(cell => _level.GetNearCells<Wall>(cell).Count() >= 2)
+                .ToList();
+
+                for (int i = 0; i < chestCount; i++)
+                {
+                    var randomIndex = _random.Next(impasseForChest.Count);
+                    var randomGround = _level.Cells[randomIndex];
+                    var chest = new Chest(randomGround.CoordinateX, randomGround.CoordinateY,_level, color, mimicOrNot);
+                    _level.Cells.Remove(randomGround);
+                    _level.Cells.Add(chest);
+                }               
         }
 
         private void BuildHero()
