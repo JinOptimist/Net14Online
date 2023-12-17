@@ -6,7 +6,7 @@ namespace Maze.Cells
 {
     public class Portal : BaseCell
     {
-        public Portal(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Portal(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.DarkMagenta) : base(coordinateX, coordinateY, level, color)
         {
         }
 
