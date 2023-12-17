@@ -4,7 +4,7 @@ using Maze.LevelStaff;
 
 namespace Maze.Cells.Creatures
 {
-    public class Hero : BaseCreature
+    public class Hero : BaseCreature, IHero
     {
         public override string Symbol => "H";
 

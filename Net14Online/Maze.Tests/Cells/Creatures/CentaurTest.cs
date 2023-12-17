@@ -1,5 +1,4 @@
-﻿using Maze.Cells;
-using Maze.Cells.CellInterfaces;
+﻿using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures;
 using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
@@ -16,41 +15,45 @@ namespace Maze.Tests.Cells.Creatures
         [TestCase(1, 0, 0, 0)]
         public void Centaur_Step_CentaurAtackCreature(int hpBefore, int hpAfter, int moneyBefore, int moneyAfter)
         {
-            var hero = new Hero(0, 0, null);
-            hero.Hp = hpBefore;
-            hero.Money = moneyBefore;
+            var levelMock = new Mock<ILevel>();
+            var hero = new Mock<IHero>();
+            hero.SetupProperty(h => h.Hp);
+            hero.SetupProperty(h => h.Money);
+            hero.Object.Hp = hpBefore;
+            hero.Object.Money = moneyBefore;
 
-            var centaur = new Centaur(0, 0, null);
-            centaur.Step(hero);
+            var centaur = new Centaur(0, 0, levelMock.Object);
+            centaur.Step(hero.Object);
 
-            Assert.That(hero.Hp == hpAfter && hero.Money == moneyAfter, Is.True, "Centaur must hit enemy");
+            Assert.That(hero.Object.Hp == hpAfter && hero.Object.Money == moneyAfter, Is.True, "Centaur must hit enemy");
         }
 
         [Test]
-        public void Centaur_GetNearCell()
+        public void Centaur_ChooseCellToStep_GetNearCell()
         {
             var levelMock = new Mock<ILevel>();
-            var cell = new Ground(0, 0, levelMock.Object);
+            var ground = new Mock<IGround>();
+            var grounds = new List<IGround>()
+            {
+                ground.Object
+            };
             var cells = new List<IBaseCell>()
             {
-                cell
+                ground.Object
             };
 
             levelMock.SetupProperty(l => l.Cells);
             levelMock.Object.Cells = cells;
 
-            var centaur = new Centaur(0, 0, levelMock.Object as Level);
+            var centaur = new Centaur(0, 0, levelMock.Object);
 
             levelMock
-                .Setup(x => x.GetNearCells<IBaseCell>(centaur))
-                .Returns(cells);
+                .Setup(x => x.GetNearCells<IGround>(centaur))
+                .Returns(grounds);
 
-            // Act
             var answer = centaur.ChooseCellToStep();
 
-            // Assert
-            Assert.That(cell == answer, Is.True, "Centaur has to step to single exister cell");
-
+            Assert.That(ground.Object == answer, Is.True, "Centaur has to step to single exister cell");
         }
     }
 }

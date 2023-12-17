@@ -28,7 +28,7 @@ namespace Maze.Cells.Creatures
 
         public override bool Step(IBaseCreature creature)
         {
-            if (creature is Hero)
+            if (creature is IHero)
             {
                 Color = DEFAULT_ATTACK_COLOR;
                 creature.Hp--;
