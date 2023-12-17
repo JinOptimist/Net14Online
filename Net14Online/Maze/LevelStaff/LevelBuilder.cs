@@ -88,6 +88,7 @@ namespace Maze.LevelStaff
             BuildGoblinStupid(coinCount);
             BuildCentaur();
             BuildTerminatorV92(2);
+            BuildBanker(3);
 
             return _level;
         }
@@ -145,6 +146,15 @@ namespace Maze.LevelStaff
                 var coin = coins[randomIndex];
                 var terminator = new Terminator3000(coin.CoordinateX, coin.CoordinateY, _level, ConsoleColor.Yellow);
                 _level.Creatures.Add(terminator);
+            }
+        }
+        private void BuildBanker(int bankerCount = 1)
+        {
+            for (int i = 0; i < bankerCount; i++)
+            {
+                var ground = _level.GetRandomCell<Ground>();
+                var banker = new Banker(ground.CoordinateX, ground.CoordinateY, _level);
+                _level.Creatures.Add(banker);
             }
         }
 
