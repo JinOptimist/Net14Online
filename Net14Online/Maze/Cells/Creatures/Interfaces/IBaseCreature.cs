@@ -9,5 +9,6 @@ namespace Maze.Cells.Creatures.Interfaces
         int Money { get; set; }
 
         IBaseCell ChooseCellToStep();
+        bool Step(IBaseCreature creature);
     }
 }
