@@ -7,7 +7,7 @@ namespace Maze.Cells.Creatures;
 public class GoodMonster : BaseCreature
 {
     private Random _random = new Random();
-    public GoodMonster(int coordinateX, int coordinateY, Level level, ConsoleColor consoleColor = ConsoleColor.Yellow) : base(coordinateX, coordinateY, level,consoleColor)
+    public GoodMonster(int coordinateX, int coordinateY, ILevel level, ConsoleColor consoleColor = ConsoleColor.Yellow) : base(coordinateX, coordinateY, level,consoleColor)
     {
     }
 
