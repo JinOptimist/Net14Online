@@ -11,7 +11,7 @@ namespace Maze.Tests.Cells.Creatures
     public class BerryTest
     {
         [Test]
-        public void Berry_Step_AlwaysCanStepOnerry()
+        public void Berry_Step_AlwaysCanStepOnBerry()
         {
             // Preparation
             var levelMock = new Mock<ILevel>();
