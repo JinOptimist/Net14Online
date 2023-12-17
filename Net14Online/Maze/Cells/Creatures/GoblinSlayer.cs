@@ -15,7 +15,7 @@ namespace Maze.Cells.Creatures
         {
         }
 
-        public override string Symbol => "S";
+        public override string Symbol => "F";
 
         public override IBaseCell ChooseCellToStep()
         {
@@ -28,10 +28,13 @@ namespace Maze.Cells.Creatures
             switch (creature)
             {
                 case GoblinStupid:
-                    creature.Hp--;
+                    creature.Hp-=2;
                     break;
                 case Hero:
                     creature.Money--;
+                    break;
+                default:
+                    creature.Hp--;
                     break;
             }
 
