@@ -1,5 +1,4 @@
 ﻿using Maze.Cells.Creatures;
-using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,7 @@ namespace Maze.Cells
         {
         }
 
-        public override bool Step(IBaseCreature creature)
+        public override bool Step(BaseCreature creature)
         {
             creature.Hp++;
             return true;

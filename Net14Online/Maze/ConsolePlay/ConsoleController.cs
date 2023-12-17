@@ -1,7 +1,5 @@
 ﻿using Maze.Cells;
-using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures;
-using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 
 namespace Maze.ConsolePlay
@@ -80,7 +78,7 @@ namespace Maze.ConsolePlay
             }
         }
 
-        private void MoveCreature(IBaseCreature creature, IBaseCell destinationCell)
+        private void MoveCreature(BaseCreature creature, BaseCell destinationCell)
         {
             if (destinationCell == null)
             {
