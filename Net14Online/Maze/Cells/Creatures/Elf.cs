@@ -1,4 +1,5 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Cells.Creatures.Interfaces;
+using Maze.LevelStaff;
 using System;
 namespace Maze.Cells.Creatures
 {
@@ -19,7 +20,7 @@ namespace Maze.Cells.Creatures
             return cell;
         }
 
-        public override bool Step(BaseCreature creature)
+        public override bool Step(IBaseCreature creature)
         {
             if (creature is Elf)
             {
