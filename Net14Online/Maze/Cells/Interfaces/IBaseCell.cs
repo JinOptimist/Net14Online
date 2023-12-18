@@ -1,5 +1,4 @@
-﻿using Maze.Cells.Creatures;
-using Maze.Cells.Creatures.Interfaces;
+﻿using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 
 namespace Maze.Cells.CellInterfaces
