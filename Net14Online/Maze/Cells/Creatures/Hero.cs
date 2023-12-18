@@ -12,6 +12,7 @@ namespace Maze.Cells.Creatures
         {
         }
 
+
         public override bool Step(IBaseCreature creature)
         {
             throw new NotImplementedException();

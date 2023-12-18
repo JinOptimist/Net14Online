@@ -1,4 +1,5 @@
-﻿using Maze.Cells.Creatures.Interfaces;
+﻿using Maze.Cells.CellInterfaces;
+using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 using System;
 using System.Collections.Generic;
@@ -15,15 +16,15 @@ namespace Maze.Cells.Creatures
 
         private Random _random = new Random();
 
-        public Thief(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Thief(int coordinateX, int coordinateY, ILevel level) : base(coordinateX, coordinateY, level)
         {
         }
 
         public override string Symbol => "t";
 
-        public override BaseCell ChooseCellToStep()
+        public override IBaseCell ChooseCellToStep()
         {
-            var cells = Level.GetNearCells<BaseCell>(this);
+            var cells = Level.GetNearCells<IBaseCell>(this);
             var randomInex = _random.Next(cells.Count);
             var cell = cells[randomInex];
             return cell;
