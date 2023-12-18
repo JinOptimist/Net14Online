@@ -6,7 +6,8 @@ namespace Maze.Cells
 {
     public class Chest : BaseCell
     {
-        public Chest(int coordinateX, int coordinateY, Level level, ConsoleColor color , bool mimicOrNot) : base(coordinateX, coordinateY, level, color)
+        public Chest(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.Gray, bool mimicOrNot = false)
+            : base(coordinateX, coordinateY, level, color)
         {
         }
 

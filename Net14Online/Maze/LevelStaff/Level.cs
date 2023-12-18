@@ -12,13 +12,14 @@ namespace Maze.LevelStaff
         public List<IBaseCell> Cells { get; set; } = new List<IBaseCell>();
         public List<IBaseCreature> Creatures { get; set; } = new List<IBaseCreature>();
         public Hero Hero { get; set; }
-        public void ReplaceCell(BaseCell oldCell, BaseCell newCell)
+        public Elf Elf { get; set; }
+        public void ReplaceCell(IBaseCell oldCell, IBaseCell newCell)
         {
             Cells.Remove(oldCell);
             Cells.Add(newCell);
         }
 
-        public void ReplaceToGround(BaseCell cell)
+        public void ReplaceToGround(IBaseCell cell)
         {
             var ground = new Ground(cell.CoordinateX, cell.CoordinateY, this);
             ReplaceCell(cell, ground);

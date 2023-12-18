@@ -1,4 +1,5 @@
-﻿using Maze.Cells.Creatures.Interfaces;
+﻿using Maze.Cells.CellInterfaces;
+using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,15 @@ namespace Maze.Cells.Creatures
     public class Snake : BaseCreature
     {
         private Random _random = new Random();
-        public Snake(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.DarkBlue) : base(coordinateX, coordinateY, level,color)
+        public Snake(int coordinateX, int coordinateY, ILevel level, ConsoleColor color = ConsoleColor.DarkBlue) : base(coordinateX, coordinateY, level,color)
         {
         }
 
         public override string Symbol => "s";
 
-        public override BaseCell ChooseCellToStep()
+        public override IBaseCell ChooseCellToStep()
         {
-            var cells = Level.GetNearCells<BaseCell>(this);
+            var cells = Level.GetNearCells<IBaseCell>(this);
             var randomInex = _random.Next(cells.Count);
             var cell = cells[randomInex];
             return cell;
