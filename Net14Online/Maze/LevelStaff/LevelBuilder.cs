@@ -595,8 +595,7 @@ namespace Maze.LevelStaff
                 {
                     var trap = new Trap(nearestCell.CoordinateX, nearestCell.CoordinateY, _level);
 
-                    _level.Cells.Remove(nearestCell);
-                    _level.Cells.Add(trap);
+                    _level.ReplaceCell(nearestCell, trap);
                 }
             }
         }
