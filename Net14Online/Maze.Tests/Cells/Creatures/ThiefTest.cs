@@ -14,7 +14,9 @@ using System.Threading.Tasks;
 
 namespace Maze.Tests.Cells.Creatures
 {
-
+    /// <summary>
+    /// Исправление тестов
+    /// </summary>
     public class ThiefTests
     {
         [Test]
