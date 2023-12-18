@@ -14,7 +14,7 @@ namespace Maze.LevelStaff
         int Width { get; set; }
 
         List<OneOfCellType> GetNearCells<OneOfCellType>(IBaseCell currentCell) where OneOfCellType : IBaseCell;
-        void ReplaceCell(BaseCell oldCell, BaseCell newCell);
-        void ReplaceToGround(BaseCell cell);
+        void ReplaceCell(IBaseCell oldCell, IBaseCell newCell);
+        void ReplaceToGround(IBaseCell cell);
     }
 }

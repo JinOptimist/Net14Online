@@ -1,4 +1,5 @@
 ﻿using Maze.Cells;
+using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures;
 using System.Drawing;
 
@@ -120,7 +121,7 @@ namespace Maze.LevelStaff
 
         private void BuildGroundSmart()
         {
-            var markToDestroy = new List<BaseCell>();
+            var markToDestroy = new List<IBaseCell>();
 
             var randomIndex = _random.Next(_level.Cells.Count);
             var randomWall = _level.Cells[randomIndex];
