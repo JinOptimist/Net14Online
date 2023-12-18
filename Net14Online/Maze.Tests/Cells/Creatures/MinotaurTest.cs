@@ -86,6 +86,6 @@ public class MinotaurTest
         var answer = minotaur.Step(monstrMock.Object);
 
         // Assert
-        Assert.That(monstrMock.Object.Money == moneyAfter, Is.True, "Minotaur must hit enemy");
+        Assert.That(monstrMock.Object.Money == moneyAfter, Is.True, "The Minotaur must take money from his enemies");
     }
 }
