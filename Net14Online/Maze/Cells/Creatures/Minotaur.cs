@@ -6,21 +6,22 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Maze.Cells.CellInterfaces;
 
 namespace Maze.Cells.Creatures
 {
     public class Minotaur : BaseCreature
     {
         private Random _random = new Random();
-        public Minotaur(int coordinateX, int coordinateY, Level level, ConsoleColor color) : base(coordinateX, coordinateY, level, color)
+        public Minotaur(int coordinateX, int coordinateY, ILevel level, ConsoleColor color) : base(coordinateX, coordinateY, level, color)
         {
         }
 
         public override string Symbol => "M";
 
-        public override BaseCell ChooseCellToStep()
+        public override IBaseCell ChooseCellToStep()
         {
-            var cells = Level.GetNearCells<BaseCell>(this);
+            var cells = Level.GetNearCells<IBaseCell>(this);
             var randomInex = _random.Next(cells.Count);
             var cell = cells[randomInex];
             return cell;
@@ -31,12 +32,12 @@ namespace Maze.Cells.Creatures
             {
                 return false;
             }
-            var hero = creature as Hero;
+            var hero = creature as IHero;
             if (hero is null)
             {
                 return false;
             }
-
+            
             hero.Hp = hero.Hp < 1 ? 0 : hero.Hp - 1;
             hero.Money = hero.Money < 1 ? 0 : hero.Money - 2;
 
