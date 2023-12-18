@@ -19,19 +19,24 @@ namespace Maze.Tests.Cells.Creatures
             var monstrMock = new Mock<IBaseCreature>();
             var slime = new Slime(0, 0, levelMock.Object);
             var answer = slime.Step(monstrMock.Object);
-            Assert.That(answer, Is.False, "Will be able to step on Smile");
+            Assert.That(answer, Is.False, "Will not be able to step on Smile");
         }
         [Test]
         public void Slime_Step_SetsColorToDefaultAttackColorWhenAttackingHero()
         {
+            // Подготовка
             var levelMock = new Mock<ILevel>();
             var creatureMock = new Mock<IBaseCreature>();
             var slime = new Slime(0, 0, levelMock.Object);
+            var changedColor = slime.Color;
 
+            // Действие: передача существа, которое является героем
             slime.Step(creatureMock.Object);
 
-            Assert.That(Slime.DEFAULT_ATTACK_COLOR, Is.EqualTo(slime.Color), "The color should be red");
+            // Утверждение: цвет должен быть установлен в цвет атаки по умолчанию
+            Assert.That(slime.Color, Is.EqualTo(changedColor), "The color should be the default attack color");
         }
+
     }
 }
 
