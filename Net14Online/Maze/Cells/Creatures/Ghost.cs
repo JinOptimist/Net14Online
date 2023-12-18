@@ -24,7 +24,7 @@ namespace Maze.Cells.Creatures
 
         public override bool Step(IBaseCreature creature)
         {
-            var hero = creature as Hero;
+            var hero = creature as IHero;
 
             if (hero is null)
             {
