@@ -9,7 +9,7 @@ namespace Maze.Tests.Cells.Creatures
     public class RingTest
     {
         [Test]
-        [TestCase(0,5,5)]  // Герой должен получить бонус 5 ко всем характеристикам
+        [TestCase(0,5,5)]  
         
         public void Ring_Step_HeroMustReceiveCorrectBonusForMoney(int initialMoney, int expectedMoney, int bonusAmount)
         {
@@ -24,7 +24,7 @@ namespace Maze.Tests.Cells.Creatures
             var result = ring.Step(heroMock.Object);
 
             // Assertion
-            //Assert.That(result, Is.True, "Hero should be able to receive the bonus");
+           
             Assert.That(heroMock.Object.Money, Is.EqualTo(expectedMoney), "Money should be increased on BonusAmount");
            
         }
@@ -45,7 +45,6 @@ namespace Maze.Tests.Cells.Creatures
             var result = ring.Step(heroMock.Object);
 
             // Assertion
-            //Assert.That(result, Is.True, "Hero should be able to receive the bonus");
             
             Assert.That(heroMock.Object.Hp, Is.EqualTo(expectedHp), "HP should be increased on BonusAmount");
            
@@ -66,8 +65,7 @@ namespace Maze.Tests.Cells.Creatures
             var result = ring.Step(heroMock.Object);
 
             // Assertion
-            //Assert.That(result, Is.True, "Hero should be able to receive the bonus");
-            
+           
             Assert.That(heroMock.Object.Age, Is.EqualTo(expectedAge), "Age should be increased on BonusAmount");
         }
     }
