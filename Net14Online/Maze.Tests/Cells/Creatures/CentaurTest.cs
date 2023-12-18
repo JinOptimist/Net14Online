@@ -15,6 +15,7 @@ namespace Maze.Tests.Cells.Creatures
         [TestCase(1, 0, 0, 0)]
         public void Centaur_Step_CentaurAtackCreature(int hpBefore, int hpAfter, int moneyBefore, int moneyAfter)
         {
+            // Preparation
             var levelMock = new Mock<ILevel>();
             var hero = new Mock<IHero>();
             hero.SetupProperty(h => h.Hp);
@@ -23,14 +24,19 @@ namespace Maze.Tests.Cells.Creatures
             hero.Object.Money = moneyBefore;
 
             var centaur = new Centaur(0, 0, levelMock.Object);
+
+            // Act
             centaur.Step(hero.Object);
 
-            Assert.That(hero.Object.Hp == hpAfter && hero.Object.Money == moneyAfter, Is.True, "Centaur must hit enemy");
+            // Assert
+            Assert.That(hero.Object.Hp == hpAfter, Is.True, "Centaur must hit hero");
+            Assert.That(hero.Object.Money == moneyAfter, Is.True, "Centaur must hit hero");
         }
 
         [Test]
         public void Centaur_ChooseCellToStep_GetNearCell()
         {
+            // Preparation
             var levelMock = new Mock<ILevel>();
             var ground = new Mock<IGround>();
             var grounds = new List<IGround>()
@@ -51,8 +57,10 @@ namespace Maze.Tests.Cells.Creatures
                 .Setup(x => x.GetNearCells<IGround>(centaur))
                 .Returns(grounds);
 
+            // Act
             var answer = centaur.ChooseCellToStep();
 
+            // Assert
             Assert.That(ground.Object == answer, Is.True, "Centaur has to step to single exister cell");
         }
     }
