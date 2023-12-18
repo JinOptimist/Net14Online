@@ -15,13 +15,13 @@ namespace Maze.Cells.Creatures
 
         private  Random _random = new Random();
 
-        public Centaur(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.Red) : base(coordinateX, coordinateY, level, color)
+        public Centaur(int coordinateX, int coordinateY, ILevel level, ConsoleColor color = ConsoleColor.Red) : base(coordinateX, coordinateY, level, color)
         {
         }
 
         public override IBaseCell ChooseCellToStep()
         {
-            var cells = Level.GetNearCells<Ground>(this);
+            var cells = Level.GetNearCells<IGround>(this);
             var random = _random.Next(cells.Count);
 
             return cells[random];
@@ -29,7 +29,7 @@ namespace Maze.Cells.Creatures
 
         public override bool Step(IBaseCreature creature)
         {
-            var hero = creature as Hero;
+            var hero = creature as IHero;
             if (hero is null)
             {
                 return false;
