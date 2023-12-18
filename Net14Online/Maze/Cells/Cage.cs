@@ -7,7 +7,7 @@ namespace Maze.Cells
     public class Cage : BaseCell
     {
         private bool isFirstStep = true;
-        public Cage(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Cage(int coordinateX, int coordinateY, ILevel level) : base(coordinateX, coordinateY, level)
         {
         }
 
