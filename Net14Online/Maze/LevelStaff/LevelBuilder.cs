@@ -625,6 +625,7 @@ namespace Maze.LevelStaff
             var cellOfRespawn = grounds[numberOfGround];
 
             var zombie = new Zombie(cellOfRespawn.CoordinateX, cellOfRespawn.CoordinateY, _level, ConsoleColor.DarkGreen);
+            _level.Creatures.Add(zombie);
         }
 
         private void BuildTrapRandom(int trapsCount)
