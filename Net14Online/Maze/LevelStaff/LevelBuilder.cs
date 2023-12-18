@@ -3,6 +3,7 @@ using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures;
 using Maze.Helper;
 using System.Drawing;
+using System.Net.Sockets;
 
 namespace Maze.LevelStaff
 {
@@ -20,10 +21,11 @@ namespace Maze.LevelStaff
             Console.WriteLine("1 - Base level Buildev0");
             Console.WriteLine("2 - Base level Buildev11");
             Console.WriteLine("3 - Base level Buildev7");
+            Console.WriteLine("4 - Base level Buildev17");
 
             while (!int.TryParse(Console.ReadLine(), out typeBuilder))
             {
-                Console.WriteLine("Only number in range 1-3 allowed");
+                Console.WriteLine("Only number in range 1-4 allowed");
             }
 
             Console.Clear();
@@ -39,6 +41,9 @@ namespace Maze.LevelStaff
                 case 3:
                     _level = BuildV7(30, 20);
                     break;
+                case 4:
+                    _level = BuildV17(30, 20);
+                    break;
                 default:
                     _level = BuildV0(30, 20);
                     break;
@@ -49,12 +54,13 @@ namespace Maze.LevelStaff
         }
 
         public Level BuildV0(int width = 10,
-             int height = 5,
-             int seedForRandom = -1,
-             int coinCount = 2,
-             int berriesCount = 3,
-             int trapsCount = 5,
-             int sunCount = 2)
+            int height = 5,
+            int seedForRandom = -1,
+            int coinCount = 2,
+            int berriesCount = 3,
+            int trapsCount = 5,
+            int sunCount = 2,
+            int chestCount = 2)
         {
             if (seedForRandom > 0)
             {
@@ -75,7 +81,7 @@ namespace Maze.LevelStaff
             BuildDiamond();
             BuildCoin(coinCount);
             //BuildRing();
-            //BuildChest();
+            BuildChest(chestCount);
             BuildMoonV26();
             AddBerriesV7(berriesCount);
             BuildCage();
@@ -83,13 +89,40 @@ namespace Maze.LevelStaff
             BuildSun(sunCount);
             BuildPuddleV_10();
             BuildMinotaur();
+            BuildPortal();
             //Generate creature
             BuildHero();
             BuildGoblinStupid(coinCount);
             BuildCentaur();
             BuildTerminatorV92(2);
+            BuildGoodMonster();
+            BuildSnake();
+            BuildGhost();
+
 
             return _level;
+        }
+
+        private void BuildGhost()
+        {
+            var groundCell = _level.Cells.OfType<Ground>().ToList();
+            var randomIndex = _random.Next(groundCell.Count);
+            var cell = groundCell[randomIndex];
+            var ghost = new Ghost(cell.CoordinateX, cell.CoordinateY, _level);
+            _level.Creatures.Add(ghost);
+        }
+
+        private void BuildGoodMonster()
+        {
+            var countGoodMonster = _level.Height / 2;
+            for (int i = 0; i < countGoodMonster; i++)
+            {
+                var grounds = _level.Cells.OfType<Ground>().ToList();
+                var randomIndex = _random.Next(grounds.Count);
+                var ground = grounds[randomIndex];
+                var goodMonster = new GoodMonster(ground.CoordinateX, ground.CoordinateY, _level);
+                _level.Creatures.Add(goodMonster);
+            }
         }
 
         public Level BuildV7(int width = 10, int height = 5, int seedForRandom = -1)
@@ -114,7 +147,6 @@ namespace Maze.LevelStaff
 
             return _level;
         }
-
 
         private void BuildGoblinStupid(int goblinCount)
         {
@@ -145,6 +177,18 @@ namespace Maze.LevelStaff
                 var coin = coins[randomIndex];
                 var terminator = new Terminator3000(coin.CoordinateX, coin.CoordinateY, _level, ConsoleColor.Yellow);
                 _level.Creatures.Add(terminator);
+            }
+        }
+
+        private void BuildSlime(int slimeCount, ConsoleColor slimeColor = ConsoleColor.Blue)
+        {
+            for (int i = 0; i < slimeCount; i++)
+            {
+                var grounds = _level.Cells.OfType<Ground>().ToList();
+                var randomIndex = _random.Next(grounds.Count);
+                var ground = grounds[randomIndex];
+                var slime = new Slime(ground.CoordinateX, ground.CoordinateY, _level, slimeColor);
+                _level.Creatures.Add(slime);
             }
         }
 
@@ -194,7 +238,8 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-        public Level BuildV17(int width = 10, int height = 5, int seedForRandom = -1, int numberOfSecrets = 5, int numberOfCoins = 3)
+        public Level BuildV17(int width = 10, int height = 5, int seedForRandom = -1,
+            int secretsCount = 5, int coinsCount = 3, int slimeCount = 2)
         {
             if (seedForRandom > 0)
             {
@@ -210,24 +255,16 @@ namespace Maze.LevelStaff
             _level.Height = height;
 
             BuildWall();
-            BuildSecret(numberOfSecrets, new Coin(0, 0, _level), new Diamond(0, 0, _level));
-            BuildCoin(numberOfCoins);
+            BuildSecret(secretsCount, new Coin(0, 0, _level), new Diamond(0, 0, _level));
+            BuildCoin(coinsCount);
             BuildHero();
+            BuildSlime(slimeCount);
 
             return _level;
         }
 
         public Level BuildV18(int width = 10, int height = 5, int seedForRandom = -1)
         {
-            if (seedForRandom > 0)
-            {
-                _random = new Random(seedForRandom);
-            }
-            else
-            {
-                _random = new Random();
-            }
-
             _level = new Level();
 
             _level.Width = width;
@@ -421,6 +458,21 @@ namespace Maze.LevelStaff
             }
 
         }
+        private void BuildPortal()
+        {
+            var cells = _level.Cells.Where(c => c.Symbol == "." && (c.CoordinateX == 1 || c.CoordinateX == _level.Width - 1 || c.CoordinateY == 1 || c.CoordinateY == _level.Height - 1)).ToList();
+            var randomNumIteration = _random.Next(2, cells.Count);
+            var i = 0;
+            while(i < randomNumIteration)
+            {
+                var randomCellIndex = _random.Next(cells.Count);
+                var randomCell = cells[randomCellIndex];
+                var portal = new Portal(randomCell.CoordinateX, randomCell.CoordinateY, _level);
+                _level.Cells.Remove(randomCell);
+                _level.Cells.Add(portal);
+                i++;
+            }
+        }
 
         private void BuildPit(Level level)
         {
@@ -539,32 +591,36 @@ namespace Maze.LevelStaff
 
             return secret;
         }
-
-        /// <summary>
-        /// сокровищница на уровне в случайном месте. Предполагатеся что можно будет пробиться к ней через стены
-        /// </summary>
-        private void BuildChest()
+        private void BuildChest(int chestCount)
         {
-            var randomX = Math.Abs(_random.Next(_level.Width));
-            var randomY = Math.Abs(_random.Next(_level.Height));
-
-            for (int x = randomX; x < randomX + 2; x++)
+            var impasseForChest = _level.Cells.OfType<Ground>().ToList();
+            var probabilityMimic = _random.Next(0, 100);
+            bool mimicOrNot = false;
+            var color = ConsoleColor.Green;
+            if (probabilityMimic >=20)
             {
-                for (int y = randomY; y < randomY + 2; y++)
-                {
-                    var randomCell = _level.Cells.First(cell => cell.CoordinateX == x && cell.CoordinateY == y);
-                    var cellChest = new Chest(x, y, _level);
-                    _level.Cells.Remove(randomCell);
-                    _level.Cells.Add(cellChest);
-                }
+                mimicOrNot = true;
+                color = ConsoleColor.Red;
             }
+            impasseForChest = impasseForChest
+                .Where(cell => _level.GetNearCells<Wall>(cell).Count() >= 2)
+                .ToList();
+
+                for (int i = 0; i < chestCount; i++)
+                {
+                    var randomIndex = _random.Next(impasseForChest.Count);
+                    var randomGround = _level.Cells[randomIndex];
+                    var chest = new Chest(randomGround.CoordinateX, randomGround.CoordinateY,_level, color, mimicOrNot);
+                    _level.Cells.Remove(randomGround);
+                    _level.Cells.Add(chest);
+                }               
         }
 
         private void BuildHero()
         {
             var ground = _level.Cells.First(x => x is Ground);
 
-            var hero = new Hero(ground.CoordinateX, ground.CoordinateY, _level, ConsoleColor.DarkYellow);
+            var hero = new Hero(ground.CoordinateX, ground.CoordinateY, _level);
 
             _level.Hero = hero;
         }
@@ -625,12 +681,54 @@ namespace Maze.LevelStaff
                 BuildPaths(startPosition, endPosition);
                 return;
             }
-
             if ((direction = GetDirection(startPosition.Y, endPosition.Y)) != 0)
             {
                 startPosition.Y += direction;
                 BuildPaths(startPosition, endPosition);
                 return;
+            }
+        }
+        public Level BuildV10(int width = 10,
+             int height = 5,
+             int seedForRandom = -1,
+             int coinCount = 2,
+             int puddleCount = 5)
+        {
+            if (seedForRandom > 0)
+            {
+                _random = new Random(seedForRandom);
+            }
+            else
+            {
+                _random = new Random();
+            }
+
+           
+            _level = new Level();
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildGroundSmart();
+            BuildCoin(coinCount);
+            BuildPuddleV_10();
+
+            //Generate creature
+            BuildHero();
+            BuildGoblinStupid(coinCount);
+            BuildSnake(puddleCount);
+
+            return _level;
+        }
+        private void BuildSnake(int snakeCount=1)
+        {
+            for (int i = 0; i < snakeCount; i++)
+            {
+                var puddles = _level.Cells.OfType<Puddle>().ToList();
+                var randomIndex = _random.Next(puddles.Count);
+                var puddle = puddles[randomIndex];
+                var snake = new Snake(puddle.CoordinateX, puddle.CoordinateY, _level);
+                _level.Creatures.Add(snake);
             }
         }
 
@@ -659,5 +757,27 @@ namespace Maze.LevelStaff
 
             return 0;
         }
+
+        private void BuildThief()
+        {
+            var cellX = (_level.Width - _level.Hero.CoordinateX) / 2;
+            var cellY = (_level.Height - _level.Hero.CoordinateY) / 2;
+
+            var currentCell = _level.Cells.FirstOrDefault(c => c.CoordinateX == cellX && c.CoordinateY == cellY && c is Ground);
+
+            if (currentCell != null)
+            {
+                var thief = new Thief(currentCell.CoordinateX, currentCell.CoordinateY, _level);
+                _level.Creatures.Add(thief);
+            }
+            else
+            {
+                var cell = _level.GetNearCells<BaseCell>(currentCell).Where(c => !(c is Wall)).First();
+
+                var thief = new Thief(cell.CoordinateX, cell.CoordinateY, _level);
+                _level.Creatures.Add(thief);
+            }
+        }
+
     }
 }

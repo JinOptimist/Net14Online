@@ -36,5 +36,10 @@ namespace Maze.LevelStaff
                 .OfType<OneOfCellType>()
                 .ToList();
         }
+
+        internal void ReplaceCell(IBaseCell randomGround, Chest chest)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

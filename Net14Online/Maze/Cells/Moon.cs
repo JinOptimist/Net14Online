@@ -15,6 +15,8 @@ namespace Maze.Cells
         public override bool Step(IBaseCreature creature)
         {
             creature.Money *= 2;
+            var ground = new Ground(CoordinateX, CoordinateY, Level);
+            Level.ReplaceCell(this, ground);
             return true;
         }
     }
