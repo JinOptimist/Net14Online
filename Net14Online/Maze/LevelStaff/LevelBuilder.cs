@@ -60,7 +60,8 @@ namespace Maze.LevelStaff
             int berriesCount = 3,
             int trapsCount = 5,
             int sunCount = 2,
-            int chestCount = 2)
+            int chestCount = 2,
+            int WitchCount = 3)
         {
             if (seedForRandom > 0)
             {
@@ -97,7 +98,7 @@ namespace Maze.LevelStaff
             BuildGoodMonster();
             BuildSnake();
             BuildGhost();
-
+            BuildWitch(WitchCount);
 
             return _level;
         }
@@ -109,6 +110,17 @@ namespace Maze.LevelStaff
             var cell = groundCell[randomIndex];
             var ghost = new Ghost(cell.CoordinateX, cell.CoordinateY, _level);
             _level.Creatures.Add(ghost);
+        }
+        private void BuildWitch(int WitchCount)
+        {
+            for (int i = 0; i < WitchCount; i++)
+            {
+                var groundCell = _level.Cells.OfType<Ground>().ToList();
+                var randomIndex = _random.Next(groundCell.Count);
+                var cell = groundCell[randomIndex];
+                var witch = new Witch(cell.CoordinateX, cell.CoordinateY, _level, ConsoleColor.DarkCyan);
+                _level.Creatures.Add(witch);
+            }
         }
 
         private void BuildGoodMonster()
