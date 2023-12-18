@@ -87,6 +87,12 @@ namespace Maze.LevelStaff
             BuildHero();
             BuildGoblinStupid(coinCount);
             BuildElf(ringCount);
+            BuildCentaur();
+            BuildTerminatorV92(2);
+            BuildBanker(3);
+            BuildGoodMonster();
+            BuildSnake();
+            BuildGhost();
 
             return _level;
         }
@@ -116,6 +122,15 @@ namespace Maze.LevelStaff
                 var coin = coins[randomIndex];
                 var goblin = new GoblinStupid(coin.CoordinateX, coin.CoordinateY, _level);
                 _level.Creatures.Add(goblin);
+            }
+        }
+        private void BuildBanker(int bankerCount = 1)
+        {
+            for (int i = 0; i < bankerCount; i++)
+            {
+                var ground = _level.GetRandomCell<Ground>();
+                var banker = new Banker(ground.CoordinateX, ground.CoordinateY, _level);
+                _level.Creatures.Add(banker);
             }
         }
 
