@@ -8,7 +8,7 @@ namespace Maze.Cells.Creatures
     {
         public override string Symbol => "H";
 
-        public Hero(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.DarkYellow) : base(coordinateX, coordinateY, level, color)
+        public Hero(int coordinateX, int coordinateY, ILevel level, ConsoleColor color = ConsoleColor.DarkYellow) : base(coordinateX, coordinateY, level, color)
         {
         }
 
