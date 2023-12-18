@@ -29,7 +29,11 @@ namespace Maze.Cells.Creatures
 
             return cells[random];
         }
-        // метод совершения действий с близлежащим героем
+        /// <summary>
+        /// метод совершения действий с близлежащим героем: дает 50 ед. денег, если у героя меньше 50 в наличии, и отнимает 50 единиц - если у героя более 50 ед. денег
+        /// </summary>
+        /// <param name="creature"></param>
+        /// <returns></returns>
         public override bool Step(IBaseCreature creature)
         {
             var hero = creature as Hero;
@@ -37,7 +41,9 @@ namespace Maze.Cells.Creatures
             {
                 return false;
             }
-            hero.Money = hero.Money < 50 ? hero.Money + 50 : hero.Money - 50;
+            hero.Money = hero.Money < 50 
+                ? hero.Money + 50 
+                : hero.Money - 50;
             return false;
         }
     }
