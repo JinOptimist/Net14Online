@@ -2,6 +2,8 @@
 using Maze.Cells.Creatures;
 using Maze.Helper;
 using System.Drawing;
+using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 
 namespace Maze.LevelStaff
 {
@@ -53,7 +55,8 @@ namespace Maze.LevelStaff
              int coinCount = 2,
              int berriesCount = 3,
              int trapsCount = 5,
-             int sunCount = 2)
+             int sunCount = 2,
+             int spiderCount=7)
         {
             if (seedForRandom > 0)
             {
@@ -87,6 +90,7 @@ namespace Maze.LevelStaff
             BuildGoblinStupid(coinCount);
             BuildCentaur();
             BuildTerminatorV92(2);
+            BuildSpider(spiderCount);
 
             return _level;
         }
@@ -125,7 +129,7 @@ namespace Maze.LevelStaff
             }
         }
 
-        private void BuildCentaur(int centaurCount = 1) 
+        private void BuildCentaur(int centaurCount = 1)
         {
             for (int i = 0; i < centaurCount; i++)
             {
@@ -662,6 +666,18 @@ namespace Maze.LevelStaff
             }
 
             return 0;
+        }
+
+        private void BuildSpider(int SpiderCount)
+        {
+            for (int i = 0; i < SpiderCount; i++)
+            {
+                var ground = _level.Cells.OfType<Ground>().ToList();
+                var randomIndex = _random.Next(ground.Count);
+                var randomGround = ground[randomIndex];
+                var spider = new Spider(randomGround.CoordinateX, randomGround.CoordinateY, _level, ConsoleColor.Red);
+                _level.Creatures.Add(spider);
+            }
         }
     }
 }
