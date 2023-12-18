@@ -32,6 +32,24 @@ namespace Maze.Tests.Cells.Creatures
         }
 
         [Test]
+        [TestCase(0, 0)]
+        [TestCase(1, 1)]
+        [TestCase(4, 4)]
+        public void Ghost_Step_CheckCreatureHpAfterAttack(int startHp, int resultHp)
+        {
+            var levelMock = new Mock<ILevel>();
+            var creatureMock = new Mock<IBaseCreature>();
+            creatureMock.SetupProperty(x => x.Hp);
+            creatureMock.Object.Hp = startHp;
+
+            var ghost = new Ghost(0, 0, levelMock.Object);
+
+            var answer = ghost.Step(creatureMock.Object);
+
+            Assert.That(creatureMock.Object.Hp, Is.EqualTo(resultHp), "Hp shouldnt changed");
+        }
+
+        [Test]
         public void Ghost_Step_CheckCreatureCanStepOnGhost()
         {
             var levelMock = new Mock<ILevel>();
