@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Maze.Tests.Cells.Creatures
@@ -30,21 +31,22 @@ namespace Maze.Tests.Cells.Creatures
             Assert.That(answer, Is.True, "All creatures can step on thief!");
         }
         [Test]
-        [TestCase(10)]
-        [TestCase(20)]
-        [TestCase(0)]
-        [TestCase(50)]
-        public void Thief_Step_StealsMoneyFromHero_WhenInteractingWithHero(int initialHeroMoney)
+        [TestCase(10,0)]
+        [TestCase(20,10)]
+        [TestCase(0,0)]
+        [TestCase(50,40)]
+        public void Thief_Step_StealsMoneyFromHero_WhenInteractingWithHero(int initialHeroMoney, int moneyAfter)
         {
             // Prep
             var levelMock = new Mock<ILevel>();
-            var hero = new Hero(1, 0, levelMock.Object);
+            var heroMock = new Mock <IHero>();
             var thief = new Thief(0, 0, levelMock.Object);
-            hero.Money = initialHeroMoney;
+            heroMock.SetupProperty(h => h.Money);
+            heroMock.Object.Money =moneyAfter;
             // Act
-            thief.Step(hero);
+            thief.Step(heroMock.Object);
             // Assert
-            Assert.That(hero.Money, Is.EqualTo(initialHeroMoney - 10).Or.EqualTo(0));
+            Assert.That(heroMock.Object.Money, Is.EqualTo(initialHeroMoney - 10).Or.EqualTo(moneyAfter));
         }
         [Test]
         public void Thief_ChooseCellToStep_ReturnsRandomCellFromNearby()
@@ -66,7 +68,7 @@ namespace Maze.Tests.Cells.Creatures
             var result = thief.ChooseCellToStep();
 
             // Assert
-            Assert.That(result, Is.Not.Null);
+            Assert.That(cell.Object == result, Is.True, "Thief has to step to single exister cell");
 
         }
 
