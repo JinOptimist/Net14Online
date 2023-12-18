@@ -11,7 +11,7 @@ namespace Maze.Cells
 {
     internal class Sun : BaseCell
     {
-        public Sun(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Sun(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.Yellow) : base(coordinateX, coordinateY, level, color)
         {
         }
 

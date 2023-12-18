@@ -59,7 +59,7 @@ namespace Maze.LevelStaff
             int coinCount = 2,
             int berriesCount = 3,
             int trapsCount = 5,
-            int sunCount = 2,
+            int sunCount = 5,
             int chestCount = 2)
         {
             if (seedForRandom > 0)
@@ -313,18 +313,20 @@ namespace Maze.LevelStaff
 
         private void BuildSun(int SunCount)
         {
-            for (int i = 0; i < SunCount; i++)
+            var crossroadCells = _level.Cells.Where(cell => _level.GetNearCells<Ground>(cell).Count > 2).ToList();
+
+
+            for (int i = 0; i < SunCount && crossroadCells.Any(); i++)
             {
-                var groundCells = _level.Cells.Where(cell => cell is Ground).ToList();
+                var randomIndex = _random.Next(crossroadCells.Count);
+                var randomCrossroad = crossroadCells[randomIndex];
 
-                if (groundCells.Count > 0)
-                {
-                    var randomGround = groundCells.GetRandom();
+                var sun = new Sun(randomCrossroad.CoordinateX, randomCrossroad.CoordinateY, _level);
+                _level.Cells.Remove(randomCrossroad);
+                _level.Cells.Add(sun);
 
-                    var sun = new Sun(randomGround.CoordinateX, randomGround.CoordinateY, _level);
-                    _level.Cells.Remove(randomGround);
-                    _level.Cells.Add(sun);
-                }
+               
+                crossroadCells.RemoveAt(randomIndex);
             }
         }
 
