@@ -315,7 +315,6 @@ namespace Maze.LevelStaff
         {
             var crossroadCells = _level.Cells.Where(cell => _level.GetNearCells<Ground>(cell).Count > 2).ToList();
 
-
             for (int i = 0; i < SunCount && crossroadCells.Any(); i++)
             {
                 var randomIndex = _random.Next(crossroadCells.Count);
@@ -324,8 +323,6 @@ namespace Maze.LevelStaff
                 var sun = new Sun(randomCrossroad.CoordinateX, randomCrossroad.CoordinateY, _level);
                 _level.Cells.Remove(randomCrossroad);
                 _level.Cells.Add(sun);
-
-               
                 crossroadCells.RemoveAt(randomIndex);
             }
         }
