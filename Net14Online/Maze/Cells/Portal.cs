@@ -4,13 +4,13 @@ using Maze.LevelStaff;
 
 namespace Maze.Cells
 {
-    public class Ground : BaseCell
+    public class Portal : BaseCell
     {
-        public Ground(int coordinateX, int coordinateY, ILevel level) : base(coordinateX, coordinateY, level)
+        public Portal(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.DarkMagenta) : base(coordinateX, coordinateY, level, color)
         {
         }
 
-        public override string Symbol => ".";
+        public override string Symbol => "@";
 
         public override bool Step(IBaseCreature creature)
         {

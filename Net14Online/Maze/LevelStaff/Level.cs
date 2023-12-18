@@ -1,14 +1,16 @@
 ﻿using Maze.Cells;
+using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures;
+using Maze.Cells.Creatures.Interfaces;
 
 namespace Maze.LevelStaff
 {
-    public class Level
+    public class Level : ILevel
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        public List<BaseCell> Cells { get; set; } = new List<BaseCell>();
-        public List<BaseCreature> Creatures { get; set; } = new List<BaseCreature>();
+        public List<IBaseCell> Cells { get; set; } = new List<IBaseCell>();
+        public List<IBaseCreature> Creatures { get; set; } = new List<IBaseCreature>();
         public Hero Hero { get; set; }
         public Elf Elf { get; set; }
         public void ReplaceCell(BaseCell oldCell, BaseCell newCell)
@@ -23,8 +25,8 @@ namespace Maze.LevelStaff
             ReplaceCell(cell, ground);
         }
 
-        public List<OneOfCellType> GetNearCells<OneOfCellType>(BaseCell currentCell)
-           where OneOfCellType : BaseCell
+        public List<OneOfCellType> GetNearCells<OneOfCellType>(IBaseCell currentCell)
+           where OneOfCellType : IBaseCell
         {
             return Cells
                 .Where(cell => cell.CoordinateX == currentCell.CoordinateX
@@ -34,6 +36,11 @@ namespace Maze.LevelStaff
                     && cell.CoordinateY == currentCell.CoordinateY)
                 .OfType<OneOfCellType>()
                 .ToList();
+        }
+
+        internal void ReplaceCell(IBaseCell randomGround, Chest chest)
+        {
+            throw new NotImplementedException();
         }
     }
 }
