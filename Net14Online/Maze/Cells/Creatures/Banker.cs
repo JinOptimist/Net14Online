@@ -1,5 +1,6 @@
 ﻿using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures.Interfaces;
+using Maze.Helper;
 using Maze.LevelStaff;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,13 @@ namespace Maze.Cells.Creatures
         public override IBaseCell ChooseCellToStep()
         {
             var cells = Level.GetNearCells<Ground>(this);
-            var random = _random.Next(cells.Count);
+            if (cells.Any())
+            {
+                return cells.GetRandom();
+            }
 
-            return cells[random];
+            //If we hasn't Ground on near cells stay on the same cells
+            return Level.Cells.First(x => x.CoordinateX == CoordinateX && x.CoordinateY == CoordinateY);
         }
         /// <summary>
         /// метод совершения действий с близлежащим героем: дает 50 ед. денег, если у героя меньше 50 в наличии, и отнимает 50 единиц - если у героя более 50 ед. денег

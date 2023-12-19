@@ -1,6 +1,7 @@
 ﻿using Maze.Cells;
 using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures;
+using Maze.Helper;
 using System.Drawing;
 
 namespace Maze.LevelStaff
@@ -47,7 +48,6 @@ namespace Maze.LevelStaff
             return _level;
         }
 
-
         public Level BuildV0(int width = 10,
             int height = 5,
             int seedForRandom = -1,
@@ -82,6 +82,7 @@ namespace Maze.LevelStaff
             BuildCage();
             BuildTrapRandom(trapsCount);
             BuildSun(sunCount);
+            BuildPuddleV_10();
 
             //Generate creature
             BuildHero();
@@ -96,6 +97,114 @@ namespace Maze.LevelStaff
 
             return _level;
         }
+
+        private void BuildGhost()
+        {
+            var groundCell = _level.Cells.OfType<Ground>().ToList();
+            var randomIndex = _random.Next(groundCell.Count);
+            var cell = groundCell[randomIndex];
+            var ghost = new Ghost(cell.CoordinateX, cell.CoordinateY, _level);
+            _level.Creatures.Add(ghost);
+        }
+
+        private void BuildPit(Level level)
+        {
+            var grounds = level.Cells.Where(x => x is Ground).ToList();
+
+            var pitCount = _random.Next(grounds.Count / 2);
+
+            for (int i = 0; i < pitCount; i++)
+            {
+                var ground = grounds.GetRandom();
+
+                var pit = new Pit(ground.CoordinateX, ground.CoordinateY, level);
+
+                level.Cells.Remove(ground);
+                level.Cells.Add(pit);
+            }
+        }
+
+        private void BuildSnake(int snakeCount = 1)
+        {
+            for (int i = 0; i < snakeCount; i++)
+            {
+                var puddles = _level.Cells.OfType<Puddle>().ToList();
+                var randomIndex = _random.Next(puddles.Count);
+                var puddle = puddles[randomIndex];
+                var snake = new Snake(puddle.CoordinateX, puddle.CoordinateY, _level);
+                _level.Creatures.Add(snake);
+            }
+        }
+
+        private void BuildPuddleV_10(int puddles = 1)
+        {
+            int puddlesAdded = 0;
+            while (puddlesAdded < puddles)
+            {
+                var randomX = _random.Next(_level.Width);
+                var randomY = _random.Next(_level.Height);
+                var cellToRemove = _level.Cells.First(cell => cell.CoordinateX == randomX && cell.CoordinateY == randomY);
+                if (cellToRemove.Symbol == ".")
+                {
+                    var puddle = new Puddle(randomX, randomY, _level);
+
+                    _level.Cells.Remove(cellToRemove);
+                    _level.Cells.Add(puddle);
+                    puddlesAdded++;
+                }
+            }
+
+        }
+
+        private void BuildSlime(int slimeCount, ConsoleColor slimeColor = ConsoleColor.Blue)
+        {
+            for (int i = 0; i < slimeCount; i++)
+            {
+                var grounds = _level.Cells.OfType<Ground>().ToList();
+                var randomIndex = _random.Next(grounds.Count);
+                var ground = grounds[randomIndex];
+                var slime = new Slime(ground.CoordinateX, ground.CoordinateY, _level, slimeColor);
+                _level.Creatures.Add(slime);
+            }
+        }
+
+        private void BuildGoodMonster()
+        {
+            var countGoodMonster = _level.Height / 2;
+            for (int i = 0; i < countGoodMonster; i++)
+            {
+                var grounds = _level.Cells.OfType<Ground>().ToList();
+                var randomIndex = _random.Next(grounds.Count);
+                var ground = grounds[randomIndex];
+                var goodMonster = new GoodMonster(ground.CoordinateX, ground.CoordinateY, _level);
+                _level.Creatures.Add(goodMonster);
+            }
+        }
+
+        private void BuildCentaur(int centaurCount = 1)
+        {
+            for (int i = 0; i < centaurCount; i++)
+            {
+                var grounds = _level.Cells.OfType<Ground>().ToList();
+                var randomIndex = _random.Next(grounds.Count);
+                var ground = grounds[randomIndex];
+                var centaur = new Centaur(ground.CoordinateX, ground.CoordinateY, _level, ConsoleColor.Red);
+                _level.Creatures.Add(centaur);
+            }
+        }
+
+        private void BuildTerminatorV92(int termitantorCount)
+        {
+            for (int i = 0; i < termitantorCount; i++)
+            {
+                var coins = _level.Cells.OfType<Coin>().ToList();
+                var randomIndex = _random.Next(coins.Count);
+                var coin = coins[randomIndex];
+                var terminator = new Terminator3000(coin.CoordinateX, coin.CoordinateY, _level, ConsoleColor.Yellow);
+                _level.Creatures.Add(terminator);
+            }
+        }
+
         private void BuildElf(int ringCount)
         {
             for (int i = 0; i < ringCount; i++)
@@ -112,7 +221,6 @@ namespace Maze.LevelStaff
             }
         }
 
-
         private void BuildGoblinStupid(int goblinCount)
         {
             for (int i = 0; i < goblinCount; i++)
@@ -124,6 +232,7 @@ namespace Maze.LevelStaff
                 _level.Creatures.Add(goblin);
             }
         }
+
         private void BuildBanker(int bankerCount = 1)
         {
             for (int i = 0; i < bankerCount; i++)
@@ -531,6 +640,7 @@ namespace Maze.LevelStaff
 
             _level.Hero = hero;
         }
+
         private void BuildTrapRandom(int trapsCount)
         {
             for (int i = 0; i < trapsCount; i++)
