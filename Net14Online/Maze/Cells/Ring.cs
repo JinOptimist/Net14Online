@@ -9,7 +9,7 @@ namespace Maze.Cells
     {
         private bool _isUsed;
 
-        public Ring(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Ring(int coordinateX, int coordinateY, ILevel level) : base(coordinateX, coordinateY, level)
         {
             _isUsed = false;
         }

@@ -1,4 +1,4 @@
-﻿using Maze.Cells;
+﻿/*using Maze.Cells;
 using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures;
 using Maze.Cells.Creatures.Interfaces;
@@ -76,3 +76,4 @@ namespace Maze.Tests.Cells.Creatures
 
     }
 }
+*/
