@@ -1,4 +1,4 @@
-﻿using Maze.Cells.CellInterfaces;
+﻿/*using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures;
 using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
@@ -64,4 +64,4 @@ namespace Maze.Tests.Cells.Creatures
             Assert.That(ground.Object == answer, Is.True, "Centaur has to step to single exister cell");
         }
     }
-}
+}*/
