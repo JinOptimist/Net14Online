@@ -23,9 +23,14 @@ namespace Maze.Cells
         public override bool Step(IBaseCreature creature)
         {
             if (cellsForSecret.Length == 0)
+            {
+                Level.ReplaceToGround(this);
                 return true;
+            }
+
             Random rnd = new Random();
             cellsForSecret[rnd.Next(0, cellsForSecret.Length)].Step(creature);
+            Level.ReplaceToGround(this);
             return true;
         }
     }
