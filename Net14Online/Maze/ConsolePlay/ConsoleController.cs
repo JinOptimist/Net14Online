@@ -1,6 +1,4 @@
-﻿using Maze.Cells;
-using Maze.Cells.CellInterfaces;
-using Maze.Cells.Creatures;
+﻿using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 
@@ -20,7 +18,7 @@ namespace Maze.ConsolePlay
             var isGameOver = false;
             while (!isGameOver)
             {
-                var key = Console.ReadKey();
+                var key = Console.ReadKey(true);
                 switch (key.Key)
                 {
                     case ConsoleKey.A:

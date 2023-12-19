@@ -1,5 +1,4 @@
 ﻿using Maze.Cells.CellInterfaces;
-using Maze.Cells.Creatures;
 using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 
@@ -13,10 +12,34 @@ namespace Maze.Cells
             CoordinateY = coordinateY;
             Level = level;
             Color = color;
+            LevelDrawer.RedrawCellAction?.Invoke(this);
         }
 
-        public int CoordinateX { get; set; }
-        public int CoordinateY { get; set; }
+        private int coordinateX;
+        private int coordinateY;
+
+        public int OldCoordinateX { get; private set; }
+        public int OldCoordinateY { get; private set; }
+        public int CoordinateX
+        {
+            get { return coordinateX; }
+            set
+            {
+                OldCoordinateX = coordinateX;
+                coordinateX = value;
+                LevelDrawer.RedrawCellAction?.Invoke(this);
+            }
+        }
+        public int CoordinateY
+        {
+            get { return coordinateY; }
+            set
+            {
+                OldCoordinateY = coordinateY;
+                coordinateY = value;
+                LevelDrawer.RedrawCellAction?.Invoke(this);
+            }
+        }
         public ILevel Level { get; }
         public ConsoleColor Color { get; set; }
 
