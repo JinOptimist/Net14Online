@@ -1,5 +1,6 @@
 using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures.Interfaces;
+using Maze.Helper;
 using Maze.LevelStaff;
 
 namespace Maze.Cells.Creatures;
@@ -25,11 +26,13 @@ public class GoodMonster : BaseCreature
 
     public override IBaseCell ChooseCellToStep()
     {
-        var cellsGround = Level.GetNearCells<Ground>(this);
-        var randomIndex = _random.Next(cellsGround.Count);
-        var cellGround = cellsGround[randomIndex];
-        return cellGround;
+        var cells = Level.GetNearCells<Ground>(this);
+        if (cells.Any())
+        {
+            return cells.GetRandom();
+        }
+
+        //If we hasn't Ground on near cells stay on the same cells
+        return Level.Cells.First(x => x.CoordinateX == CoordinateX && x.CoordinateY == CoordinateY);
     }
-    
-   
 }
