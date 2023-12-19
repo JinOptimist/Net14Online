@@ -30,7 +30,8 @@ namespace Maze.Cells.Creatures
         public override bool Step(IBaseCreature creature)
         {
 
-            if (creature is Hero)
+            var hero = creature as Hero;
+            if (hero is not null)
             {
                 creature.Hp -= 2;
                 return true;
