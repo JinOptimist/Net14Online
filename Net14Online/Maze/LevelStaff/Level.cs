@@ -12,7 +12,7 @@ namespace Maze.LevelStaff
         public List<IBaseCell> Cells { get; set; } = new List<IBaseCell>();
         public List<IBaseCreature> Creatures { get; set; } = new List<IBaseCreature>();
         public Hero Hero { get; set; }
-        public Elf Elf { get; set; }
+
         public void ReplaceCell(IBaseCell oldCell, IBaseCell newCell)
         {
             Cells.Remove(oldCell);
