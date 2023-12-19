@@ -54,8 +54,9 @@ namespace Maze.LevelStaff
             int coinCount = 2,
             int berriesCount = 3,
             int trapsCount = 5,
-            int sunCount = 5,
-            int ringCount = 2)
+            int sunCount = 2,
+            int ringCount = 2,
+            int witchCount = 3)
         {
             if (seedForRandom > 0)
             {
@@ -94,6 +95,7 @@ namespace Maze.LevelStaff
             BuildSnake();
             BuildGhost();
             BuildElf(ringCount);
+            BuildWitch(witchCount);
 
             return _level;
         }
@@ -218,6 +220,17 @@ namespace Maze.LevelStaff
                     var elf = new Elf(ring.CoordinateX, ring.CoordinateY, _level);
                     _level.Creatures.Add(elf);
                 }
+            }
+        }
+        private void BuildWitch(int WitchCount)
+        {
+            for (int i = 0; i < WitchCount; i++)
+            {
+                var groundCell = _level.Cells.OfType<Ground>().ToList();
+                var randomIndex = _random.Next(groundCell.Count);
+                var cell = groundCell[randomIndex];
+                var witch = new Witch(cell.CoordinateX, cell.CoordinateY, _level, ConsoleColor.DarkCyan);
+                _level.Creatures.Add(witch);
             }
         }
 
