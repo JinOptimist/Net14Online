@@ -222,9 +222,9 @@ namespace Maze.LevelStaff
                 }
             }
         }
-        private void BuildWitch(int WitchCount)
+        private void BuildWitch(int witchCount)
         {
-            for (int i = 0; i < WitchCount; i++)
+            for (int i = 0; i < witchCount; i++)
             {
                 var groundCell = _level.Cells.OfType<Ground>().ToList();
                 var randomIndex = _random.Next(groundCell.Count);
