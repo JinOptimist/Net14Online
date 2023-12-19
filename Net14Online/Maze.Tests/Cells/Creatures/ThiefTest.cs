@@ -33,22 +33,22 @@ namespace Maze.Tests.Cells.Creatures
             Assert.That(answer, Is.True, "All creatures can step on thief!");
         }
         [Test]
-        [TestCase(10,0)]
-        [TestCase(20,10)]
-        [TestCase(0,0)]
-        [TestCase(50,40)]
+        [TestCase(10, 0)]
+        [TestCase(20, 10)]
+        [TestCase(0, 0)]
+        [TestCase(50, 40)]
         public void Thief_Step_StealsMoneyFromHero_WhenInteractingWithHero(int initialHeroMoney, int moneyAfter)
         {
             // Prep
             var levelMock = new Mock<ILevel>();
-            var heroMock = new Mock <IHero>();
+            var heroMock = new Mock<IHero>();
             var thief = new Thief(0, 0, levelMock.Object);
             heroMock.SetupProperty(h => h.Money);
-            heroMock.Object.Money =moneyAfter;
+            heroMock.Object.Money = moneyAfter;
             // Act
             thief.Step(heroMock.Object);
             // Assert
-            Assert.That(heroMock.Object.Money, Is.EqualTo(initialHeroMoney - 10).Or.EqualTo(moneyAfter));
+            Assert.That(heroMock.Object.Money, Is.EqualTo(initialHeroMoney - 10).Or.EqualTo(moneyAfter), "Thief steal money!");
         }
         [Test]
         public void Thief_ChooseCellToStep_ReturnsRandomCellFromNearby()
@@ -57,8 +57,8 @@ namespace Maze.Tests.Cells.Creatures
             var levelMock = new Mock<ILevel>();
 
             var cell = new Mock<IBaseCell>();
-            var cells = new List<IBaseCell>() 
-            { 
+            var cells = new List<IBaseCell>()
+            {
                 cell.Object
             };
 
