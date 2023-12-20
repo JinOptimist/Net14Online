@@ -13,8 +13,8 @@ namespace Maze.Cells.Creatures
 {
     public class Witch : BaseCreature
     {
-        private const int  _giveStress = 10;
-        private const int _takeHp = 5;
+        private const int  _GIVE_STRESS = 10;
+        private const int _TAKE_HP = 5;
         private Random _random = new Random();
         public Witch(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.DarkCyan)
             : base(coordinateX, coordinateY, level, color)
@@ -37,17 +37,23 @@ namespace Maze.Cells.Creatures
 
             if (hero is not null)
             {
-                if (hero.Hp - _takeHp > 0)
+                if (hero.Hp - _TAKE_HP > 0)
                 {
-                    hero.Hp -= _takeHp;
+                    hero.Hp -= _TAKE_HP;
                 }
-                else hero.Hp = 0;
+                else
+                {
+                    hero.Hp = 0;
+                }
 
-                if (hero.Stress + _giveStress <= Hero.MaxHeroStress)
+                if (hero.Stress + _GIVE_STRESS <= Hero.MAX_HERO_STRESS)
                 {
-                    hero.Stress += _giveStress;
+                    hero.Stress += _GIVE_STRESS;
                 }
-                else hero.Stress = Hero.MaxHeroStress;
+                else
+                {
+                    hero.Stress = Hero.MAX_HERO_STRESS;
+                }
 
                 return true;
             }

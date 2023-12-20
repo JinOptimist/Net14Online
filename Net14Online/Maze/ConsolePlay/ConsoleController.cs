@@ -20,27 +20,6 @@ namespace Maze.ConsolePlay
             var isGameOver = false;
             while (!isGameOver)
             {
-                if (_level.Hero.Stress >= Hero.MaxHeroStress)
-                {
-                    isGameOver = true;
-                    Console.Clear();
-
-                    var stressText = "Your hero has reached the maximum stress level! He refuses to go anywhere in the labyrinth!";
-                    var gameOverText = "GAME OVER!!!";
-                  
-                    var centerX = Console.WindowWidth / 2 - stressText.Length / 2;
-                    var centerY = Console.WindowHeight / 2;
-                    Console.ForegroundColor = ConsoleColor.Red; 
-                    Console.SetCursorPosition(centerX, centerY);
-                    Console.WriteLine(stressText);
-                    centerX = Console.WindowWidth / 2 - gameOverText.Length / 2;
-                    centerY += 2;
-                    Console.SetCursorPosition(centerX, centerY);
-                    Console.WriteLine(gameOverText);
-                    Console.ResetColor();
-                    Console.ReadLine();
-                    return;
-                }
                 var key = Console.ReadKey();
                 switch (key.Key)
                 {
@@ -65,13 +44,16 @@ namespace Maze.ConsolePlay
                         break;
                 }
                 drawer.Draw(_level);
+
+                CheckStress(isGameOver);
+                
             }
 
         }
 
         private void Step(Direction direction)
         {
-            CheckHeroChanceToMakeOneStep(direction);
+            HeroStep(direction);
 
             foreach (var creature in _level.Creatures)
             {
@@ -96,13 +78,13 @@ namespace Maze.ConsolePlay
             }
         }
 
-        private void CheckHeroChanceToMakeOneStep(Direction direction)
+        private void HeroStep(Direction direction)
         {
             var destinationX = _level.Hero.CoordinateX;
             var destinationY = _level.Hero.CoordinateY;
 
             Random random = new();
-            var relativeStress = (double)(_level.Hero.Stress - Hero.MinHeroStress) / (Hero.MaxHeroStress - Hero.MinHeroStress);
+            var relativeStress = (double)(_level.Hero.Stress - Hero.MIN_HERO_STRESS) / (Hero.MAX_HERO_STRESS - Hero.MIN_HERO_STRESS);
             var randomChanceToMakeOneStep = random.NextDouble();
             var probabilityLimit = 1.0 - relativeStress;
 
@@ -130,6 +112,31 @@ namespace Maze.ConsolePlay
                 MoveCreature(_level.Hero, destinationCell);
             }
 
+        }
+
+        private void CheckStress(bool isGameOver)
+        {
+            if (_level.Hero.Stress >= Hero.MAX_HERO_STRESS)
+            {
+                isGameOver = true;
+                Console.Clear();
+
+                var stressText = "Your hero has reached the maximum stress level! He refuses to go anywhere in the labyrinth!";
+                var gameOverText = "GAME OVER!!!";
+
+                var centerX = Console.WindowWidth / 2 - stressText.Length / 2;
+                var centerY = Console.WindowHeight / 2;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition(centerX, centerY);
+                Console.WriteLine(stressText);
+                centerX = Console.WindowWidth / 2 - gameOverText.Length / 2;
+                centerY += 2;
+                Console.SetCursorPosition(centerX, centerY);
+                Console.WriteLine(gameOverText);
+                Console.ResetColor();
+                Console.ReadLine();
+                return;
+            }
         }
     }
 }
