@@ -24,7 +24,8 @@ namespace Maze.ConsolePlay
                 {
                     isGameOver = true;
                     Console.Clear();
-                    Console.WriteLine($"Your hero has reached the maximum stress level! He refuses to go anywhere in the labyrinth!");
+                    Console.WriteLine("Your hero has reached the maximum stress level! He refuses to go anywhere in the labyrinth!");
+                    Console.WriteLine("GAME OVER!!!");
                     return;
                 }
                 var key = Console.ReadKey();
