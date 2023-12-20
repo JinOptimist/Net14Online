@@ -13,8 +13,8 @@ namespace Maze.Cells.Creatures
 {
     public class Witch : BaseCreature
     {
-        private int _giveStress = 10;
-        private int _takeHp = 5;
+        private const int  _giveStress = 10;
+        private const int _takeHp = 5;
         private Random _random = new Random();
         public Witch(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.DarkCyan)
             : base(coordinateX, coordinateY, level, color)

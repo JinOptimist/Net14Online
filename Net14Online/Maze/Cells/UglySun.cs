@@ -11,12 +11,22 @@ namespace Maze.Cells
 {
     internal class UglySun : BaseCell
     {
-        private int _giveStress = 5;
+        private const int _giveStress = 5;
         public UglySun(int coordinateX, int coordinateY, ILevel level, ConsoleColor color = ConsoleColor.DarkYellow) : base(coordinateX, coordinateY, level, color)
         { }
 
-        public override string Symbol => "U";
+       
+        public override string Symbol
+        {
+            get
+            {
+                const string darkRedColor = "\u001b[31m";
+                const string resetColor = "\u001b[0m";
+                const string uglySunCharacter = "¤";
 
+                return $"{darkRedColor}{uglySunCharacter}{resetColor}";
+            }
+        }
         public override bool Step(IBaseCreature creature)
         {
             var hero = creature as Hero;

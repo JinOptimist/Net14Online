@@ -11,11 +11,11 @@ namespace Maze.Cells
 {
     internal class Sun : BaseCell
     {
-        private int _giveHappiness = 5;
+        private const int _giveHappiness = 5;
         public Sun(int coordinateX, int coordinateY, ILevel level, ConsoleColor color = ConsoleColor.Yellow) : base(coordinateX, coordinateY, level, color)
         { }
 
-        public override string Symbol => "*";
+        public override string Symbol => "☀";
 
         public override bool Step(IBaseCreature creature)
         {
