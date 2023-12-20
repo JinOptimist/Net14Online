@@ -12,14 +12,18 @@ namespace Maze.Cells
             CoordinateY = coordinateY;
             Level = level;
             Color = color;
-            LevelDrawer.RedrawCellAction?.Invoke(this);
+            State?.Invoke(this);
         }
 
         private int coordinateX;
         private int coordinateY;
 
-        public int OldCoordinateX { get; private set; }
-        public int OldCoordinateY { get; private set; }
+        public event IBaseCell.StateDelegate State;
+
+        public delegate void StateDelegate(BaseCell newPositionCell);
+
+        public int OldCoordinateX { get; set; }
+        public int OldCoordinateY { get; set; }
         public int CoordinateX
         {
             get { return coordinateX; }
@@ -27,7 +31,7 @@ namespace Maze.Cells
             {
                 OldCoordinateX = coordinateX;
                 coordinateX = value;
-                LevelDrawer.RedrawCellAction?.Invoke(this);
+                StateUpdate();
             }
         }
         public int CoordinateY
@@ -37,7 +41,7 @@ namespace Maze.Cells
             {
                 OldCoordinateY = coordinateY;
                 coordinateY = value;
-                LevelDrawer.RedrawCellAction?.Invoke(this);
+                StateUpdate();
             }
         }
         public ILevel Level { get; }
@@ -46,5 +50,10 @@ namespace Maze.Cells
         public abstract string Symbol { get; }
 
         public abstract bool Step(IBaseCreature creature);
+
+        public void StateUpdate()
+        {
+            State?.Invoke(this);
+        }
     }
 }

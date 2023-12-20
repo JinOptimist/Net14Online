@@ -1,45 +1,69 @@
-﻿using Maze.Cells;
-using Maze.Cells.CellInterfaces;
+﻿using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures.Interfaces;
 
 namespace Maze.LevelStaff
 {
     public class LevelDrawer
     {
-        public delegate void RedrawCellDelegate(BaseCell newPositionCell);
-        public static RedrawCellDelegate RedrawCellAction;
-
         private List<IBaseCell> _cellsForRedraw;
+        private int _countCellsForRedraw;
+        private int _countCreaturesForRedraw;
 
         public LevelDrawer()
         {
             _cellsForRedraw = new List<IBaseCell>();
-            RedrawCellAction += RedrawCell;
         }
 
         public void Draw(Level level)
         {
+            AddStateForCells(level);
             foreach (var cell in _cellsForRedraw)
             {
                 DrawCell(cell);
             }
-
+            DrawCell(level.Hero);
             _cellsForRedraw.Clear();
-
             Console.ResetColor();
             Console.SetCursorPosition(level.Width, level.Height - 1);
             DrawHeroStats(level.Hero);
         }
 
-        private void RedrawCell(BaseCell newPositionCell)
+        private void AddStateForCells(Level level)
+        {
+            if (_countCellsForRedraw != level.Cells.Count)
+            {
+                AddState(level.Cells.GetRange(_countCellsForRedraw, level.Cells.Count - _countCellsForRedraw));
+                _countCellsForRedraw = level.Cells.Count;
+            }
+
+            if (_countCreaturesForRedraw != level.Creatures.Count + 1)
+            {
+                AddState(level.Creatures.GetRange(_countCreaturesForRedraw, level.Creatures.Count - _countCreaturesForRedraw));
+                var hero = level.Hero;
+                hero.State -= RedrawCell;
+                hero.State += RedrawCell;
+                hero.StateUpdate();
+                _countCreaturesForRedraw = level.Creatures.Count + 1;
+            }
+        }
+
+        private void AddState<CellType>(List<CellType> cells) where CellType : IBaseCell
+        {
+            foreach (var cell in cells)
+            {
+                cell.State -= RedrawCell;
+                cell.State += RedrawCell;
+                cell.StateUpdate();
+            }
+        }
+
+        private void RedrawCell(IBaseCell newPositionCell)
         {
             if (newPositionCell.Level == null)
             {
                 return;
             }
-
             _cellsForRedraw.Add(newPositionCell);
-
             if (newPositionCell.Level.Hero != null)
             {
                 var oldHero = newPositionCell.Level.Hero;
@@ -49,7 +73,6 @@ namespace Maze.LevelStaff
                     return;
                 }
             }
-
             if (AddRedrawCell(newPositionCell.Level.Cells, newPositionCell.OldCoordinateX, newPositionCell.OldCoordinateY))
             {
                 return;
