@@ -20,6 +20,13 @@ namespace Maze.ConsolePlay
             var isGameOver = false;
             while (!isGameOver)
             {
+                if (_level.Hero.Stress >=Hero.MaxHeroStress)
+                {
+                    isGameOver = true;
+                    Console.Clear();
+                    Console.WriteLine($"Your hero has reached the maximum stress level! He refuses to go anywhere in the labyrinth!");
+                    return;
+                }
                 var key = Console.ReadKey();
                 switch (key.Key)
                 {
@@ -45,39 +52,20 @@ namespace Maze.ConsolePlay
                 }
                 drawer.Draw(_level);
             }
+          
         }
-        
+
         private void Step(Direction direction)
         {
-            var destinationX = _level.Hero.CoordinateX;
-            var destinationY = _level.Hero.CoordinateY;
-
-            switch (direction)
-            {
-                case Direction.Left:
-                    destinationX--;
-                    break;
-                case Direction.Right:
-                    destinationX++;
-                    break;
-                case Direction.Up:
-                    destinationY--;
-                    break;
-                case Direction.Down:
-                    destinationY++;
-                    break;
-            }
-
-            var destinationCell = _level.Cells
-                .SingleOrDefault(x => x.CoordinateX == destinationX && x.CoordinateY == destinationY);
-
-            MoveCreature(_level.Hero, destinationCell);
+            CheckHeroChanceToMakeOneStep(direction);
 
             foreach (var creature in _level.Creatures)
             {
+                
                 var cell = creature.ChooseCellToStep();
                 MoveCreature(creature, cell);
             }
+
         }
 
         private void MoveCreature(IBaseCreature creature, IBaseCell destinationCell)
@@ -92,6 +80,38 @@ namespace Maze.ConsolePlay
                 creature.CoordinateX = destinationCell.CoordinateX;
                 creature.CoordinateY = destinationCell.CoordinateY;
             }
+        }
+
+        private void CheckHeroChanceToMakeOneStep(Direction direction)
+        {
+            var destinationX = _level.Hero.CoordinateX;
+            var destinationY = _level.Hero.CoordinateY;
+            Random random = new();
+            var randomChanceToMakeOneStep = random.Next(0, 100);
+            if ((randomChanceToMakeOneStep > _level.Hero.Stress) || (_level.Hero.Stress == 0))
+            {
+                switch (direction)
+                {
+                    case Direction.Left:
+                        destinationX--;
+                        break;
+                    case Direction.Right:
+                        destinationX++;
+                        break;
+                    case Direction.Up:
+                        destinationY--;
+                        break;
+                    case Direction.Down:
+                        destinationY++;
+                        break;
+                }
+
+                var destinationCell = _level.Cells
+                   .SingleOrDefault(x => x.CoordinateX == destinationX && x.CoordinateY == destinationY);
+
+                MoveCreature(_level.Hero, destinationCell);
+            }
+
         }
     }
 }

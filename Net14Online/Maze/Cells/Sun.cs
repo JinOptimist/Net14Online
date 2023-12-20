@@ -11,6 +11,7 @@ namespace Maze.Cells
 {
     internal class Sun : BaseCell
     {
+        private int _giveHappiness = 5;
         public Sun(int coordinateX, int coordinateY, ILevel level, ConsoleColor color = ConsoleColor.Yellow) : base(coordinateX, coordinateY, level, color)
         { }
 
@@ -19,12 +20,28 @@ namespace Maze.Cells
         public override bool Step(IBaseCreature creature)
         {
             var hero = creature as Hero;
+
             if (hero is not null)
             {
-                hero.Money += 5;
+                if (hero.Stress - _giveHappiness >= 0)
+                {
+                    hero.Stress -= _giveHappiness;
+                }
+                else hero.Stress = 0;
+               
+
                 var ground = new Ground(CoordinateX, CoordinateY, Level);
                 Level.ReplaceCell(this, ground);
             }
+            
+            var witch = creature as Witch;
+
+            if (witch is not null)
+            {
+                var ground = new Ground(CoordinateX, CoordinateY, Level);
+                Level.ReplaceCell(this, ground);
+            }
+
             return true;
         }
     }

@@ -1,4 +1,4 @@
-﻿/*using Maze.Cells;
+﻿using Maze.Cells;
 using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 using Moq;
@@ -43,4 +43,3 @@ namespace Maze.Tests.Cells
         }
     }
 }
-*/

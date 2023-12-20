@@ -54,7 +54,8 @@ namespace Maze.LevelStaff
             int coinCount = 2,
             int berriesCount = 3,
             int trapsCount = 5,
-            int sunCount = 2,
+            int sunCount = 10,
+            int uglySunCount =20,
             int ringCount = 2,
             int witchCount = 3)
         {
@@ -83,6 +84,7 @@ namespace Maze.LevelStaff
             BuildCage();
             BuildTrapRandom(trapsCount);
             BuildSun(sunCount);
+            BuildUglySun(uglySunCount);
             BuildPuddleV_10();
 
             //Generate creature
@@ -395,6 +397,20 @@ namespace Maze.LevelStaff
                 var randomIndex = _random.Next(crossroadCells.Count);
                 var randomCrossroad = crossroadCells[randomIndex];
                 var sun = new Sun(randomCrossroad.CoordinateX, randomCrossroad.CoordinateY, _level);
+                _level.Cells.Remove(randomCrossroad);
+                _level.Cells.Add(sun);
+                crossroadCells.RemoveAt(randomIndex);
+            }
+        }
+
+        private void BuildUglySun(int uglySunCount)
+        {
+            var crossroadCells = _level.Cells.Where(cell => _level.GetNearCells<Ground>(cell).Count > 2).ToList();
+            for (int i = 0; i < uglySunCount && crossroadCells.Any(); i++)
+            {
+                var randomIndex = _random.Next(crossroadCells.Count);
+                var randomCrossroad = crossroadCells[randomIndex];
+                var sun = new UglySun(randomCrossroad.CoordinateX, randomCrossroad.CoordinateY, _level);
                 _level.Cells.Remove(randomCrossroad);
                 _level.Cells.Add(sun);
                 crossroadCells.RemoveAt(randomIndex);
