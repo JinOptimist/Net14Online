@@ -12,11 +12,11 @@ namespace Maze.Cells
             CoordinateY = coordinateY;
             Level = level;
             Color = color;
-            State?.Invoke(this);
         }
 
-        private int coordinateX;
-        private int coordinateY;
+        private int _coordinateX;
+        private int _coordinateY;
+        private ConsoleColor _color;
 
         public event IBaseCell.StateDelegate State;
 
@@ -26,26 +26,34 @@ namespace Maze.Cells
         public int OldCoordinateY { get; set; }
         public int CoordinateX
         {
-            get { return coordinateX; }
+            get { return _coordinateX; }
             set
             {
-                OldCoordinateX = coordinateX;
-                coordinateX = value;
+                OldCoordinateX = _coordinateX;
+                _coordinateX = value;
                 StateUpdate();
             }
         }
         public int CoordinateY
         {
-            get { return coordinateY; }
+            get { return _coordinateY; }
             set
             {
-                OldCoordinateY = coordinateY;
-                coordinateY = value;
+                OldCoordinateY = _coordinateY;
+                _coordinateY = value;
                 StateUpdate();
             }
         }
         public ILevel Level { get; }
-        public ConsoleColor Color { get; set; }
+        public ConsoleColor Color
+        {
+            get { return _color; }
+            set
+            {
+                _color = value;
+                StateUpdate();
+            }
+        }
 
         public abstract string Symbol { get; }
 

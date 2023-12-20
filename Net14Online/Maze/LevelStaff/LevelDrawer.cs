@@ -35,7 +35,6 @@ namespace Maze.LevelStaff
                 AddState(level.Cells.GetRange(_countCellsForRedraw, level.Cells.Count - _countCellsForRedraw));
                 _countCellsForRedraw = level.Cells.Count;
             }
-
             if (_countCreaturesForRedraw != level.Creatures.Count + 1)
             {
                 AddState(level.Creatures.GetRange(_countCreaturesForRedraw, level.Creatures.Count - _countCreaturesForRedraw));
@@ -96,7 +95,7 @@ namespace Maze.LevelStaff
 
         private IBaseCell? GetRedrawCell<CellType>(List<CellType> cells, int positionX, int positionY) where CellType : IBaseCell
         {
-            return cells.FirstOrDefault(c => c.CoordinateX == positionX && c.CoordinateY == positionY); ;
+            return cells.FirstOrDefault(c => c.CoordinateX == positionX && c.CoordinateY == positionY);
         }
 
         private void DrawCell(IBaseCell? cell)
