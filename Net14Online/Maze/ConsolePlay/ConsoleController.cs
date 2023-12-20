@@ -51,9 +51,13 @@ namespace Maze.ConsolePlay
                 drawer.Draw(_level);
             }
             Console.Clear();
-            Console.WriteLine($"Game over{(_level.Hero.Hp<=0? ", Hero is dead" : "")}");
+            Console.Write("Game over");
+            if (_level.Hero.Hp <= 0)
+            {
+                Console.WriteLine("Game over, Hero is dead");
+            }
         }
-        
+
         private void Step(Direction direction)
         {
             var destinationX = _level.Hero.CoordinateX;
