@@ -18,6 +18,7 @@ namespace Maze.ConsolePlay
             drawer.Draw(_level);
 
             var isGameOver = false;
+
             while (!isGameOver)
             {
                 var key = Console.ReadKey();
@@ -43,10 +44,20 @@ namespace Maze.ConsolePlay
                         isGameOver = true;
                         break;
                 }
+            
+                if (_level.Hero.Stress >= Hero.MAX_HERO_STRESS)
+                {
+                    isGameOver = true;
+                    Console.Clear();
+                    Conclusion("Your hero has reached the maximum stress level! He refuses to go anywhere in the labyrinth!", ConsoleColor.Red, 0);
+                    Conclusion("GAME OVER!!!", ConsoleColor.Red, 2);
+                    Console.ResetColor();
+                    Console.ReadKey();
+                    return;
+                }
+
                 drawer.Draw(_level);
 
-                CheckStress(isGameOver);
-                
             }
 
         }
@@ -113,30 +124,16 @@ namespace Maze.ConsolePlay
             }
 
         }
-
-        private void CheckStress(bool isGameOver)
-        {
-            if (_level.Hero.Stress >= Hero.MAX_HERO_STRESS)
+            private void Conclusion(string message, ConsoleColor textColor, int moveMessage)
             {
-                isGameOver = true;
-                Console.Clear();
-
-                var stressText = "Your hero has reached the maximum stress level! He refuses to go anywhere in the labyrinth!";
-                var gameOverText = "GAME OVER!!!";
-
-                var centerX = Console.WindowWidth / 2 - stressText.Length / 2;
-                var centerY = Console.WindowHeight / 2;
-                Console.ForegroundColor = ConsoleColor.Red;
+                var centerX = Console.WindowWidth / 2 - message.Length / 2;
+                var centerY = Console.WindowHeight / 2 + moveMessage;
+                Console.ForegroundColor = textColor;
                 Console.SetCursorPosition(centerX, centerY);
-                Console.WriteLine(stressText);
-                centerX = Console.WindowWidth / 2 - gameOverText.Length / 2;
-                centerY += 2;
-                Console.SetCursorPosition(centerX, centerY);
-                Console.WriteLine(gameOverText);
-                Console.ResetColor();
-                Console.ReadLine();
-                return;
+                Console.WriteLine(message);
+                
             }
-        }
+        
     }
+
 }
