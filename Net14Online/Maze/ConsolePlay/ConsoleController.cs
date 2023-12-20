@@ -20,12 +20,25 @@ namespace Maze.ConsolePlay
             var isGameOver = false;
             while (!isGameOver)
             {
-                if (_level.Hero.Stress >=Hero.MaxHeroStress)
+                if (_level.Hero.Stress >= Hero.MaxHeroStress)
                 {
                     isGameOver = true;
                     Console.Clear();
-                    Console.WriteLine("Your hero has reached the maximum stress level! He refuses to go anywhere in the labyrinth!");
-                    Console.WriteLine("GAME OVER!!!");
+
+                    var stressText = "Your hero has reached the maximum stress level! He refuses to go anywhere in the labyrinth!";
+                    var gameOverText = "GAME OVER!!!";
+                  
+                    var centerX = Console.WindowWidth / 2 - stressText.Length / 2;
+                    var centerY = Console.WindowHeight / 2;
+                    Console.ForegroundColor = ConsoleColor.Red; 
+                    Console.SetCursorPosition(centerX, centerY);
+                    Console.WriteLine(stressText);
+                    centerX = Console.WindowWidth / 2 - gameOverText.Length / 2;
+                    centerY += 2;
+                    Console.SetCursorPosition(centerX, centerY);
+                    Console.WriteLine(gameOverText);
+                    Console.ResetColor();
+                    Console.ReadLine();
                     return;
                 }
                 var key = Console.ReadKey();
@@ -53,7 +66,7 @@ namespace Maze.ConsolePlay
                 }
                 drawer.Draw(_level);
             }
-          
+
         }
 
         private void Step(Direction direction)
@@ -62,7 +75,7 @@ namespace Maze.ConsolePlay
 
             foreach (var creature in _level.Creatures)
             {
-                
+
                 var cell = creature.ChooseCellToStep();
                 MoveCreature(creature, cell);
             }
@@ -92,7 +105,7 @@ namespace Maze.ConsolePlay
             var relativeStress = (double)(_level.Hero.Stress - Hero.MinHeroStress) / (Hero.MaxHeroStress - Hero.MinHeroStress);
             var randomChanceToMakeOneStep = random.NextDouble();
             var probabilityLimit = 1.0 - relativeStress;
-            
+
             if (!(randomChanceToMakeOneStep > probabilityLimit))
             {
                 switch (direction)
