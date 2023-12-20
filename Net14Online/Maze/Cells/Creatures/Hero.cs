@@ -7,6 +7,7 @@ namespace Maze.Cells.Creatures
     public class Hero : BaseCreature, IHero
     {
         public const int MaxHeroStress = 100;
+        public const int MinHeroStress = 0;
         public override string Symbol => "H";
 
         public Hero(int coordinateX, int coordinateY, ILevel level, ConsoleColor color = ConsoleColor.DarkYellow) : base(coordinateX, coordinateY, level, color)

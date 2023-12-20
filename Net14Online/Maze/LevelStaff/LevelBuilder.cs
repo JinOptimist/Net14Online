@@ -410,9 +410,9 @@ namespace Maze.LevelStaff
             {
                 var randomIndex = _random.Next(crossroadCells.Count);
                 var randomCrossroad = crossroadCells[randomIndex];
-                var sun = new UglySun(randomCrossroad.CoordinateX, randomCrossroad.CoordinateY, _level);
+                var uglysun = new UglySun(randomCrossroad.CoordinateX, randomCrossroad.CoordinateY, _level);
                 _level.Cells.Remove(randomCrossroad);
-                _level.Cells.Add(sun);
+                _level.Cells.Add(uglysun);
                 crossroadCells.RemoveAt(randomIndex);
             }
         }

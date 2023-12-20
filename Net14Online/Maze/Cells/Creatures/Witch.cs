@@ -43,11 +43,11 @@ namespace Maze.Cells.Creatures
                 }
                 else hero.Hp = 0;
 
-                if (hero.Stress + _giveStress <= 100)
+                if (hero.Stress + _giveStress <= Hero.MaxHeroStress)
                 {
                     hero.Stress += _giveStress;
                 }
-                else hero.Stress = 100;
+                else hero.Stress = Hero.MaxHeroStress;
 
                 return true;
             }

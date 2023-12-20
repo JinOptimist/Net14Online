@@ -22,11 +22,11 @@ namespace Maze.Cells
             var hero = creature as Hero;
             if (hero is not null)
             {
-                if (hero.Stress + _giveStress <= 100)
+                if (hero.Stress + _giveStress <= Hero.MaxHeroStress)
                 {
                     hero.Stress += _giveStress;
                 }
-                else hero.Stress = 100;
+                else hero.Stress = Hero.MaxHeroStress;
 
                 var ground = new Ground(CoordinateX, CoordinateY, Level);
                 Level.ReplaceCell(this, ground);

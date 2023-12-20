@@ -23,11 +23,11 @@ namespace Maze.Cells
 
             if (hero is not null)
             {
-                if (hero.Stress - _giveHappiness >= 0)
+                if (hero.Stress - _giveHappiness >= Hero.MinHeroStress)
                 {
                     hero.Stress -= _giveHappiness;
                 }
-                else hero.Stress = 0;
+                else hero.Stress = Hero.MinHeroStress;
                
 
                 var ground = new Ground(CoordinateX, CoordinateY, Level);

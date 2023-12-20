@@ -2,5 +2,6 @@
 {
     public interface IHero : IBaseCreature
     {
+
     }
 }

@@ -87,8 +87,8 @@ namespace Maze.ConsolePlay
             var destinationX = _level.Hero.CoordinateX;
             var destinationY = _level.Hero.CoordinateY;
             Random random = new();
-            var randomChanceToMakeOneStep = random.Next(0, 100);
-            if ((randomChanceToMakeOneStep > _level.Hero.Stress) || (_level.Hero.Stress == 0))
+            var randomChanceToMakeOneStep = random.Next(Hero.MinHeroStress, Hero.MaxHeroStress);
+            if ((randomChanceToMakeOneStep > _level.Hero.Stress) || (_level.Hero.Stress == Hero.MinHeroStress))
             {
                 switch (direction)
                 {
