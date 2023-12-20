@@ -1,12 +1,12 @@
-﻿using Maze.Cells.Creatures;
-using Maze.Cells.Creatures.Interfaces;
+﻿using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 
 namespace Maze.Cells
 {
     public class Coin : BaseCell
     {
-        public Coin(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        // Поменял входной параметр для консткрутора с Level на интерфейс
+        public Coin(int coordinateX, int coordinateY, ILevel level) : base(coordinateX, coordinateY, level)
         {
         }
 
