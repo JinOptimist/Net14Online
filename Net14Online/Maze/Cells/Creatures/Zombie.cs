@@ -32,7 +32,7 @@ namespace Maze.Cells.Creatures
                 {
                     zombie.CoordinateX = cellToStep.CoordinateX;
                     zombie.CoordinateY = cellToStep.CoordinateY;
-                    
+
                 }
                 else
                 {
@@ -41,7 +41,7 @@ namespace Maze.Cells.Creatures
                     {
                         zombie.CoordinateX = cellToStep.CoordinateX;
                         zombie.CoordinateY = cellToStep.CoordinateY;
-                       
+
                     }
                     else
                     {
@@ -50,7 +50,7 @@ namespace Maze.Cells.Creatures
                         {
                             zombie.CoordinateX = cellToStep.CoordinateX;
                             zombie.CoordinateY = cellToStep.CoordinateY;
-                           
+
                         }
                     }
                 }
@@ -60,17 +60,22 @@ namespace Maze.Cells.Creatures
 
         public override bool Step(IBaseCreature creature)
         {
-           if (creature is Hero)
+            var hero = creature as Hero;
+
+            if (hero != null)
             {
-                _level.Hero.Hp--;
+                hero.Hp--;
 
-                var zombie = _level.Creatures.First(x => x is Zombie);
-                var stepCell = _level.Cells.First(x => x.CoordinateX == zombie.CoordinateX && x.CoordinateY == zombie.CoordinateY);
+                var zombie = Level.Creatures.First(x => x is Zombie);
+                var stepCell = Level.Cells.First(x => x.CoordinateX == zombie.CoordinateX && x.CoordinateY == zombie.CoordinateY);
 
-                var potentionalCellsForCoin = _level.GetNearCells<IBaseCell>(stepCell);
+                var potentionalCellsForCoin = Level.GetNearCells<IBaseCell>(stepCell);
                 var newCoinCell = potentionalCellsForCoin[_random.Next(potentionalCellsForCoin.Count)];
 
-                var newCoin = new Coin(newCoinCell.CoordinateX, newCoinCell.CoordinateY, _level);
+                var newCoin = new Coin(newCoinCell.CoordinateX, newCoinCell.CoordinateY, newCoinCell.Level);
+                Level.Cells.Remove(newCoinCell);
+                Level.Cells.Add(newCoinCell);
+
                 return false;
             }
 
