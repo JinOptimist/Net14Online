@@ -9,22 +9,19 @@ using System.Threading.Tasks;
 
 namespace Maze.Cells.Creatures
 {
-
-    public class Thief : BaseCreature
+    public class Witch : BaseCreature
     {
-        private int _robMoney = 10;
-
         private Random _random = new Random();
-
-        public Thief(int coordinateX, int coordinateY, ILevel level) : base(coordinateX, coordinateY, level)
+        public Witch(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.DarkCyan)
+            : base(coordinateX, coordinateY, level, color)
         {
         }
 
-        public override string Symbol => "t";
+        public override string Symbol => "W";
 
         public override IBaseCell ChooseCellToStep()
         {
-            var cells = Level.GetNearCells<IBaseCell>(this);
+            var cells = Level.GetNearCells<BaseCell>(this);
             var randomInex = _random.Next(cells.Count);
             var cell = cells[randomInex];
             return cell;
@@ -32,18 +29,15 @@ namespace Maze.Cells.Creatures
 
         public override bool Step(IBaseCreature creature)
         {
-            if (creature is Hero)
+
+            var hero = creature as Hero;
+            if (hero is not null)
             {
-                if (creature.Money > _robMoney)
-                {
-                    creature.Money -= 10;
-                }
-                else
-                {
-                    creature.Money = 0;
-                }
+                creature.Hp -= 2;
+                return true;
             }
-            return true;
+
+            return false;
         }
     }
 }
