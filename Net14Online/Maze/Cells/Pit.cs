@@ -6,10 +6,14 @@ namespace Maze.Cells
 {
     public class Pit : BaseCell
     {
+<<<<<<< Updated upstream
         private readonly Level _level;
         private Random _random = new Random();
 
         public Pit(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+=======
+        public Pit(int coordinateX, int coordinateY, ILevel level) : base(coordinateX, coordinateY, level)
+>>>>>>> Stashed changes
         {
             _level = level;
         }
