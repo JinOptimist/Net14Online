@@ -91,9 +91,9 @@ namespace Maze.ConsolePlay
             Random random = new();
             var relativeStress = (double)(_level.Hero.Stress - Hero.MinHeroStress) / (Hero.MaxHeroStress - Hero.MinHeroStress);
             var randomChanceToMakeOneStep = random.NextDouble();
-            var probabilityThreshold = 1.0 - relativeStress;
+            var probabilityLimit = 1.0 - relativeStress;
             
-            if (!(randomChanceToMakeOneStep > probabilityThreshold))
+            if (!(randomChanceToMakeOneStep > probabilityLimit))
             {
                 switch (direction)
                 {
