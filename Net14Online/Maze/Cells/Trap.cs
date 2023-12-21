@@ -11,14 +11,16 @@ namespace Maze.Cells
 {
     internal class Trap : BaseCell
     {
-        public Trap(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public const ConsoleColor DEFAULT_COLOR = ConsoleColor.DarkCyan;
+        public Trap(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level, DEFAULT_COLOR)
         {
         }
-
         public override string Symbol => "^";
 
         public override bool Step(IBaseCreature creature)
         {
+            creature.Hp -= 1;
+
             return true;
         }
     }
