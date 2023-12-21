@@ -7,10 +7,9 @@ namespace Maze.Cells
 {
     public class Ring : BaseCell
     {
-        private int _moneyCount;
         private bool _isUsed;
 
-        public Ring(int coordinateX, int coordinateY, Level level, int moneyCount) : base(coordinateX, coordinateY, level)
+        public Ring(int coordinateX, int coordinateY, ILevel level) : base(coordinateX, coordinateY, level)
         {
             _isUsed = false;
         }
@@ -19,7 +18,7 @@ namespace Maze.Cells
 
         public override bool Step(IBaseCreature creature)
         {
-            if (creature is Hero && !_isUsed)
+            if (!_isUsed)
             {
                 creature.Money += 5;
                 creature.Hp += 5;

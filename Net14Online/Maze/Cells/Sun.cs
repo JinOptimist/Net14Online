@@ -11,15 +11,20 @@ namespace Maze.Cells
 {
     internal class Sun : BaseCell
     {
-        public Sun(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
-        {
-        }
+        public Sun(int coordinateX, int coordinateY, ILevel level, ConsoleColor color = ConsoleColor.Yellow) : base(coordinateX, coordinateY, level, color)
+        { }
 
         public override string Symbol => "*";
 
         public override bool Step(IBaseCreature creature)
         {
-            creature.Money += 5;
+            var hero = creature as Hero;
+            if (hero is not null)
+            {
+                hero.Money += 5;
+                var ground = new Ground(CoordinateX, CoordinateY, Level);
+                Level.ReplaceCell(this, ground);
+            }
             return true;
         }
     }

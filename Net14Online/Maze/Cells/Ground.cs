@@ -1,10 +1,10 @@
-﻿using Maze.Cells.Creatures;
+﻿using Maze.Cells.CellInterfaces;
 using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 
 namespace Maze.Cells
 {
-    public class Ground : BaseCell
+    public class Ground : BaseCell, IGround
     {
         public Ground(int coordinateX, int coordinateY, ILevel level) : base(coordinateX, coordinateY, level)
         {

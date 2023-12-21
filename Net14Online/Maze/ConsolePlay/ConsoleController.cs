@@ -20,6 +20,11 @@ namespace Maze.ConsolePlay
             var isGameOver = false;
             while (!isGameOver)
             {
+                if (_level.Hero.Hp <= 0)
+                {
+                    isGameOver = true;
+                    break;
+                }
                 var key = Console.ReadKey();
                 switch (key.Key)
                 {
@@ -45,8 +50,14 @@ namespace Maze.ConsolePlay
                 }
                 drawer.Draw(_level);
             }
+            Console.Clear();
+            Console.Write("Game over");
+            if (_level.Hero.Hp <= 0)
+            {
+                Console.WriteLine("Game over, Hero is dead");
+            }
         }
-        
+
         private void Step(Direction direction)
         {
             var destinationX = _level.Hero.CoordinateX;

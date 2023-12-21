@@ -12,7 +12,7 @@ namespace Maze.Cells
 
     public class Puddle : BaseCell
     {
-        public Puddle(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Puddle(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.DarkBlue) : base(coordinateX, coordinateY, level, color)
         {
         }
 
