@@ -668,7 +668,6 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(trap);
             }
         }
-<<<<<<< HEAD
         private void BuildSpider(int spiderCount)
         {
             var ground = _level.Cells.OfType<Ground>().ToList();
@@ -678,7 +677,8 @@ namespace Maze.LevelStaff
                 var randomGround = ground.GetRandom();
                 var spider = new Spider(randomGround.CoordinateX, randomGround.CoordinateY, _level);
                 _level.Creatures.Add(spider);
-=======
+            }
+        }
         private void BuildCages2(int cageCount = 13)
         {
             var potentialCages = _level.Cells.Where(x => _level.GetNearCells<Ground>(x).Count == 4).ToList();
@@ -689,7 +689,6 @@ namespace Maze.LevelStaff
                 var сage = new Cage(crossroad.CoordinateX, crossroad.CoordinateY, _level);
 
                 _level.ReplaceCell(crossroad, сage);
->>>>>>> main
             }
         }
     }
