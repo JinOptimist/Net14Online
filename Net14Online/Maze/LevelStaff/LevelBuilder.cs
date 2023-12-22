@@ -56,7 +56,6 @@ namespace Maze.LevelStaff
             int trapsCount = 5,
             int sunCount = 2,
             int ringCount = 2,
-            int spiderCount = 7,
             int witchCount = 3)
         {
             if (seedForRandom > 0)
@@ -95,7 +94,6 @@ namespace Maze.LevelStaff
             BuildGoodMonster();
             BuildSnake();
             BuildGhost();
-            BuildSpider(spiderCount);
             BuildElf(ringCount);
             BuildWitch(witchCount);
 
@@ -666,30 +664,6 @@ namespace Maze.LevelStaff
 
                 _level.Cells.Remove(randomWall);
                 _level.Cells.Add(trap);
-            }
-        }
-<<<<<<< HEAD
-        private void BuildSpider(int spiderCount)
-        {
-            var ground = _level.Cells.OfType<Ground>().ToList();
-
-            for (int i = 0; i < spiderCount; i++)
-            {
-                var randomGround = ground.GetRandom();
-                var spider = new Spider(randomGround.CoordinateX, randomGround.CoordinateY, _level);
-                _level.Creatures.Add(spider);
-=======
-        private void BuildCages2(int cageCount = 13)
-        {
-            var potentialCages = _level.Cells.Where(x => _level.GetNearCells<Ground>(x).Count == 4).ToList();
-
-            for (int i = 0; i < cageCount && i < potentialCages.Count; i++)
-            {
-                var crossroad = potentialCages.GetRandom();
-                var сage = new Cage(crossroad.CoordinateX, crossroad.CoordinateY, _level);
-
-                _level.ReplaceCell(crossroad, сage);
->>>>>>> main
             }
         }
     }
