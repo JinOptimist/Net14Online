@@ -81,8 +81,8 @@ namespace Maze.LevelStaff
             //BuildChest();
             BuildMoonV26();
             AddBerriesV7(berriesCount);
-            BuildCage();
-            BuildTrapRandom(trapsCount);
+            BuildCages2();
+            BuildTrapsAroundCoins(trapsCount);
             BuildSun(sunCount);
             BuildPuddleV_10();
 
@@ -638,6 +638,21 @@ namespace Maze.LevelStaff
 
             _level.Hero = hero;
         }
+        private void BuildTrapsAroundCoins(int maxTrapsCount)
+        {
+            for (int i = 0; i < maxTrapsCount; i++)
+            {
+                var coin = _level.GetRandomCell<Coin>();
+                var nearestCell = _level.GetNearCells<Ground>(coin).FirstOrDefault();
+
+                if (nearestCell != null)
+                {
+                    var trap = new Trap(nearestCell.CoordinateX, nearestCell.CoordinateY, _level);
+
+                    _level.ReplaceCell(nearestCell, trap);
+                }
+            }
+        }
 
         private void BuildTrapRandom(int trapsCount)
         {
@@ -653,6 +668,7 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(trap);
             }
         }
+<<<<<<< HEAD
         private void BuildSpider(int spiderCount)
         {
             var ground = _level.Cells.OfType<Ground>().ToList();
@@ -662,6 +678,18 @@ namespace Maze.LevelStaff
                 var randomGround = ground.GetRandom();
                 var spider = new Spider(randomGround.CoordinateX, randomGround.CoordinateY, _level);
                 _level.Creatures.Add(spider);
+=======
+        private void BuildCages2(int cageCount = 13)
+        {
+            var potentialCages = _level.Cells.Where(x => _level.GetNearCells<Ground>(x).Count == 4).ToList();
+
+            for (int i = 0; i < cageCount && i < potentialCages.Count; i++)
+            {
+                var crossroad = potentialCages.GetRandom();
+                var сage = new Cage(crossroad.CoordinateX, crossroad.CoordinateY, _level);
+
+                _level.ReplaceCell(crossroad, сage);
+>>>>>>> main
             }
         }
     }
