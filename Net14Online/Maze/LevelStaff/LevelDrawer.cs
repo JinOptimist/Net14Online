@@ -111,5 +111,11 @@ namespace Maze.LevelStaff
             Symbol = symbol;
             Color = color;
         }
+
+        private void DrawingColorCells(ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+        }
+        
     }
 }

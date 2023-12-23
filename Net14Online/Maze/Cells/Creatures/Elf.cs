@@ -6,7 +6,7 @@ namespace Maze.Cells.Creatures
     public class Elf : BaseCreature
     {
         private Random _random = new Random();
-        public Elf(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Elf(int coordinateX, int coordinateY, ILevel level) : base(coordinateX, coordinateY, level)
         {
         }
 
