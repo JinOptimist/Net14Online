@@ -5,107 +5,72 @@ namespace Maze.LevelStaff
 {
     public class LevelDrawer
     {
-        private List<IBaseCell> _cellsForRedraw;
-        private int _countCellsForRedraw;
-        private int _countCreaturesForRedraw;
-
-        public LevelDrawer()
-        {
-            _cellsForRedraw = new List<IBaseCell>();
-        }
+        private List<OldCell> _oldCells = new List<OldCell>();
 
         public void Draw(Level level)
         {
-            AddStateForCells(level);
-            foreach (var cell in _cellsForRedraw)
+            var inputColor = Console.ForegroundColor;
+            foreach (var cell in level.Cells)
             {
-                DrawCell(cell);
+                var topCell = GetTopCellByCoordinate(level, cell.CoordinateX, cell.CoordinateY);
+                RedrawCell(topCell);
             }
-            DrawCell(level.Hero);
-            _cellsForRedraw.Clear();
             Console.ResetColor();
             Console.SetCursorPosition(level.Width, level.Height - 1);
             DrawHeroStats(level.Hero);
+            Console.ForegroundColor = inputColor;
         }
 
-        private void AddStateForCells(Level level)
+        private IBaseCell GetTopCellByCoordinate(Level level, int coordinateX, int coordinateY)
         {
-            if (_countCellsForRedraw != level.Cells.Count)
+            if (level.Hero.CoordinateX == coordinateX && level.Hero.CoordinateY == coordinateY)
             {
-                AddState(level.Cells.GetRange(_countCellsForRedraw, level.Cells.Count - _countCellsForRedraw));
-                _countCellsForRedraw = level.Cells.Count;
+                return level.Hero;
             }
-            if (_countCreaturesForRedraw != level.Creatures.Count + 1)
+
+            var creature = level.Creatures.FirstOrDefault(c => c.CoordinateX == coordinateX && c.CoordinateY == coordinateY);
+            if (creature is not null)
             {
-                AddState(level.Creatures.GetRange(_countCreaturesForRedraw, level.Creatures.Count - _countCreaturesForRedraw));
-                var hero = level.Hero;
-                hero.State -= RedrawCell;
-                hero.State += RedrawCell;
-                hero.StateUpdate();
-                _countCreaturesForRedraw = level.Creatures.Count + 1;
+                return creature;
             }
+
+            var cell = level.Cells.FirstOrDefault(c => c.CoordinateX == coordinateX && c.CoordinateY == coordinateY);
+            if (cell is not null)
+            {
+                return cell;
+            }
+
+            return null;
         }
 
-        private void AddState<CellType>(List<CellType> cells) where CellType : IBaseCell
+        private void RedrawCell(IBaseCell cell)
         {
-            foreach (var cell in cells)
-            {
-                cell.State -= RedrawCell;
-                cell.State += RedrawCell;
-                cell.StateUpdate();
-            }
-        }
-
-        private void RedrawCell(IBaseCell newPositionCell)
-        {
-            if (newPositionCell.Level == null)
+            if (cell is null)
             {
                 return;
             }
-            _cellsForRedraw.Add(newPositionCell);
-            if (newPositionCell.Level.Hero != null)
-            {
-                var oldHero = newPositionCell.Level.Hero;
-                if (oldHero.CoordinateX == newPositionCell.OldCoordinateX && oldHero.CoordinateY == newPositionCell.OldCoordinateY)
-                {
-                    _cellsForRedraw.Add(oldHero);
-                    return;
-                }
-            }
-            if (AddRedrawCell(newPositionCell.Level.Cells, newPositionCell.OldCoordinateX, newPositionCell.OldCoordinateY))
+
+            var oldCell = _oldCells.FirstOrDefault(c => c.CoordinateX == cell.CoordinateX && c.CoordinateY == cell.CoordinateY);
+            if (oldCell is not null && oldCell.Symbol == cell.Symbol && oldCell.Color == cell.Color)
             {
                 return;
             }
-            if (AddRedrawCell(newPositionCell.Level.Creatures, newPositionCell.OldCoordinateX, newPositionCell.OldCoordinateY))
+            if (oldCell is not null)
             {
-                return;
+                _oldCells.Remove(oldCell);
             }
+            if (oldCell is null)
+            {
+                _oldCells.Add(new OldCell(cell.CoordinateX, cell.CoordinateY, cell.Symbol, cell.Color));
+            }
+            DrawCell(cell);
         }
 
-        private bool AddRedrawCell<CellType>(List<CellType> cells, int oldPositionX, int oldPositionY) where CellType : IBaseCell
+        private void DrawCell(IBaseCell cell)
         {
-            var cell = GetRedrawCell(cells, oldPositionX, oldPositionY);
-            if (cell != null)
-            {
-                _cellsForRedraw.Add(cell);
-                return true;
-            }
-            return false;
-        }
-
-        private IBaseCell? GetRedrawCell<CellType>(List<CellType> cells, int positionX, int positionY) where CellType : IBaseCell
-        {
-            return cells.FirstOrDefault(c => c.CoordinateX == positionX && c.CoordinateY == positionY);
-        }
-
-        private void DrawCell(IBaseCell? cell)
-        {
-            if (cell != null)
-            {
-                Console.SetCursorPosition(cell.CoordinateX, cell.CoordinateY);
-                Console.ForegroundColor = cell.Color;
-                Console.Write(cell.Symbol);
-            }
+            Console.SetCursorPosition(cell.CoordinateX, cell.CoordinateY);
+            Console.ForegroundColor = cell.Color;
+            Console.Write(cell.Symbol);
         }
 
         private void DrawHeroStats(IHero? hero)
@@ -129,6 +94,22 @@ namespace Maze.LevelStaff
                 Console.ResetColor();
                 Console.Write(" years\n");
             }
+        }
+    }
+
+    public class OldCell
+    {
+        public int CoordinateX { get; set; }
+        public int CoordinateY { get; set; }
+        public string Symbol { get; set; }
+        public ConsoleColor Color { get; set; }
+
+        public OldCell(int coordinateX, int coordinateY, string symbol, ConsoleColor color)
+        {
+            CoordinateX = coordinateX;
+            CoordinateY = coordinateY;
+            Symbol = symbol;
+            Color = color;
         }
     }
 }
