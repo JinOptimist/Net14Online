@@ -7,7 +7,7 @@ namespace Maze.Cells
 {
     internal class Diamond: BaseCell 
     {
-        public Diamond(int coordinateX, int coordinateY, Level level, ConsoleColor color) : base(coordinateX, coordinateY, level)
+        public Diamond(int coordinateX, int coordinateY, Level level, ConsoleColor color = ConsoleColor.Blue) : base(coordinateX, coordinateY, level)
         {
         }
         public override string Symbol => "=";
