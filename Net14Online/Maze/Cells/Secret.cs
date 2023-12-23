@@ -28,9 +28,14 @@ namespace Maze.Cells
                 return true;
             }
 
-            Random rnd = new Random();
-            cellsForSecret[rnd.Next(0, cellsForSecret.Length)].Step(creature);
-            Level.ReplaceToGround(this);
+            var hero = creature as Hero;
+            if (hero is not null)
+            {
+                Random rnd = new Random();
+                cellsForSecret[rnd.Next(0, cellsForSecret.Length)].Step(creature);
+                Level.ReplaceToGround(this);
+            }
+
             return true;
         }
     }
