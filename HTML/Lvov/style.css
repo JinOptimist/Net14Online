@@ -1,0 +1,76 @@
+.content{
+    width: 1000px;
+    margin: auto;
+}
+
+.origin {
+    display: flex;
+}
+
+.general-info {
+    display: flex;
+    justify-content: space-around;
+    flex: 1;
+}
+
+.box {
+    border: 1px solid #000;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.box.small {
+    width: 100px;
+    height: 100px;
+}
+
+.named-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.named-line .value{
+    font-size: 25px;
+    margin-top: 27px;
+}
+
+.named-line .desc {
+    border-top: 1px solid #000;
+    color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    text-align: center;
+}
+
+.detail-status-info{
+    display: flex;
+}
+
+.general-status-info{
+    display: flex;
+}
+
+.hp-block{
+    height: 30px;
+    background: red;
+    overflow: hidden;
+}
+
+.current-hp{
+    height: 100%;
+    background: green;
+    width: 84%;
+}
+
+.specification{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.specification textarea{
+    width: 510px;
+    height: 280px;
+    resize: none;
+}
