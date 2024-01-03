@@ -54,12 +54,13 @@ namespace Maze.LevelStaff
             int coinCount = 2,
             int berriesCount = 3,
             int trapsCount = 5,
-            int sunCount = 2,
+            int sunCount = 5,
             int ringCount = 2,
             int secretCount = 3,
             int slimeCount = 2,
             int spiderCount = 7,
-            int witchCount = 3)
+            int witchCount = 3,
+            int uglySunCount = 10)
         {
             if (seedForRandom > 0)
             {
@@ -86,6 +87,7 @@ namespace Maze.LevelStaff
             BuildCages2();
             BuildTrapsAroundCoins(trapsCount);
             BuildSun(sunCount);
+            BuildUglySun(uglySunCount);
             BuildSecret(secretCount, new Diamond(0, 0, _level), new Coin(0, 0, _level), new Ring(0, 0, _level));
             BuildPuddleV_10();
 
@@ -414,6 +416,19 @@ namespace Maze.LevelStaff
 
                 _level.Cells.Remove(randomWall);
                 _level.Cells.Add(ground);
+            }
+        }
+        private void BuildUglySun(int uglySunCount)
+        {
+            var crossroadCells = _level.Cells.Where(cell => _level.GetNearCells<Ground>(cell).Count > 2).ToList();
+            for (int i = 0; i < uglySunCount && crossroadCells.Any(); i++)
+            {
+                var randomIndex = _random.Next(crossroadCells.Count);
+                var randomCrossroad = crossroadCells[randomIndex];
+                var uglysun = new UglySun(randomCrossroad.CoordinateX, randomCrossroad.CoordinateY, _level);
+                _level.Cells.Remove(randomCrossroad);
+                _level.Cells.Add(uglysun);
+                crossroadCells.RemoveAt(randomIndex);
             }
         }
 
