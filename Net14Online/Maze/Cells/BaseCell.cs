@@ -1,5 +1,4 @@
 ﻿using Maze.Cells.CellInterfaces;
-using Maze.Cells.Creatures;
 using Maze.Cells.Creatures.Interfaces;
 using Maze.LevelStaff;
 
@@ -14,7 +13,7 @@ namespace Maze.Cells
             Level = level;
             Color = color;
         }
-
+        
         public int CoordinateX { get; set; }
         public int CoordinateY { get; set; }
         public ILevel Level { get; }

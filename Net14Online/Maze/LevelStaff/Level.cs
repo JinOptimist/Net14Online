@@ -1,6 +1,5 @@
 ﻿using Maze.Cells;
 using Maze.Cells.CellInterfaces;
-using Maze.Cells.Creatures;
 using Maze.Cells.Creatures.Interfaces;
 
 namespace Maze.LevelStaff
@@ -11,7 +10,7 @@ namespace Maze.LevelStaff
         public int Height { get; set; }
         public List<IBaseCell> Cells { get; set; } = new List<IBaseCell>();
         public List<IBaseCreature> Creatures { get; set; } = new List<IBaseCreature>();
-        public Hero Hero { get; set; }
+        public IHero Hero { get; set; }
 
         public void ReplaceCell(IBaseCell oldCell, IBaseCell newCell)
         {

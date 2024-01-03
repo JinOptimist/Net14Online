@@ -31,7 +31,7 @@ namespace Maze.LevelStaff
             switch (typeBuilder)
             {
                 case 1:
-                    _level = BuildV0(40, 30);
+                    _level = BuildV0(30, 20);
                     break;
                 case 2:
                     _level = BuildV11(30, 20);
@@ -54,9 +54,13 @@ namespace Maze.LevelStaff
             int coinCount = 2,
             int berriesCount = 3,
             int trapsCount = 5,
-            int sunCount = 2,
+            int sunCount = 5,
             int ringCount = 2,
-            int witchCount = 3)
+            int secretCount = 3,
+            int slimeCount = 2,
+            int spiderCount = 7,
+            int witchCount = 3,
+            int uglySunCount = 10)
         {
             if (seedForRandom > 0)
             {
@@ -80,9 +84,11 @@ namespace Maze.LevelStaff
             //BuildChest();
             BuildMoonV26();
             AddBerriesV7(berriesCount);
-            BuildCage();
-            BuildTrapRandom(trapsCount);
+            BuildCages2();
+            BuildTrapsAroundCoins(trapsCount);
             BuildSun(sunCount);
+            BuildUglySun(uglySunCount);
+            BuildSecret(secretCount, new Diamond(0, 0, _level), new Coin(0, 0, _level), new Ring(0, 0, _level));
             BuildPuddleV_10();
 
             //Generate creature
@@ -94,6 +100,8 @@ namespace Maze.LevelStaff
             BuildGoodMonster();
             BuildSnake();
             BuildGhost();
+            BuildSpider(spiderCount);
+            BuildSlime(slimeCount);
             BuildElf(ringCount);
             BuildWitch(witchCount);
 
@@ -303,6 +311,30 @@ namespace Maze.LevelStaff
             return _level;
         }
 
+        public Level BuildV17(int width = 10, int height = 5, int seedForRandom = -1,
+            int secretsCount = 5, int coinsCount = 3, int slimeCount = 2)
+        {
+            if (seedForRandom > 0)
+            {
+                _random = new Random(seedForRandom);
+            }
+            else
+            {
+                _random = new Random();
+            }
+            _level = new Level();
+            _level.Width = width;
+            _level.Height = height;
+
+            BuildWall();
+            BuildSecret(secretsCount, new Coin(0, 0, _level), new Diamond(0, 0, _level));
+            BuildCoin(coinsCount);
+            BuildHero();
+            BuildSlime(slimeCount);
+
+            return _level;
+        }
+
         public Level BuildV18(int width = 10, int height = 5, int seedForRandom = -1)
         {
             if (seedForRandom > 0)
@@ -384,6 +416,19 @@ namespace Maze.LevelStaff
 
                 _level.Cells.Remove(randomWall);
                 _level.Cells.Add(ground);
+            }
+        }
+        private void BuildUglySun(int uglySunCount)
+        {
+            var crossroadCells = _level.Cells.Where(cell => _level.GetNearCells<Ground>(cell).Count > 2).ToList();
+            for (int i = 0; i < uglySunCount && crossroadCells.Any(); i++)
+            {
+                var randomIndex = _random.Next(crossroadCells.Count);
+                var randomCrossroad = crossroadCells[randomIndex];
+                var uglysun = new UglySun(randomCrossroad.CoordinateX, randomCrossroad.CoordinateY, _level);
+                _level.Cells.Remove(randomCrossroad);
+                _level.Cells.Add(uglysun);
+                crossroadCells.RemoveAt(randomIndex);
             }
         }
 
@@ -608,6 +653,71 @@ namespace Maze.LevelStaff
         }
 
 
+
+        private void BuildSecret(int numberOfSecrets, params BaseCell[] cellsForSecret)
+        {
+            for (int i = 0; i < numberOfSecrets; i++)
+            {
+                var grounds = _level.Cells
+                    .Where(x => x is Ground)
+                    .ToList();
+                var randomGroundIndex = _random.Next(grounds.Count);
+                var randomGround = grounds[randomGroundIndex];
+                Point position = new Point(randomGround.CoordinateX, randomGround.CoordinateY);
+                Secret secret = AddSecret(position, ConsoleColor.DarkMagenta, cellsForSecret);
+            }
+        }
+
+        private Secret AddSecret(Point position, ConsoleColor color, params BaseCell[] cellsForSecret)
+        {
+            var oldCell = _level.Cells.First(x => x.CoordinateX == position.X && x.CoordinateY == position.Y);
+            var secret = new Secret(position.X, position.Y, _level, color, cellsForSecret);
+            _level.Cells.Remove(oldCell);
+            _level.Cells.Add(secret);
+            return secret;
+        }
+
+        private void BuildPaths(Point startPosition, Point endPosition)
+        {
+            ChangeWallCell(startPosition, new Ground(startPosition.X, startPosition.Y, _level));
+            int direction = 0;
+            if ((direction = GetDirection(startPosition.X, endPosition.X)) != 0)
+            {
+                startPosition.X += direction;
+                BuildPaths(startPosition, endPosition);
+                return;
+            }
+            if ((direction = GetDirection(startPosition.Y, endPosition.Y)) != 0)
+            {
+                startPosition.Y += direction;
+                BuildPaths(startPosition, endPosition);
+                return;
+            }
+        }
+
+        private void ChangeWallCell(Point position, BaseCell newCell)
+        {
+            var wallCell = _level.Cells.SingleOrDefault(x => x.CoordinateX == position.X && x.CoordinateY == position.Y && x is Wall);
+            if (wallCell != null)
+            {
+                _level.Cells.Remove(wallCell);
+                _level.Cells.Add(newCell);
+            }
+        }
+
+        private int GetDirection(int startPosition, int endPosition)
+        {
+            if (startPosition < endPosition)
+            {
+                return 1;
+            }
+            if (startPosition > endPosition)
+            {
+                return -1;
+            }
+            return 0;
+        }
+
         /// <summary>
         /// сокровищница на уровне в случайном месте. Предполагатеся что можно будет пробиться к ней через стены
         /// </summary>
@@ -636,6 +746,21 @@ namespace Maze.LevelStaff
 
             _level.Hero = hero;
         }
+        private void BuildTrapsAroundCoins(int maxTrapsCount)
+        {
+            for (int i = 0; i < maxTrapsCount; i++)
+            {
+                var coin = _level.GetRandomCell<Coin>();
+                var nearestCell = _level.GetNearCells<Ground>(coin).FirstOrDefault();
+
+                if (nearestCell != null)
+                {
+                    var trap = new Trap(nearestCell.CoordinateX, nearestCell.CoordinateY, _level);
+
+                    _level.ReplaceCell(nearestCell, trap);
+                }
+            }
+        }
 
         private void BuildTrapRandom(int trapsCount)
         {
@@ -651,8 +776,31 @@ namespace Maze.LevelStaff
                 _level.Cells.Add(trap);
             }
         }
+
+        private void BuildSpider(int spiderCount)
+        {
+            var ground = _level.Cells.OfType<Ground>().ToList();
+
+            for (int i = 0; i < spiderCount; i++)
+            {
+                var randomGround = ground.GetRandom();
+                var spider = new Spider(randomGround.CoordinateX, randomGround.CoordinateY, _level);
+                _level.Creatures.Add(spider);
+            }
+        }
+
+        private void BuildCages2(int cageCount = 13)
+        {
+            var potentialCages = _level.Cells.Where(x => _level.GetNearCells<Ground>(x).Count == 4).ToList();
+
+            for (int i = 0; i < cageCount && i < potentialCages.Count; i++)
+            {
+                var crossroad = potentialCages.GetRandom();
+                var сage = new Cage(crossroad.CoordinateX, crossroad.CoordinateY, _level);
+
+                _level.ReplaceCell(crossroad, сage);
+
+            }
+        }
     }
 }
-
-
-

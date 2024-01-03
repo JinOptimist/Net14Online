@@ -10,7 +10,7 @@ namespace Maze.LevelStaff
         List<IBaseCell> Cells { get; set; }
         List<IBaseCreature> Creatures { get; set; }
         int Height { get; set; }
-        Hero Hero { get; set; }
+        IHero Hero { get; set; }
         int Width { get; set; }
 
         List<OneOfCellType> GetNearCells<OneOfCellType>(IBaseCell currentCell) where OneOfCellType : IBaseCell;
