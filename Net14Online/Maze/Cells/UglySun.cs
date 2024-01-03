@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Maze.Cells
 {
-    internal class Sun : BaseCell
+    internal class UglySun : BaseCell
     {
-        private const int _GIVE_HAPPINESS = 5;
-        public Sun(int coordinateX, int coordinateY, ILevel level, ConsoleColor color = ConsoleColor.Yellow) : base(coordinateX, coordinateY, level, color)
+        private const int _GIVE_STRESS = 5;
+        public UglySun(int coordinateX, int coordinateY, ILevel level, ConsoleColor color = ConsoleColor.DarkRed) : base(coordinateX, coordinateY, level, color)
         { }
 
         public override string Symbol => "*";
@@ -20,25 +20,17 @@ namespace Maze.Cells
         public override bool Step(IBaseCreature creature)
         {
             var hero = creature as Hero;
-
             if (hero is not null)
             {
-                hero.Money += 5;
-                if (hero.Stress - _GIVE_HAPPINESS >= Hero.MIN_HERO_STRESS)
+                if (hero.Stress + _GIVE_STRESS <= Hero.MAX_HERO_STRESS)
                 {
-                    hero.Stress -= _GIVE_HAPPINESS;
+                    hero.Stress += _GIVE_STRESS;
                 }
                 else
                 {
-                    hero.Stress = Hero.MIN_HERO_STRESS;
+                    hero.Stress = Hero.MAX_HERO_STRESS;
                 }
 
-                var ground = new Ground(CoordinateX, CoordinateY, Level);
-                Level.ReplaceCell(this, ground);
-            }
-
-            if (creature is Witch)
-            {
                 var ground = new Ground(CoordinateX, CoordinateY, Level);
                 Level.ReplaceCell(this, ground);
             }
