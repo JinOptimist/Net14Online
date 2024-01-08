@@ -1,0 +1,41 @@
+﻿@using Net14Web.Models.Dnd
+@model List<HeroViewModel>
+
+@{
+    Layout = "_LayoutDnd";
+}
+
+@section Style
+{
+    <link href="~/css/dnd.css" rel="stylesheet" />
+    <link href="~/css/dnd2.css" rel="stylesheet" />
+}
+
+<div>
+    <a href="/Dnd/AddHero">AddHero</a>
+</div>
+<div>
+    @foreach (var hero in Model)
+    {
+        <div class="hero">
+            <div>
+                <img src="@hero.AvatarUrl" />
+            </div>
+            <div>
+                Это лист пресонажа по имени @hero.Name
+            </div>
+            <div>
+                У персонажа @hero.Coin монеток
+            </div>
+            <div>
+                У меня в рюкзаме лежит
+                @foreach (var item in hero.Tools)
+                {
+                    <span id="@item">
+                        @item
+                    </span>
+                }
+            </div>
+        </div>
+    }
+</div>

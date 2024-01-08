@@ -1,0 +1,34 @@
+﻿@using Net14Web.Models.Dnd
+@model AddHeroViewModel
+
+@{
+    Layout = "_LayoutDnd";
+}
+
+<div>
+    <form method="post">
+        <div>
+            Имя
+            @Html.TextBoxFor(x => x.Name, new { placeholder = "Имя" })
+        </div>
+
+        <div>
+            Монетки
+            @Html.TextBoxFor(x => x.Coin, new { placeholder = "Монетки", @type = "number" })
+        </div>
+
+        <div>
+            AvatarUrl
+            @Html.TextBoxFor(x => x.AvatarUrl)
+        </div>
+
+        <div>
+            Хп
+            @Html.TextBoxFor(x => x.Hp)
+        </div>
+
+        <div>
+            <input type="submit" value="Создать героя" />
+        </div>
+    </form>
+</div>
