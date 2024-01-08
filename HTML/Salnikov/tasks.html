@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<link href="styles.css" rel="stylesheet">
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление задачами</title>
+</head>
+<body>
+    <div class="tasksContainer">
+        <h1>Управление задачами</h1>
+        <form class="taskForm">
+            <label for="taskTitle">Заголовок задачи:</label>
+            <input type="text" id="taskTitle" name="taskTitle" required>
+
+            <label for="taskDescription">Описание задачи:</label>
+            <textarea id="taskDescription" name="taskDescription" required></textarea>
+
+            <label for="assignee">Исполнитель:</label>
+            <input type="text" id="assignee" name="assignee">
+
+            <button type="submit">Добавить задачу</button>
+        </form>
+        <h2>Список задач</h2>
+        <ul class="taskList">
+        </ul>
+    </div>
+</body>
+</html>
