@@ -1,6 +1,6 @@
 .footer-at-all {
     display: flex;
-    justify-content:space-around;
+    justify-content:space-between;
     align-items: center;
     background-color: #956cbb;
     padding: 20px 50px;
@@ -23,23 +23,24 @@
     display: flex;
     list-style-type: none;
     padding: 0;
-    position: relative;
-    width: 100%;
+    width: 40%;
+    flex-direction: row;
 }
 
-.social li,
-.footer-menu li {
+.social a,
+.footer-menu a {
     margin: 0 10px;
+    color: rgb(219, 208, 219);
 }
 
 .social img {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
 }
 
 .year {
     text-align: center;
-    color: #fff;
+    color: rgb(219, 208, 219);
     width: 100%;
 }
 @media (max-width: 700px) {
