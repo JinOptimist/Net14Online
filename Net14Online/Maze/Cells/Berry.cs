@@ -6,7 +6,7 @@ namespace Maze.Cells
 {
     public class Berry : BaseCell
     {
-        public Berry(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+        public Berry(int coordinateX, int coordinateY, ILevel level) : base(coordinateX, coordinateY, level)
         {
         }
 
