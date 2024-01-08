@@ -12,7 +12,7 @@ namespace Maze.Cells.Creatures
     public class Minotaur : BaseCreature
     {
         private Random _random = new Random();
-        public Minotaur(int coordinateX, int coordinateY, Level level, ConsoleColor color) : base(coordinateX, coordinateY, level, color)
+        public Minotaur(int coordinateX, int coordinateY, ILevel level, ConsoleColor color) : base(coordinateX, coordinateY, level, color)
         {
         }
 
@@ -31,7 +31,7 @@ namespace Maze.Cells.Creatures
             {
                 return false;
             }
-            var hero = creature as Hero;
+            var hero = creature as IHero;
             if (hero is null)
             {
                 return false;
