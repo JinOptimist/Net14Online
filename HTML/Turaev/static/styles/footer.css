@@ -1,5 +1,6 @@
 .footer-at-all {
     display: flex;
+    flex-flow:column wrap;
     justify-content:space-between;
     align-items: center;
     background-color: #956cbb;
@@ -23,7 +24,7 @@
     display: flex;
     list-style-type: none;
     padding: 0;
-    width: 40%;
+    width: 100%;
     flex-direction: row;
 }
 
@@ -34,8 +35,8 @@
 }
 
 .social img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
 
 .year {
