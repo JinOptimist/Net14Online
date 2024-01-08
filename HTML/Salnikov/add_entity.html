@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet">
+    <title>Добавление</title>
+</head>
+<body>
+    <header>
+        <div class="headerContainer">
+            <img src="logo.png" alt="Здесь лого">
+        </div>
+    </header>
+    <div class="addEntityContainer">
+        <h2>Добавление</h2>
+        <form class="addCompanyForm">
+            <h3>Добавить Компанию</h3>
+            <label for="companyName">Название компании:</label>
+            <input type="text" id="companyName" name="companyName" required>
+
+            <label for="companyAddress">Адрес компании:</label>
+            <input type="text" id="companyAddress" name="companyAddress" required>
+
+            <label for="companyDescription">Описание компании:</label>
+            <textarea id="companyDescription" name="companyDescription" required></textarea>
+
+            <button type="submit">Добавить Компанию</button>
+        </form>
+        <form class="addProjectForm">
+            <h3>Добавить Проект</h3>
+            <label for="projectName">Название проекта:</label>
+            <input type="text" id="projectName" name="projectName" required>
+
+            <label for="projectAddress">Адрес проекта:</label>
+            <input type="text" id="projectAddress" name="projectAddress" required>
+
+            <label for="projectDescription">Описание проекта:</label>
+            <textarea id="projectDescription" name="projectDescription" required></textarea>
+
+            <button type="submit">Добавить Проект</button>
+        </form>
+        <form class="addUserForm">
+            <h3>Добавить Пользователя</h3>
+            <label for="userName">ФИО пользователя:</label>
+            <input type="text" id="userName" name="userName" required>
+
+            <label for="userPhone">Телефон пользователя:</label>
+            <input type="tel" id="userPhone" name="userPhone" required>
+
+            <label for="userPosition">Специализация пользователя:</label>
+            <input type="text" id="userPosition" name="userPosition" required>
+
+            <button type="submit">Добавить Пользователя</button>
+        </form>
+    </div>
+</body>
+</html>
