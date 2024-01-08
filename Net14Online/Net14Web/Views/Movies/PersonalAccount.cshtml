@@ -1,0 +1,67 @@
+﻿@using Net14Web.Models.Movies
+@model PersoneViewModel
+
+@section Style
+    {
+    <link rel="stylesheet" href="~/css/movies.css" />
+    <link rel="stylesheet" href="~/bootstrap-5.3.2-dist/css/bootstrap.css">
+}
+
+<div class="row vh-100">
+    <div class="col-12 row container d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-3">
+            <div class="align-middle text-center">
+                <img src="@Model.AvatarUrl" class="rounded mx-auto d-block avatar-img" alt="avatar">
+                <h4 class="card-title">@Model.Login</h4>
+                <span class="badge bg-success">Онлайн</span>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-8 profile-menu align-items-end">
+            <div class="card">
+                <div class="text-center card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link nav-button active" href="#">Комментарии</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-button" href="#">Просмотренное</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-button" href="#">Подписки</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-button" href="#">Подписчики</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body">
+                    @foreach (var comment in @Model.Comments)
+                    {
+                        <div class="card comment-card-in-profile">
+                            <a class="comment-a rounded" href="#">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="@comment.Movie.PosterUrl" class="rounded movie-image">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <p class="h5">@comment.Movie.Title</p>
+                                            <p class="card-text comment-in-profile">
+                                                @comment.Description
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p class="card-text"><small class="text-muted">@comment.TimeOfWritng</small></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
