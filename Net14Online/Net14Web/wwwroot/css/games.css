@@ -1,0 +1,24 @@
+﻿.games {
+    display: flex;
+}
+
+.game {
+    border: 1px black solid;
+    margin: 10px;
+}
+
+    .game img {
+        max-width: 300px;
+        max-height: 300px;
+    }
+
+    .game .game-footer {
+        justify-content: space-between;
+        display: flex;
+        flex-direction: row;
+        margin: 10px;
+    }
+
+    .page{
+        background-color: black;
+    }
