@@ -1,0 +1,37 @@
+﻿@using Net14Web.Models.ManagmentCompany
+@model List<UserViewModel>
+
+@{
+    Layout = "_LayoutManagmentCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagmentCompany/ManagmentCompany.css" rel="stylesheet" />
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="index.css" rel="stylesheet">
+    <title>Стартовая страница</title>
+</head>
+<body>
+    <div class="cC" id="contentContainer">
+        <h2 class="h2">Добро пожаловать на стартовую страницу!</h2>
+        <p class="p">Здесь вы можете разместить важную информацию или предложения для пользователей.</p>
+        <div class="userstat" id="userstat">
+            <ul>
+                <li><a href="all_users.html">Всего участников</a></li>
+                <li><a href="users.html">Пользователей</a></li>
+                <li><a href="admins.html">Админов</a></li>
+            </ul>
+            <div>
+                Количество участников @Model.Count
+            </div>
+        </div>
+    </div>
+</body>
+</html>
