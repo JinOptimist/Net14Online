@@ -10,41 +10,49 @@
     <link href="~/css/dnd.css" rel="stylesheet" />
     <link href="~/css/dnd2.css" rel="stylesheet" />
 }
-
-<div>
-    <a href="/Dnd/AddHero">AddHero</a>
-</div>
-<div>
-    <a href="/Dnd/AddRandomHero">AddRandomHero</a>
-</div>
-<div>
-    @foreach (var hero in Model)
-    {
-        <div class="hero">
-            <a href="/dnd/remove?name=@hero.Name">Удалить</a>
-            <div>
-                <img src="@hero.AvatarUrl" />
+<div class="hero-content">
+    <div>
+        <a href="/Dnd/AddHero">AddHero</a>
+    </div>
+    <div>
+        <a href="/Dnd/AddRandomHero">AddRandomHero</a>
+    </div>
+    <div class="heroes">
+        @foreach (var hero in Model)
+        {
+            <div class="hero">
+                <div class="remove-block">
+                    <a href="/dnd/remove?name=@hero.Name" class="remove-link">X</a>
+                </div>
+                <div class="name-and-coin-block">
+                    <div class="name-block">
+                        <div class="hero-title">
+                            ГЕРОЙ
+                        </div>
+                        <div class="hero-name">
+                            @hero.Name
+                        </div>
+                    </div>
+                    <div class="coin-block">
+                        <div>
+                            @hero.Coin <img src="/images/dnd/coin.png" class="icon" />
+                        </div>
+                        <div class="new-coint-block">
+                            <form action="/dnd/updateCoin" method="post">
+                                <input type="hidden" name="name" value="@hero.Name" />
+                                <div>
+                                    <input type="number" name="coin" />
+                                </div>
+                                <div>
+                                    <input type="submit" value="Upd" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="inventory-block">
+                </div>
             </div>
-            <div>
-                Это лист пресонажа по имени @hero.Name
-            </div>
-            <div>
-                У персонажа @hero.Coin монеток
-                <form action="/dnd/updateCoin" method="post">
-                    <input type="hidden" name="name" value="@hero.Name" />
-                    <input type="number" name="coin" value="@hero.Coin" />
-                    <input type="submit" value="Обновить" />
-                </form>
-            </div>
-            <div>
-                У меня в рюкзаме лежит
-                @foreach (var item in hero.Tools)
-                {
-                    <span id="@item">
-                        @item
-                    </span>
-                }
-            </div>
-        </div>
-    }
+        }
+    </div>
 </div>
