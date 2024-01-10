@@ -1,0 +1,22 @@
+@using Net14Web.Models.RealEstate
+@model List<UserViewModel>
+
+<div>
+    <a href="/RealEstate/AddUser">AddUser</a>
+</div>
+<div>
+    @foreach (var user in Model)
+    {
+        <div class="user">
+            <div>
+               Пользователь @user.Name
+            </div>
+            <div>
+                Возраст @user.Age
+            </div>
+             <div>
+                 Вид деятельности @user.KindOfActivity
+             </div>
+        </div>
+    }
+</div>
