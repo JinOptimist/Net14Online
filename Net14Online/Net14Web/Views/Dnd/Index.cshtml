@@ -15,9 +15,13 @@
     <a href="/Dnd/AddHero">AddHero</a>
 </div>
 <div>
+    <a href="/Dnd/AddRandomHero">AddRandomHero</a>
+</div>
+<div>
     @foreach (var hero in Model)
     {
         <div class="hero">
+            <a href="/dnd/remove?name=@hero.Name">Удалить</a>
             <div>
                 <img src="@hero.AvatarUrl" />
             </div>

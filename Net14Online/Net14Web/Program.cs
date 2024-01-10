@@ -1,7 +1,19 @@
+using Net14Web.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<HeroBuilder>(diContainer =>
+{
+    var randomHelper = diContainer.GetService<RandomHelper>();
+    return new HeroBuilder(randomHelper);
+});
+
+// builder.Services.AddTransient<RandomHelper>();
+builder.Services.AddScoped<RandomHelper>();
+// builder.Services.AddSingleton<RandomHelper>();
 
 var app = builder.Build();
 
