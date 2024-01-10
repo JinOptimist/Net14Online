@@ -49,6 +49,13 @@ namespace Net14Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public IActionResult UpdateCoin(string name, int coin)
+        {
+            heroViewModels.First(x => x.Name == name).Coin = coin;
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
         public IActionResult AddHero()
         {

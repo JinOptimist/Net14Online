@@ -30,6 +30,11 @@
             </div>
             <div>
                 У персонажа @hero.Coin монеток
+                <form action="/dnd/updateCoin" method="post">
+                    <input type="hidden" name="name" value="@hero.Name" />
+                    <input type="number" name="coin" value="@hero.Coin" />
+                    <input type="submit" value="Обновить" />
+                </form>
             </div>
             <div>
                 У меня в рюкзаме лежит
