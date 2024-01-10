@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maze", "Maze\Maze.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maze.Tests", "Maze.Tests\Maze.Tests.csproj", "{D6C5894A-04E4-4B58-B3B4-04AEE7E8C7C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net14Web", "Net14Web\Net14Web.csproj", "{1A73ADF9-D534-4AAB-BBAD-80AA672B9981}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Net14Web", "Net14Web\Net14Web.csproj", "{1A73ADF9-D534-4AAB-BBAD-80AA672B9981}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

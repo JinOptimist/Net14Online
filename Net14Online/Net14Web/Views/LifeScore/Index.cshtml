@@ -1,0 +1,17 @@
+﻿@using Net14Web.Models.LifeScore
+@model LifeScoreViewModel
+<div>
+    hello
+</div>
+
+<div>
+    @foreach (var game in Model.Games)
+    {
+        <div>
+            Дата @game.GameDate
+        </div>
+        <div>
+            Резудьтат @game.Result
+        </div>
+    }
+</div>
