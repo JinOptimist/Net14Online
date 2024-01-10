@@ -1,0 +1,68 @@
+.header {
+    display: flex;
+    height: 45px;
+}
+
+.option-panel {
+    display: flex;
+    position: absolute;
+    right: 20px;
+    background-color: rgb(255, 255, 255);
+    border: 0px solid rgb(0, 0, 0);
+}
+
+.button {
+    padding: 10px;
+}
+
+.button:hover {
+    background-color: rgb(0, 128, 255);
+}
+
+.control-panel {
+    display: flex;
+    height: 40px;
+    background-color: #004593;
+    color: white;
+}
+
+.left-panel {
+    width: 400px;
+    height: 100%;
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.content {
+    display: flex;
+}
+
+.object {
+    display: flex;
+    border: 1px solid rgba(0, 0, 128, 0.3);
+    vertical-align: text-top;
+    padding: 5px;
+}
+
+.font {
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+
+.objectType {
+    color: darkgray;
+    font-size: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+}
+
+.control-btn {
+    position: absolute;
+    right: 10px;
+}
+
+.objectIcon {
+    padding-right:10px;
+}

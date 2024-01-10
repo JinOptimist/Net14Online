@@ -1,0 +1,77 @@
+﻿@using Net14Web.Models.Sattelite
+@model List<Objects>
+
+@{
+    Layout = "_LayoutSattelite";
+}
+
+@section Style
+    {
+    <link href="/css/Sattelite.css" rel="stylesheet" />
+}
+
+<div class="header">
+    <div class="logo">
+        Логотип
+    </div>
+    <div class="option-panel">
+        <div class="current-time button">
+            15:00
+        </div>
+        <div class="user button">
+            USER_NAME
+        </div>
+        <div class="option button">
+            Настройки
+        </div>
+        <div class="info button">
+            Справка
+        </div>
+        <div class="exit button">
+            Выход
+        </div>
+    </div>
+</div>
+<div class="control-panel">
+    <div class="map button">
+        Карта
+    </div>
+    <div class="Report button">
+        Отчёты
+    </div>
+    <div class="Dashboard button">
+        Дашборд
+    </div>
+</div>
+<div class="content">
+    <div class="left-panel">
+        <div class="AddObject">
+            <a href="/Sattelite/AddObject"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe3qvfd2awEbLue7IDeIGac4JcP61_2OhJPw&usqp=CAU" alt="" width="20" height="20"></a>
+        </div>
+        <div class="table-object">
+            <table width="100%">
+                @foreach (var ObjectNav in Model)
+                {
+                    <div class="object">
+                        <div class="objectType font">
+                            @ObjectNav.Type
+                        </div>
+                        <div class="objectIcon">
+                            <img src="@ObjectNav.IconURL" width="30" height="20" />
+                        </div>
+                        <div class="objectName font">
+                            @ObjectNav.Name
+                        </div>
+                        <div class="control-btn">
+                            <img src="https://w7.pngwing.com/pngs/766/422/png-transparent-no-symbol-scalable-graphics-drug-free-angle-text-logo-thumbnail.png" alt="" width="15" height="15">
+                        </div>
+                    </div>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="map">
+        Карта
+    </div>
+
+</div>
