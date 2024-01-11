@@ -1,5 +1,5 @@
 ﻿@using Net14Web.Models.Movies
-@model LoginPersoneViewModel
+@model LoginUserViewModel
 
 @section Style
     {
@@ -27,7 +27,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            @Html.TextBoxFor(x => x.Password, new { placeholder = "Пароль", @class="form-control" })
+                                            @Html.TextBoxFor(x => x.Password, new { @type="password", placeholder = "Пароль", @class="form-control" })
                                         </div>
                                     </div>
 

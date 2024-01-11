@@ -1,8 +1,8 @@
 ﻿@using Net14Web.Models.Movies
-@model PersoneViewModel
+@model UserViewModel
 
 @section Style
-    {
+{
     <link rel="stylesheet" href="~/css/movies.css" />
     <link rel="stylesheet" href="~/bootstrap-5.3.2-dist/css/bootstrap.css">
 }
@@ -40,7 +40,7 @@
                     @foreach (var comment in @Model.Comments)
                     {
                         <div class="card comment-card-in-profile">
-                            <a class="comment-a rounded" href="#">
+                            <a class="comment-a rounded" href="/movies/movie?movieId=@comment.Movie.Id">
                                 <div class="row">
                                     <div class="col-md-2">
                                         <img src="@comment.Movie.PosterUrl" class="rounded movie-image">

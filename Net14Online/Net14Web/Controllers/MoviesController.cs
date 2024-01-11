@@ -1,26 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Net14Web.Models.Dnd;
 using Net14Web.Models.Movies;
 
 namespace Net14Web.Controllers
 {
     public class MoviesController : Controller
     {
-        public static List<PersoneViewModel> Persones = new List<PersoneViewModel>();
+        public static List<UserViewModel> Users = new List<UserViewModel>();
+        public static List<MovieViewModel> Movies = new List<MovieViewModel>();
+        public static AdminPanelViewModel AdminPanelViewModel = new AdminPanelViewModel();
 
-        private static int _personId = -1;
+        public MoviesController()
+        {
+            AdminPanelViewModel.Users = Users;
+            AdminPanelViewModel.Movies = Movies;
+        }
+
+        private static int activeUserId = -1;
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult PersonalAccount()
-        {
-            if (_personId != -1)
-            {
-                return View(Persones[_personId]);
-            }
             return View();
         }
 
@@ -34,67 +32,175 @@ namespace Net14Web.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult Movie()
+        public IActionResult AddMovie()
         {
-            List<CommentsOnMovieViewModel> commentsOnMovieViews = new List<CommentsOnMovieViewModel>();
-            if (_personId != -1)
-            {
-                commentsOnMovieViews.Add(new CommentsOnMovieViewModel() { Description = "Класс!", TimeOfWritng = DateTime.Now, Persone = Persones[0] });
-                commentsOnMovieViews.Add(new CommentsOnMovieViewModel() { Description = "ВАУ!", TimeOfWritng = DateTime.Now, Persone = Persones[0] });
-            };
+            return View();
+        }
 
-            MovieViewModel movieViewModel = new MovieViewModel
-            {
-                PosterUrl = "https://goo.su/KugxHc",
-                Title = "Рождество кота Боба",
-                Description = "До встречи с котом Бобом Джеймс не любил Рождество, но рыжий пушистый хулиган всё изменил. Он в буквальном смысле подарил своему хозяину новую жизнь, сотворив настоящее рождественское чудо. Ведь даже если у тебя пусто в кармане, а во всём городе отключили свет, праздник должен состояться!",
-                Comments = commentsOnMovieViews
-            };
+        public IActionResult Error(ErrorViewModel error)
+        {
+            return View(error);
+        }
 
-            return View(movieViewModel);
+        public IActionResult AdminPanel()
+        {
+            return View(AdminPanelViewModel);
         }
 
         [HttpPost]
-        public IActionResult Login(LoginPersoneViewModel loginPersone)
+        public IActionResult AddMovie(AddMovieViewModel movie)
         {
-            for (int i = 0; i < Persones.Count; i++)
+            var id = Movies.Count;
+            var newMovie = new MovieViewModel
             {
-                if (Persones[i].Login == loginPersone.Login && Persones[i].Password == loginPersone.Password)
+                Id = id,
+                Title = movie.Title,
+                Description = movie.Description,
+                PosterUrl = movie.PosterUrl,
+                Comments = new ()
+            };
+            Movies.Add(newMovie);
+            return RedirectToAction("Movie", new { movieId = newMovie.Id });
+        }
+
+        [HttpPost]
+        public IActionResult Registration(AddUserViewModel addUser)
+        {
+            var id = Users.Count;
+            UserViewModel user = new UserViewModel
+            {
+                Id = id,
+                Login = addUser.Login,
+                Email = addUser.Email,
+                Password = addUser.Password,
+                AvatarUrl = "https://goo.su/w7Qh",
+                Comments = new ()
+            };
+            Users.Add(user);
+            activeUserId = user.Id;
+            return RedirectToAction("User", new { userId = id });
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginUserViewModel loginUser)
+        {
+            foreach (var user in Users)
+            {
+                if (user.Login.ToLower() == loginUser.Login.ToLower() && user.Password == loginUser.Password)
                 {
-                    _personId = i;
-                    return RedirectToAction("PersonalAccount");
+                    activeUserId = user.Id;
+                    return RedirectToAction("User", new { userId = activeUserId });
                 }
             }
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Registration(CreatePersoneViewModel createPersone)
+        [HttpGet]
+        public new IActionResult User(int userId)
         {
-            MovieViewModel movieViewModel = new MovieViewModel
+            return View(Users[userId]);
+        }
+
+        [HttpGet]
+        public IActionResult Movie(int movieId)
+        {
+            var movie = Movies.FirstOrDefault(movie => movie.Id == movieId);
+            if (movie != null)
             {
-                PosterUrl = "https://goo.su/KugxHc",
-                Title = "Рождество кота Боба"
+                return View(movie);
+            }
+            return RedirectToAction("Error", new ErrorViewModel { Title = "Movie", Description = "The movie was not found" });
+        }
+
+        [HttpPost]
+        public IActionResult AddCommentOnMovie(int movieId, string description)
+        {
+            var timeOfWriting = DateTime.Now;
+            if (activeUserId == -1)
+            {
+                return RedirectToAction("Movie", new { movieId = movieId });
+            }
+            var comment = new CommentsOnMovieViewModel
+            {
+                Description = description,
+                TimeOfWriting = timeOfWriting,
+                User = Users[activeUserId]
             };
 
-            List<CommentsInPersoneAccount> commentsOnMovieViews = new List<CommentsInPersoneAccount>()
+            var movie = Movies.FirstOrDefault(movie => movie.Id == movieId);
+            if (movie != null)
             {
-                new CommentsInPersoneAccount() { Description = "Класс!", TimeOfWritng = DateTime.Now, Movie = movieViewModel },
-                new CommentsInPersoneAccount() { Description = "Вау!", TimeOfWritng = DateTime.Now, Movie = movieViewModel }
-            };
+                movie.Comments.Add(comment);
+                var userComment = new UserCommentViewModel
+                {
+                    Description = description,
+                    TimeOfWritng = timeOfWriting,
+                    Movie = movie
+                };
+                Users[activeUserId].Comments.Add(userComment);
+            }
 
-            PersoneViewModel persone = new PersoneViewModel
+            return RedirectToAction("Movie", new { movieId = movieId });
+        }
+
+        [HttpPost]
+        public IActionResult EditUser(UserViewModel editUser)
+        {
+            var user = Users.First(user => user.Id == editUser.Id);
+            Users.Remove(user);
+            editUser.Comments = user.Comments;
+            Users.Add(editUser);
+            Users = Users.OrderBy(u => u.Id).ToList();
+            return RedirectToAction("AdminPanel");
+        }
+
+        [HttpPost]
+        public IActionResult EditMovie(MovieViewModel editMovie)
+        {
+            var movie = Movies.First(m => m.Id == editMovie.Id);
+            Movies.Remove(movie);
+            Movies.Add(editMovie);
+            Movies = Movies.OrderBy(m => m.Id).ToList();
+            return RedirectToAction("AdminPanel");
+        }
+
+        [HttpPost]
+        public IActionResult EditComment(int movieId, string timeOfWriting, int userId, string description)
+        {
+            var movie = Movies.FirstOrDefault(movie => movie.Id == movieId);
+
+            if (movie != null)
             {
-                Login = createPersone.Login,
-                Email = createPersone.Email,
-                Password = createPersone.Password,
-                AvatarUrl = "https://goo.su/w7Qh", 
-                Comments = commentsOnMovieViews
-            };
+                var comment = movie.Comments.FirstOrDefault(comment =>
+                    comment.TimeOfWriting.ToString() == timeOfWriting && comment.User.Id == userId);
+                if (comment != null)
+                {
+                    comment.Description = description;
+                }
+            }
 
-            Persones.Add(persone);
-            return RedirectToAction("Login");
+            return RedirectToAction("Movie", new { movieId = movie?.Id });
+        }
+
+        public IActionResult RemoveCommentOnMovie(int movieId, string timeOfWriting, int userId)
+        {
+            var movie = Movies.FirstOrDefault(movie => movie.Id == movieId);
+            if (movie == null)
+            {
+                return RedirectToAction("Movie", new { movieId = movieId });
+            }
+
+            var comment = movie.Comments.FirstOrDefault((comment) =>
+                comment.TimeOfWriting.ToString() == timeOfWriting && comment.User.Id == userId);
+            if (comment != null)
+            {
+                movie.Comments.Remove(comment);
+                var user = Users.First(u => u.Id == userId);
+                var userComment = user.Comments.First(c => c.TimeOfWritng.ToString() == timeOfWriting);
+                user.Comments.Remove(userComment);
+            }
+
+            return RedirectToAction("Movie", new { movieId = movieId });
         }
     }
 }

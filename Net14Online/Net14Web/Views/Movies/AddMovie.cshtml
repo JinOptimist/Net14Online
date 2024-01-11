@@ -1,0 +1,38 @@
+﻿@using Net14Web.Models.Movies
+@model AddMovieViewModel
+
+@section Style
+{
+    <link rel="stylesheet" href="~/css/movies.css" />
+    <link rel="stylesheet" href="~/bootstrap-5.3.2-dist/css/bootstrap.css">
+}
+
+<div>
+    <section class="vh-100">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-11">
+                    <div class="card text-black" style="border-radius: 25px;">
+                        <div class="card-body p-md-5">
+                            <br>
+                            <div class="row">
+                                <form class="col-12" method="post">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(x => x.Title, new { placeholder = "Название фильма", @class="form-control" })
+                                        @Html.TextBoxFor(x => x.Description, new { placeholder = "Описание фильма", @class="form-control" })
+                                        @Html.TextBoxFor(x => x.PosterUrl, new { placeholder = "Poster Url", @class="form-control" })
+                                        <button type="submit" class="btn btn-outline-secondary"
+                                                id="input-group-button-right">
+                                            Добавить фильм
+                                        </button>
+                                    </div>
+                                    <br>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,5 +1,5 @@
 ﻿@using Net14Web.Models.Movies
-@model CreatePersoneViewModel
+@model AddUserViewModel
 
 @section Style
 {
@@ -27,12 +27,12 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-flex flex-row align-items-center mb-4">
+                                      @*   <div class="d-flex flex-row align-items-center mb-4">
                                             <div class="form-outline flex-fill mb-0">
                                                 @Html.TextBoxFor(x => x.Email, new { placeholder = "E-Mail", @class="form-control", @type="email",  })
                                             </div>
                                         </div>
-
+ *@
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <div class="form-outline flex-fill mb-0">
                                                 @Html.TextBoxFor(x => x.Password, new { placeholder = "Пароль", @class="form-control", @type="password" })
