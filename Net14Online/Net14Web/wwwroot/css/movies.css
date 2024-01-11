@@ -46,7 +46,8 @@ a {
 }
 
 .comment-a {
-  color: black;
+    color: black;
+    text-decoration: none;
 }
 
 .subscriber-a {
@@ -66,4 +67,14 @@ a {
   margin-right: 0px !important;
   margin-left: 0px !important;
   margin-top: 0px !important;
+}
+
+.avatar-img {
+    max-width: 200px;
+    max-height: 250px;
+}
+
+.movie-poster {
+    max-width: 200px;
+    max-height: 250px;
 }

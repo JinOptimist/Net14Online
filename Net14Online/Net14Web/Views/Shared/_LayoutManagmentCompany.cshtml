@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @RenderSection("Style", false)
+    @RenderSection("Script", false)
+</head>
+<body>
+    <nav class="" id="navbar">
+        <div class="dropdown">
+            <button class="dropbtn">
+                <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+            </button>
+            <div class="dropdown-content">
+                <a href="/ManagmentCompany/Index">На главную</a>
+                <a href="about_us.html">О нас</a>
+                <a href="contacts.html">Контакты</a>
+                <a href="statistics.html">Статистика</a>
+                <a class="Login" href="/ManagmentCompany/Login">Вход</a>
+                <a class="reg" href="/ManagmentCompany/Registrstion">Регистрация</a>
+            </div>
+        </div>
+    </nav>
+    @RenderBody()
+    <footer id="blueFooter">
+        <div id="footerContainer">
+            <p>&copy; 2024 Мой Дом. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,25 @@
+﻿@using Net14Web.Models.Sattelite
+@model AddObjectModel
+
+<div>
+    <form method="post">
+        <div>
+            Название объекта
+            @Html.TextBoxFor(x => x.Name, new { placeholder = "Название объекта" })
+        </div>
+
+        <div>
+            Тип
+            @Html.TextBoxFor(x => x.Type, new { placeholder = "Тип транспорта" })
+        </div>
+
+        <div>
+            Иконка
+            @Html.TextBoxFor(x => x.IconURL, new { placeholder = "URL" })
+        </div>
+
+        <div>
+            <input type="submit" value="Добавить объект" />
+        </div>
+    </form>
+</div>
