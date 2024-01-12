@@ -9,35 +9,41 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <header class="header-style">
+        <header class="header-style bg-info">
             <div class="header-upper-bar">
                 <a class="logo">
                     Система мониторинга состояния агрегатов
                 </a>
-                <ul class="profile-buttons">
-                    <li><button class="btn btn-info">Зарегистрироваться</button></li>
-                    <li><button class="btn btn-info">Войти</button></li>
+                <ul class="list-group">
+                    <li class="list-group-item"><button class="btn btn-primary">Зарегистрироваться</button></li>
+                    <li class="list-group-item"><button class="btn btn-primary">Войти</button></li>
                 </ul>             
             </div>
         </header>
         <div class="main-container">
-            <aside class="big-nav-sidebar">
-                <h1 class="menu-big-nav">
-                    Выбор участка
-                </h1>
-                <a class="button-big-nav">
-                    Участок 1
-                </a>
-                <a class="button-big-nav">
-                    Участок 2
-                </a>
-                <a class="button-big-nav">
-                    Участок 3
-                </a>
-                <a class="button-big-nav">
-                    Участок 4
-                </a>
-
+            <aside class="big-nav-sidebar bg-secondary">
+                <ul class="list-group">
+                    <li class="list-group-item active">
+                        <a class="nav-link active">
+                            Участок 1
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="nav-link active">
+                            Участок 2
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="nav-link active">
+                            Участок 3
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="nav-link active">
+                            Участок 4
+                        </a>
+                    </li>
+                  </ul>
             </aside>
             <main>
                 <section class="article-field">
@@ -133,7 +139,7 @@
                 </div> 
             </main>
         </div>
-        <footer>
+        <footer class="bg-info">
                 <div class="logo">
                     FOOTER PLACEHOLDER
                 </div>
