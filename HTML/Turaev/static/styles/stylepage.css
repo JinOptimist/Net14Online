@@ -1,0 +1,52 @@
+.head-buttons > li {
+  margin: 0.5px;
+  font-style: italic;
+  color: #956cbb;
+}
+a {
+  text-decoration: none;
+}
+.page {
+  display: flex;
+  justify-content: center;
+}
+
+.conteiner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3);
+}
+.card {
+  margin: 1.5em;
+}
+.card img {
+  width: 100%;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  margin: 16px 0;
+  text-decoration: none;
+  border: 1px solid #ddd;
+}
+@media (max-width: 1000px) {
+  .conteiner {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5);
+  }
+}
+@media (max-width: 500px) {
+  .conteiner {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(9);
+  }
+  .card {
+    margin-inline: 0;
+  }
+}

@@ -7,7 +7,8 @@ namespace Maze.Cells.Creatures.Interfaces
         int Age { get; set; }
         int Hp { get; set; }
         int Money { get; set; }
-
+        int Stress { get; set; }
         IBaseCell ChooseCellToStep();
+        bool Step(IBaseCreature creature);
     }
 }

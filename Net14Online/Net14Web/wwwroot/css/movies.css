@@ -1,0 +1,80 @@
+:root {
+  --main-color: #eee;
+  --secondary-color: #b0b0b0;
+}
+
+body {
+  background-color: var(--main-color);
+}
+
+.profile-menu {
+  margin-top: 5vh;
+}
+
+.movie-image {
+  height: 100%;
+  width: 100%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.comment-image {
+  max-height: 250px;
+  width: 100%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.avatar-subscriber{
+  max-height: 150px;
+  max-width: 100px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.comment-in-profile {
+  max-height: 50px;
+  overflow: hidden;
+}
+
+.comment-card-in-profile {
+  margin-bottom: 15px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.comment-a {
+    color: black;
+    text-decoration: none;
+}
+
+.subscriber-a {
+  color:black;
+  margin-bottom: 15px;
+}
+
+.comment-a:hover {
+  background-color: var(--secondary-color);
+}
+
+.subscriber-a:hover {
+  background-color: var(--secondary-color);
+}
+
+.row {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+  margin-top: 0px !important;
+}
+
+.avatar-img {
+    max-width: 200px;
+    max-height: 250px;
+}
+
+.movie-poster {
+    max-width: 200px;
+    max-height: 250px;
+}

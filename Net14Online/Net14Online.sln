@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Net14OnlineConsole", "Net14
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maze", "Maze\Maze.csproj", "{513A13CF-F0C7-4BD6-8A2F-29BEA6182095}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maze.Tests", "Maze.Tests\Maze.Tests.csproj", "{D6C5894A-04E4-4B58-B3B4-04AEE7E8C7C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maze.Tests", "Maze.Tests\Maze.Tests.csproj", "{D6C5894A-04E4-4B58-B3B4-04AEE7E8C7C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net14Web", "Net14Web\Net14Web.csproj", "{1A73ADF9-D534-4AAB-BBAD-80AA672B9981}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D6C5894A-04E4-4B58-B3B4-04AEE7E8C7C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6C5894A-04E4-4B58-B3B4-04AEE7E8C7C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6C5894A-04E4-4B58-B3B4-04AEE7E8C7C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A73ADF9-D534-4AAB-BBAD-80AA672B9981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A73ADF9-D534-4AAB-BBAD-80AA672B9981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A73ADF9-D534-4AAB-BBAD-80AA672B9981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A73ADF9-D534-4AAB-BBAD-80AA672B9981}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

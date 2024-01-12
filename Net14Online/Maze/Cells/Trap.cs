@@ -19,7 +19,7 @@ namespace Maze.Cells
 
         public override bool Step(IBaseCreature creature)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

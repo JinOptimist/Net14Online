@@ -1,0 +1,22 @@
+﻿@using Net14Web.Models.Dnd
+@model HeroViewModel
+
+@{
+    Layout = "_LayoutDnd";
+}
+
+<div>
+    Это лист пресонажа по имени @Model.Name
+</div>
+<div>
+    У персонажа @Model.Coin монеток
+</div>
+<div>
+    У меня в рюкзаме лежит
+    @foreach(var item in Model.Tools)
+    {
+        <span id="@item">
+            @item
+        </span>
+    }
+</div>

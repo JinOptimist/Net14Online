@@ -1,0 +1,32 @@
+﻿@model Net14Web.Models.GameShop.AddGameViewModel
+
+@{
+    Layout = "_LayoutGameShop";
+}
+
+@section Style
+    {
+    <link href="~/css/games.css" rel="stylesheet" />
+}
+
+<form method="post">
+    <div>
+        Game name
+        @Html.TextBoxFor(x => x.Name, new { placeholder = "Name" })
+    </div>
+
+    <div>
+        Genre
+        @Html.TextBoxFor(x => x.Genre)
+    </div>
+
+    <div>
+        Poster Url
+        @Html.TextBoxFor(x => x.PosterUrl)
+    </div>
+
+    <div>
+        <input type="submit" value="Create game page" />
+    </div>
+
+</form>
