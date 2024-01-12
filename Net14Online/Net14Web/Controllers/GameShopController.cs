@@ -35,5 +35,39 @@ namespace Net14Web.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult DeleteGame(string name)
+        {
+            var game = GameModels!.FirstOrDefault(x => x.Name == name);
+
+            if (game != null) 
+            {
+                GameModels!.Remove(game);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateGame(string name, string posterUrl)
+        {
+            var game = GameModels!.FirstOrDefault(x => x.Name == name);
+
+            game!.PosterUrl = posterUrl;
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult ViewGame(string name)
+        {
+            var game = GameModels.FirstOrDefault(x => x.Name == name);
+
+            if (game != null) 
+            {
+                return View("ViewGame", game);
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
