@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Net14Web.Models.Movies
+﻿namespace Net14Web.Models.Movies
 {
     public class UserViewModel
     {
