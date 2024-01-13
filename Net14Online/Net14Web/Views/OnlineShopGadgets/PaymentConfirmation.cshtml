@@ -1,9 +1,21 @@
 ﻿@using Net14Web.Models.Online_shop_gadgets
 @model PaymentModel
 
-<h1>Вашa карта добавлена</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation</title>
+    <link rel="stylesheet" href="~/css/OnlineShopGadgets/stylePaymentConfirmation.css">
+</head>
+<body>
+    <h1>Ваша карта добавлена</h1>
 
-<p>Детали оплаты:</p>
-<ul>
-    <li>Номер карты: **** **** **** @Model.CardNumber.Substring(Model.CardNumber.Length - 4)</li>
-</ul>
+    <p>Детали оплаты:</p>
+    <ul>
+        <li>Номер карты: **** **** **** @Model.CardNumber.Substring(Model.CardNumber.Length - 4)</li>
+    </ul>
+
+</body>
+</html>

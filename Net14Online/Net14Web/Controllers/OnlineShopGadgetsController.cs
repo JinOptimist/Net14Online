@@ -24,6 +24,15 @@ namespace Net14Web.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult PaymentConfirmation()
+        {
+            var paymentModel = paymentModels.FirstOrDefault();
+
+            return View(paymentModel);
+        }
+
+
         [HttpPost]
         public IActionResult Payment(PaymentModel paymentModel)
         {
@@ -35,7 +44,7 @@ namespace Net14Web.Controllers
             };
             paymentModels.Add(newAdding);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("PaymentConfirmation");
         }
     }
 }
