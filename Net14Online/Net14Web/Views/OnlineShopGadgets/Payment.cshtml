@@ -1,0 +1,36 @@
+﻿@using Net14Web.Models.Online_shop_gadgets
+@model List<PaymentModel>
+
+@{
+    Layout = "_LayoutOnlineShopGadgets";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Оплата</title>
+    <link rel="stylesheet" href="~/css/OnlineShopGadgets/stylePayment.css">
+</head>
+<body>
+    <h1>Добавление карты</h1>
+     
+    @using (Html.BeginForm("Payment", "OnlineShopGadgets", FormMethod.Post))
+    {
+        <div>
+            <label for="CardNumber">Номер карты:</label>
+            <input type="text" id="CardNumber" name="CardNumber" required>
+
+            <label for="ExpiryDate">Срок действия:</label>
+            <input type="text" id="ExpiryDate" name="ExpiryDate" required>
+
+            <label for="CVV">CVV-код:</label>
+            <input type="text" id="CVV" name="CVV" required>
+
+            <button type="submit">Оплатить</button>
+        </div>
+    }
+
+</body>
+</html>

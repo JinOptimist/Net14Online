@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @RenderSection("Style", false)
+    @RenderSection("Script", false)
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Магазин гаджетов</title>
+    <link rel="stylesheet" href="~/css/styleGadgets.css">
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="/OnlineShopGadgets/Catalog" class="rounded-button">Каталог</a>
+            <a href="/OnlineShopGadgets/Payment" class="rounded-button">Оплата</a>
+            <button class="rounded-button">О нас</button>
+            <button class="rounded-button">Доставка</button>
+            <img src="https://img.freepik.com/premium-vector/online-shopping-logo-design-template-digital-shopping-logo-mouse-cursor-and-cart-concepts_502185-286.jpg" alt="Эмблема магазина" class="logo" style="height: 40px;">
+        </nav>
+    </header>
+
+    <div>
+        @RenderBody()
+    </div>
+
+    <footer>
+    </footer>
+
+</body>
+</html>
