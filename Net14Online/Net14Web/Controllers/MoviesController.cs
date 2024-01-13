@@ -36,7 +36,7 @@ namespace Net14Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(Movies);
         }
 
         public IActionResult Registration()
