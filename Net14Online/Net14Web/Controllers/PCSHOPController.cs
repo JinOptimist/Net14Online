@@ -39,29 +39,20 @@ namespace Net14Web.Controllers
             UsersViewModels.Add(UserModel);
             return RedirectToAction(nameof(Index));
         }
-
-        // GET: PCSHOPController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult EditUserPassword()
         {
             return View();
         }
 
-        // POST: PCSHOPController/Edit/5
         [HttpPost]
-        public ActionResult Edit(AddUserViewModel addmodel)
+        public ActionResult EditUserPassword(string login, string password)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            UsersViewModels.First(x => x.Login == login).Password = password;
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: PCSHOPController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteUsers()
         {
             return View();
         }
@@ -69,16 +60,11 @@ namespace Net14Web.Controllers
         // POST: PCSHOPController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteUsers(string login)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            UsersViewModels.RemoveAll(user => user.Login == login);
+            return RedirectToAction(nameof(Users));
+            
         }
     }
 }
