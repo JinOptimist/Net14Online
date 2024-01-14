@@ -1,0 +1,34 @@
+﻿@using Net14Web.Models.PCSHOP
+@model AddUserViewModel
+
+@{
+    Layout = "_LayoutPCSHOP";
+}
+
+<div>
+    <form method="post">
+        <div>
+            Имя
+            @Html.TextBoxFor(x => x.Name, new { placeholder = "Имя" })
+        </div>
+
+        <div>
+            Логин
+            @Html.TextBoxFor(x => x.Login, new { placeholder = "Логин" })
+        </div>
+
+        <div>
+            Пароль
+            @Html.TextBoxFor(x => x.Password, new { placeholder = "Пароль" })
+        </div>
+
+        <div>
+            Почта
+            @Html.TextBoxFor(x => x.Email, new { placeholder = "Почта" })
+        </div>
+
+        <div>
+            <input type="submit" value="Создать аккаунт" />
+        </div>
+    </form>
+</div>
