@@ -161,7 +161,10 @@ footer{
     list-style: none;
 }
 .remove-link {
-    display :block;
+    display: block;
+}
+.control-elements-ul li label {
+    display: block;
 }
 
 
