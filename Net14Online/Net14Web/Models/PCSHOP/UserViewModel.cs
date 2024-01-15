@@ -1,4 +1,4 @@
-﻿namespace Net14Web.Models.PCSHOP
+﻿namespace Net14Web.Models.PcShop
 {
     public class UserViewModel
     {
