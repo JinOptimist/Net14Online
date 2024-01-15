@@ -7,4 +7,6 @@ public class UserViewModel
    public int Age { get; set; }
    
    public string KindOfActivity { get; set; }
+   
+   public string Id { get; set; }
 }
