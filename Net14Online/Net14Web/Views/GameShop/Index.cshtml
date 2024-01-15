@@ -6,7 +6,7 @@
 }
 
 @section Style
-    {
+{
     <link href="~/css/games.css" rel="stylesheet" />
 }
 
@@ -20,6 +20,7 @@
         <div class="game">
             <div>
                 <img src="@game.PosterUrl" />
+
             </div>
 
             <div class="game-footer">
@@ -32,6 +33,30 @@
                 <div>
                     @game.Genre
                 </div>
+            </div>
+            <div class="remove-block">
+                <a href="/gameshop/deletegame?name=@game.Name" class="remove-link">Remove</a>
+            </div>
+            <div class="new-info-block">
+                <form action="/gameshop/updateGame" method="post">
+                    <input type="hidden" name="name" value="@game.Name" />
+                    <div>
+                        <div>
+                            <input type="text" name="posterUrl" />
+                        </div>
+                    </div>
+                    <div>
+                        <input type="submit" value="Update" />
+                    </div>
+                </form>
+            </div>
+            <div class="View-action">
+                <form action="/gameshop/ViewGame" method="post">
+                    <input type="hidden" name="name" value="@game.Name" />
+                    <div>
+                        <input type="submit" value="ViewGame" />
+                    </div>
+                </form>
             </div>
         </div>
     }
