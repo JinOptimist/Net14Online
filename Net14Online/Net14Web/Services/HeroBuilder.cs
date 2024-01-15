@@ -16,7 +16,7 @@ namespace Net14Web.Services
         {
             var hero = new HeroViewModel
             {
-                Coin = DateTime.Now.Second * 5,
+                Coins = DateTime.Now.Second * 5,
                 Name = _randomHelper.GetRandomName(),
                 Tools = new()
             };

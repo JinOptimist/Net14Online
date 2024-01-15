@@ -1,0 +1,49 @@
+.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #956cbb;
+    margin-left: 2em;
+    margin-right: 2em;
+}
+.nav-list {
+  display: flex;
+}
+.nav-list a {
+  display: block;
+  padding: 1em;
+  text-decoration: none;
+  color: rgb(219, 208, 219);
+}
+.nav-list a:hover {
+  background-color: #a38cb9;
+}
+
+.nav-btn {
+  display: none;
+}
+@media (max-width: 700px) {
+  .nav-btn {
+    font-size: 2em;
+    padding-inline: 10px;
+    padding-bottom: 3px;
+    border: none;
+    background-color: #956cbb;
+    display: block;
+    cursor: pointer;
+  }
+  .nav-list {
+    display: none;
+  }
+  .nav-btn:hover {
+    background-color: #a38cb9;
+  }
+  .drop:hover .nav-list {
+    display: block;
+    position: absolute;
+    background-color: #956cbb;
+  }
+  .navbar{
+    justify-content: space-between;
+  }
+}
+

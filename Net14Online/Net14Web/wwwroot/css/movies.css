@@ -45,6 +45,17 @@ a {
   text-decoration: none;
 }
 
+.navbar-a {
+    color: black;
+    text-decoration: none;
+}
+
+.navbar-a:hover {
+    color: black;
+    text-decoration: none;
+    background-color: none;
+}
+
 .comment-a {
     color: black;
     text-decoration: none;
