@@ -1,4 +1,5 @@
 using Net14Web.Services;
+using Net14Web.Services.RealEstate;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,10 @@ builder.Services.AddScoped<HeroBuilder>(diContainer =>
 builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
+builder.Services.AddScoped<DeleteUser>();
+builder.Services.AddScoped<IdBuilder>();
+builder.Services.AddScoped<UpdateUser>();
+builder.Services.AddScoped<UserBuilder>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
