@@ -1,22 +1,15 @@
+using Net14Web.Services;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
-using Net14Web.Services;
-using Net14Web.Services.Movies;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
 
 var connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=Net14Web; Integrated Security=True";
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
 //builder.Services.AddScoped<WebDbContext>();
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<CommentBuilder>();
-builder.Services.AddScoped<ErrorBuilder>();
-builder.Services.AddScoped<LoginHelper>();
-builder.Services.AddScoped<MovieBuilder>();
-builder.Services.AddScoped<RedirectBuilder>();
-builder.Services.AddScoped<UserBuilder>();
 
 builder.Services.AddScoped<HeroBuilder>(diContainer =>
 {
