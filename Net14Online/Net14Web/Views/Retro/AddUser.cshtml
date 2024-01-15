@@ -1,0 +1,41 @@
+﻿@using Net14Web.Models.RetroConsoles
+@model AddUser
+
+@{
+    Layout = "_LayoutRetro";
+}
+@section Style
+{
+    <link href="~/css/RetroConsoles/AddUser.css" rel="stylesheet" />
+}
+    <form method="post">
+    <div class ="addinfo">
+            <div>
+                Изображение консоли
+                @Html.TextBoxFor(x => x.PicUrl, new { placeholder = "Изображение консоли" })
+            </div>
+            <div>
+                Имя
+                @Html.TextBoxFor(x => x.Name, new { placeholder = "Имя" })
+            </div>
+
+            <div>
+                Еmail
+                @Html.TextBoxFor(x => x.Email, new { type = "email", placeholder = "Email" })
+            </div>
+
+            <div>
+                Количество консолей
+                @Html.TextBoxFor(x => x.NumOfConsoles, new { placeholder = "Введите количество консолей"})
+            </div>
+
+            <div>
+                Описание
+                @Html.TextBoxFor(x => x.Discription, new { placeholder = "Описание вашей консоли"})
+            </div>
+
+            <div>
+                <input type="submit" value="Создать запись" />
+            </div>
+        </div>
+    </form>
