@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Net14Web.Models.PCSHOP;
+using Net14Web.Models.PcShop;
 
 namespace Net14Web.Controllers
 {
-    public class PCSHOPController : Controller
+    public class PcShopController : Controller
     {
         public static List<AddUserViewModel> UsersViewModels = new List<AddUserViewModel>();
 
