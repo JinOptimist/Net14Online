@@ -1,0 +1,57 @@
+﻿@using Net14Web.Models.BookingWeb
+@model IndexViewModel
+
+@{
+    Layout = "_LayoutBookingWeb";
+}
+@section Style
+{
+    <link href="~/css/booking.css" rel="stylesheet" />
+}
+<head>
+    <title>voyager</title>
+</head>
+<body>
+    <div class="options">
+        <ul class="opt">
+            <li> <a href="Index">Stays</a> </li>
+            <li> <a href="#">Flights</a> </li>
+            <li> <a href="#">Car rent</a> </li>
+            <li> <a href="#">Attractions</a> </li>
+        </ul>
+    </div>
+    <div class="searchBlock">
+            <div class="bg-image">
+                <div class="search">Search:</div>
+    <form method="post">
+        <div class="searchfields">
+            <div class="field">
+            <input placeholder="Country" name="country" />
+            </div>
+            <div class="field">
+            <input placeholder="City" name="city" />
+            </div>
+            <div class="field">
+            <input placeholder="Checkin" name="checkin" />
+            </div>
+            <div class="field">
+            <input placeholder="Checkout" name="checkout" />
+            </div>
+            <div>
+            <input type="submit" value="Search" />
+            </div>
+        </div>
+    </form>
+    </div>
+    </div>
+        <div class="offer">
+            <div class="offerbox"></div>
+            <div class="offerbox"></div>
+            <div class="offerbox"></div>
+            <div class="offerbox"></div>
+            <div class="city">France, Paris</div>
+            <div class="city">Italy, Rome</div>
+            <div class="city">Brasil, Rio-De-Janeiro</div>
+            <div class="city">Georgia, Tiflis</div>
+        </div>
+</body>
