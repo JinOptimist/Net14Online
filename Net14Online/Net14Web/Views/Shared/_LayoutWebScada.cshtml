@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<head>
+    @RenderSection("WebScadaStyles", false)
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <header class="header-style bg-info">
+        <div class="header-upper-bar">
+            <a class="logo">
+                Система мониторинга состояния агрегатов
+            </a>
+            <ul class="list-group">
+                <li class="list-group-item"><button class="btn btn-primary">Зарегистрироваться</button></li>
+                <li class="list-group-item"><button class="btn btn-primary">Войти</button></li>
+            </ul>
+        </div>
+    </header>
+    <div class="main-container">
+        <aside class="big-nav-sidebar bg-secondary">
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    <a class="nav-link active">
+                        Участок 1
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="nav-link active">
+                        Участок 2
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="nav-link active">
+                        Участок 3
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a class="nav-link active">
+                        Участок 4
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        @RenderBody()
+    </div>
+    <footer class="bg-info">
+        <div class="logo">
+            FOOTER PLACEHOLDER
+        </div>
+    </footer>
+</body>

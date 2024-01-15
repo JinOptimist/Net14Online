@@ -1,0 +1,64 @@
+﻿@using Net14Web.Models.RetroConsoles
+@model List<UserConsole>
+
+@{
+    Layout = "_LayoutRetro";
+}
+
+@section Style
+{
+    <link rel="stylesheet" href="~/css/RetroConsoles/UserConsoles.css" />
+}
+<div>
+    <div class="user-content">
+        <div class="adduser">
+            <a href="~/Retro/AddUser">Добавить пользователя</a>
+        </div>
+        <div class="users">
+            @foreach (var user in Model)
+            {
+                <div class="user">
+                    <div class="remove-block-icon">
+                        <a href="/retro/remove?name=@user.Name" class="remove-link"><img src="~/images/Retro/klipartz.com.png"/></a>
+                    </div>
+                    <div class="user-block">
+                        <div class="name-block">
+                            <div class="user-title">
+                                Пользователь:
+                            </div>
+                            <div class="user-name">
+                                @user.Name
+                            </div>
+                            <div class="user-email">
+                               Email: @user.Email
+                            </div>
+                            <div class="user-num-consoles">
+                               Количество консолей: @user.NumOfConsoles
+                            </div>
+                        </div>
+                        <div class="picurl">
+                            <div>
+                                <img src="@user.PicUrl" alt="User Image" class="icon" />
+                            </div>
+                            <div class="pic-and-update">
+                                <form action="/retro/updatepic" method="post">
+                                    <input type="hidden" name="name" value="@user.Name" />
+                                    <div>
+                                        <input type="url" name="picurl" />
+                                    </div>
+                                    <div class="update-pic">
+                                        <input type="submit" value="Обновить изображение" />
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                        <div class="console-discription">
+                            Описание:@user.Discription
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

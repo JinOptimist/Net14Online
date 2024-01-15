@@ -1,26 +1,46 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Net14Web.Models.ManagmentCompany
+@* @model List<UserViewModel> *@
+
+<!DOCTYPE html>
+<html lang="ru">
 <head>
     @RenderSection("Style", false)
     @RenderSection("Script", false)
 </head>
 <body>
-    <nav class="" id="navbar">
-        <div class="dropdown">
-            <button class="dropbtn">
-                <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
-            </button>
-            <div class="dropdown-content">
-                <a href="/ManagmentCompany/Index">На главную</a>
-                <a href="about_us.html">О нас</a>
-                <a href="contacts.html">Контакты</a>
-                <a href="statistics.html">Статистика</a>
-                <a class="Login" href="/ManagmentCompany/Login">Вход</a>
-                <a class="reg" href="/ManagmentCompany/Registrstion">Регистрация</a>
+    <header>
+        <nav class="top-panel-content" id="navbar">
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+                </button>
+                <div class="dropdown-content">
+                    <a href="/ManagmentCompany/Index">На главную</a>
+                    <a href="/ManagmentCompany/About">О нас</a>
+                    <a href="/ManagmentCompany/Contacts">Контакты</a>
+                    @* <a href="statistics.html">Статистика</a> *@
+                    <a class="login" href="/ManagmentCompany/Login">Вход</a>
+                    <a class="reg" href="/ManagmentCompany/Registration">Регистрация</a>
+                </div>
             </div>
-        </div>
-    </nav>
-    @RenderBody()
+
+            <div>
+                Всего домов: @* @Model.Count *@
+            </div>
+            <div>
+                Всего задач: @* @Model.Count *@
+            </div>
+            <div>
+                Задач выполнено: @* @Model.Where(x => x.Status == "Выполнено").Count() *@
+            </div>
+            <div>
+                Задач в процессе: @* @Model.Where(x => x.Status != "Выполнено").Count() *@
+            </div>
+        </nav>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
     <footer id="blueFooter">
         <div id="footerContainer">
             <p>&copy; 2024 Мой Дом. Все права защищены.</p>
