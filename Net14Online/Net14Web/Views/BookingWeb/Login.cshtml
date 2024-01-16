@@ -1,0 +1,27 @@
+﻿@using Net14Web.Models.BookingWeb
+@model LoginViewModel
+
+@{
+    Layout = "_LayoutBookingWeb";
+}
+@section Style
+{
+    <link href="~/css/booking.css" rel="stylesheet" />
+}
+
+<div>
+    <form method="post">
+        <div>
+            Name <input placeholder="Name" name="name" />
+        </div>
+        <div>
+            E-mail <input placeholder="Email" name="email" />
+        </div>
+        <div>
+            Password <input placeholder="Password" type="password" name="password" />
+        </div>
+        <div>
+            <input type="submit" value="Continue" />
+        </div>
+    </form>
+</div>
