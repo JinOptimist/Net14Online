@@ -6,7 +6,10 @@ namespace Net14Web.DbStuff
     public class WebDbContext : DbContext
     {
         public DbSet<Hero> Heroes { get; set; }
+        
         public DbSet<Weapon> Weapons { get; set; }
+
+        public DbSet<Game> Games { get; set; }
 
         public WebDbContext(DbContextOptions options) : base(options) { }
     }

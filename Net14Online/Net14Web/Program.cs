@@ -2,6 +2,8 @@ using Net14Web.Services;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.Services.RealEstate;
+using Net14Web.Services.GameShop;
+using Net14Web.DbStuff.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,7 @@ builder.Services.AddScoped<HeroBuilder>(diContainer =>
 builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
+builder.Services.AddScoped<IGameShopRepository, GameShopRepository>();
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<IdBuilder>();
 builder.Services.AddScoped<UpdateUser>();
