@@ -16,8 +16,6 @@ namespace Net14Web.Controllers
         private readonly MovieEditHelper _movieEditHelper;
         private readonly UserEditHelper _userEditHelper;
 
-        /*    public static List<UserViewModel> Users = new List<UserViewModel>();
-            public static List<MovieViewModel> Movies = new List<MovieViewModel>();*/
         public static AdminPanelViewModel AdminPanelViewModel = new AdminPanelViewModel();
 
         private WebDbContext _webDbContext;
