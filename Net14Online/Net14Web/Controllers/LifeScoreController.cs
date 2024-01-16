@@ -18,7 +18,25 @@ public class LifeScoreController : Controller
         return View(updatedLifeScoreViewModel);
     }
 
+    public IActionResult TeamsTable()
+    {
+        return View();
+    }
 
+    public IActionResult Calendar()
+    {
+        return View();
+    }
+
+    public IActionResult Results()
+    {
+        return View();
+    }
+
+    public IActionResult Teams()
+    {
+        return View();
+    }
 
     private LifeScoreViewModel InitializeLifeScoreViewModel(LifeScoreViewModel lifeScoreViewModel)
     {
