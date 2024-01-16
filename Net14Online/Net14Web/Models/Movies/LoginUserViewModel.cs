@@ -1,6 +1,6 @@
 ﻿namespace Net14Web.Models.Movies
 {
-    public class LoginPersoneViewModel
+    public class LoginUserViewModel
     {
         public string Login { get; set; }
         public string Password { get; set; }

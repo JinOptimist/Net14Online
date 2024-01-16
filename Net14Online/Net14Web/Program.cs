@@ -1,9 +1,16 @@
 using Net14Web.Services;
+using Microsoft.EntityFrameworkCore;
+using Net14Web.DbStuff;
+using Net14Web.Services.RealEstate;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=Net14Web; Integrated Security=True";
+builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
+//builder.Services.AddScoped<WebDbContext>();
 
 builder.Services.AddScoped<HeroBuilder>(diContainer =>
 {
@@ -15,6 +22,10 @@ builder.Services.AddScoped<HeroBuilder>(diContainer =>
 builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
+builder.Services.AddScoped<DeleteUser>();
+builder.Services.AddScoped<IdBuilder>();
+builder.Services.AddScoped<UpdateUser>();
+builder.Services.AddScoped<UserBuilder>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

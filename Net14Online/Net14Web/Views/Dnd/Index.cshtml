@@ -22,7 +22,7 @@
         {
             <div class="hero">
                 <div class="remove-block">
-                    <a href="/dnd/remove?name=@hero.Name" class="remove-link">X</a>
+                    <a href="/dnd/remove?id=@hero.Id" class="remove-link">X</a>
                 </div>
                 <div class="name-and-coin-block">
                     <div class="name-block">
@@ -35,11 +35,11 @@
                     </div>
                     <div class="coin-block">
                         <div>
-                            @hero.Coin <img src="/images/dnd/coin.png" class="icon" />
+                            @hero.Coins <img src="/images/dnd/coin.png" class="icon" />
                         </div>
                         <div class="new-coint-block">
                             <form action="/dnd/updateCoin" method="post">
-                                <input type="hidden" name="name" value="@hero.Name" />
+                                <input type="hidden" name="heroId" value="@hero.Id" />
                                 <div>
                                     <input type="number" name="coin" />
                                 </div>

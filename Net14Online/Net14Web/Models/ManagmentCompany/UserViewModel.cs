@@ -2,8 +2,12 @@
 {
     public class UserViewModel
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public string PermissionLevel { get; set; }
+        public string? NickName { get; set; }
+
+        public string? Password { get; set; }
+
+        public string? PermissionLevel { get; set; }
     }
 }
