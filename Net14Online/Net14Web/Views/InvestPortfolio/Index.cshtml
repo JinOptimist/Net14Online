@@ -30,7 +30,15 @@
                 {
                     <tr>
                         <td>@stock.NameStock</td>
-                        <td>@stock.Price рублей</td>                    
+                        <td>@stock.Price рублей
+                            <form action="/InvestPortfolio/UpdatePrice" method="post">
+                                <input type="hidden" name="name" value="@stock.NameStock">
+                                <input type="number" name="price" value="@stock.Price">
+                                <input type="submit" value="обновить">
+                            </form>
+                        </td>
+                        <td></td>
+                        <td><a href="/InvestPortfolio/remove?name=@stock.NameStock">Удалить</a></td>             
                     </tr>
                    
                 }

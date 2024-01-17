@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Net14Web.Models.Dnd;
 using Net14Web.Models.InvestPortfolio;
 
 namespace Net14Web.Controllers
@@ -28,6 +29,18 @@ namespace Net14Web.Controllers
 
             stockViewModels.Add(newStock);
 
+            return RedirectToAction("Index");
+        }
+        public IActionResult Remove(string name)
+        {
+            var stockDelete = stockViewModels.First(x => x.NameStock == name);
+            stockViewModels.Remove(stockDelete);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult UpdatePrice(string name, int price)
+        {
+            stockViewModels.First(x => x.NameStock == name).Price = price;
             return RedirectToAction("Index");
         }
     }
