@@ -4,6 +4,8 @@ using Net14Web.DbStuff;
 using Net14Web.Services.RealEstate;
 using Net14Web.Services.GameShop;
 using Net14Web.DbStuff.Models;
+using Net14Web.Services.Movies;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +27,18 @@ builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
 builder.Services.AddScoped<IGameShopRepository, GameShopRepository>();
+builder.Services.AddScoped<CommentBuilder>();
+builder.Services.AddScoped<ErrorBuilder>();
+builder.Services.AddScoped<MovieBuilder>();
+builder.Services.AddScoped<Net14Web.Services.Movies.UserBuilder>();
+builder.Services.AddScoped<UserEditHelper>();
+builder.Services.AddScoped<MovieEditHelper>();
+builder.Services.AddScoped<LoginHelper>();
+
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<IdBuilder>();
 builder.Services.AddScoped<UpdateUser>();
-builder.Services.AddScoped<UserBuilder>();
+builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

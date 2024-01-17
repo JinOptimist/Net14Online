@@ -1,0 +1,20 @@
+﻿@using Net14Web.Models.PcShop
+@model AddUserViewModel
+
+@{
+    Layout = "_LayoutPcShop";
+}
+
+<div>
+    <form method="post">
+
+        <div>
+            Логин
+            @Html.TextBoxFor(x => x.Login)
+        </div>
+
+        <div>
+            <input type="submit" value="Удалить пользователя" />
+        </div>
+    </form>
+</div>
