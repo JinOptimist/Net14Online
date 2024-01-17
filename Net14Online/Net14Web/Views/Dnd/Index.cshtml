@@ -17,6 +17,10 @@
     <div>
         <a href="/Dnd/AddRandomHero">AddRandomHero</a>
     </div>
+    <div>
+        <a href="/Dnd/ChooseFavoriteWeapon">ChooseFavoriteWeapon</a>
+    </div>
+    
     <div class="heroes">
         @foreach (var hero in Model.Heroes)
         {
@@ -31,6 +35,9 @@
                         </div>
                         <div class="hero-name">
                             @hero.Name
+                        </div>
+                        <div class="weapon">
+                            Любимое оружие: @hero.FavWeaponName
                         </div>
                     </div>
                     <div class="coin-block">
