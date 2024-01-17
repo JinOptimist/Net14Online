@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Net14Web.DbStuff;
+using Net14Web.DbStuff.Models;
 using Net14Web.Models.PcShop;
 
 namespace Net14Web.Controllers
@@ -6,7 +8,7 @@ namespace Net14Web.Controllers
     public class PcShopController : Controller
     {
         public static List<AddUserViewModel> UsersViewModels = new List<AddUserViewModel>();
-
+        private WebDbContext _webDbContext;
         public ActionResult Index()
         {
             return View();
