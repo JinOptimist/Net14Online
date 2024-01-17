@@ -1,16 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Net14Web.DbStuff.Models;
 using Net14Web.Models.GameShop;
+using Net14Web.Services.GameShop;
 
 namespace Net14Web.Controllers
 {
     public class GameShopController : Controller
     {
-        public static List<GameViewModel>? GameModels = new List<GameViewModel>();
         private Random _random = new Random();
 
-        public IActionResult Index()
+        private readonly IGameShopRepository _repository;
+
+        public GameShopController(IGameShopRepository repository)
         {
-            return View(GameModels);
+            _repository = repository;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var games = await _repository.GetAllAsync();
+
+            var gameViewModels = games.Select(
+                game => new GameViewModel
+                {
+                    Id = game.Id,
+                    Genre = game.Genre,
+                    Name = game.Name,
+                    PosterUrl = game.LogoUrl,
+                    Rating = game.Raiting
+                }
+                ).ToList();
+
+            return View("Index", gameViewModels);
         }
 
         [HttpGet]
@@ -20,20 +41,44 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddGame(AddGameViewModel gameModel)
+        public async Task<IActionResult> AddGame(AddGameViewModel gameModel)
         {
             var raiting = _random.NextDouble() * 5;
-            var newGame = new GameViewModel()
+            var newGame = new Game()
             {
-                Name = gameModel.Name,
-                PosterUrl = gameModel.PosterUrl,
+                Name = gameModel.Name!,
+                LogoUrl = gameModel.PosterUrl,
                 Genre = gameModel.Genre,
-                Rating = Math.Round(raiting, 1)
+                Raiting = Math.Round(raiting, 1)
             };
 
-            GameModels!.Add(newGame);
+            await _repository.AddAsync(newGame);
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult Upgrade(Game gameModel)
+        {
+            _repository.Update(gameModel);
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            _repository.DeleteById(id);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Profile(int id)
+        {
+            var game = _repository.GetById(id);
+
+            return View("Profile", game);
+        }
+
     }
 }

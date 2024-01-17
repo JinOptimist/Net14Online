@@ -4,10 +4,6 @@ namespace Net14Web.Services.Movies
 {
     public class CommentBuilder
     {
-        public CommentBuilder()
-        {
-        }
-
         public CommentsOnMovieViewModel BuildCommentToMovie(DateTime timeOfWriting, string description, UserViewModel user)
         {
             var comment = new CommentsOnMovieViewModel

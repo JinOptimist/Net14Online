@@ -1,0 +1,43 @@
+﻿.table-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    background-color: #F0F0F0;
+    border-radius: 10px;
+}
+
+.table-header-date{
+    width:150px;
+    text-align:center;
+}
+
+.table-header-time {
+    width: 100px;
+    text-align: center;
+}
+
+.table-header-teams {
+    width: 400px;
+    text-align: center;
+}
+
+.game {
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-around;
+}
+
+.game-date {
+    width: 150px;
+    text-align: center;
+}
+
+.game-time {
+    width: 100px;
+    text-align: center;
+}
+
+.game-teams {
+    width: 400px;
+    text-align: center;
+}

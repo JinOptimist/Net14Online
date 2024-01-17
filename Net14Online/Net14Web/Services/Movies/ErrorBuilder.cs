@@ -4,10 +4,6 @@ namespace Net14Web.Services.Movies
 {
     public class ErrorBuilder
     {
-        public ErrorBuilder()
-        {
-        }
-
         public ErrorViewModel BuildError(string title, string descrtiption)
         {
             var error = new ErrorViewModel
