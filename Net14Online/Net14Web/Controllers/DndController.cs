@@ -37,7 +37,13 @@ namespace Net14Web.Controllers
                 })
                 .ToList();
 
-            return View(viewModels);
+            var dndIndexViewModel = new DndIndexViewModel()
+            {
+                Heroes = viewModels,
+                Weapons = new List<WeaponViewModel> { new WeaponViewModel { Name = "Кинжал", Damadge = 3 } }
+            };
+
+            return View(dndIndexViewModel);
         }
 
         public IActionResult Profile()
