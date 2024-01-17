@@ -204,8 +204,6 @@ namespace Maze.LevelStaff
             }
         }
 
-        private void BuildCentaur(int centaurCount = 1) 
-
         private void BuildCentaur(int centaurCount = 1)
 
         {

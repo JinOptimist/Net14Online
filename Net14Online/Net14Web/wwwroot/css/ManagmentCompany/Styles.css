@@ -1,19 +1,23 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
+.regContainer, .loginContainer {
+    font-family: Verdana, sans-serif;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: auto;
     margin: 0;
 }
 
-#loginContainer {
-    max-width: 400px;
+.regContainer, .loginContainer {
+    align-items: center;
+    justify-content: center;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+    .regContainer h2, .loginContainer h2 {
+        text-align: center;
+    }
 
 h1 {
     color: #333;
@@ -23,7 +27,7 @@ h1 {
 form {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
 }
 
 label {
@@ -36,7 +40,7 @@ input {
     box-sizing: border-box;
 }
 
-button {
+.button {
     background-color: #4caf50;
     color: white;
     padding: 10px 15px;
@@ -44,6 +48,14 @@ button {
     cursor: pointer;
 }
 
-    button:hover {
+    .button:hover {
         background-color: #45a049;
     }
+
+.reg-ref {
+    margin: 10px;
+}
+
+.update-form, .remove-form {
+    display: inline-block;
+}

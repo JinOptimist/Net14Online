@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header class="header-style bg-info">
+            <div class="header-upper-bar">
+                <a class="logo">
+                    Система мониторинга состояния агрегатов
+                </a>
+                <ul class="list-group">
+                    <li class="list-group-item"><button class="btn btn-primary">Зарегистрироваться</button></li>
+                    <li class="list-group-item"><button class="btn btn-primary">Войти</button></li>
+                </ul>             
+            </div>
+        </header>
+        <div class="main-container">
+            <aside class="big-nav-sidebar bg-secondary">
+                <ul class="list-group">
+                    <li class="list-group-item active">
+                        <a class="nav-link active">
+                            Участок 1
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="nav-link active">
+                            Участок 2
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="nav-link active">
+                            Участок 3
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="nav-link active">
+                            Участок 4
+                        </a>
+                    </li>
+                  </ul>
+            </aside>
+            <main>
+                <section class="article-field">
+                    <article class="scada-item">
+                        <h3 class="article-h3">оборудование 1</h3>
+                        <ul class="scada-item-ul">
+                            <li>Состояние : Включен</li>
+                            <li>Счетчик : 21043</li>
+                            <li>Обрыв : Нет</li>
+                            <li>Замена волок : Нет</li>
+                            <li>
+                                <button type="button" class="btn btn-warning">Изменить</button>
+                                <button type="button" class="btn btn-danger">Удалить</button>
+                            </li>
+                        </ul>
+                    </article>
+                    <article class="scada-item">
+                        <h3 class="article-h3">оборудование 2</h3>
+                        <ul class="scada-item-ul">
+                            <li>Состояние : Включен</li>
+                            <li>Счетчик : 11351</li>
+                            <li>Обрыв : Нет</li>
+                            <li>Замена волок : Нет</li>
+                            <li>
+                                <button type="button" class="btn btn-warning">Изменить</button>
+                                <button type="button" class="btn btn-danger">Удалить</button>
+                            </li>
+                        </ul>
+                    </article>
+                    
+                    <article class="scada-item">
+                        <h3 class="article-h3">оборудование 3</h3>
+                        <ul class="scada-item-ul">
+                            <li>Состояние : Включен</li>
+                            <li>Счетчик : 0</li>
+                            <li>Обрыв : Нет</li>
+                            <li>Замена волок : Да</li>
+                            <li>
+                                <button type="button" class="btn btn-warning">Изменить</button>
+                                <button type="button" class="btn btn-danger">Удалить</button>
+                            </li>
+                        </ul>
+                    </article>
+                    <article class="scada-item">
+                        <h3 class="article-h3">оборудование 4</h3>
+                        <ul class="scada-item-ul">
+                            <li>Состояние : Включен</li>
+                            <li>Счетчик : 1512</li>
+                            <li>Обрыв : Нет</li>
+                            <li>Замена волок : Нет</li>
+                            <li>
+                                <button type="button" class="btn btn-warning">Изменить</button>
+                                <button type="button" class="btn btn-danger">Удалить</button>
+                            </li>
+                        </ul>
+                    </article>
+                    <article class="scada-item">
+                        <h3 class="article-h3">оборудование 5</h3>
+                        <ul class="scada-item-ul">
+                            <li>Состояние : Выключен</li>
+                            <li>Счетчик : 0</li>
+                            <li>Обрыв : Да</li>
+                            <li>Замена волок : Нет</li>
+                            <li>
+                                <button type="button" class="btn btn-warning">Изменить</button>
+                                <button type="button" class="btn btn-danger">Удалить</button>
+                            </li>
+                        </ul>
+                    </article>
+                    <article class="scada-item">
+                        <h3 class="article-h3">оборудование 6</h3>
+                        <ul class="scada-item-ul">
+                            <li>Состояние : Включен</li>
+                            <li>Счетчик : 551</li>
+                            <li>Обрыв : Нет</li>
+                            <li>Замена волок : Нет</li>
+                            <li>
+                                <button type="button" class="btn btn-warning">Изменить</button>
+                                <button type="button" class="btn btn-danger">Удалить</button>
+                            </li>
+                        </ul>
+                    </article>
+                </section>
+                <div class="control-elements">
+                    <form>
+                        <ul>
+                            <li><label>Состояние </label><input type="text" name="status"></li>
+                            <li><label>Счетчик </label><input type="text" name="cointer"></li>
+                            <li><label>Обрыв </label><input type="text" name="break"></li>
+                            <li><label>Замена волок </label><input type="text" name="change"></li>
+                            <li><button type="submit" class="btn btn-danger" name="cointer">Добавить</li>
+                        </ul> 
+                    </form>
+                </div> 
+            </main>
+        </div>
+        <footer class="bg-info">
+                <div class="logo">
+                    FOOTER PLACEHOLDER
+                </div>
+        </footer>
+    </body>
+</html>

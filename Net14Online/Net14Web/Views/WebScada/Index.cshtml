@@ -1,0 +1,78 @@
+﻿@using Net14Web.Models.WebScada
+@model List<ScadaDataViewModel>
+
+@{
+    Layout = "_LayoutWebScada";
+}
+
+@section WebScadaStyles
+    {
+    <link href="~/css/WebScada/WebScadaStyles.css" rel="stylesheet" />
+    <link href="~/css/WebScada/bootstrap.css" rel="stylesheet" />
+}
+<main>
+    <section class="article-field">
+        @*<article class="scada-item">
+            <h3 class="article-h3">оборудование 1</h3>
+            <ul class="scada-item-ul">
+                <li>Состояние : Включен</li>
+                <li>Счетчик : 21043</li>
+                <li>Обрыв : Нет</li>
+                <li>Замена волок : Нет</li>
+                <li>
+                    <button type="button" class="btn btn-warning">Изменить</button>
+                    <button type="button" class="btn btn-danger">Удалить</button>
+                </li>
+            </ul>
+        </article>
+        <article class="scada-item">
+            <h3 class="article-h3">оборудование 2</h3>
+            <ul class="scada-item-ul">
+                <li>Состояние : Включен</li>
+                <li>Счетчик : 11351</li>
+                <li>Обрыв : Нет</li>
+                <li>Замена волок : Нет</li>
+                <li>
+                    <button type="button" class="btn btn-warning">Изменить</button>
+                    <button type="button" class="btn btn-danger">Удалить</button>
+                </li>
+            </ul>
+        </article>*@
+
+        @foreach (var Data in Model)
+        {
+            <article class="scada-item">
+                <h3 class="article-h3">оборудование @Data.Id</h3>
+                <form action="/WebScada/UpdateData" method="post">
+                    <ul class="scada-item-ul">
+
+                        <input type="hidden" name="Id" value="@Data.Id" />
+                        <li>Состояние : @Data.Status</li>
+                        <li>Счетчик : <input type="text" name="Cointer" value="@Data.Cointer"></li>
+                        <li>Обрыв : @Data.WireBreak</li>
+                        <li>Замена волок : @Data.RollingDiesChange</li>
+
+                        <li>
+                            <button type="submit" class="btn btn-warning">Изменить</button>
+
+                            <a href="/WebScada/RemoveData?Id=@Data.Id" class="remove-link btn btn-danger">
+                                Удалить
+                            </a>
+                        </li>
+                    </ul>
+                </form>
+            </article>
+        }
+    </section>
+    <div class="control-elements">
+        <form action="/WebScada/AddData" method="post">
+            <ul class="control-elements-ul">
+                <li><label>Состояние </label><input type="text" name="Status"></li>
+                <li><label>Счетчик </label><input type="text" name="Cointer"></li>
+                <li><label>Обрыв </label><input type="text" name="Break"></li>
+                <li><label>Замена волок </label><input type="text" name="RollingDiesChange"></li>
+                <li><button type="submit" class="btn btn-danger" value="">Добавить</button></li>
+            </ul>
+        </form>
+    </div>
+</main>
