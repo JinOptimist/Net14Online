@@ -1,0 +1,16 @@
+﻿@using Net14Web.Models.PcShop
+@model List<UserViewModel>
+
+@{
+    Layout = "_LayoutPcShop";
+}
+
+<div>
+    <table>
+        <tr><th>Логин</th><th>Имя</th></tr>
+        @foreach (var User in Model)
+        {
+            <tr><td>@User.Login</td><td>@User.Name</td></tr>
+        }
+    </table>
+</div>
