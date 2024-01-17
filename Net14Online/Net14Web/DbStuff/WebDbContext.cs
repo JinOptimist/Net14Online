@@ -7,7 +7,7 @@ namespace Net14Web.DbStuff
     public class WebDbContext : DbContext
     {
         public DbSet<Hero> Heroes { get; set; }
-        
+
         public DbSet<Weapon> Weapons { get; set; }
 
         public DbSet<Game> Games { get; set; }
@@ -16,5 +16,20 @@ namespace Net14Web.DbStuff
         public DbSet<Comment> Comments { get; set; }
 
         public WebDbContext(DbContextOptions options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder
+                .Entity<Hero>()
+                .HasOne(hero => hero.FavoriteWeapon)
+                .WithMany(weapon => weapon.HeroesWhoLikeTheWeapon)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Hero>()
+                .HasMany(hero => hero.KnowedWeapons)
+                .WithMany(weapon => weapon.HeroesWhoKnowsTheWeapon);
+        }
     }
 }
