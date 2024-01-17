@@ -5,21 +5,6 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\css\styleGadgets.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Views\Shared\_LayoutOnlineShopGadgets.cshtml.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Views\Shared\_LayoutOnlineShopGadgets.cshtml.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\css\OnlineShopGadgets\styleGadgets.css" />
-  </ItemGroup>
+  
 
 </Project>
