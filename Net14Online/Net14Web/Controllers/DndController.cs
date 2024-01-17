@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Net14Web.DbStuff;
+using Net14Web.DbStuff.Models;
 using Net14Web.Models.Dnd;
 using Net14Web.Services;
 using System.Xml.Linq;
@@ -8,20 +10,34 @@ namespace Net14Web.Controllers
     public class DndController : Controller
     {
         private readonly HeroBuilder _heroBuilder;
+        private WebDbContext _webDbContext;
 
         /// <summary>
         /// TEMP SOLUTION. DONT DO THIS IN PRODUCT
         /// </summary>
         public static List<HeroViewModel> heroViewModels = new List<HeroViewModel>();
 
-        public DndController(HeroBuilder heroBuilder)
+        public DndController(HeroBuilder heroBuilder, WebDbContext webDbContext)
         {
             _heroBuilder = heroBuilder;
+            _webDbContext = webDbContext;
         }
 
         public IActionResult Index()
         {
-            return View(heroViewModels);
+            var dbHeroes = _webDbContext.Heroes.Take(10).ToList();
+
+            var viewModels = dbHeroes
+                .Select(dbHero => new HeroViewModel
+                {
+                    Id = dbHero.Id,
+                    Age = DateTime.Now.Year - dbHero.Birthday.Year,
+                    Name = dbHero.Name,
+                    Coins = dbHero.Coins,
+                })
+                .ToList();
+
+            return View(viewModels);
         }
 
         public IActionResult Profile()
@@ -29,16 +45,18 @@ namespace Net14Web.Controllers
             var viewModel = new HeroViewModel();
 
             viewModel.Name = "Test";
-            viewModel.Coin = DateTime.Now.Second;
+            viewModel.Coins = DateTime.Now.Second;
             viewModel.Tools = new List<string> { "Hammer", "Shuffle" };
 
             return View(viewModel);
         }
 
-        public IActionResult Remove(string name)
+        public IActionResult Remove(int id)
         {
-            var hero = heroViewModels.First(x => x.Name == name);
-            heroViewModels.Remove(hero);
+            var hero = _webDbContext.Heroes.First(x => x.Id == id);
+            _webDbContext.Heroes.Remove(hero);
+            _webDbContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -50,9 +68,12 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateCoin(string name, int coin)
+        public IActionResult UpdateCoin(int heroId, int coin)
         {
-            heroViewModels.First(x => x.Name == name).Coin = coin;
+            var hero = _webDbContext.Heroes.First(x => x.Id == heroId);
+            hero.Coins = coin;
+            _webDbContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -65,15 +86,16 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult AddHero(AddHeroViewModel heroViewModel)
         {
-            var newHero = new HeroViewModel
+            var hero = new Hero
             {
-                Coin = heroViewModel.Coin,
                 Name = heroViewModel.Name,
-                AvatarUrl = heroViewModel.AvatarUrl,
-                Tools = new List<string> { "Бутылки жизни: " + heroViewModel.Hp }
+                Birthday = DateTime.Now,
+                Coins = heroViewModel.Coin
             };
 
-            heroViewModels.Add(newHero);
+            _webDbContext.Heroes.Add(hero);
+
+            _webDbContext.SaveChanges();
 
             return RedirectToAction("Index");
         }

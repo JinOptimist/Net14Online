@@ -2,9 +2,9 @@
 @model MovieViewModel
 
 @section Style
-    {
+{
     <link rel="stylesheet" href="~/css/movies.css" />
-    <link rel="stylesheet" href="~/bootstrap-5.3.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="~/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
 }
 
 <div>
@@ -27,9 +27,10 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <form class="col-12" method="post">
+                                        <form class="col-12" action="/Movies/AddCommentOnMovie" method="post">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Комментарий" aria-describedby="input-group-button-right">
+                                                <input type="hidden" name="movieId" value="@Model.Id" />
+                                                <input type="text" class="form-control" name="description" placeholder="Комментарий" aria-describedby="input-group-button-right">
                                                 <button type="submit" class="btn btn-outline-secondary"
                                                         id="input-group-button-right">
                                                     Оставить комментарий
@@ -41,23 +42,24 @@
                                             @foreach (var comment in @Model.Comments)
                                             {
                                                 <div>
-                                                    <a class="comment-a rounded" href="#">
+                                                    <a class="comment-a rounded" href="/movies/user?userId=@comment.User.Id">
                                                         <div class="row">
                                                             <div class="col-md-2">
-                                                                <img src="@comment.Persone.AvatarUrl" class="rounded comment-image">
+                                                                <img src="@comment.User.AvatarUrl" class="rounded comment-image">
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <div class="card-body">
-                                                                    <p class="h5">@comment.Persone.Login</p>
+                                                                    <p class="h5">@comment.User.Login</p>
                                                                     <p class="card-text">
                                                                         @comment.Description
                                                                     </p>
+                                                                    <a class="btn btn-link" href="/movies/RemoveCommentOnMovie?movieId=@Model.Id&timeOfWriting=@comment.TimeOfWriting.ToString()&userId=@comment.User.Id">Удалить</a>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-2">
                                                                 <p class="card-text">
                                                                     <small class="text-muted">
-                                                                        @comment.TimeOfWritng
+                                                                        @comment.TimeOfWriting
                                                                     </small>
                                                                 </p>
                                                             </div>

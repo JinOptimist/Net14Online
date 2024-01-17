@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @RenderSection("Style", false)
+    @RenderSection("Script", false)
+    <link rel="stylesheet" href="~/css/RetroConsoles/nav-bar.css" />
+    <link rel="stylesheet" href="~/css/RetroConsoles/footer.css" />
+</head>
+<body>
+    <div class="navbar">
+        <div class="drop">
+            <button class="nav-btn">&#9776</button>
+            <div class="nav-list">
+                <a href="#">О нас</a>
+                <a href="#">Новости</a>
+                <a href="#">Обзоры</a>
+                <a href="#">Приставки</a>
+                <a href="#">Игры</a>
+                <a href="#">Коллекции</a>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        @RenderBody()
+    </div>
+    <div>
+        <footer>
+            <div class="footer-at-all">
+                <div class="picture-footer">
+                    <a href="#"><img src="~/images/Retro/forgotten-90s-cartoons.png" alt=""></a>
+                </div>
+                <div class="footer-column-add">
+                    <div class="footer-section">
+                        <ul class="social">
+                            <a href="#"><img src="~/images/Retro/facebook.png" alt=""></a>
+                            <a href="#"><img src="~/images/Retro/telegram.png" alt=""></a>
+                            <a href="#"><img src="~/images/Retro/Linkedin.png" alt=""></a>
+                            <a href="#"><img src="~/images/Retro/instagram.png" alt=""></a>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <ul class="footer-menu">
+                            <a href="#">Главная страница</a>
+                            <a href="#">Команда</a>
+                            <a href="#">Контакты</a>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <div class="year">
+                            <p>©2024 Retro Lab</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+    </div>
+</body>
+</html>

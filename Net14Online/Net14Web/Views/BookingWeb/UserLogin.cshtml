@@ -1,0 +1,28 @@
+﻿@using Net14Web.Models.BookingWeb
+@model List<UserLoginViewModel>
+
+@{
+    Layout = "_LayoutBookingWeb";
+}
+@section Style
+{
+    <link href="~/css/booking.css" rel="stylesheet" />
+}
+<button><a href="Login">Login</a></button>
+@foreach(var user in Model){
+    <a href="Remove?name=@user.Name">Remove</a>
+<div>
+    Your Name: @user.Name
+</div>
+<div>
+    Your E-mail: @user.Email
+    <form action="UpdateEmail" method="post">
+        <input type="hidden" name="name" value="@user.Name" />
+        <input type="email" name="email" />
+        <input type="submit" value="update" />
+    </form>
+</div>
+<div>
+    Your Password: @user.Password
+</div>
+}

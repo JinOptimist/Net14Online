@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @RenderSection("Style", false)
+    @RenderSection("Script", false)
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="/BookingWeb/Index"><img src="/images/BookingWeb/logo.png" width="190" height="190" /></a>
+            </div>
+            <div class="navinfo">
+                <ul class="navinfo">
+                    <button> <a href="#">EUR</a> </button>
+                    <button> <a href="#">EN</a> </button>
+                    <button> <a href="/BookingWeb/Help">Help</a> </button>
+                    <button> <a href="/BookingWeb/Login">Log In</a> </button>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    @RenderBody()
+</body>
+<footer>
+    <button> <a href="#">Privacy</a> </button>
+    <button> <a href="#">About Company</a> </button>
+    <button> <a href="/BookingWeb/Help">Help</a> </button>
+    <button> <a href=#>Cookies</a></button>
+</footer>
+</html>

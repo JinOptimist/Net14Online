@@ -1,0 +1,51 @@
+﻿.header {
+    display: flex;
+    margin: 20px;
+    justify-content:center;
+}
+
+.game1 {
+    width: 150px;
+    height: 100px;
+    margin-left: 20px; 
+    border: 1px black solid;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.game1:hover {
+    background-color: #E6EBF2;
+}
+
+.game-head {
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+}
+
+.team-first-name {
+    margin: 5px;
+    color: gray;
+    text-decoration:underline;
+}
+
+.team-second-name {
+    margin: 5px;
+    color: gray;
+    text-decoration: underline;
+}
+
+.game-score {
+    margin: 5px;
+    font-size: large;
+    font-family:Arial;
+}
+
+.game-body{
+    margin-top: 8px;
+}
+
+.game-body-time{
+    font-size: 14px;
+    color: red;
+}

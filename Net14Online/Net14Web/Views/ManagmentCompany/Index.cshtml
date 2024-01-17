@@ -10,23 +10,38 @@
     <link href="~/css/ManagmentCompany/ManagmentCompany.css" rel="stylesheet" />
 }
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="index.css" rel="stylesheet">
-    <title>Стартовая страница</title>
-</head>
 <body>
-    <div class="cC" id="contentContainer">
+    <div class="content-container">
         <h2 class="h2">Добро пожаловать на стартовую страницу!</h2>
         <p class="p">Здесь вы можете разместить важную информацию или предложения для пользователей.</p>
-        <div class="userstat" id="userstat">
+        <div class="userstat">
             <ul>
-                <li><a href="all_users.html">Всего участников</a></li>
-                <li><a href="users.html">Пользователей</a></li>
-                <li><a href="admins.html">Админов</a></li>
+                <li><a @* href="AllUsers" *@>Всего участников</a></li>
+                <li><a @* href="Users" *@>Пользователей</a></li>
+                <li><a @* href="Admins" *@>Админов</a></li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                @foreach (var user in Model)
+                {
+                    <li>
+                        <div>
+                            <span>@user.Name | @user.NickName | @user.PermissionLevel</span>
+
+                            <form class="update-form" method="post" action="/ManagmentCompany/UpdateUser">
+                                <input type="hidden" name="name" value="@user.Name" />
+                                <input type="text" name="nickName" value="@user.NickName" @* placeholder="Новый никнейм" *@ required />
+                                <button type="submit">Изменить</button>
+                            </form>
+
+                            <form class="remove-form" method="post" action="/ManagmentCompany/RemoveUser">
+                                <input type="hidden" name="name" value="@user.Name" />
+                                <button type="submit">Удалить</button>
+                            </form>
+                        </div>
+                    </li>
+                }
             </ul>
             <div>
                 Количество участников @Model.Count
@@ -34,4 +49,3 @@
         </div>
     </div>
 </body>
-</html>
