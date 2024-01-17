@@ -1,0 +1,33 @@
+﻿@using Net14Web.Models.ManagmentCompany
+@model List<UserViewModel>
+
+@{
+    Layout = "_LayoutManagmentCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagmentCompany/ManagmentCompany.css" rel="stylesheet" />
+    <link href="~/css/ManagmentCompany/Styles.css" rel="stylesheet" />
+}
+
+<div class="regContainer">
+    <h2>Регистрация</h2>
+        <form method="post">
+            <label for="firstName">Ваше имя:</label>
+            <input type="text" id="firstName" name="firstName" required>
+
+            <label for="nickName">Ваш ник на сайте (будет виден другим пользвоателям):</label>
+            <input type="text" id="nickName" name="nickName" required>
+
+            @*<label for="address">Адрес проживания:</label>
+            <input type="text" id="address" name="address" required>
+
+            <label for="passportScan">Прикрепите подтверждающие документы:</label>
+            <input type="file" id="passportScan" name="passportScan" accept=".jpg, .png, .pdf" required> *@
+
+            <button class="registry" type="submit">Зарегистрироваться</button>
+        </form>
+    </div>
+
+

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Net14Web.DbStuff;
+using Net14Web.DbStuff.ManagmentCompany.Models;
 using Net14Web.Models.ManagmentCompany;
 
 
@@ -6,11 +8,27 @@ namespace Net14Web.Controllers
 {
     public class ManagmentCompanyController : Controller
     {
-        public static List<UserViewModel> userViewModels { get; set; } = new List<UserViewModel>();
+        private ManagmentCompanyDbContext _managmentCompanyDbContext;
+
+        public ManagmentCompanyController(ManagmentCompanyDbContext managmentCompanyDbContext)
+        {
+            _managmentCompanyDbContext = managmentCompanyDbContext;
+        }
 
         public IActionResult Index()
         {
-            return View(userViewModels);
+            var dbUsers = _managmentCompanyDbContext.Users.ToList();
+
+            var viewModels = dbUsers
+                .Select(dbUser => new UserViewModel
+                {
+                    NickName = dbUser.NickName,
+                    PermissionLevel = dbUser.UserPermission,
+                })
+                .ToList();
+
+            return View(viewModels);
+            
         }
 
         public IActionResult About()
@@ -46,39 +64,48 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult Registration(RegistrationViewModel userViewModel)
         {
-            var newUser = new UserViewModel
+            var user = new User
             {
-                Name = userViewModel.Name,
+                Id = userViewModel.Id,
+                LastName = userViewModel.Name,
                 NickName = userViewModel.NickName,
                 Password = userViewModel.Password,
-                PermissionLevel = "Пользователь",
+                UserPermission = "Пользователь",
             };
-            userViewModels.Add(newUser);
+
+            _managmentCompanyDbContext.Add(user);
+            _managmentCompanyDbContext.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public IActionResult RemoveUser(string name)
+        public IActionResult RemoveUser(int id)
         {
-            var user = userViewModels.First(x => x.Name == name);
-            userViewModels.Remove(user);
+            var user = _managmentCompanyDbContext.Users.First(x => x.Id == id);
+
+            _managmentCompanyDbContext.Users.Remove(user);
+
+            _managmentCompanyDbContext.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public IActionResult UpdateUser(string name, string nickName)
+        public IActionResult UpdateUser(int id, string nickName)
         {
-            userViewModels.First(x => x.Name == name).NickName = nickName;
+            var user = _managmentCompanyDbContext.Users.First(x => x.Id == id);
+            user.NickName = nickName;
+
+            _managmentCompanyDbContext.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Logon(string name, string password)
+        public IActionResult Logon(int id, string password)
         {
-            var user = userViewModels.FirstOrDefault(x => x.Name == name && x.Password == password);
+            var user = _managmentCompanyDbContext.Users.FirstOrDefault(x => x.Id == id && x.Password == password);
 
             if (user != null)
             {

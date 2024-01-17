@@ -27,16 +27,16 @@
                 {
                     <li>
                         <div>
-                            <span>@user.Name | @user.NickName | @user.PermissionLevel</span>
+                            <span>@user.NickName | @user.PermissionLevel</span>
 
-                            <form class="update-form" method="post" action="/ManagmentCompany/UpdateUser">
-                                <input type="hidden" name="name" value="@user.Name" />
+                            <form action="/ManagmentCompany/UpdateUser" class="update-form" method="post">
+                                <input type="hidden" name="id" value="@user.Id" />
                                 <input type="text" name="nickName" value="@user.NickName" @* placeholder="Новый никнейм" *@ required />
                                 <button type="submit">Изменить</button>
                             </form>
 
-                            <form class="remove-form" method="post" action="/ManagmentCompany/RemoveUser">
-                                <input type="hidden" name="name" value="@user.Name" />
+                            <form action="/ManagmentCompany/RemoveUser" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@user.Id" />
                                 <button type="submit">Удалить</button>
                             </form>
                         </div>
