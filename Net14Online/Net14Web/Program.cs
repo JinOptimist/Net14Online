@@ -9,9 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 var connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=Net14Web; Integrated Security=True";
+
+var connStringManagmentCompany = "Server=(localdb)\\MSSQLLocalDB; Database=ManagmentCompany; Integrated Security=True";
+
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
 
-builder.Services.AddDbContext<ManagmentCompanyDbContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ManagmentCompanyDbContext>(x => x.UseSqlServer(connStringManagmentCompany));
 
 //builder.Services.AddScoped<WebDbContext>();
 
