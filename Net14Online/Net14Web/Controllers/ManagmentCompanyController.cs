@@ -22,13 +22,14 @@ namespace Net14Web.Controllers
             var viewModels = dbUsers
                 .Select(dbUser => new UserViewModel
                 {
+                    Id = dbUser.Id,
                     NickName = dbUser.NickName,
                     PermissionLevel = dbUser.UserPermission,
                 })
                 .ToList();
 
             return View(viewModels);
-            
+
         }
 
         public IActionResult About()
@@ -62,18 +63,18 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registration(RegistrationViewModel userViewModel)
+        public IActionResult Registration(RegistrationViewModel registrationViewModel)
         {
             var user = new User
             {
-                Id = userViewModel.Id,
-                LastName = userViewModel.Name,
-                NickName = userViewModel.NickName,
-                Password = userViewModel.Password,
+                Id = registrationViewModel.Id,
+                LastName = registrationViewModel.Name,
+                NickName = registrationViewModel.NickName,
+                Password = registrationViewModel.Password,
                 UserPermission = "Пользователь",
             };
 
-            _managmentCompanyDbContext.Add(user);
+            _managmentCompanyDbContext.Users.Add(user);
             _managmentCompanyDbContext.SaveChanges();
 
             return RedirectToAction("Index");
