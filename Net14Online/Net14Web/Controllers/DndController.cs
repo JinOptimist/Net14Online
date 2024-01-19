@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models;
 using Net14Web.Models.Dnd;
@@ -25,19 +27,33 @@ namespace Net14Web.Controllers
 
         public IActionResult Index()
         {
-            var dbHeroes = _webDbContext.Heroes.Take(10).ToList();
+            var dbHeroes = _webDbContext
+                .Heroes
+                //.Include(x => x.FavoriteWeapon)
+                .Take(10)
+                .ToList();
 
             var viewModels = dbHeroes
-                .Select(dbHero => new HeroViewModel
+                .Select(dbHero =>
                 {
-                    Id = dbHero.Id,
-                    Age = DateTime.Now.Year - dbHero.Birthday.Year,
-                    Name = dbHero.Name,
-                    Coins = dbHero.Coins,
+                    return new HeroViewModel
+                    {
+                        Id = dbHero.Id,
+                        Age = DateTime.Now.Year - dbHero.Birthday.Year,
+                        Name = dbHero.Name,
+                        Coins = dbHero.Coins,
+                        FavWeaponName = dbHero.FavoriteWeapon?.Name ?? "---"
+                    };
                 })
                 .ToList();
 
-            return View(viewModels);
+            var dndIndexViewModel = new DndIndexViewModel()
+            {
+                Heroes = viewModels,
+                Weapons = new List<WeaponViewModel> { new WeaponViewModel { Name = "Кинжал", Damadge = 3 } }
+            };
+
+            return View(dndIndexViewModel);
         }
 
         public IActionResult Profile()
@@ -81,6 +97,35 @@ namespace Net14Web.Controllers
         public IActionResult AddHero()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult ChooseFavoriteWeapon()
+        {
+            var viewModel = new FavoriteWeaponViewModel();
+
+            viewModel.Heroes = _webDbContext
+                .Heroes
+                .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
+                .ToList();
+
+            viewModel.Weapons = _webDbContext
+                .Weapons
+                .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
+                .ToList();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult ChooseFavoriteWeapon(int heroId, int weaponId)
+        {
+            var hero = _webDbContext.Heroes.First(x => x.Id == heroId);
+            var weapon = _webDbContext.Weapons.First(x => x.Id == weaponId);
+            hero.FavoriteWeapon = weapon;
+            _webDbContext.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

@@ -1,6 +1,8 @@
-﻿namespace Net14Web.Models.GameShop
+﻿using Net14Web.DbStuff.Models;
+
+namespace Net14Web.Models.GameShop
 {
-    public class GameViewModel
+    public class GameViewModel : BaseModel
     {
         public string? Name { get; set; }
 

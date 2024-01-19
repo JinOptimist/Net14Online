@@ -6,5 +6,8 @@
         public int Coins { get; set; }
         public int Hp {  get; set; }
         public DateTime Birthday { get; set; }
+
+        public virtual Weapon? FavoriteWeapon { get; set; }
+        public virtual List<Weapon> KnowedWeapons { get; set; }
     }
 }

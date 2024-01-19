@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Net14Web.DbStuff;
 
@@ -11,9 +12,11 @@ using Net14Web.DbStuff;
 namespace Net14Web.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240116113036_Movies")]
+    partial class Movies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,47 +24,6 @@ namespace Net14Web.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("HeroWeapon", b =>
-                {
-                    b.Property<int>("HeroesWhoKnowsTheWeaponId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("KnowedWeaponsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("HeroesWhoKnowsTheWeaponId", "KnowedWeaponsId");
-
-                    b.HasIndex("KnowedWeaponsId");
-
-                    b.ToTable("HeroWeapon");
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.Models.Game", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Genre")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogoUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("Raiting")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Games");
-                });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Hero", b =>
                 {
@@ -77,9 +39,6 @@ namespace Net14Web.Migrations
                     b.Property<int>("Coins")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FavoriteWeaponId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Hp")
                         .HasColumnType("int");
 
@@ -88,8 +47,6 @@ namespace Net14Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FavoriteWeaponId");
 
                     b.ToTable("Heroes");
                 });
@@ -175,36 +132,6 @@ namespace Net14Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Weapons");
-                });
-
-            modelBuilder.Entity("HeroWeapon", b =>
-                {
-                    b.HasOne("Net14Web.DbStuff.Models.Hero", null)
-                        .WithMany()
-                        .HasForeignKey("HeroesWhoKnowsTheWeaponId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Net14Web.DbStuff.Models.Weapon", null)
-                        .WithMany()
-                        .HasForeignKey("KnowedWeaponsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.Models.Hero", b =>
-                {
-                    b.HasOne("Net14Web.DbStuff.Models.Weapon", "FavoriteWeapon")
-                        .WithMany("HeroesWhoLikeTheWeapon")
-                        .HasForeignKey("FavoriteWeaponId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("FavoriteWeapon");
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.Models.Weapon", b =>
-                {
-                    b.Navigation("HeroesWhoLikeTheWeapon");
                 });
 #pragma warning restore 612, 618
         }
