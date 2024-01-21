@@ -1,15 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Net14Web.Models.Dnd;
+using Net14Web.DbStuff;
+using Net14Web.DbStuff.Models;
 using Net14Web.Models.InvestPortfolio;
+using Net14Web.Services;
 
 namespace Net14Web.Controllers
 {
     public class InvestPortfolioController : Controller
     {
+        private WebDbContext _webDbContext;
+
         public static List<StockViewModel> stockViewModels = new List<StockViewModel>();
+        
+        public InvestPortfolioController(WebDbContext webDbContext)
+        {
+            _webDbContext = webDbContext;
+        }
+
         public IActionResult Index()
         {
-            return View(stockViewModels);
+            var dbStocks = _webDbContext.Stocks.Take(10).ToList();
+
+            var viewModels = dbStocks.Select(dbStock => new StockViewModel
+            {
+                NameStock = dbStock.Name,
+                Price = dbStock.Price,
+                Id = dbStock.Id
+            }).ToList();
+
+            return View(viewModels);
         }
 
         [HttpGet]
@@ -21,26 +40,31 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult AddStock(AddStockViewModel StockViewModel)
         {
-            var newStock = new StockViewModel
+
+            var stock = new Stock
             {
-                NameStock = StockViewModel.NameStock,
-                Price = StockViewModel.Price               
+                Name = StockViewModel.NameStock,
+                Price = StockViewModel.Price,           
             };
 
-            stockViewModels.Add(newStock);
+            _webDbContext.Stocks.Add(stock);
+            _webDbContext.SaveChanges();         
 
             return RedirectToAction("Index");
         }
-        public IActionResult Remove(string name)
+        public IActionResult Remove(int id)
         {
-            var stockDelete = stockViewModels.First(x => x.NameStock == name);
-            stockViewModels.Remove(stockDelete);
+            var stock = _webDbContext.Stocks.First(x => x.Id == id);
+            _webDbContext.Stocks.Remove(stock);
+            _webDbContext.SaveChanges();
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public IActionResult UpdatePrice(string name, int price)
+        public IActionResult UpdatePrice(int id, int price)
         {
-            stockViewModels.First(x => x.NameStock == name).Price = price;
+            var stock = _webDbContext.Stocks.First(x=>x.Id==id);
+            stock.Price = price;
+            _webDbContext.SaveChanges();
             return RedirectToAction("Index");
         }
     }

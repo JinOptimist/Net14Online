@@ -32,13 +32,13 @@
                         <td>@stock.NameStock</td>
                         <td>@stock.Price рублей
                             <form action="/InvestPortfolio/UpdatePrice" method="post">
-                                <input type="hidden" name="name" value="@stock.NameStock">
+                                <input type="hidden" name="id" value="@stock.Id">
                                 <input type="number" name="price" value="@stock.Price">
                                 <input type="submit" value="обновить">
                             </form>
                         </td>
                         <td></td>
-                        <td><a href="/InvestPortfolio/remove?name=@stock.NameStock">Удалить</a></td>             
+                        <td><a href="/InvestPortfolio/remove?id=@stock.Id">Удалить</a></td>             
                     </tr>
                    
                 }
