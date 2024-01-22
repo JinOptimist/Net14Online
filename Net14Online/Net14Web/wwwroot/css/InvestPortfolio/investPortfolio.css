@@ -1,0 +1,46 @@
+body {
+    display: flex;
+}
+
+.the-left-part {
+    margin-right: 10px;
+}
+
+.the-search-bar {
+    margin-bottom: 15px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    padding: 5px 7px;
+    border: 1px solid #000000;
+    text-align: center;
+}
+/* как отодвинуть все таблицы на одинаковое расстояние ? */
+.the-central-part {
+    margin-top: 57px;
+}
+
+img {
+    width: 300px;
+}
+
+.the-central-part {
+    margin-right: 10px;
+}
+
+.authorization {
+    margin-bottom: 18px;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: #410ae8;
+    }
