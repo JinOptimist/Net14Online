@@ -1,17 +1,14 @@
-﻿@using Net14Web.Models.LifeScore
-@model LifeScoreViewModel
-
-
-@section Style
+﻿@section Style
 {
     <link href="~/css/LifeScore/lifeScore.css" rel="stylesheet" />
     <link href="~/css/LifeScore/header.css" rel="stylesheet" />
-    <link href="~/css/LifeScore/body.css" rel="stylesheet"/>
+    <link href="~/css/LifeScore/body.css" rel="stylesheet" />
+    <link href="~/css/LifeScore/teams-table.css" rel="stylesheet" />
 }
 
 <div>
     <div class="header">
-        
+
         <div class="game1">
             <div class="game-head">
                 <div class="team-first-name">
@@ -19,7 +16,7 @@
                 </div>
                 <div class="game-score">
                     2 : 1
-                </div> 
+                </div>
                 <div class="team-second-name">
                     SLT
                 </div>
@@ -41,7 +38,7 @@
                     AVG
                 </div>
                 <div class="game-score">
-                    2 : 1   
+                    2 : 1
                 </div>
                 <div class="team-second-name">
                     SLT
@@ -58,7 +55,6 @@
             </div>
         </div>
         <div class="game3">
-
         </div>
     </div>
 
@@ -85,32 +81,49 @@
             </div>
             <div class="content-table">
                 <div class="table-header">
-                    <div class="table-header-date">
-                        Дата
+                    <div class="table-header-place">
+                        #
                     </div>
-                    <div class="table-header-time">
-                        Время
+                    <div class="table-header-name">
+                        Команда
                     </div>
-                    <div class="table-header-teams">
-                        Команды
+                    <div class="table-header-games">
+                        И
                     </div>
-                    <div class="table-header-score">
-                        Счет
+                    <div class="table-header-wins">
+                        В
+                    </div>
+                    <div class="table-header-defeats">
+                        П
+                    </div>
+                    <div class="table-header-goals">
+                        Г
+                    </div><div class="table-header-points">
+                        О
                     </div>
                 </div>
                 <div class="table-body">
-                    <div class="game">
-                        <div class="game-date">
-                            28.04.2023
+                    <div class="table-body-team">
+                        <div class="table-body-team-place">
+                            1
                         </div>
-                        <div class="game-time">
-                            19.00
+                        <div class="table-body-team-name">
+                            Wolves
                         </div>
-                        <div class="game-teams">
-                            Lions - Wolves
+                        <div class="table-body-team-games">
+                            19
                         </div>
-                        <div class="game-score">
-                            2 : 1
+                        <div class="table-body-team-wins">
+                            11
+                        </div>
+                        <div class="table-body-team-defeats">
+                            8
+                        </div>
+                        <div class="table-body-team-goals">
+                            58 - 25
+                        </div>
+                        <div class="table-body-team-points">
+                            22
                         </div>
                     </div>
                 </div>
@@ -118,6 +131,3 @@
         </div>
     </div>
 </div>
-
-
-

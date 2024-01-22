@@ -1,5 +1,5 @@
 ﻿@using Net14Web.Models.Dnd
-@model List<HeroViewModel>
+@model DndIndexViewModel
 
 @{
     Layout = "_LayoutDnd";
@@ -17,8 +17,12 @@
     <div>
         <a href="/Dnd/AddRandomHero">AddRandomHero</a>
     </div>
+    <div>
+        <a href="/Dnd/ChooseFavoriteWeapon">ChooseFavoriteWeapon</a>
+    </div>
+    
     <div class="heroes">
-        @foreach (var hero in Model)
+        @foreach (var hero in Model.Heroes)
         {
             <div class="hero">
                 <div class="remove-block">
@@ -31,6 +35,9 @@
                         </div>
                         <div class="hero-name">
                             @hero.Name
+                        </div>
+                        <div class="weapon">
+                            Любимое оружие: @hero.FavWeaponName
                         </div>
                     </div>
                     <div class="coin-block">
@@ -52,6 +59,14 @@
                 </div>
                 <div class="inventory-block">
                 </div>
+            </div>
+        }
+    </div>
+    <div class="weapon">
+        @foreach (var weapon in Model.Weapons)
+        {
+            <div>
+                @weapon.Name d: @weapon.Damadge
             </div>
         }
     </div>

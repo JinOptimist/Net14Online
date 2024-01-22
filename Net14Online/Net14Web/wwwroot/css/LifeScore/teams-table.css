@@ -1,0 +1,93 @@
+﻿.table-header {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background-color: #F0F0F0;
+    border-radius: 10px;
+}
+
+.table-header-place {
+    width: 20px;
+    text-align: center;
+}
+
+.table-header-name {
+    width: 300px;
+    text-align: center;
+}
+
+.table-header-games {
+    width: 20px;
+    text-align: center;
+}
+
+.table-header-wins {
+    margin-left: 30px;
+    width: 20px;
+    text-align: center;
+}
+
+.table-header-defeats {
+    margin-left: 30px;
+    width: 20px;
+    text-align: center;
+}
+
+.table-header-goals {
+    margin-left: 30px;
+    width: 60px;
+    text-align: center;
+}
+
+.table-header-points {
+    margin-left: 30px;
+    width: 20px;
+    text-align: center;
+}
+
+.table-body-team {
+    display: flex;
+    margin-top: 15px;
+    background-color: white;
+    border-radius: 10px;
+    justify-content: center;
+}
+
+.table-body-team-place {
+    width: 20px;
+    text-align: center;
+}
+
+.table-body-team-name {
+    width: 300px;
+    text-align: center;
+}
+
+.table-body-team-games {
+    width: 20px;
+    text-align: center;
+}
+
+.table-body-team-wins {
+    margin-left: 30px;
+    width: 20px;
+    text-align: center;
+}
+
+.table-body-team-defeats {
+    margin-left: 30px;
+    width: 20px;
+    text-align: center;
+}
+
+.table-body-team-goals {
+    margin-left: 30px;
+    width: 60px;
+    text-align: center;
+}
+
+.table-body-team-points {
+    margin-left: 30px;
+    width: 20px;
+    text-align: center;
+}
