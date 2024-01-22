@@ -301,7 +301,7 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddCompany(CompanyViewModel companyViewModel, int statusId)
+        public IActionResult AddCompany(CompanyViewModel companyViewModel)
         {
             var company = new Company
             {
@@ -310,7 +310,7 @@ namespace Net14Web.Controllers
                 Email = companyViewModel.Email,
                 Adress = companyViewModel.Adress,
                 PhoneNumber = companyViewModel.PhoneNumber,
-                CompanyStatus = _managmentCompanyDbContext.MemberStatuses.First(x => x.Id == statusId)
+                CompanyStatus = _managmentCompanyDbContext.MemberStatuses.First(x => x.Id == 2)
             };
 
             _managmentCompanyDbContext.Companies.Add(company);
@@ -321,14 +321,14 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProject(ProjectViewModel projectViewModel, int companyId, int statusId)
+        public IActionResult AddProject(ProjectViewModel projectViewModel, int companyId)
         {
             var project = new Project
             {
                 Name = projectViewModel.Name,
                 ShortName = projectViewModel.ShortName,
                 Adress = projectViewModel.Adress,
-                ProjectStatus = _managmentCompanyDbContext.MemberStatuses.First(x => x.Id == statusId),
+                ProjectStatus = _managmentCompanyDbContext.MemberStatuses.First(x => x.Id == 2),
                 Company = _managmentCompanyDbContext.Companies.First(x => x.Id == companyId)
             };
 
@@ -340,7 +340,7 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddExecutor(ExecutorViewModel executorViewModel, int projectId, int permissionId, int statusId)
+        public IActionResult AddExecutor(ExecutorViewModel executorViewModel, int projectId, int permissionId)
         {
             var project = _managmentCompanyDbContext.Projects.First(x => x.Id == projectId);
 
@@ -354,7 +354,7 @@ namespace Net14Web.Controllers
                 Password = executorViewModel.Password,
                 ExpireDate = executorViewModel.ExpireDate,
                 MemberPermission = _managmentCompanyDbContext.MemberPermissions.First(x => x.Id == permissionId),
-                ExecutorStatus = _managmentCompanyDbContext.MemberStatuses.First(x => x.Id == statusId),
+                ExecutorStatus = _managmentCompanyDbContext.MemberStatuses.First(x => x.Id == 2),
             };
 
             executor.Projects?.Add(project);

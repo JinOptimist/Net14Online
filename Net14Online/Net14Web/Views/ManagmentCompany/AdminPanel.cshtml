@@ -24,7 +24,7 @@
             <a href="/ManagmentCompany/Index">На главную</a>
             <a href="/ManagmentCompany/About">О нас</a>
             <a href="/ManagmentCompany/Contacts">Контакты</a>
-            <a href="statistics.html">Статистика</a>
+            @* <a href="statistics.html">Статистика</a> *@
             <a class="login" href="/ManagmentCompany/Login">Вход</a>
             <a class="reg" href="/ManagmentCompany/Registration">Регистрация</a>
         </div>
@@ -49,9 +49,6 @@
                 <label for="phoneNumber">Номер телефона:</label>
                 <input type="text" id="phoneNumber" name="phoneNumber" required>
 
-                <label for="status">Статус:</label>
-                @Html.DropDownList("statusId", Model.Statuses)
-
                 <button type="submit">Добавить компанию</button>
             </form>
         </div>
@@ -67,9 +64,6 @@
                 <label for="adress">Адрес:</label>
                 <input type="text" id="adress" name="adress" required>
 
-                <label for="status">Статус:</label>
-                @Html.DropDownList("statusId", Model.Statuses)
-
                 <label for="company">Компания:</label>
                 @Html.DropDownList("companyId", Model.Companies)
 
@@ -77,7 +71,7 @@
             </form>
         </div>
         <div class="add-user">
-            <h2>Добавить пользователя</h2>
+            <h2>Добавить исполнителя</h2>
             <form method="post" action="/ManagmentCompany/AddExecutor">
                 <label for="firstName"> Имя:</label>
                 <input type="text" id="firstName" name="firstName" required>
@@ -102,9 +96,6 @@
 
                 <label for="permission">Уровень доступа:</label>
                 @Html.DropDownList("permissionId", Model.Permissions)
-
-                <label for="status">Статус:</label>
-                @Html.DropDownList("statusId", Model.Statuses)
 
                 <label for="project">Проект:</label>
                 @Html.DropDownList("projectId", Model.Projects)
