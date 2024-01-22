@@ -2,7 +2,7 @@
 
 namespace Net14Web.Models.ManagmentCompany
 {
-    public class UserViewModel : BaseModel
+    public class UserViewModel
     {
         public int Id { get; set; }
 
@@ -12,6 +12,6 @@ namespace Net14Web.Models.ManagmentCompany
 
         public string? Password { get; set; }
 
-        public string? PermissionLevel { get; set; }
+        public string? MemberPermission { get; set; }
     }
 }

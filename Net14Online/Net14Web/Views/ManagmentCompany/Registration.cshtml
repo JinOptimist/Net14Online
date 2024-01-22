@@ -1,4 +1,5 @@
 ﻿@using Net14Web.Models.ManagmentCompany
+@model IndexViewModel
 
 @{
     Layout = "_LayoutManagmentCompany";
@@ -11,10 +12,27 @@
 }
 
 <div class="regContainer">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+        </button>
+        <div class="dropdown-content">
+            @* @foreach (var myPage in Model.Pages)
+            {
+                <a href="/ManagmentCompany/@myPage">@myPage</a>
+            } *@
+            <a href="/ManagmentCompany/Index">На главную</a>
+            <a href="/ManagmentCompany/About">О нас</a>
+            <a href="/ManagmentCompany/Contacts">Контакты</a> 
+            <a href="statistics.html">Статистика</a>
+            <a class="login" href="/ManagmentCompany/Login">Вход</a>
+            <a class="reg" href="/ManagmentCompany/Registration">Регистрация</a>
+        </div>
+    </div>
     <h2>Регистрация</h2>
     <form method="post">
-        <label for="name">Ваше имя:</label>
-        <input type="text" id="name" name="name" required>
+        <label for="name">Ваша почта:</label>
+        <input type="text" id="email" name="email" required>
 
         <label for="nickName">Ваш ник на сайте (будет виден другим пользвоателям):</label>
         <input type="text" id="nickName" name="nickName" required>

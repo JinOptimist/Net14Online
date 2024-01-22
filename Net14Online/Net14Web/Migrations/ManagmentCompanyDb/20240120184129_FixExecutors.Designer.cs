@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Net14Web.DbStuff;
 
@@ -11,9 +12,11 @@ using Net14Web.DbStuff;
 namespace Net14Web.Migrations.ManagmentCompanyDb
 {
     [DbContext(typeof(ManagmentCompanyDbContext))]
-    partial class ManagmentCompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240120184129_FixExecutors")]
+    partial class FixExecutors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ExecutorProject", b =>
-                {
-                    b.Property<int>("ExecutorsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ExecutorsId", "ProjectsId");
-
-                    b.HasIndex("ProjectsId");
-
-                    b.ToTable("ExecutorProject");
-                });
 
             modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Company", b =>
                 {
@@ -47,9 +35,6 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
 
                     b.Property<string>("Adress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CompanyStatusId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -68,8 +53,6 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompanyStatusId");
 
                     b.ToTable("Companies");
                 });
@@ -86,23 +69,11 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ExecutorStatusId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ExpireDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("Guid")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("MemberPermissionId")
-                        .HasColumnType("int");
 
                     b.Property<string>("NickName")
                         .IsRequired()
@@ -115,53 +86,16 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserPermission")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
-
-                    b.HasIndex("ExecutorStatusId");
-
-                    b.HasIndex("MemberPermissionId");
 
                     b.ToTable("Executors");
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.MemberPermission", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("Guid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Permission")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MemberPermissions");
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("Guid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MemberStatuses");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Project", b =>
@@ -178,15 +112,15 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                     b.Property<int?>("CompanyId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ExecutorId")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ProjectStatusId")
-                        .HasColumnType("int");
 
                     b.Property<string>("ShortName")
                         .HasColumnType("nvarchar(max)");
@@ -195,7 +129,7 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("ProjectStatusId");
+                    b.HasIndex("ExecutorId");
 
                     b.ToTable("Projects");
                 });
@@ -221,9 +155,6 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MemberPermissionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("NickName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -235,25 +166,30 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserStatusId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserPermission")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MemberPermissionId");
-
-                    b.HasIndex("UserStatusId");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.UserTask", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
                     b.Property<int?>("AuthorId")
                         .HasColumnType("int");
@@ -280,8 +216,8 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("StatusId")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -289,68 +225,7 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("ExecutorId");
 
-                    b.HasIndex("StatusId");
-
                     b.ToTable("UserTasks");
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.UserTaskStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("Guid")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TaskStatuses");
-                });
-
-            modelBuilder.Entity("ExecutorProject", b =>
-                {
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.Executor", null)
-                        .WithMany()
-                        .HasForeignKey("ExecutorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.Project", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Company", b =>
-                {
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", "CompanyStatus")
-                        .WithMany("Companies")
-                        .HasForeignKey("CompanyStatusId");
-
-                    b.Navigation("CompanyStatus");
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Executor", b =>
-                {
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", "ExecutorStatus")
-                        .WithMany("Executors")
-                        .HasForeignKey("ExecutorStatusId");
-
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberPermission", "MemberPermission")
-                        .WithMany("Executors")
-                        .HasForeignKey("MemberPermissionId");
-
-                    b.Navigation("ExecutorStatus");
-
-                    b.Navigation("MemberPermission");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Project", b =>
@@ -359,28 +234,18 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                         .WithMany("Projects")
                         .HasForeignKey("CompanyId");
 
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", "ProjectStatus")
+                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.Executor", null)
                         .WithMany("Projects")
-                        .HasForeignKey("ProjectStatusId");
+                        .HasForeignKey("ExecutorId");
 
                     b.Navigation("Company");
-
-                    b.Navigation("ProjectStatus");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.User", b =>
                 {
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberPermission", "MemberPermission")
+                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.Project", null)
                         .WithMany("Users")
-                        .HasForeignKey("MemberPermissionId");
-
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", "UserStatus")
-                        .WithMany("Users")
-                        .HasForeignKey("UserStatusId");
-
-                    b.Navigation("MemberPermission");
-
-                    b.Navigation("UserStatus");
+                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.UserTask", b =>
@@ -393,15 +258,9 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                         .WithMany("ExecutorTasks")
                         .HasForeignKey("ExecutorId");
 
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.UserTaskStatus", "Status")
-                        .WithMany("UserTasks")
-                        .HasForeignKey("StatusId");
-
                     b.Navigation("Author");
 
                     b.Navigation("Executor");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Company", b =>
@@ -412,32 +271,16 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
             modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Executor", b =>
                 {
                     b.Navigation("ExecutorTasks");
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.MemberPermission", b =>
-                {
-                    b.Navigation("Executors");
-
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", b =>
-                {
-                    b.Navigation("Companies");
-
-                    b.Navigation("Executors");
 
                     b.Navigation("Projects");
+                });
 
+            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Project", b =>
+                {
                     b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.User", b =>
-                {
-                    b.Navigation("UserTasks");
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.UserTaskStatus", b =>
                 {
                     b.Navigation("UserTasks");
                 });
