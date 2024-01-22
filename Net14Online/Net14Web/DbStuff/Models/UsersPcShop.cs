@@ -1,12 +1,10 @@
-﻿namespace Net14Web.Models.PcShop
+﻿namespace Net14Web.DbStuff.Models
 {
-    public class AddUserViewModel
+    public class UsersPcShop : BaseModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-
     }
 }

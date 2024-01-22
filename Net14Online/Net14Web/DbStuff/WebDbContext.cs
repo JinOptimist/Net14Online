@@ -9,6 +9,7 @@ namespace Net14Web.DbStuff
         public DbSet<Hero> Heroes { get; set; }
 
         public DbSet<Weapon> Weapons { get; set; }
+        public DbSet<UsersPcShop> UserPcShop { get; set; }
 
         public DbSet<Game> Games { get; set; }
         public DbSet<User> Users { get; set; }
@@ -31,6 +32,14 @@ namespace Net14Web.DbStuff
             builder.Entity<Hero>()
                 .HasMany(hero => hero.KnowedWeapons)
                 .WithMany(weapon => weapon.HeroesWhoKnowsTheWeapon);
+
+            builder.Entity<User>()
+                .HasMany(user => user.Comments)
+                .WithOne(comment => comment.User);
+
+            builder.Entity<Movie>()
+                .HasMany(movie => movie.Comments)
+                .WithOne(comment => comment.Movie);
         }
     }
 }

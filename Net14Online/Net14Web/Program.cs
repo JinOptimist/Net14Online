@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=Net14Web; Integrated Security=True";
+var connectionString = builder.Configuration.GetConnectionString("Net14WebDb");
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
 //builder.Services.AddScoped<WebDbContext>();
 
