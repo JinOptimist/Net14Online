@@ -40,13 +40,16 @@ input {
     box-sizing: border-box;
 }
 
+button {
+    margin: 10px;
+}
+
 .button {
     background-color: #4caf50;
     color: white;
     padding: 10px 15px;
     border: none;
     cursor: pointer;
-    margin: 10px;
 }
 
     .button:hover {
