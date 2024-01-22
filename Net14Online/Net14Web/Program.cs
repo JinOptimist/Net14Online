@@ -13,7 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("Net14WebDb");
+var connStringManagmentCompany = builder.Configuration.GetConnectionString("ManagmentCompany");
+
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
+
+builder.Services.AddDbContext<ManagmentCompanyDbContext>(x => x.UseSqlServer(connStringManagmentCompany));
+
 //builder.Services.AddScoped<WebDbContext>();
 
 builder.Services.AddScoped<HeroBuilder>(diContainer =>

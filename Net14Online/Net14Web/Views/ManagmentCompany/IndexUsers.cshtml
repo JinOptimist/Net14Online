@@ -31,14 +31,14 @@
                 <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
             </button>
             <div class="dropdown-content">
-                
+
                 @* @foreach (var myPage in Model.Pages)
                 {
-                    <a href="/ManagmentCompany/@myPage">@myPage</a>
+                <a href="/ManagmentCompany/@myPage">@myPage</a>
                 } *@
                 <a href="/ManagmentCompany/Index">На главную</a>
                 <a href="/ManagmentCompany/About">О нас</a>
-                <a href="/ManagmentCompany/Contacts">Контакты</a> 
+                <a href="/ManagmentCompany/Contacts">Контакты</a>
                 @* <a href="statistics.html">Статистика</a> *@
                 <a class="login" href="/ManagmentCompany/Login">Вход</a>
                 <a class="reg" href="/ManagmentCompany/Registration">Регистрация</a>
@@ -61,7 +61,7 @@
                 {
                     <li>
                         <div>
-                            <span>@user.NickName | @user.MemberPermission.</span>
+                            <span>@user.NickName | @user.MemberPermission</span>
 
                             <form action="/ManagmentCompany/UpdateUser" class="update-form" method="post">
                                 <input type="hidden" name="id" value="@user.Id" />
