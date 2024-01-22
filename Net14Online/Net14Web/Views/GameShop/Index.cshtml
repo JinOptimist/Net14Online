@@ -6,7 +6,7 @@
 }
 
 @section Style
-    {
+{
     <link href="~/css/games.css" rel="stylesheet" />
 }
 
@@ -18,19 +18,44 @@
     @foreach (var game in Model)
     {
         <div class="game">
+            <div class="delete-button">
+                <a href="/gameShop/delete?id=@game.Id" class="remove-link">X</a>
+            </div>
+
             <div>
                 <img src="@game.PosterUrl" />
             </div>
 
             <div class="game-footer">
-                <div>
-                    @game.Name
+                <div class="name-block">
+                    <div>
+                        @game.Name
+                    </div>
+                    <div class="upgrade-name">
+                        <form action="/gameShop/upgrade" method="post">
+                            <input type="hidden" name="gameModel.Id" value="@game.Id" />
+                            <input type="hidden" name="gameModel.LogoUrl" value="@game.PosterUrl" />
+                            <input type="hidden" name="gameModel.Raiting" value="@game.Rating" />
+                            <input type="hidden" name="gameModel.Genre" value="@game.Genre" />
+                            <div>
+                                <input type="text" name="gameModel.Name" />
+                            </div>
+                            <div>
+                                <input type="submit" value="Upd" />
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
+                <div class="raiting-block">
                 <div>
                     @game.Rating
                 </div>
+                </div>
+                <div class="genre-block">
                 <div>
                     @game.Genre
+                </div>
                 </div>
             </div>
         </div>

@@ -1,14 +1,18 @@
-using Net14Web.Services;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
+using Net14Web.Services;
+using Net14Web.Services.DndServices;
+using Net14Web.Services.GameShop;
+using Net14Web.Services.Movies;
 using Net14Web.Services.RealEstate;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=Net14Web; Integrated Security=True";
+var connectionString = builder.Configuration.GetConnectionString("Net14WebDb");
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
 //builder.Services.AddScoped<WebDbContext>();
 
@@ -22,10 +26,19 @@ builder.Services.AddScoped<HeroBuilder>(diContainer =>
 builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
+builder.Services.AddScoped<IGameShopRepository, GameShopRepository>();
+builder.Services.AddScoped<CommentBuilder>();
+builder.Services.AddScoped<ErrorBuilder>();
+builder.Services.AddScoped<MovieBuilder>();
+builder.Services.AddScoped<Net14Web.Services.Movies.UserBuilder>();
+builder.Services.AddScoped<UserEditHelper>();
+builder.Services.AddScoped<MovieEditHelper>();
+builder.Services.AddScoped<LoginHelper>();
+
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<IdBuilder>();
 builder.Services.AddScoped<UpdateUser>();
-builder.Services.AddScoped<UserBuilder>();
+builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
