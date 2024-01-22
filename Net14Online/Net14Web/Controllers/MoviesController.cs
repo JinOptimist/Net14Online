@@ -21,6 +21,7 @@ namespace Net14Web.Controllers
         private WebDbContext _webDbContext;
 
         private static int activeUserId = -1;
+        private const int COUNT_MOVIES_ON_INDEX = 10;
 
         public MoviesController(MovieBuilder movieBuilder, ErrorBuilder errorBuilder, UserBuilder userBuilder, CommentBuilder commentBuilder, 
             LoginHelper loginHelper, MovieEditHelper movieEditHelper, UserEditHelper userEditHelper,
@@ -34,13 +35,17 @@ namespace Net14Web.Controllers
             _movieEditHelper = movieEditHelper;
             _userEditHelper = userEditHelper;
             _webDbContext = webDbContext;
-            AdminPanelViewModel.Movies = _movieBuilder.RebuildMoviesToMoviesViewModel(_webDbContext.Movies.ToList());
-            AdminPanelViewModel.Users = _userBuilder.RebuildUsersToUrsesViewModel(_webDbContext.Users.ToList());
+            AdminPanelViewModel.Movies = _webDbContext.Movies.
+                Select(m => _movieBuilder.RebuildMovieToMovieViewModel(m)).ToList();
+            AdminPanelViewModel.Users = _webDbContext.Users.
+                Select(u => userBuilder.RebuildUserToUserView(u)).ToList();
         }
 
         public IActionResult Index()
         {
-            var movies = _movieBuilder.RebuildMoviesToMoviesViewModel(_webDbContext.Movies.ToList());
+            var movies = _webDbContext.Movies
+                .Take(COUNT_MOVIES_ON_INDEX)
+                .Select(m => _movieBuilder.RebuildMovieToMovieViewModel(m)).ToList();
             return View(movies);
         }
 
@@ -103,7 +108,9 @@ namespace Net14Web.Controllers
         [HttpGet]
         public new IActionResult User(int userId)
         {
-            var user = _webDbContext.Users.FirstOrDefault(u => u.Id == userId);
+            var user = _webDbContext.Users
+                .Include(u => u.Comments)
+                .FirstOrDefault(u => u.Id == userId);
             if (user != null)
             {
                 var userView = _userBuilder.RebuildUserToUserView(user);
@@ -115,7 +122,9 @@ namespace Net14Web.Controllers
         [HttpGet]
         public IActionResult Movie(int movieId)
         {
-            var movie = _webDbContext.Movies.FirstOrDefault(movie => movie.Id == movieId);
+            var movie = _webDbContext.Movies
+                .Include(m => m.Comments)
+                .FirstOrDefault(movie => movie.Id == movieId);
             if (movie != null)
             {
                 var movieView = _movieBuilder.RebuildMovieToMovieViewModel(movie);
@@ -131,44 +140,21 @@ namespace Net14Web.Controllers
             {
                 return RedirectToAction("Movie", RedirectMovieById(movieId));
             }
-
-            /*var movie = _webDbContext.Movies.FirstOrDefault(movie => movie.Id == movieId);
-            if (movie != null)
-            {
-                var timeOfWriting = DateTime.Now;
-                var user = Users[activeUserId];
-                var movieComment = _commentBuilder.BuildCommentToMovie(timeOfWriting, description, user);
-                var userComment = _commentBuilder.BuildCommentToUser(timeOfWriting, description, movie);
-                movie.Comments.Add(movieComment);
-                user.Comments.Add(userComment);
-            }*/
+            var timeOfWriting = DateTime.Now;
+            var movie = _webDbContext.Movies.First(movie => movie.Id == movieId);
+            var user = _webDbContext.Users.First(u => u.Id == activeUserId);
+            var comment = _commentBuilder.BuildComment(timeOfWriting, description, user, movie);
+            _webDbContext.Comments.Add(comment);
+            _webDbContext.SaveChanges();
             return RedirectToAction("Movie", RedirectMovieById(movieId));
         }
 
-        [HttpPost]
-        public IActionResult EditComment(int movieId, DateTime timeOfWriting, int userId, string description)
+        public IActionResult RemoveCommentOnMovie(int commentId)
         {
-            var movie = _webDbContext.Movies.First(movie => movie.Id == movieId);
-           /* movie.Comments.First(comment =>
-                comment.TimeOfWriting == timeOfWriting && comment.User.Id == userId).Description = description;
-*/
-            return RedirectToAction("Movie", RedirectMovieById(movie.Id));
-        }
-
-        public IActionResult RemoveCommentOnMovie(int movieId, DateTime timeOfWriting, int userId)
-        {
-            var movie = _webDbContext.Movies.First(movie => movie.Id == movieId);
-
-            /*var comment = movie.Comments.FirstOrDefault((comment) =>
-                comment.TimeOfWriting == timeOfWriting && comment.User.Id == userId);
-            if (comment != null)
-            {
-                movie.Comments.Remove(comment);
-                var user = Users.First(u => u.Id == userId);
-                var userComment = user.Comments.First(c => c.TimeOfWritng == timeOfWriting);
-                user.Comments.Remove(userComment);
-            }
-*/
+            var comment = _webDbContext.Comments.First(comment => comment.Id == commentId);
+            var movieId = comment.Movie.Id;
+            _webDbContext.Remove(comment);
+            _webDbContext.SaveChanges();
             return RedirectToAction("Movie", RedirectMovieById(movieId));
         }
 

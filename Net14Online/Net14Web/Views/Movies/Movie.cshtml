@@ -42,18 +42,18 @@
                                             @foreach (var comment in @Model.Comments)
                                             {
                                                 <div>
-                                                    <a class="comment-a rounded" href="/movies/user?userId=@comment.User.Id">
+                                                    <a class="comment-a rounded" href="/movies/user?userId=@comment.User.UserId">
                                                         <div class="row">
                                                             <div class="col-md-2">
                                                                 <img src="@comment.User.AvatarUrl" class="rounded comment-image">
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <div class="card-body">
-                                                                    <p class="h5">@comment.User.Login</p>
+                                                                    <p class="h5">@comment.User.Username</p>
                                                                     <p class="card-text">
                                                                         @comment.Description
                                                                     </p>
-                                                                    <a class="btn btn-link" href="/movies/RemoveCommentOnMovie?movieId=@Model.Id&timeOfWriting=@comment.TimeOfWriting.ToString()&userId=@comment.User.Id">Удалить</a>
+                                                                    <a class="btn btn-link" href="/movies/RemoveCommentOnMovie?commentId=@comment.Id">Удалить</a>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-2">

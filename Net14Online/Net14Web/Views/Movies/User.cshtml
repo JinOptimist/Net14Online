@@ -44,7 +44,7 @@
                         @foreach (var comment in @Model.Comments)
                         {
                             <div class="card comment-card-in-profile">
-                                <a class="comment-a rounded" href="/movies/movie?movieId=@comment.Movie.Id">
+                                <a class="comment-a rounded" href="/movies/movie?movieId=@comment.Movie.MovieId">
                                     <div class="row">
                                         <div class="col-md-2">
                                             <img src="@comment.Movie.PosterUrl" class="rounded movie-image">
