@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Net14Web.DbStuff;
+using Net14Web.DbStuff.Models;
 using Net14Web.Models.RealEstate;
 using Net14Web.Services.RealEstate;
 
@@ -9,14 +11,16 @@ public class RealEstateController : Controller
     public readonly UserBuilder _userBuilder;
     public readonly DeleteUser _deleteUser;
     public readonly UpdateUser _updateUser;
+    private MyWebDbContext _myWebDbContext;
         
     public static List<UserViewModel> userViewModels = new();
 
-    public RealEstateController(UserBuilder userBuilder,DeleteUser deleteUser,UpdateUser updateUser)
+    public RealEstateController(UserBuilder userBuilder,DeleteUser deleteUser,UpdateUser updateUser,MyWebDbContext myWebDbContext)
     {
         _userBuilder = userBuilder;
         _deleteUser = deleteUser;
         _updateUser = updateUser;
+        _myWebDbContext = myWebDbContext;
     }
     public IActionResult Main()
     {
@@ -25,7 +29,18 @@ public class RealEstateController : Controller
     
     public IActionResult DataBase()
     {
-        return View(userViewModels);
+        var dbUsers = _myWebDbContext.Users.Take(10).ToList();
+
+        var viewModels = dbUsers
+            .Select(dbUser => new UserViewModel()
+            {
+                Age = dbUser.Age,
+                Name = dbUser.Name,
+                KindOfActivity = dbUser.KindOfActivity,
+            })
+            .ToList();
+
+        return View(viewModels);
     }
     
     [HttpGet]
@@ -40,34 +55,36 @@ public class RealEstateController : Controller
     }
 
     [HttpGet]
-    public IActionResult Update(string id)
+    public IActionResult Update(int id)
     {
-        var user = userViewModels.First(x => x.Id == id);
+        var user = _myWebDbContext.Users.First(x => x.Id == id);
         return View(user);
     }
     
     [HttpPost]
-    public IActionResult Update(string id,string kindOfActivity,int age,string name)
+    public IActionResult Update(int id,string kindOfActivity,int age,string name)
     {
-       
-       _updateUser.Update(userViewModels, id, name, age,kindOfActivity);
+        _updateUser.Update(_myWebDbContext.Users, id, name, age,kindOfActivity);
         return RedirectToAction("DataBase");
     }
 
-    public IActionResult Delete(string id)
+    public IActionResult Delete(int id)
     {
-        var user = _deleteUser.UserDelete(userViewModels, id);
-        userViewModels.Remove(user);
+        var user = _deleteUser.UserDelete(_myWebDbContext.Users,id);
+        _myWebDbContext.Users.Remove(user);
         
         return RedirectToAction("DataBase");
     }
     
     
     [HttpPost]
-    public IActionResult AddUser(AddUserViewModel userViewModel)
+    public IActionResult AddUser(User user)
     {
-        var newUser = _userBuilder.BuilderUser(userViewModel);
-        userViewModels.Add(newUser);
+        var newUser = _userBuilder.BuilderUser(user);
+
+        _myWebDbContext.Users.Add(newUser);
+
+        _myWebDbContext.SaveChanges();
 
         return RedirectToAction("DataBase");
     }

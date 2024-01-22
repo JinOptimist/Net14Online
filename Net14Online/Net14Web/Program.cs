@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Builder;
 using Net14Web.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Net14Web.DbStuff;
 using Net14Web.Services.RealEstate;
 
@@ -10,7 +13,12 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=Net14Web; Integrated Security=True";
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
-//builder.Services.AddScoped<WebDbContext>();
+builder.Services.AddScoped<WebDbContext>();
+
+var myConnectionString = "Server=localhost; Database=Net14WebRE; Integrated Security=True";
+builder.Services.AddDbContext<MyWebDbContext>(x => x.UseSqlServer(myConnectionString));
+builder.Services.AddScoped<MyWebDbContext>();
+
 
 builder.Services.AddScoped<HeroBuilder>(diContainer =>
 {

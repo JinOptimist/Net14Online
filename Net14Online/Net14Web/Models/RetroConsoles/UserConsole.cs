@@ -2,6 +2,7 @@
 {
     public class UserConsole
     {
+        public int Id { get; set; }
         public string PicUrl { get; set; }
         public string Name { get; set; }
         public int NumOfConsoles {get;set;}
