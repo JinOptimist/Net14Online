@@ -9,6 +9,12 @@ namespace Net14Web.Controllers
     {
         public static List<AddUserViewModel> UsersViewModels = new List<AddUserViewModel>();
         private WebDbContext _webDbContext;
+
+        public PcShopController(WebDbContext webDbContext)
+        {
+            _webDbContext = webDbContext;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -16,30 +22,39 @@ namespace Net14Web.Controllers
 
         public ActionResult Users()
         {
-            var users = new List<UserViewModel>();
+            var dbUserPcShop = _webDbContext.UserPcShop.Take(10).ToList();
 
-            users = UsersViewModels.ConvertAll(
-            new Converter<AddUserViewModel, UserViewModel>(UsersViewModelsToUserViewModel));
+            var viewModels = dbUserPcShop
+                .Select(dbUserPcShop => new UserViewModel
+                {
+                    Id = dbUserPcShop.Id,
+                    Name = dbUserPcShop.Name,
+                    Login = dbUserPcShop.Login,
+                })
+                .ToList();
 
-            return View(users);
+            return View(viewModels);
         }
-        private UserViewModel UsersViewModelsToUserViewModel(AddUserViewModel pf)
-        {
-            var viewmodel = new UserViewModel();
-            viewmodel.Login = pf.Login;
-            viewmodel.Name = pf.Name;
-            return viewmodel;
-        }
+        
         public ActionResult Registration()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Registration(AddUserViewModel UserModel)
+        public ActionResult Registration(AddUserViewModel UserViewModel)
         {
-            UsersViewModels.Add(UserModel);
+            var user = new UsersPcShop
+            {
+                Name = UserViewModel.Name,
+                Login = UserViewModel.Login,
+                Email = UserViewModel.Email,
+                Password = UserViewModel.Password,
+            };
+            _webDbContext.UserPcShop.Add(user);
+            _webDbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
+
         }
         public ActionResult EditUserPassword()
         {
@@ -47,9 +62,11 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditUserPassword(string login, string password)
+        public ActionResult EditUserPassword(int Id, string password)
         {
-            UsersViewModels.First(x => x.Login == login).Password = password;
+            var user = _webDbContext.UserPcShop.First(x => x.Id == Id);
+            user.Password = password;
+            _webDbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
@@ -62,9 +79,11 @@ namespace Net14Web.Controllers
         // POST: PCSHOPController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteUsers(string login)
+        public ActionResult DeleteUsers(int id)
         {
-            UsersViewModels.RemoveAll(user => user.Login == login);
+            var user = _webDbContext.UserPcShop.First(x => x.Id == id);
+            _webDbContext.UserPcShop.Remove(user);
+            _webDbContext.SaveChanges();
             return RedirectToAction(nameof(Users));
             
         }
