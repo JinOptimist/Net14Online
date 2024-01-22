@@ -3,11 +3,11 @@ using Net14Web.DbStuff.Models;
 
 namespace Net14Web.DbStuff;
 
-public class MyWebDbContext : DbContext
+public class WebDbContextRealEstate : DbContext
 {
     protected readonly IConfiguration Configuration;
 
-    public MyWebDbContext(IConfiguration configuration)
+    public WebDbContextRealEstate(IConfiguration configuration)
     {
         Configuration = configuration;
     }

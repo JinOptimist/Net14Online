@@ -11,16 +11,16 @@ public class RealEstateController : Controller
     public readonly UserBuilder _userBuilder;
     public readonly DeleteUser _deleteUser;
     public readonly UpdateUser _updateUser;
-    private MyWebDbContext _myWebDbContext;
+    private WebDbContextRealEstate _webDbContextRealEstate;
         
     public static List<UserViewModel> userViewModels = new();
 
-    public RealEstateController(UserBuilder userBuilder,DeleteUser deleteUser,UpdateUser updateUser,MyWebDbContext myWebDbContext)
+    public RealEstateController(UserBuilder userBuilder,DeleteUser deleteUser,UpdateUser updateUser,WebDbContextRealEstate webDbContextRealEstate)
     {
         _userBuilder = userBuilder;
         _deleteUser = deleteUser;
         _updateUser = updateUser;
-        _myWebDbContext = myWebDbContext;
+        _webDbContextRealEstate = webDbContextRealEstate;
     }
     public IActionResult Main()
     {
@@ -29,7 +29,7 @@ public class RealEstateController : Controller
     
     public IActionResult DataBase()
     {
-        var dbUsers = _myWebDbContext.Users.Take(10).ToList();
+        var dbUsers = _webDbContextRealEstate.Users.Take(10).ToList();
 
         var viewModels = dbUsers
             .Select(dbUser => new UserViewModel()
@@ -57,21 +57,21 @@ public class RealEstateController : Controller
     [HttpGet]
     public IActionResult Update(int id)
     {
-        var user = _myWebDbContext.Users.First(x => x.Id == id);
+        var user = _webDbContextRealEstate.Users.First(x => x.Id == id);
         return View(user);
     }
     
     [HttpPost]
     public IActionResult Update(int id,string kindOfActivity,int age,string name)
     {
-        _updateUser.Update(_myWebDbContext.Users, id, name, age,kindOfActivity);
+        _updateUser.Update(_webDbContextRealEstate.Users, id, name, age,kindOfActivity);
         return RedirectToAction("DataBase");
     }
 
     public IActionResult Delete(int id)
     {
-        var user = _deleteUser.UserDelete(_myWebDbContext.Users,id);
-        _myWebDbContext.Users.Remove(user);
+        var user = _deleteUser.UserDelete(_webDbContextRealEstate.Users,id);
+        _webDbContextRealEstate.Users.Remove(user);
         
         return RedirectToAction("DataBase");
     }
@@ -82,9 +82,9 @@ public class RealEstateController : Controller
     {
         var newUser = _userBuilder.BuilderUser(user);
 
-        _myWebDbContext.Users.Add(newUser);
+        _webDbContextRealEstate.Users.Add(newUser);
 
-        _myWebDbContext.SaveChanges();
+        _webDbContextRealEstate.SaveChanges();
 
         return RedirectToAction("DataBase");
     }

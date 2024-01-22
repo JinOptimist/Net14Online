@@ -15,9 +15,9 @@ var connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=Net14Web; Integ
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
 builder.Services.AddScoped<WebDbContext>();
 
-var myConnectionString = "Server=localhost; Database=Net14WebRE; Integrated Security=True";
-builder.Services.AddDbContext<MyWebDbContext>(x => x.UseSqlServer(myConnectionString));
-builder.Services.AddScoped<MyWebDbContext>();
+var ConnectionStringRealEsate = "Server=localhost; Database=Net14WebRE; Integrated Security=True";
+builder.Services.AddDbContext<WebDbContextRealEstate>(x => x.UseSqlServer(ConnectionStringRealEsate));
+builder.Services.AddScoped<WebDbContextRealEstate>();
 
 
 builder.Services.AddScoped<HeroBuilder>(diContainer =>
