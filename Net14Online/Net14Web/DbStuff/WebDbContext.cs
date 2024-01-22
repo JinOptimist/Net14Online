@@ -14,7 +14,8 @@ namespace Net14Web.DbStuff
         public DbSet<Game> Games { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Movie> Movies { get; set; }
-        public DbSet<ScadaDataViewModel> ScadaDataViewModels { get; set; }
+        public DbSet<ScadaData> ScadaDataViewModels { get; set; }
+        //public DbSet<SimaticController> SimaticControllers { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
         public WebDbContext(DbContextOptions options) : base(options) { }
@@ -32,6 +33,12 @@ namespace Net14Web.DbStuff
             builder.Entity<Hero>()
                 .HasMany(hero => hero.KnowedWeapons)
                 .WithMany(weapon => weapon.HeroesWhoKnowsTheWeapon);
+
+            builder
+                .Entity<ScadaData>()
+                .HasOne(ScadaDataViewModel => ScadaDataViewModel.UsedController)
+                .WithMany(UsedController => UsedController.ScadaData)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

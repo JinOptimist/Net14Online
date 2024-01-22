@@ -1,6 +1,6 @@
 ﻿@using Net14Web.DbStuff.Models.WebScada;
     
-@model List<ScadaDataViewModel>
+@model List<ScadaData>
 
 @{
     Layout = "_LayoutWebScada";
@@ -52,12 +52,15 @@
                         <li>Счетчик : <input type="text" name="Cointer" value="@Data.Cointer"></li>
                         <li>Обрыв : @Data.WireBreak</li>
                         <li>Замена волок : @Data.RollingDiesChange</li>
-
+                        <li>Контроллер : @Data.UsedController?.IpAdress</li>
                         <li>
                             <button type="submit" class="btn btn-warning">Изменить</button>
 
                             <a href="/WebScada/RemoveData?Id=@Data.Id" class="remove-link btn btn-danger">
                                 Удалить
+                            </a>
+                            <a href="/WebScada/ChangeController?Id=@Data.Id" class="remove-link btn btn-danger">
+                                Сменить контроллер
                             </a>
                         </li>
                     </ul>

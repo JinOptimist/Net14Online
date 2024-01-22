@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.WebScada;
 using Net14Web.Models.Dnd;
@@ -23,6 +25,7 @@ namespace Net14Web.Controllers
             var dbWebScada = _webDbContext
                 .ScadaDataViewModels
                 .Take(10)
+                .Include(x => x.UsedController)
                 .ToList();
 
             return View(dbWebScada);
@@ -30,7 +33,7 @@ namespace Net14Web.Controllers
 
         public IActionResult AddData(AddScadaDataViewModel AddScadaDataViewModel)
         {
-            var newData = new ScadaDataViewModel
+            var newData = new ScadaData
             {
                 Status = AddScadaDataViewModel.Status,
                 Cointer = AddScadaDataViewModel.Cointer,
@@ -66,5 +69,19 @@ namespace Net14Web.Controllers
 
             return RedirectToAction("Index");
         }
+
+        //[HttpGet]
+        //public IActionResult ChangeController()
+        //{
+        //    var dbWebScadaControllers = _webDbContext
+        //        .SimaticControllers
+        //        .Take(10)
+        //        .Select(x => new SelectListItem(x.IpAdress, x.Id.ToString()))
+        //        .ToList();
+
+
+
+        //    return View(dbWebScadaControllers);
+        //}
     }
 }
