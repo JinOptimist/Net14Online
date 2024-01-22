@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models;
 using Net14Web.Models.Dnd;
-using Net14Web.Services;
+using Net14Web.Services.DndServices;
 using System.Xml.Linq;
 
 namespace Net14Web.Controllers
@@ -99,6 +99,28 @@ namespace Net14Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult AddHero(AddHeroViewModel heroViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(heroViewModel);
+            }
+
+            var hero = new Hero
+            {
+                Name = heroViewModel.Name,
+                Birthday = DateTime.Now,
+                Coins = heroViewModel.Coin ?? default
+            };
+
+            _webDbContext.Heroes.Add(hero);
+
+            _webDbContext.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
         public IActionResult ChooseFavoriteWeapon()
         {
@@ -123,23 +145,6 @@ namespace Net14Web.Controllers
             var hero = _webDbContext.Heroes.First(x => x.Id == heroId);
             var weapon = _webDbContext.Weapons.First(x => x.Id == weaponId);
             hero.FavoriteWeapon = weapon;
-            _webDbContext.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public IActionResult AddHero(AddHeroViewModel heroViewModel)
-        {
-            var hero = new Hero
-            {
-                Name = heroViewModel.Name,
-                Birthday = DateTime.Now,
-                Coins = heroViewModel.Coin
-            };
-
-            _webDbContext.Heroes.Add(hero);
-
             _webDbContext.SaveChanges();
 
             return RedirectToAction("Index");
