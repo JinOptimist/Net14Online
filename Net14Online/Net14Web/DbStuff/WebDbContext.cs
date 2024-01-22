@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Models.Movies;
+using Net14Web.DbStuff.Models.WebScada;
 
 namespace Net14Web.DbStuff
 {
@@ -13,6 +14,7 @@ namespace Net14Web.DbStuff
         public DbSet<Game> Games { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<ScadaDataViewModel> ScadaDataViewModels { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
         public WebDbContext(DbContextOptions options) : base(options) { }
