@@ -304,6 +304,23 @@ namespace Net14Web.Migrations
                 {
                     b.Navigation("HeroesWhoLikeTheWeapon");
                 });
+            modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+                b.Property<int>("Priority")
+                    .HasColumnType("int");
+                b.HasKey("Id");
+                b.ToTable("TaskInfos");
+            });
 #pragma warning restore 612, 618
         }
     }
