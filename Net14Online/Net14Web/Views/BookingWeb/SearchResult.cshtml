@@ -11,14 +11,14 @@
 
 @foreach (var user in Model)
 {
-    <a href="RemoveSearch?country=@user.Country">Remove</a>
+    <a href="RemoveSearch?id=@user.Id">Remove</a>
     <div>
         Country: @user.Country
     </div>
     <div>
         City: @user.City
         <form action="UpdateCity" method="post">
-            <input type="hidden" name="country" value="@user.Country" />
+            <input type="hidden" name="Id" value="@user.Id" />
             <input name="city" />
             <input type="submit" value="Update" />
         </form>
