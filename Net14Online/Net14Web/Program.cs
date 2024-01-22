@@ -13,11 +13,11 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=Net14Web; Integrated Security=True";
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
-builder.Services.AddScoped<WebDbContext>();
+//builder.Services.AddScoped<WebDbContext>();
 
 var ConnectionStringRealEsate = "Server=localhost; Database=Net14WebRE; Integrated Security=True";
 builder.Services.AddDbContext<WebDbContextRealEstate>(x => x.UseSqlServer(ConnectionStringRealEsate));
-builder.Services.AddScoped<WebDbContextRealEstate>();
+
 
 
 builder.Services.AddScoped<HeroBuilder>(diContainer =>
