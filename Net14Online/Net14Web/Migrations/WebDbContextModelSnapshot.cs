@@ -63,6 +63,33 @@ namespace Net14Web.Migrations
                     b.ToTable("Games");
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Checkin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Checkout")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Searches");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.Hero", b =>
                 {
                     b.Property<int>("Id")

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Models.Movies;
+using Net14Web.DbStuff.Models.BookingWeb;
 
 namespace Net14Web.DbStuff
 {
@@ -10,6 +11,7 @@ namespace Net14Web.DbStuff
 
         public DbSet<Weapon> Weapons { get; set; }
         public DbSet<UsersPcShop> UserPcShop { get; set; }
+        public DbSet<Search> Searches { get; set; }
 
         public DbSet<Game> Games { get; set; }
         public DbSet<User> Users { get; set; }
