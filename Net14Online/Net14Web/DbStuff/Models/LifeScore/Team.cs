@@ -5,7 +5,7 @@
         public string Name { get; set; }
         public string Liga { get; set; }
         public string ShortName { get; set; }
-        public int CountryId { get; set; }
+        public string Country { get; set; }
 
         public ICollection<SportGame> NextGames { get; set; } = default!;
         public ICollection<SportGame> LastGames { get; set; } = default!;

@@ -5,6 +5,7 @@ using Net14Web.Services.RealEstate;
 using Net14Web.Services.GameShop;
 using Net14Web.DbStuff.Models;
 using Net14Web.Services.Movies;
+using Net14Web.DbStuff.SeedData;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,12 @@ builder.Services.AddControllersWithViews();
 var connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=Net14Web; Integrated Security=True";
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
 //builder.Services.AddScoped<WebDbContext>();
+
+//using var scope = app.Services.CreateScope();
+//var db = scope.ServiceProvider.GetService<WebDbContext>();
+//await db.Database.MigrateAsync();
+//await LifeScoreSeedData.AddDefaultTeams(db);
+//await LifeScoreSeedData.AddDefaultSportGames(db);
 
 builder.Services.AddScoped<HeroBuilder>(diContainer =>
 {

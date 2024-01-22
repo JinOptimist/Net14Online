@@ -7,6 +7,6 @@
         public int? Team1Goals { get; set; }
         public int? Team2Goals { get; set; }
         public DateTime Date { get; set; }
-        public string? TeamWin { get; set; }
+        public int? TeamIDWin { get; set; }
     }
 }
