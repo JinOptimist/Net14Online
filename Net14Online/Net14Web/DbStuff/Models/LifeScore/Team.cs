@@ -1,0 +1,14 @@
+﻿namespace Net14Web.DbStuff.Models.LifeScore
+{
+    public class Team : BaseModel
+    {
+        public string Name { get; set; }
+        public string Liga { get; set; }
+        public string ShortName { get; set; }
+        public int CountryId { get; set; }
+
+        public ICollection<SportGame> NextGames { get; set; } = default!;
+        public ICollection<SportGame> LastGames { get; set; } = default!;
+        public ICollection<Player> Players { get; set; } = default!;
+    }
+}
