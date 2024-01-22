@@ -18,8 +18,6 @@ public class UserBuilder
             Name = addUser.Name,
             Age = addUser.Age,
             KindOfActivity = addUser.KindOfActivity,
-            Id = addUser.Id
-
         };
         return user;
     }
