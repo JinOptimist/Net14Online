@@ -1,22 +1,37 @@
-﻿using Net14Web.Models.Movies;
+﻿using Net14Web.DbStuff.Models.Movies;
+using Net14Web.Models.Movies;
 
 namespace Net14Web.Services.Movies
 {
     public class MovieBuilder
     {
-        public MovieBuilder()
+        private readonly CommentBuilder _commentBuilder;
+
+        public MovieBuilder(CommentBuilder commentBuilder)
         {
+            _commentBuilder = commentBuilder;
         }
 
-        public MovieViewModel BuildMovie(int id, AddMovieViewModel addMovie)
+        public MovieViewModel RebuildMovieToMovieViewModel(Movie movie)
         {
-            var movie = new MovieViewModel
+            var movieView = new MovieViewModel
             {
-                Id = id,
+                Id = movie.Id,
+                Title = movie.Title,
+                Description = movie.Description,
+                PosterUrl = movie.PosterUrl,
+                Comments = movie.Comments?.Select(c => _commentBuilder.BuildCommentToMovie(c)).ToList() ?? new List<CommentOnMovieViewModel>()
+            };
+            return movieView;
+        }
+
+        public Movie BuildMovie(AddMovieViewModel addMovie)
+        {
+            var movie = new Movie
+            {
                 Title = addMovie.Title,
                 Description = addMovie.Description,
-                PosterUrl = addMovie.PosterUrl,
-                Comments = new()
+                PosterUrl = addMovie.PosterUrl
             };
             return movie;
         }

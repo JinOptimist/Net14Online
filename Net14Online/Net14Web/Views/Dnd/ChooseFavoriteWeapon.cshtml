@@ -1,0 +1,24 @@
+﻿@using Net14Web.Models.Dnd
+@model FavoriteWeaponViewModel
+
+@{
+    Layout = "_LayoutDnd";
+}
+
+@section Style
+{
+    <link href="~/css/dnd.css" rel="stylesheet" />
+    <link href="~/css/dnd2.css" rel="stylesheet" />
+}
+
+<div>
+   <form method="post">
+        <div>
+            @Html.DropDownList("heroId", Model.Heroes)
+        </div>
+        <div>
+            @Html.DropDownList("weaponId", Model.Weapons)
+        </div>
+        <input type="submit" value="Выбрать" />
+   </form>
+</div>

@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
-using Net14Web.Models.Dnd;
+﻿using Net14Web.Models.Dnd;
 
-namespace Net14Web.Services
+namespace Net14Web.Services.DndServices
 {
     public class HeroBuilder
     {

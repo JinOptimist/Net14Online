@@ -22,6 +22,47 @@ namespace Net14Web.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("HeroWeapon", b =>
+                {
+                    b.Property<int>("HeroesWhoKnowsTheWeaponId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("KnowedWeaponsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("HeroesWhoKnowsTheWeaponId", "KnowedWeaponsId");
+
+                    b.HasIndex("KnowedWeaponsId");
+
+                    b.ToTable("HeroWeapon");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Game", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Genre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Raiting")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Games");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.Hero", b =>
                 {
                     b.Property<int>("Id")
@@ -36,6 +77,9 @@ namespace Net14Web.Migrations
                     b.Property<int>("Coins")
                         .HasColumnType("int");
 
+                    b.Property<int?>("FavoriteWeaponId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Hp")
                         .HasColumnType("int");
 
@@ -45,7 +89,114 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FavoriteWeaponId");
+
                     b.ToTable("Heroes");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TimeOfWriting")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Movie", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PosterUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Login")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.UsersPcShop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserPcShop");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Weapon", b =>
@@ -66,6 +217,65 @@ namespace Net14Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Weapons");
+                });
+
+            modelBuilder.Entity("HeroWeapon", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Hero", null)
+                        .WithMany()
+                        .HasForeignKey("HeroesWhoKnowsTheWeaponId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Net14Web.DbStuff.Models.Weapon", null)
+                        .WithMany()
+                        .HasForeignKey("KnowedWeaponsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Hero", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Weapon", "FavoriteWeapon")
+                        .WithMany("HeroesWhoLikeTheWeapon")
+                        .HasForeignKey("FavoriteWeaponId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("FavoriteWeapon");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Comment", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.Movie", "Movie")
+                        .WithMany("Comments")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Movie", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.User", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Weapon", b =>
+                {
+                    b.Navigation("HeroesWhoLikeTheWeapon");
                 });
 #pragma warning restore 612, 618
         }
