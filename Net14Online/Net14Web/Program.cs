@@ -1,10 +1,11 @@
-using Net14Web.Services;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
-using Net14Web.Services.RealEstate;
+using Net14Web.Services;
+using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
-using Net14Web.DbStuff.Models;
 using Net14Web.Services.Movies;
+using Net14Web.Services.RealEstate;
+using Net14Web.Services.Sattelite;
 using Net14Web.DbStuff.SeedData;
 
 
@@ -13,8 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=Net14Web; Integrated Security=True";
+var connectionString = builder.Configuration.GetConnectionString("Net14WebDb");
+var connStringManagmentCompany = builder.Configuration.GetConnectionString("ManagmentCompany");
+
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
+
+builder.Services.AddDbContext<ManagmentCompanyDbContext>(x => x.UseSqlServer(connStringManagmentCompany));
+
 //builder.Services.AddScoped<WebDbContext>();
 
 //using var scope = app.Services.CreateScope();
@@ -41,6 +47,7 @@ builder.Services.AddScoped<Net14Web.Services.Movies.UserBuilder>();
 builder.Services.AddScoped<UserEditHelper>();
 builder.Services.AddScoped<MovieEditHelper>();
 builder.Services.AddScoped<LoginHelper>();
+builder.Services.AddScoped<ObjectBuilder>();
 
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<IdBuilder>();

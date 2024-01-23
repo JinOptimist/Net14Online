@@ -4,5 +4,7 @@
     {
         public string? Description { get; set; }
         public DateTime TimeOfWriting { get; set; }
+        public virtual User User {  get; set; }
+        public virtual Movie Movie { get; set; }
     }
 }

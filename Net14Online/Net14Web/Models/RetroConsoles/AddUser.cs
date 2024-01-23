@@ -7,6 +7,7 @@
         public string Email { get; set; }
         public int NumOfConsoles { get; set; }
         public string Discription { get; set; }
+        public string Password { get; set; }
 
     }
 }

@@ -1,0 +1,110 @@
+﻿@using Net14Web.Models.ManagmentCompany
+@model AdminPanelViewModel
+
+@{
+    Layout = "_LayoutManagmentCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagmentCompany/ManagmentCompany.css" rel="stylesheet" />
+    <link href="~/css/ManagmentCompany/Styles.css" rel="stylesheet" />
+}
+
+<div class="regContainer">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+        </button>
+        <div class="dropdown-content">
+            @* @foreach (var myPage in Model.Pages)
+            {
+            <a href="/ManagmentCompany/@myPage">@myPage</a>
+            } *@
+            <a href="/ManagmentCompany/Index">На главную</a>
+            <a href="/ManagmentCompany/About">О нас</a>
+            <a href="/ManagmentCompany/Contacts">Контакты</a>
+            @* <a href="statistics.html">Статистика</a> *@
+            <a class="login" href="/ManagmentCompany/Login">Вход</a>
+            <a class="reg" href="/ManagmentCompany/Registration">Регистрация</a>
+        </div>
+    </div>
+    <h2>Панель администратора</h2>
+    <div>
+        <div class="add-company">
+            <h2>Добавить компанию</h2>
+            <form method="post" action="/ManagmentCompany/AddCompany">
+                <label for="name"> Название компании:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="shortName">Сокращенное название:</label>
+                <input type="text" id="shortName" name="shortName" required>
+
+                <label for="email">Электронная почта:</label>
+                <input type="text" id="email" name="email" required>
+
+                <label for="adress">Адрес:</label>
+                <input type="text" id="adress" name="adress" required>
+
+                <label for="phoneNumber">Номер телефона:</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" required>
+
+                <button type="submit">Добавить компанию</button>
+            </form>
+        </div>
+        <div class="add-project">
+            <h2>Добавить проект</h2>
+            <form method="post" action="/ManagmentCompany/AddProject">
+                <label for="name"> Название проекта:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="shortName">Сокращенное название:</label>
+                <input type="text" id="shortName" name="shortName" required>
+
+                <label for="adress">Адрес:</label>
+                <input type="text" id="adress" name="adress" required>
+
+                <label for="company">Компания:</label>
+                @Html.DropDownList("companyId", Model.Companies)
+
+                <button type="submit" value="Добавить проект">Добавить проект</button>
+            </form>
+        </div>
+        <div class="add-user">
+            <h2>Добавить исполнителя</h2>
+            <form method="post" action="/ManagmentCompany/AddExecutor">
+                <label for="firstName"> Имя:</label>
+                <input type="text" id="firstName" name="firstName" required>
+
+                <label for="lastName"> Фамилия:</label>
+                <input type="text" id="lastName" name="lastName" required>
+
+                <label for="nickName"> Ник на сайте:</label>
+                <input type="text" id="nickName" name="nickName" required>
+
+                <label for="email">Электронная почта:</label>
+                <input type="text" id="email" name="email" required>
+
+                <label for="password">Пароль для пользователя:</label>
+                <input type="text" id="password" name="password" required>
+
+                <label for="phoneNumber">Номер телефона:</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" required>
+
+                <label for="expireDate">Выберите дату:</label>
+                <input type="date" id="expireDate" name="expireDate">
+
+                <label for="permission">Уровень доступа:</label>
+                @Html.DropDownList("permissionId", Model.Permissions)
+
+                <label for="project">Проект:</label>
+                @Html.DropDownList("projectId", Model.Projects)
+
+                <button type="submit" value="Добавить пользователя">Добавить пользователя</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+

@@ -1,14 +1,14 @@
 .regContainer, .loginContainer {
     font-family: Verdana, sans-serif;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     height: auto;
     margin: 0;
 }
 
 .regContainer, .loginContainer {
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -40,6 +40,10 @@ input {
     box-sizing: border-box;
 }
 
+button {
+    margin: 10px;
+}
+
 .button {
     background-color: #4caf50;
     color: white;
@@ -58,4 +62,23 @@ input {
 
 .update-form, .remove-form {
     display: inline-block;
+}
+
+.add-company, .add-project, .add-user {
+    border: 2px solid #00ff00;
+    border-radius: 10px;
+    padding: 10px;
+    display: inline-block;
+}
+
+.add-company label, .add-company input {
+    width: 400px;
+}
+
+.add-project label, .add-project input, .add-project div {
+    width: 400px;
+}
+
+.add-user label, .add-user input, .add-user div {
+    width: 400px;
 }
