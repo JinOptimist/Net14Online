@@ -19,7 +19,7 @@ namespace Net14Web.DbStuff
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Stock> Stocks { get; set; }
 
-        public WebDbContext(DbContextOptions options) : base(options) { }
+        public WebDbContext(DbContextOptions<WebDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
