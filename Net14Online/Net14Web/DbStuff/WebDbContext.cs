@@ -22,6 +22,7 @@ namespace Net14Web.DbStuff
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<TaskInfo> TaskInfos { get; set; }
         public DbSet<RetroUser> RetroUsers { get; set; }
+        public DbSet<LoginBooking> LoginsBooking { get; set; }
         public WebDbContext(DbContextOptions<WebDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
