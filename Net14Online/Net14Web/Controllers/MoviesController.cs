@@ -86,6 +86,11 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult Registration(AddUserViewModel addUser)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(addUser);
+            }
+
             var user = _userBuilder.BuildUser(addUser);
             _webDbContext.Add(user);
             _webDbContext.SaveChanges();
