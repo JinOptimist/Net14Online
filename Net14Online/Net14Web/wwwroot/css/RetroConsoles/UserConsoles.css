@@ -1,5 +1,3 @@
-/* UserConsoles.css */
-
 .user-content {
     display: flex;
     flex-direction: column;
@@ -13,7 +11,7 @@
 }
 
 .user {
-    width: 300px; /* Увеличен размер блока пользователя */
+    width: 300px;
     margin: 10px;
     border: 2px solid #ddd;
     padding: 10px;
@@ -22,9 +20,9 @@
     border-radius: 3px;
 }
 
-.remove-block-icon>img {
-    max-height:20px;
-    max-width:20px;
+.remove-block-icon > img {
+    max-height: 20px;
+    max-width: 20px;
 }
 
 .remove-link {
@@ -36,27 +34,25 @@
 }
 
     .remove-link img {
-        max-width: 20px; /* Ограничивает максимальную ширину изображения до ширины контейнера */
-        height: auto; /* Сохраняет пропорции изображения */
+        max-width: 20px;
     }
-
 
 .user-block {
     margin-top: 10px;
 }
 
 .user-title {
-    font-size: 16px; /* Увеличен размер заголовка */
+    font-size: 16px;
 }
 
 .user-name {
-    font-size: 24px; /* Увеличен размер имени */
+    font-size: 24px;
     margin-top: 5px;
 }
 
 .user-email,
 .user-num-consoles {
-    font-size: 16px; /* Увеличен размер остальных строк информации */
+    font-size: 16px;
     color: #555;
     margin-top: 5px;
 }
@@ -68,17 +64,27 @@
 }
 
 .icon {
-    max-width: 100px; /* Ограничение максимальной ширины изображения пользователя */
+    max-width: 100px;
     height: auto;
-    border-radius: 10px; /* Небольшой скругленный угол изображения */
+    border-radius: 10px;
     margin-right: 10px;
 }
 
-.pic-and-update {
+.email-update-block {
     display: flex;
     flex-direction: column;
     margin-top: 5px;
 }
+
+    .email-update-block label {
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    .email-update-block span {
+        color: #555;
+        margin-top: 5px;
+    }
 
 input[type="url"] {
     width: 100%;
@@ -92,11 +98,10 @@ input[type="url"] {
 
 .console-discription {
     margin-top: 10px;
-    font-size: 16px; /* Увеличен размер описания консоли */
+    font-size: 16px;
     color: #333;
 }
 
-/* Добавлены надписи к каждой строке информации */
 .label {
     font-weight: bold;
     margin-right: 5px;
