@@ -10,7 +10,7 @@ namespace Net14Web.Services
 
         public Task<List<T>> GetAllAsync(int count = 10);
 
-        public Task Update(T entity);
+        public Task UpdateAsync(T entity);
 
         public Task AddAsync(T entity);
     }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Models.GameShop;
 using Net14Web.Models.GameShop;
 using Net14Web.Services.GameShop;
 
@@ -9,16 +9,18 @@ namespace Net14Web.Controllers
     {
         private Random _random = new Random();
 
-        private readonly IGameShopRepository _repository;
+        private readonly IGameShopRepository _gamesRepository;
+        private readonly IGameCommentsRepository _commentsRepository;
 
-        public GameShopController(IGameShopRepository repository)
+        public GameShopController(IGameShopRepository repository, IGameCommentsRepository commentsRepository)
         {
-            _repository = repository;
+            _gamesRepository = repository;
+            _commentsRepository = commentsRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            var games = await _repository.GetAllAsync();
+            var games = await _gamesRepository.GetAllAsync();
 
             var gameViewModels = games.Select(
                 game => new GameViewModel
@@ -52,7 +54,7 @@ namespace Net14Web.Controllers
                 Raiting = Math.Round(raiting, 1)
             };
 
-            await _repository.AddAsync(newGame);
+            await _gamesRepository.AddAsync(newGame);
 
             return RedirectToAction("Index");
         }
@@ -60,24 +62,68 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult Upgrade(Game gameModel)
         {
-            _repository.Update(gameModel);
+            _gamesRepository.UpdateAsync(gameModel);
 
             return RedirectToAction("Index");
         }
 
         public IActionResult Delete(int id)
         {
-            _repository.DeleteById(id);
+            _gamesRepository.DeleteById(id);
 
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult Profile(int id)
+        [HttpPost]
+        public async Task<IActionResult> AddComment(int heroId, string comment)
         {
-            var game = _repository.GetById(id);
+            var game = await _gamesRepository.GetById(heroId)!;
 
-            return View("Profile", game);
+            if(game.Comments == null)
+            {
+                game.Comments = new List<GameComment>();
+            }
+
+            var gameComment = new GameComment()
+            {
+                CommentedGame = game,
+                Content = comment
+            };
+
+            await _commentsRepository.AddAsync(gameComment);
+            game.Comments.Add(gameComment);
+            await _gamesRepository.UpdateAsync(game);
+
+            var gameViewModel = new GameViewModel()
+            {
+                Comments = game.Comments.Select(x => x.Content).ToList(),
+                Genre = game!.Genre,
+                Name = game.Name,
+                PosterUrl = game.LogoUrl,
+                Rating = 5d
+            };
+
+            return RedirectToAction("Profile", heroId);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile(int id)
+        {
+            var game = await _gamesRepository.GetById(id)!;
+
+            var comments = game.Comments.Select(x => x.Content).ToList();
+
+            var gameViewModel = new GameViewModel()
+            {
+                Id= game!.Id,
+                Comments = comments,
+                Genre = game!.Genre,
+                Name = game.Name,
+                PosterUrl = game.LogoUrl,
+                Rating = 5d
+            };
+
+            return View("Profile", gameViewModel);
         }
 
     }

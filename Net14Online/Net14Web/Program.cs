@@ -33,6 +33,7 @@ builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
 builder.Services.AddScoped<IGameShopRepository, GameShopRepository>();
+builder.Services.AddScoped<IGameCommentsRepository, GameCommentRepository>();
 builder.Services.AddScoped<CommentBuilder>();
 builder.Services.AddScoped<ErrorBuilder>();
 builder.Services.AddScoped<MovieBuilder>();

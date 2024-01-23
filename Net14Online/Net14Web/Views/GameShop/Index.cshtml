@@ -46,16 +46,22 @@
 
                         </form>
                     </div>
+                    <div class="view-button">
+                        <form action="/gameShop/profile" method="get">
+                            <input type="hidden" name="id" value="@game.Id" />
+                            <input type="submit" value="View"/>    
+                        </form>
+                    </div>
                 </div>
                 <div class="raiting-block">
-                <div>
-                    @game.Rating
-                </div>
+                    <div>
+                        @game.Rating
+                    </div>
                 </div>
                 <div class="genre-block">
-                <div>
-                    @game.Genre
-                </div>
+                    <div>
+                        @game.Genre
+                    </div>
                 </div>
             </div>
         </div>
