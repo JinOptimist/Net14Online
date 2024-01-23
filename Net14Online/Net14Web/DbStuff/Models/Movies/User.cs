@@ -5,5 +5,7 @@
         public string? Login { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
+        public string? AvatarUrl { get; set; }
+        public virtual List<Comment>? Comments { get; set; }
     }
 }

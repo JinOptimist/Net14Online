@@ -1,0 +1,24 @@
+﻿@using Net14Web.Models.InvestPortfolio
+@model AddStockViewModel
+
+@{
+    Layout = "_LayoutInvestPortfolio";
+}
+
+<div>
+    <form method="post">
+        <div>
+            Имя
+            @Html.TextBoxFor(x => x.NameStock, new { placeholder = "Название" })
+        </div>
+
+        <div>
+            Акция
+            @Html.TextBoxFor(x => x.Price, new { placeholder = "Цена", @type = "number" })
+        </div>
+
+        <div>
+            <input type="submit" value="Добавить акцию" />
+        </div>
+    </form>
+</div>

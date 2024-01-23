@@ -1,0 +1,35 @@
+﻿@using Net14Web.Models.TaskTracker
+@model TaskViewModel
+@{
+    Layout = "_LayoutTaskTracker";
+}
+@section Style
+{
+    <link href="~/css/tasktracker.css" rel="stylesheet" />
+}
+<button class="navigation-button"><a href="/TaskTracker/Index">Back to the Tasks</a></button>
+<section class="add-form">
+    <div class="add-form__container">
+        <h3 class="add-form__title">НОВАЯ ЗАДАЧА</h3>
+
+        <form action="updateTask" method="post" class="add-form__form">
+            <input type="hidden" name="id" value="@Model.Id">
+
+            @Html.TextBoxFor(x => x.Name, new { placeholder = Model.Name, @class = "add-form__input" })
+
+
+
+            @Html.TextAreaFor(x => x.Description, new { placeholder = Model.Description, @class = "add-form__input add-form__input_description" })
+
+
+
+            @Html.TextBoxFor(x => x.Priority, new { placeholder = Model.Priority, @class = "add-form__input" })
+
+
+            <input type="submit" value="Обновить заметку" class="add-form__button" />
+
+        </form>
+
+    </div>
+</section>
+

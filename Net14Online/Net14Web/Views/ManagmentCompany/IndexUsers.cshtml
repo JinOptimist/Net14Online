@@ -1,0 +1,85 @@
+﻿@using Net14Web.Models.ManagmentCompany
+@model IndexViewModel
+
+@{
+    Layout = "_LayoutManagmentCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagmentCompany/ManagmentCompany.css" rel="stylesheet" />
+}
+
+<body>
+    <header>
+        <nav class="top-panel-content" id="navbar">
+            <div>
+                Всего проектов: @Model.Projects?.Count
+            </div>
+            <div>
+                Всего задач: @Model.AllTasks.Count
+            </div>
+            <div>
+                Задач выполнено: @Model.CompletedTasks?.Count()
+            </div>
+            <div>
+                Задач в процессе: @Model.WorkInProgressTasks?.Count()
+            </div>
+        </nav>
+        <div class="dropdown">
+            <button class="dropbtn">
+                <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+            </button>
+            <div class="dropdown-content">
+
+                @* @foreach (var myPage in Model.Pages)
+                {
+                <a href="/ManagmentCompany/@myPage">@myPage</a>
+                } *@
+                <a href="/ManagmentCompany/Index">На главную</a>
+                <a href="/ManagmentCompany/About">О нас</a>
+                <a href="/ManagmentCompany/Contacts">Контакты</a>
+                @* <a href="statistics.html">Статистика</a> *@
+                <a class="login" href="/ManagmentCompany/Login">Вход</a>
+                <a class="reg" href="/ManagmentCompany/Registration">Регистрация</a>
+            </div>
+        </div>
+    </header>
+    <div class="content-container">
+        <h2 class="h2">Добро пожаловать на стартовую страницу!</h2>
+        <p class="p">Здесь вы можете разместить важную информацию или предложения для пользователей.</p>
+        <div class="userstat">
+            <ul>
+                <li><a href="/ManagmentCompany/Index">Всего участников</a></li>
+                <li><a href="/ManagmentCompany/IndexUsers">Пользователей</a></li>
+                <li><a href="/ManagmentCompany/IndexAdmins">Админов</a></li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                @foreach (var user in Model.Users)
+                {
+                    <li>
+                        <div>
+                            <span>@user.NickName | @user.MemberPermission</span>
+
+                            <form action="/ManagmentCompany/UpdateUser" class="update-form" method="post">
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <input type="text" name="nickName" value="@user.NickName" @* placeholder="Новый никнейм" *@ required />
+                                <button type="submit">Изменить</button>
+                            </form>
+
+                            <form action="/ManagmentCompany/RemoveUser" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <button type="submit">Удалить</button>
+                            </form>
+                        </div>
+                    </li>
+                }
+            </ul>
+            <div>
+                Количество участников @Model.Users.Count
+            </div>
+        </div>
+    </div>
+</body>

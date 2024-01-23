@@ -1,0 +1,273 @@
+html {
+    background-color: black;
+    color: white;
+    font-family: 'Courier New', Sans-serif, Arial;
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+header {
+    width: 100%;
+    height: 10%;
+}
+
+    header a {
+        color: white;
+        text-decoration: none;
+        margin-left: 3%;
+    }
+
+main {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    min-height: 80%;
+}
+
+.navigation-button {
+    opacity: 1;
+    width: 300px;
+    height: 80px;
+    background-color: transparent;
+    border: 2px solid white;
+    outline: none;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    transition: box-shadow 1s, opacity 1s;
+    margin: 20px;
+}
+
+    .navigation-button a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .navigation-button:hover {
+        box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px;
+    }
+
+
+.photo-grid {
+    padding: 0 30px;
+    display: flex;
+}
+
+
+.photo-grid__container {
+    display: grid;
+    margin: auto;
+    grid-template-columns: repeat(4, 282px);
+    row-gap: 30px;
+    column-gap: 18px;
+}
+
+.photo-grid__card {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    box-sizing: border-box;
+    position: relative;
+    min-height: 282px;
+}
+
+.photo-grid__priority {
+    color: black;
+    font-size: 20px;
+    line-height: 20px;
+    background: transparent;
+    position: absolute;
+    top: 18px;
+    left: 15px;
+    width: 19px;
+    height: 19px;
+    margin: 0;
+}
+
+
+.photo-grid__delete-icon {
+    color: black;
+    font-size: 20px;
+    line-height: 20px;
+    background: transparent;
+    position: absolute;
+    top: 18px;
+    right: 15px;
+    width: 19px;
+    height: 19px;
+    border: none;
+    transition: opacity 1s ease;
+}
+    .photo-grid__delete-icon a {
+        text-decoration: none;
+        color: black;
+    }
+
+.photo-grid__delete-icon:hover {
+    opacity: .6;
+}
+
+.photo-grid__update-icon {
+    color: black;
+    font-size: 20px;
+    line-height: 20px;
+    background: transparent;
+    position: absolute;
+    top: 18px;
+    right: 40px;
+    width: 19px;
+    height: 19px;
+    border: none;
+    transition: opacity 1s ease;
+}
+
+    .photo-grid__update-icon a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .photo-grid__update-icon:hover {
+        opacity: .6;
+    }
+
+
+
+.photo-grid__text {
+    max-width: 90%;
+    height: 80%;
+    margin: 40px auto 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: black;
+}
+
+.photo-grid__title {
+    width: 100%;
+    height: 20%;
+    text-align: center;
+    white-space: break-spaces;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 auto;
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 22px;
+}
+
+.photo-grid__description {
+    width: 100%;
+    height: 80%;
+    text-align: left;
+    overflow: clip;
+    white-space: pre-wrap;
+    margin: 5% auto 0;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 18px;
+}
+
+.add-form {
+    display: flex;
+    justify-content: flex-start;
+    height: 450px;
+    width: 50%;
+    margin: 0 5%
+}
+
+.add-form__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: black;
+    border-radius: 10px;
+    box-sizing: border-box;
+    height: 100%;
+    width: 361px;
+    animation: shimmer 5s infinite;
+}
+
+.add-form__title {
+    color: white;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.add-form__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.add-form__input {
+    text-align: start;
+    color: white;
+    margin: 10px auto;
+    width: 90%;
+    height: 10%;
+    border: white 1px solid;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.add-form__input_description {
+    height: 40%;
+}
+
+.add-form__button {
+    color: white;
+    background-color: transparent;
+    margin: 10px auto;
+    width: 90%;
+    height: 50px;
+    border: 2px white solid;
+    border-radius: 5px;
+    transition: opacity 1s ease;
+}
+
+
+    .add-form__button:hover {
+        opacity: .6;
+        cursor: pointer;
+    }
+
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 10%;
+}
+
+    footer span {
+        color: white;
+        text-decoration: none;
+        margin-left: 3% auto;
+    }
+
+
+@keyframes shimmer {
+    0% {
+        box-shadow: 0 0 10px 0 rgb(232, 138, 138, 0.50);
+    }
+
+    50% {
+        box-shadow: 0 0 40px 20px rgb(129, 184, 221, 0.30);
+    }
+
+    100% {
+        box-shadow: 0 0 10px 0 rgb(230, 140, 217, 0.50);
+    }
+}

@@ -5,9 +5,10 @@ namespace Net14Web.Models.BookingWeb
 {
     public class SearchResultViewModel
     {
+        public int Id { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
-        public int CheckinDate { get; set; }
-        public int CheckoutDate { get; set; }
+        public DateTime CheckinDate { get; set; }
+        public DateTime CheckoutDate { get; set; }
     }
 }
