@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Net14Web.DbStuff;
 
@@ -11,9 +12,11 @@ using Net14Web.DbStuff;
 namespace Net14Web.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240123175515_LoginBooking")]
+    partial class LoginBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,13 +40,13 @@ namespace Net14Web.Migrations
                     b.ToTable("HeroWeapon");
                 });
 
-           modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -61,31 +64,6 @@ namespace Net14Web.Migrations
 
                     b.ToTable("LoginsBooking");
                 });
-            modelBuilder.Entity("Net14Web.DbStuff.Models.Game", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                b.Property<string>("Genre")
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("LogoUrl")
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("Name")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<double?>("Raiting")
-                    .HasColumnType("float");
-
-                b.HasKey("Id");
-
-                b.ToTable("Games");
-            });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
                 {
@@ -398,23 +376,6 @@ namespace Net14Web.Migrations
                 {
                     b.Navigation("HeroesWhoLikeTheWeapon");
                 });
-            modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-                b.Property<string>("Description")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-                b.Property<string>("Name")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-                b.Property<int>("Priority")
-                    .HasColumnType("int");
-                b.HasKey("Id");
-                b.ToTable("TaskInfos");
-            });
 #pragma warning restore 612, 618
         }
     }
