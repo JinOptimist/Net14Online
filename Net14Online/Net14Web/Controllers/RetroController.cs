@@ -1,83 +1,64 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Net14Web.DbStuff;
-using Net14Web.DbStuff.Models.RetroConsoles;
+﻿using Microsoft.AspNetCore.Mvc;
+using Net14Web.Models.Dnd;
 using Net14Web.Models.RetroConsoles;
-using System.ComponentModel.DataAnnotations;
 
 namespace Net14Web.Controllers
 {
     public class RetroController : Controller
     {
-        private WebDbContext _webDbContext;
         public static List<UserConsole> UsersConsoles = new List<UserConsole>();
-        public RetroController(WebDbContext webDbContext)
-        {
-            _webDbContext = webDbContext;
-        }
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Remove(int id)
+        public IActionResult Remove(string name)
         {
-            var user = _webDbContext.RetroUsers.FirstOrDefault(x => x.Id == id);
-            
-            if (user != null)
-            {
-                _webDbContext.RetroUsers.Remove(user);
-                _webDbContext.SaveChanges();
-            }
-            return RedirectToAction("UserConsoles");
-        }
-        [HttpPost]
-        [HttpPost]
-        public IActionResult UpdateEmail(int id, string email)
-        {
-            var user = _webDbContext.RetroUsers.FirstOrDefault(x => x.Id == id);
+            var user = UsersConsoles.FirstOrDefault(x => x.Name == name);
 
             if (user != null)
             {
-                user.Email = email;
-                _webDbContext.SaveChanges();
+                UsersConsoles.Remove(user);
             }
 
             return RedirectToAction("UserConsoles");
         }
+        [HttpPost]
+        public IActionResult UpdatePic(string name, string picurl)
+        {
+            var user = UsersConsoles.FirstOrDefault(x => x.Name == name);
 
+            if (user != null)
+            {
+                user.PicUrl = picurl;
+            }
+
+            return RedirectToAction("UserConsoles");
+        }
 
         public IActionResult UserConsoles()
         {
-            var dbRetroUsers = _webDbContext.RetroUsers.Take(10).ToList();
-            var viewRetroModels = dbRetroUsers
-                .Select(dbRetroUser => new UserConsole
-                {
-                    Id = dbRetroUser.Id,
-                    Name = dbRetroUser.Login,
-                    Email = dbRetroUser.Email,
-                    Password = dbRetroUser.Password,
-                })
-                .ToList();
-            return View(viewRetroModels);
+            return View(UsersConsoles);
         }
         [HttpGet]
         public IActionResult AddUser()
         {
             return View();
         }
-
+       
 
         [HttpPost]
         public IActionResult AddUser(AddUser UserConsole)
         {
-            var retroUser = new RetroUser
+            var newUser = new UserConsole
             {
-                Login = UserConsole.Name,
+                PicUrl = UserConsole.PicUrl,
+                Name = UserConsole.Name,
+                NumOfConsoles = UserConsole.NumOfConsoles,
+                Discription = UserConsole.Discription,
                 Email = UserConsole.Email,
-                Password = UserConsole.Password,
             };
-            _webDbContext.RetroUsers.Add(retroUser);
-            _webDbContext.SaveChanges();
+
+            UsersConsoles.Add(newUser);
 
             return RedirectToAction("UserConsoles");
         }

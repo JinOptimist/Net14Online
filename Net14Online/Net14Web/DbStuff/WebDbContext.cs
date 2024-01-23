@@ -3,7 +3,6 @@ using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Models.BookingWeb;
 using Net14Web.DbStuff.Models.TaskTracker;
-using Net14Web.DbStuff.Models.RetroConsoles;
 
 namespace Net14Web.DbStuff
 {
@@ -21,7 +20,7 @@ namespace Net14Web.DbStuff
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<TaskInfo> TaskInfos { get; set; }
-        public DbSet<RetroUser> RetroUsers { get; set; }
+
         public WebDbContext(DbContextOptions<WebDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
