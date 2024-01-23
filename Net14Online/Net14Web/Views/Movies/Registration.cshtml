@@ -24,7 +24,6 @@
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <div class="form-outline flex-fill mb-0">
                                                 @Html.TextBoxFor(x => x.Login, new { placeholder = "Логин", @class="form-control" })
-                                                @Html.ValidationMessageFor(x => x.Login)
                                             </div>
                                         </div>
 
@@ -37,7 +36,6 @@
                                         <div class="d-flex flex-row align-items-center mb-4">
                                             <div class="form-outline flex-fill mb-0">
                                                 @Html.TextBoxFor(x => x.Password, new { placeholder = "Пароль", @class="form-control", @type="password" })
-                                                @Html.ValidationMessageFor(x => x.Password)
                                             </div>
                                         </div>
                                         @*

@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Net14Web.Models.Movies
+﻿namespace Net14Web.Models.Movies
 {
     public class CommentOnMovieViewModel
     {
         public int Id { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public DateTime TimeOfWriting { get; set; }
         public CommentUserOnMovie User { get; set; }
     }
