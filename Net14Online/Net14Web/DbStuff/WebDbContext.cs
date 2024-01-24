@@ -4,6 +4,7 @@ using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Models.BookingWeb;
 using Net14Web.DbStuff.Models.TaskTracker;
 using Net14Web.DbStuff.Models.RetroConsoles;
+using Net14Web.DbStuff.Models.InvestPort;
 
 namespace Net14Web.DbStuff
 {
@@ -45,6 +46,11 @@ namespace Net14Web.DbStuff
             builder.Entity<Movie>()
                 .HasMany(movie => movie.Comments)
                 .WithOne(comment => comment.Movie);
+
+            builder.Entity<Stock>()
+                .HasMany(stock => stock.Dividends)
+                .WithOne(dividends => dividends.Stock);
+
         }
     }
 }
