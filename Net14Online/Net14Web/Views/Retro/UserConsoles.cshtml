@@ -19,7 +19,7 @@
             {
                 <div class="user">
                     <div class="remove-block-icon">
-                        <a href="/retro/remove?name=@user.Name" class="remove-link"><img src="~/images/Retro/klipartz.com.png"/></a>
+                        <a href="/retro/remove?id=@user.Id" class="remove-link"><img src="~/images/Retro/klipartz.com.png"/></a>
                     </div>
                     <div class="user-block">
                         <div class="name-block">
@@ -32,6 +32,18 @@
                             <div class="user-email">
                                Email: @user.Email
                             </div>
+                            <div class="email-and-update">
+                                <form action="/retro/UpdateEmail" method="post">
+                                    <input type="hidden" name="id" value="@user.Id" />
+                                    <div>
+                                        <input type="email" name="email" />
+                                    </div>
+                                    <div class="update-email">
+                                        <input type="submit" value="Обновить Email" />
+                                    </div>
+                                </form>
+
+                            </div>
                             <div class="user-num-consoles">
                                Количество консолей: @user.NumOfConsoles
                             </div>
@@ -39,18 +51,6 @@
                         <div class="picurl">
                             <div>
                                 <img src="@user.PicUrl" alt="User Image" class="icon" />
-                            </div>
-                            <div class="pic-and-update">
-                                <form action="/retro/updatepic" method="post">
-                                    <input type="hidden" name="name" value="@user.Name" />
-                                    <div>
-                                        <input type="url" name="picurl" />
-                                    </div>
-                                    <div class="update-pic">
-                                        <input type="submit" value="Обновить изображение" />
-                                    </div>
-                                </form>
-
                             </div>
                         </div>
                         <div class="console-discription">

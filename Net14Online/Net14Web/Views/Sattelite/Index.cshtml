@@ -48,6 +48,9 @@
         <div class="AddObject">
             <a href="/Sattelite/AddObject"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe3qvfd2awEbLue7IDeIGac4JcP61_2OhJPw&usqp=CAU" alt="" width="20" height="20"></a>
         </div>
+        <div class="AddRandomObject">
+            <a href="/Sattelite/AddRandomObject">Случайный объект</a>
+        </div>
         <div class="table-object">
             <table width="100%">
                 @foreach (var ObjectNav in Model)
@@ -63,8 +66,13 @@
                             @ObjectNav.Name
                         </div>
                         <div class="control-btn">
-                            <img src="https://w7.pngwing.com/pngs/766/422/png-transparent-no-symbol-scalable-graphics-drug-free-angle-text-logo-thumbnail.png" alt="" width="15" height="15">
+                            <a href="/Sattelite/RemoveObject?name=@ObjectNav.Name"><img src="https://w7.pngwing.com/pngs/766/422/png-transparent-no-symbol-scalable-graphics-drug-free-angle-text-logo-thumbnail.png" alt="" width="15" height="15"></a>
                         </div>
+                        <form action="/sattelite/UpdateType" method="post" class="UpdType">
+                            <input type="hidden" name="name" value="@ObjectNav.Name"/>
+                            <input type="text" name="Type" value="@ObjectNav.Type"/>
+                            <input type="submit" value="Обновить"/>
+                        </form>
                     </div>
                 }
             </table>
