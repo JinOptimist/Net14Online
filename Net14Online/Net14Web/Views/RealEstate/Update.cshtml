@@ -1,12 +1,11 @@
 @using Net14Web.Models.RealEstate
-@model UserViewModel
+@model Net14Web.DbStuff.RealEstate.Models.ApartmentOwner
 
 
 <div class="update-user-block">
     <div class="update-user">
         <div class="new-user-paremtr-block">
             <form action="/realestate/update" method="post">
-                <input type="hidden" name="id" value="@Model.Id" />
                 <div>
                     Имя
                     <input type="text" name="Name" value="@Model.Name"/>
@@ -18,6 +17,9 @@
                 <div>
                     Вид деятельности
                     <input type="text" name="KindOfActivity" value="@Model.KindOfActivity"/>
+                </div>
+                <div>
+                    <input type="hidden" name="Id" value="@Model.Id"/>
                 </div>
                 <div>
                     <input type="submit" value="Обновить" />
