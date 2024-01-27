@@ -21,6 +21,7 @@ namespace Net14Web.DbStuff
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Stock> Stocks { get; set; }
+        public DbSet<Dividend> Dividend { get; set; }
         public DbSet<TaskInfo> TaskInfos { get; set; }
         public DbSet<RetroUser> RetroUsers { get; set; }
         public WebDbContext(DbContextOptions<WebDbContext> options) : base(options) { }

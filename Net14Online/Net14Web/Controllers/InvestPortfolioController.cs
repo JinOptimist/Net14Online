@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Models.InvestPort;
+using Net14Web.Migrations;
+using Net14Web.Models.Dnd;
 using Net14Web.Models.InvestPortfolio;
 using Net14Web.Services;
 
@@ -66,6 +69,41 @@ namespace Net14Web.Controllers
             var stock = _webDbContext.Stocks.First(x=>x.Id==id);
             stock.Price = price;
             _webDbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+
+
+        [HttpGet]
+        public IActionResult AddDividend()
+        {
+            var viewModel = new AddDividendViewModel();
+            viewModel.Stocks = _webDbContext
+                .Stocks
+                .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
+                .ToList();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult AddDividend(AddDividendViewModel AddDividendViewModel, int stockId)
+        {
+            var stock = _webDbContext.Stocks.First(x => x.Id == stockId);           
+            var dividend = new Dividend
+            {
+                DateOfReplenishment = AddDividendViewModel.DateOfReplenishment,
+
+                TheAmountOfTheDividend = AddDividendViewModel.TheAmountOfTheDividend,
+
+                Stock = stock,
+                StockId = stockId
+
+            };
+            
+            _webDbContext.Dividend.Add(dividend);
+            _webDbContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
     }
