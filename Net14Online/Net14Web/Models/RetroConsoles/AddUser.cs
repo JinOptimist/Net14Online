@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Net14Web.Models.ValidationAttributes;
-using Net14Web.Models.RetroConsoles;
 
 public class AddUser
 {
