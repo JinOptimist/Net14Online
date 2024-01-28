@@ -1,26 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.RetroConsoles;
 using Net14Web.Models.RetroConsoles;
-using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace Net14Web.Controllers
 {
     public class RetroController : Controller
     {
-        private readonly WebDbContext _webDbContext;
-
+        private WebDbContext _webDbContext;
+        public static List<UserConsole> UsersConsoles = new List<UserConsole>();
         public RetroController(WebDbContext webDbContext)
         {
             _webDbContext = webDbContext;
         }
-
         public IActionResult Index()
         {
             return View();
         }
-
         public IActionResult Remove(int id)
         {
             var user = _webDbContext.RetroUsers.FirstOrDefault(x => x.Id == id);
@@ -32,7 +31,6 @@ namespace Net14Web.Controllers
             }
             return RedirectToAction("UserConsoles");
         }
-
         [HttpPost]
         public IActionResult UpdateEmail(int id, string email)
         {
@@ -63,14 +61,14 @@ namespace Net14Web.Controllers
                     Email = dbRetroUser.Email,
                     Password = dbRetroUser.Password,
                     Consoles = dbRetroUser.ConsolesRetroUsers
-                        .Select(link => new ConsoleInfo
-                        {
-                            ConsoleName = link.Consoles.ConsoleName,
-                            Year = link.Consoles.Year
-                        })
-                        .ToList()
+                .Select(link => new ConsoleInfo
+                {
+                    ConsoleName = link.Consoles.ConsoleName,
+                    Year = link.Consoles.Year
                 })
-                .ToList();
+                .ToList()
+                })
+        .ToList();
 
             return View(viewRetroModels);
         }
@@ -82,41 +80,40 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddUser(AddUser addUser)
+        public IActionResult AddUser(AddUser UserConsole)
         {
-            if (ModelState.IsValid)
+            var retroUser = new RetroUser
             {
-                var retroUser = new RetroUser
-                {
-                    Login = addUser.Name,
-                    Email = addUser.Email,
-                    Password = addUser.Password,
-                };
+                Login = UserConsole.Name,
+                Email = UserConsole.Email,
+                Password = UserConsole.Password,
+            };
 
-                var console = new Consoles
-                {
-                    ConsoleName = addUser.ConsoleName,
-                    Year = addUser.Year,
-                };
+            var console = new Consoles
+            {
+                ConsoleName = UserConsole.ConsoleName,
+                Year = UserConsole.Year,
+            };
 
-                var consolesRetroUser = new ConsolesRetroUser
-                {
-                    RetroUser = retroUser,
-                    Consoles = console
-                };
+            var consolesRetroUser = new ConsolesRetroUser
+            {
+                RetroUser = retroUser,
+                Consoles = console
+            };
 
-                _webDbContext.RetroUsers.Add(retroUser);
-                _webDbContext.Consoles.Add(console);
-                _webDbContext.SaveChanges();
+            // Добавляем объекты в контекст
+            _webDbContext.RetroUsers.Add(retroUser);
+            _webDbContext.Consoles.Add(console);
 
-                _webDbContext.ConsolesRetroUsers.Add(consolesRetroUser);
-                _webDbContext.SaveChanges();
+            // Сохраняем изменения
+            _webDbContext.SaveChanges();
 
-                return RedirectToAction("UserConsoles");
-            }
+            // Добавляем связующий объект после сохранения, чтобы EF установил правильные внешние ключи
+            _webDbContext.ConsolesRetroUsers.Add(consolesRetroUser);
+            _webDbContext.SaveChanges();
 
-            // Если модель не прошла валидацию, возвращаем пользователя на страницу AddUser с ошибками
-            return View(addUser);
+            return RedirectToAction("UserConsoles");
         }
+
     }
 }
