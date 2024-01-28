@@ -1,28 +1,30 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.RetroConsoles;
 using Net14Web.Models.RetroConsoles;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Net14Web.Controllers
 {
     public class RetroController : Controller
     {
-        private WebDbContext _webDbContext;
-        public static List<UserConsole> UsersConsoles = new List<UserConsole>();
+        private readonly WebDbContext _webDbContext;
+
         public RetroController(WebDbContext webDbContext)
         {
             _webDbContext = webDbContext;
         }
+
         public IActionResult Index()
         {
             return View();
         }
+
         public IActionResult Remove(int id)
         {
             var user = _webDbContext.RetroUsers.FirstOrDefault(x => x.Id == id);
-            
+
             if (user != null)
             {
                 _webDbContext.RetroUsers.Remove(user);
@@ -30,7 +32,7 @@ namespace Net14Web.Controllers
             }
             return RedirectToAction("UserConsoles");
         }
-        [HttpPost]
+
         [HttpPost]
         public IActionResult UpdateEmail(int id, string email)
         {
@@ -45,10 +47,14 @@ namespace Net14Web.Controllers
             return RedirectToAction("UserConsoles");
         }
 
-
         public IActionResult UserConsoles()
         {
-            var dbRetroUsers = _webDbContext.RetroUsers.Take(10).ToList();
+            var dbRetroUsers = _webDbContext.RetroUsers
+                .Include(user => user.ConsolesRetroUsers)
+                .ThenInclude(link => link.Consoles)
+                .Take(10)
+                .ToList();
+
             var viewRetroModels = dbRetroUsers
                 .Select(dbRetroUser => new UserConsole
                 {
@@ -56,30 +62,61 @@ namespace Net14Web.Controllers
                     Name = dbRetroUser.Login,
                     Email = dbRetroUser.Email,
                     Password = dbRetroUser.Password,
+                    Consoles = dbRetroUser.ConsolesRetroUsers
+                        .Select(link => new ConsoleInfo
+                        {
+                            ConsoleName = link.Consoles.ConsoleName,
+                            Year = link.Consoles.Year
+                        })
+                        .ToList()
                 })
                 .ToList();
+
             return View(viewRetroModels);
         }
+
         [HttpGet]
         public IActionResult AddUser()
         {
             return View();
         }
 
-
         [HttpPost]
-        public IActionResult AddUser(AddUser UserConsole)
+        public IActionResult AddUser(AddUser addUser)
         {
-            var retroUser = new RetroUser
+            if (ModelState.IsValid)
             {
-                Login = UserConsole.Name,
-                Email = UserConsole.Email,
-                Password = UserConsole.Password,
-            };
-            _webDbContext.RetroUsers.Add(retroUser);
-            _webDbContext.SaveChanges();
+                var retroUser = new RetroUser
+                {
+                    Login = addUser.Name,
+                    Email = addUser.Email,
+                    Password = addUser.Password,
+                };
 
-            return RedirectToAction("UserConsoles");
+                var console = new Consoles
+                {
+                    ConsoleName = addUser.ConsoleName,
+                    Year = addUser.Year,
+                };
+
+                var consolesRetroUser = new ConsolesRetroUser
+                {
+                    RetroUser = retroUser,
+                    Consoles = console
+                };
+
+                _webDbContext.RetroUsers.Add(retroUser);
+                _webDbContext.Consoles.Add(console);
+                _webDbContext.SaveChanges();
+
+                _webDbContext.ConsolesRetroUsers.Add(consolesRetroUser);
+                _webDbContext.SaveChanges();
+
+                return RedirectToAction("UserConsoles");
+            }
+
+            // Если модель не прошла валидацию, возвращаем пользователя на страницу AddUser с ошибками
+            return View(addUser);
         }
     }
 }

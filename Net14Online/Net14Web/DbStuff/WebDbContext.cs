@@ -4,6 +4,7 @@ using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Models.BookingWeb;
 using Net14Web.DbStuff.Models.TaskTracker;
 using Net14Web.DbStuff.Models.RetroConsoles;
+using Net14Web.Models.RetroConsoles;
 
 namespace Net14Web.DbStuff
 {
@@ -22,7 +23,13 @@ namespace Net14Web.DbStuff
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<TaskInfo> TaskInfos { get; set; }
         public DbSet<RetroUser> RetroUsers { get; set; }
+        public DbSet<Consoles> Consoles { get; set; }
+        public DbSet<ConsolesRetroUser> ConsolesRetroUsers { get; set; }
         public WebDbContext(DbContextOptions<WebDbContext> options) : base(options) { }
+
+        public WebDbContext()
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -45,6 +52,16 @@ namespace Net14Web.DbStuff
             builder.Entity<Movie>()
                 .HasMany(movie => movie.Comments)
                 .WithOne(comment => comment.Movie);
+
+            builder.Entity<RetroUser>()
+                 .HasMany(user => user.ConsolesRetroUsers)
+                 .WithOne(link => link.RetroUser)
+                 .HasForeignKey(link => link.RetroUserId);
+
+            builder.Entity<Consoles>()
+                .HasMany(console => console.ConsolesRetroUsers)
+                .WithOne(link => link.Consoles)
+                .HasForeignKey(link => link.ConsolesId);
         }
     }
 }

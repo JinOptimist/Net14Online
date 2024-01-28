@@ -47,14 +47,13 @@
                             <div class="user-num-consoles">
                                Количество консолей: @user.NumOfConsoles
                             </div>
-                        </div>
-                        <div class="picurl">
-                            <div>
-                                <img src="@user.PicUrl" alt="User Image" class="icon" />
+                            <div class="user-consoles">
+                                Любимая консоль:
+                                @foreach (var consoleInfo in user.Consoles)
+                                {
+                                    <div>@($"{consoleInfo.ConsoleName} (Год: {consoleInfo.Year})")</div>
+                                }
                             </div>
-                        </div>
-                        <div class="console-discription">
-                            Описание:@user.Discription
                         </div>
                     </div>
                 </div>

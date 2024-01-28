@@ -8,6 +8,9 @@
     {
     <link href="~/css/RetroConsoles/AddUser.css" rel="stylesheet" />
 }
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 <form method="post">
     <div class="addinfo">
         <div>
@@ -17,27 +20,41 @@
         <div>
             Имя
             @Html.TextBoxFor(x => x.Name, new { placeholder = "Имя" })
+            @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
         </div>
 
         <div>
-            Еmail
+            Email
             @Html.TextBoxFor(x => x.Email, new { type = "email", placeholder = "Email" })
+            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
         </div>
         <div>
             Пароль
-            @Html.TextBoxFor(x => x.Password, new { placeholder = "Укажите ваш пароль"})
+            @Html.TextBoxFor(x => x.Password, new { placeholder = "Укажите ваш пароль" })
+            @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
         </div>
 
         <div>
             Количество консолей
-            @Html.TextBoxFor(x => x.NumOfConsoles, new { placeholder = "Введите количество консолей"})
+            @Html.TextBoxFor(x => x.NumOfConsoles, new { placeholder = "Введите количество консолей" })
+            @Html.ValidationMessageFor(x => x.NumOfConsoles, "", new { @class = "text-danger" })
         </div>
 
         <div>
             Описание
-            @Html.TextBoxFor(x => x.Discription, new { placeholder = "Описание вашей консоли"})
+            @Html.TextBoxFor(x => x.Discription, new { placeholder = "Описание вашей консоли" })
+        </div>
+        <div>
+            Год выпуска консоли
+            @Html.TextBoxFor(x => x.Year, new { placeholder = "Год выпуска консоли" })
+            @Html.ValidationMessageFor(x => x.Year, "", new { @class = "text-danger" })
         </div>
 
+        <div>
+            Название консоли
+            @Html.TextBoxFor(x => x.ConsoleName, new { placeholder = "Название консоли" })
+            @Html.ValidationMessageFor(x => x.ConsoleName, "", new { @class = "text-danger" })
+        </div>
         <div>
             <input type="submit" value="Создать запись" />
         </div>

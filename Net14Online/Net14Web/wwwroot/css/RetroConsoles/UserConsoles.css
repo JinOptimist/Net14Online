@@ -106,3 +106,13 @@ input[type="url"] {
     font-weight: bold;
     margin-right: 5px;
 }
+
+.user-consoles {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+    .user-consoles div {
+        margin-top: 5px;
+    }

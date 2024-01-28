@@ -12,8 +12,8 @@ using Net14Web.DbStuff;
 namespace Net14Web.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    [Migration("20240123185843_RetroConsole")]
-    partial class RetroConsole
+    [Migration("20240128174607_AddRetroUsers")]
+    partial class AddRetroUsers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -200,6 +200,49 @@ namespace Net14Web.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.Consoles", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConsoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Consoles");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.ConsolesRetroUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ConsolesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RetroUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsolesId");
+
+                    b.HasIndex("RetroUserId");
+
+                    b.ToTable("ConsolesRetroUsers");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.RetroUser", b =>
                 {
                     b.Property<int>("Id")
@@ -359,6 +402,25 @@ namespace Net14Web.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.ConsolesRetroUser", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.RetroConsoles.Consoles", "Consoles")
+                        .WithMany("ConsolesRetroUsers")
+                        .HasForeignKey("ConsolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Net14Web.DbStuff.Models.RetroConsoles.RetroUser", "RetroUser")
+                        .WithMany("ConsolesRetroUsers")
+                        .HasForeignKey("RetroUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Consoles");
+
+                    b.Navigation("RetroUser");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Movie", b =>
                 {
                     b.Navigation("Comments");
@@ -367,6 +429,16 @@ namespace Net14Web.Migrations
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.User", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.Consoles", b =>
+                {
+                    b.Navigation("ConsolesRetroUsers");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.RetroUser", b =>
+                {
+                    b.Navigation("ConsolesRetroUsers");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Weapon", b =>
