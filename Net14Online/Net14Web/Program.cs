@@ -39,8 +39,8 @@ builder.Services.AddScoped<MovieBuilder>();
 builder.Services.AddScoped<Net14Web.Services.Movies.UserBuilder>();
 builder.Services.AddScoped<UserEditHelper>();
 builder.Services.AddScoped<MovieEditHelper>();
-builder.Services.AddScoped<LoginHelper>();
 builder.Services.AddScoped<ObjectBuilder>();
+builder.Services.AddScoped<RegistrationHelper>();
 
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<IdBuilder>();
