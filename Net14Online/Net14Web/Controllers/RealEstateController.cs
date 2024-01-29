@@ -62,10 +62,14 @@ public class RealEstateController : Controller
         return RedirectToAction("DataBase");
     }
     
-    
     [HttpPost]
     public IActionResult AddUser(AddUserViewModel userViewModel)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(userViewModel);
+        }
+        
         var newUser = _userBuilder.BuilderUser(userViewModel);
         userViewModels.Add(newUser);
 
