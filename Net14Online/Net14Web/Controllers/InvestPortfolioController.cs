@@ -9,9 +9,7 @@ namespace Net14Web.Controllers
     public class InvestPortfolioController : Controller
     {
         private WebDbContext _webDbContext;
-
-        public static List<StockViewModel> stockViewModels = new List<StockViewModel>();
-        
+  
         public InvestPortfolioController(WebDbContext webDbContext)
         {
             _webDbContext = webDbContext;
@@ -40,7 +38,10 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult AddStock(AddStockViewModel StockViewModel)
         {
-
+            if (!ModelState.IsValid)
+            {
+                return View(StockViewModel);
+            }
             var stock = new Stock
             {
                 Name = StockViewModel.NameStock,

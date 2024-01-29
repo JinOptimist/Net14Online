@@ -8,13 +8,15 @@
 <div>
     <form method="post">
         <div>
-            Имя
+            Название акции
             @Html.TextBoxFor(x => x.NameStock, new { placeholder = "Название" })
+            @Html.ValidationMessageFor(x=>x.NameStock)
         </div>
 
         <div>
-            Акция
+            Цена
             @Html.TextBoxFor(x => x.Price, new { placeholder = "Цена", @type = "number" })
+            @Html.ValidationMessageFor(x => x.Price)
         </div>
 
         <div>
