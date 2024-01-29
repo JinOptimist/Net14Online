@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.RealEstate;
@@ -14,7 +15,7 @@ public class RealEstateController : Controller
     public readonly DeleteUser _deleteUser;
     public readonly UpdateUser _updateUser;
     private WebDbContextRealEstate _webDbContextRealEstate;
-        
+    
     public static List<UserViewModel> userViewModels = new();
 
     public RealEstateController(UserBuilder userBuilder,DeleteUser deleteUser,UpdateUser updateUser,WebDbContextRealEstate webDbContextRealEstate)
@@ -24,6 +25,7 @@ public class RealEstateController : Controller
         _updateUser = updateUser;
         _webDbContextRealEstate = webDbContextRealEstate;
     }
+    
     public IActionResult Main()
     {
         return View(userViewModels);
@@ -39,6 +41,7 @@ public class RealEstateController : Controller
                 Age = dbUser.Age,
                 Name = dbUser.Name,
                 KindOfActivity = dbUser.KindOfActivity,
+                HaveBuilding = dbUser.HaveBuilding ?? "---"
             })
             .ToList();
 
@@ -92,4 +95,35 @@ public class RealEstateController : Controller
         
         return RedirectToAction("DataBase");
     }
+
+    [HttpGet]
+    public IActionResult ChooseApartaments()
+    {
+        var viewModel = new ApartamentsViewModel();
+
+        viewModel.ApartamentOwners =
+            _webDbContextRealEstate.ApartmentOwners
+                .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
+                .ToList();
+
+        viewModel.Apartaments =
+            _webDbContextRealEstate.Apartaments
+                .Select(x => new SelectListItem(x.Size, x.Id.ToString()))
+                .ToList();
+
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    public IActionResult ChooseApartaments(int apartmentOwnerId,int apartamanetId)
+    {
+        var apartmentOwner = _webDbContextRealEstate.ApartmentOwners.First(x => x.Id == apartmentOwnerId);
+        var apartament = _webDbContextRealEstate.Apartaments.First(x => x.Id == apartamanetId);
+        
+      // apartament.ApartmentOwner = apartmentOwner;
+       apartmentOwner.HaveBuilding = apartament.Size;
+        _webDbContextRealEstate.SaveChanges();
+        return RedirectToAction("DataBase");
+    }
+    
 }
