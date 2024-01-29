@@ -9,7 +9,7 @@ namespace Net14Web.Models.ValidationAttributes
             if (value is null
                 || value is not string)
             {
-                throw new ArgumentException("ForbidenStringsAttribute can be only on string");
+                throw new ArgumentException("ForbidenNameAttribure can be only on string");
             }
 
             var someStringValue = (string)value;
