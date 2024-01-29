@@ -109,16 +109,10 @@ namespace Net14Web.Controllers
         {
             var game = await _gamesRepository.GetById(id)!;
 
-            var comentModels = await _commentsRepository.GetAllAsync() ?? null;
-            var comments = comentModels?
-                .Where(x => x.CommentedGame.Id == id)
-                .Select(x => x.Content)
-                .ToList() ?? null;
-
             var gameViewModel = new GameViewModel()
             {
                 Id= game!.Id,
-                Comments = comments,
+                Comments = game?.Comments?.Select(x => x.Content).ToList() ?? null,
                 Genre = game!.Genre,
                 Name = game.Name,
                 PosterUrl = game.LogoUrl,
