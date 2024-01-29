@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
+using Net14Web.DbStuff.Repositories;
 using Net14Web.Services;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
@@ -31,6 +32,11 @@ builder.Services.AddScoped<HeroBuilder>(diContainer =>
 // builder.Services.AddTransient<RandomHelper>();
 builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
+
+// Repositories
+builder.Services.AddScoped<HeroRepository>();
+builder.Services.AddScoped<WeaponRepository>();
+
 
 builder.Services.AddScoped<IGameShopRepository, GameShopRepository>();
 builder.Services.AddScoped<IGameCommentsRepository, GameCommentRepository>();
