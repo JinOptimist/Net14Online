@@ -14,5 +14,5 @@ public class AddUserViewModel
     [CheckForString(ErrorMessage = "Введите строку!Попробуйте еще раз!")]
     public string KindOfActivity { get; set; }
     
-    public string Id { get; set; }
+    public string? Id { get; set; }
 }
