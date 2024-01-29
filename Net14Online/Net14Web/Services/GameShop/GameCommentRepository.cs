@@ -1,20 +1,19 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.GameShop;
 
 namespace Net14Web.Services.GameShop
 {
-    public class GameShopRepository : IGameShopRepository
+    public class GameCommentRepository : IGameCommentsRepository
     {
         private readonly WebDbContext _context;
 
-        public GameShopRepository(WebDbContext context)
+        public GameCommentRepository(WebDbContext context)
         {
             _context = context;
         }
 
-        public async Task AddAsync(Game entity)
+        public async Task AddAsync(GameComment entity)
         {
             await _context.AddAsync(entity);
             await _context.SaveChangesAsync();
@@ -27,17 +26,17 @@ namespace Net14Web.Services.GameShop
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Game>> GetAllAsync()
+        public async Task<List<GameComment>> GetAllAsync()
         {
-            return await _context.Games.Where(x => x.Id > 0).ToListAsync();
+            return await _context.GameComments.Where(x => x.Id > 0).ToListAsync();
         }
 
-        public async Task<Game?>? GetById(int id)
+        public async Task<GameComment?>? GetById(int id)
         {
-            return await _context.Games.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.GameComments.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task UpdateAsync(Game entity)
+        public async Task UpdateAsync(GameComment entity)
         {
             _context.Update(entity);
             await _context.SaveChangesAsync();
