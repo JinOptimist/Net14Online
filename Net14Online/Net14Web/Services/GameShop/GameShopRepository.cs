@@ -8,7 +8,7 @@ namespace Net14Web.Services.GameShop
     public class GameShopRepository : IGameShopRepository
     {
         private readonly WebDbContext _context;
-        
+
         public GameShopRepository(WebDbContext context)
         {
             _context = context;
@@ -27,9 +27,9 @@ namespace Net14Web.Services.GameShop
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Game>> GetAllAsync(int count = 10)
+        public async Task<List<Game>> GetAllAsync()
         {
-            return await _context.Games.Take(count).ToListAsync();
+            return await _context.Games.Where(x => x.Id > 0).ToListAsync();
         }
 
         public async Task<Game?>? GetById(int id)

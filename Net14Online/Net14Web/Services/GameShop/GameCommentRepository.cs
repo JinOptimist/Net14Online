@@ -26,9 +26,9 @@ namespace Net14Web.Services.GameShop
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<GameComment>> GetAllAsync(int count = 10)
+        public async Task<List<GameComment>> GetAllAsync()
         {
-            return await _context.GameComments.Take(count).ToListAsync();
+            return await _context.GameComments.Where(x => x.Id > 0).ToListAsync();
         }
 
         public async Task<GameComment?>? GetById(int id)

@@ -8,7 +8,7 @@ namespace Net14Web.Services
 
         public Task DeleteById(int id);
 
-        public Task<List<T>> GetAllAsync(int count = 10);
+        public Task<List<T>> GetAllAsync();
 
         public Task UpdateAsync(T entity);
 

@@ -75,11 +75,11 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddComment(int heroId, string comment)
+        public async Task<IActionResult> AddComment(int gameId, string comment)
         {
-            var game = await _gamesRepository.GetById(heroId)!;
+            var game = await _gamesRepository.GetById(gameId)!;
 
-            if(game.Comments == null)
+            if (game.Comments == null)
             {
                 game.Comments = new List<GameComment>();
             }
@@ -91,8 +91,6 @@ namespace Net14Web.Controllers
             };
 
             await _commentsRepository.AddAsync(gameComment);
-            game.Comments.Add(gameComment);
-            await _gamesRepository.UpdateAsync(game);
 
             var gameViewModel = new GameViewModel()
             {
@@ -103,7 +101,7 @@ namespace Net14Web.Controllers
                 Rating = 5d
             };
 
-            return RedirectToAction("Profile", heroId);
+            return RedirectToAction("Profile", new { id = gameId });
         }
 
         [HttpGet]
@@ -111,7 +109,11 @@ namespace Net14Web.Controllers
         {
             var game = await _gamesRepository.GetById(id)!;
 
-            var comments = game.Comments.Select(x => x.Content).ToList();
+            var comentModels = await _commentsRepository.GetAllAsync() ?? null;
+            var comments = comentModels?
+                .Where(x => x.CommentedGame.Id == id)
+                .Select(x => x.Content)
+                .ToList() ?? null;
 
             var gameViewModel = new GameViewModel()
             {

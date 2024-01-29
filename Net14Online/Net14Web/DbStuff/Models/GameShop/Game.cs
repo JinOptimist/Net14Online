@@ -10,6 +10,6 @@
 
         public string? Genre { get; set; }
 
-        public List<GameComment>? Comments { get; set; }
+        public virtual List<GameComment>? Comments { get; set; }
     }
 }

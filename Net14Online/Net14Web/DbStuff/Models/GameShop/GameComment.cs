@@ -6,6 +6,6 @@ namespace Net14Web.DbStuff.Models.GameShop
     {
         public string Content { get; set; } = null!;
 
-        public Game CommentedGame { get; set; } = null!;
+        public virtual Game CommentedGame { get; set; } = null!;
     }
 }
