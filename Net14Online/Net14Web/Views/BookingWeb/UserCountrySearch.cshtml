@@ -1,0 +1,21 @@
+﻿@using Net14Web.Models.BookingWeb
+@model UserSearchViewModel
+
+@{
+    Layout = "_LayoutBookingWeb";
+}
+@section Style
+{
+    <link href="~/css/booking.css" rel="stylesheet" />
+}
+<div>
+    <form method="post">
+    <div>
+        @Html.DropDownList("loginId", Model.Logins)
+    </div>
+    <div>
+        @Html.DropDownList("searchId", Model.Searches)
+    </div>
+    <input type="submit" value="Choose" />
+    </form>
+</div>

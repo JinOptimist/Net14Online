@@ -14,7 +14,6 @@ namespace Net14Web.DbStuff
         public DbSet<Weapon> Weapons { get; set; }
         public DbSet<UsersPcShop> UserPcShop { get; set; }
         public DbSet<Search> Searches { get; set; }
-
         public DbSet<Game> Games { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Movie> Movies { get; set; }
@@ -46,6 +45,11 @@ namespace Net14Web.DbStuff
             builder.Entity<Movie>()
                 .HasMany(movie => movie.Comments)
                 .WithOne(comment => comment.Movie);
+
+            builder.Entity<LoginBooking>()
+                .HasMany(loginBooking => loginBooking.Searches)
+                .WithOne(search => search.LoginBooking);
+
         }
     }
 }
