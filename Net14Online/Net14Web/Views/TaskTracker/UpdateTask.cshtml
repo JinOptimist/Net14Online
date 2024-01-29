@@ -1,5 +1,5 @@
 ﻿@using Net14Web.Models.TaskTracker
-@model TaskViewModel
+@model AddTaskViewModel
 @{
     Layout = "_LayoutTaskTracker";
 }
@@ -7,9 +7,9 @@
 {
     <link href="~/css/tasktracker.css" rel="stylesheet" />
 }
-<button class="navigation-button"><a href="/TaskTracker/Index">Back to the Tasks</a></button>
 <section class="add-form">
     <div class="add-form__container">
+        <button class="delete-icon delete-icon_white"><a href="/TaskTracker/Index">&#10006</a></button>
         <h3 class="add-form__title">НОВАЯ ЗАДАЧА</h3>
 
         <form action="updateTask" method="post" class="add-form__form">
@@ -17,13 +17,10 @@
 
             @Html.TextBoxFor(x => x.Name, new { placeholder = Model.Name, @class = "add-form__input" })
 
-
-
             @Html.TextAreaFor(x => x.Description, new { placeholder = Model.Description, @class = "add-form__input add-form__input_description" })
 
-
-
-            @Html.TextBoxFor(x => x.Priority, new { placeholder = Model.Priority, @class = "add-form__input" })
+            <label class="add-form__dropdown-label">Приоритет</label>
+            @Html.DropDownListFor(x => x.Priority, new SelectList(Model.PriorityOptions.Select(p => new SelectListItem { Value = p.ToString(), Text = p.ToString() }), "Value", "Text"), new { placeholder = "Приоритет", @class = "add-form__dropdown" })
 
 
             <input type="submit" value="Обновить заметку" class="add-form__button" />

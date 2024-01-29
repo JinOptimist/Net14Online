@@ -36,12 +36,22 @@ namespace Net14Web.Controllers
         [HttpGet]
         public IActionResult AddTask()
         {
-            return View();
+            var viewModel = new AddTaskViewModel
+            {
+                PriorityOptions = new List<int> { 1, 2, 3 }
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult AddTask(TaskViewModel taskViewModel)
+        public IActionResult AddTask(AddTaskViewModel taskViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                taskViewModel.PriorityOptions = new List<int> { 1, 2, 3 };
+                return View(taskViewModel);
+            }
+
             var task = new TaskInfo
             {
                 Name = taskViewModel.Name,
@@ -59,12 +69,13 @@ namespace Net14Web.Controllers
         public IActionResult UpdateTask(int id)
         {
             var dbTask = _webDbContext.TaskInfos.First(x => x.Id == id);
-            var viewModel = new TaskViewModel
+            var viewModel = new AddTaskViewModel
             {
                 Id = dbTask.Id,
                 Name = dbTask.Name,
                 Description = dbTask.Description,
                 Priority = dbTask.Priority,
+                PriorityOptions = new List<int> { 1, 2, 3 }
 
             };
             return View(viewModel);
