@@ -82,9 +82,14 @@ public class RealEstateController : Controller
     
     
     [HttpPost]
-    public IActionResult AddUser(AddUserViewModel user)
+    public IActionResult AddUser(AddUserViewModel userViewModel)
     {
-        var newUser = _userBuilder.BuilderUser(user);
+        if (!ModelState.IsValid)
+        {
+            return View(userViewModel);
+        }
+        
+        var newUser = _userBuilder.BuilderUser(userViewModel);
         
         _webRealEstateDbContext.ApartmentOwners.Add(newUser);
      
