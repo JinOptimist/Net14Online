@@ -7,7 +7,6 @@ public class ApartmentOwner : BaseModel
     public string Name { get; set; }
     public int Age { get; set; }
     public string KindOfActivity { get; set; }
-    public virtual List<Apartament>? Apartaments { get; set; }
-    
-    public string? HaveBuilding { get; set; }
+    public virtual List<Apartament>? Apartaments { get; set; } = new();
+
 }

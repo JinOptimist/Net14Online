@@ -147,7 +147,7 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
 
-                    b.UseTphMappingStrategy();
+                   // b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.UserTask", b =>

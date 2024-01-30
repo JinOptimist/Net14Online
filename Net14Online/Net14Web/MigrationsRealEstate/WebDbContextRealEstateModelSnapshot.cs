@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Net14Web.MigrationsRealEstate
 {
-    [DbContext(typeof(WebDbContextRealEstate))]
+    [DbContext(typeof(WebDbRealEstateContext))]
     partial class WebDbContextRealEstateModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -29,6 +29,9 @@ namespace Net14Web.MigrationsRealEstate
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
 
                     b.Property<int?>("ApartmentOwnerId")
                         .HasColumnType("integer");
@@ -54,10 +57,6 @@ namespace Net14Web.MigrationsRealEstate
 
                     b.Property<int>("Age")
                         .HasColumnType("integer");
-
-                    b.Property<string>("HaveBuilding")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<string>("KindOfActivity")
                         .IsRequired()

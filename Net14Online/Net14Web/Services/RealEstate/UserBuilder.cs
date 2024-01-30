@@ -14,7 +14,6 @@ public class UserBuilder
             Name = addUser.Name,
             Age = addUser.Age,
             KindOfActivity = addUser.KindOfActivity,
-            HaveBuilding = " "
         };
         return user;
     }

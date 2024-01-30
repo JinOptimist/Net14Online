@@ -3,11 +3,11 @@ using Net14Web.DbStuff.RealEstate.Models;
 
 namespace Net14Web.DbStuff.RealEstate;
 
-public class WebDbContextRealEstate : DbContext
+public class WebDbRealEstateContext : DbContext
 {
     protected readonly IConfiguration Configuration;
 
-    public WebDbContextRealEstate(IConfiguration configuration)
+    public WebDbRealEstateContext(IConfiguration configuration)
     {
         Configuration = configuration;
     }
@@ -23,9 +23,9 @@ public class WebDbContextRealEstate : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.Entity<Apartament>()
-            .HasOne(apartament => apartament.ApartmentOwner)
-            .WithMany(apartmentOwner => apartmentOwner.Apartaments)
+        builder.Entity<ApartmentOwner>()
+            .HasMany(apartmentOwner => apartmentOwner.Apartaments)
+            .WithOne(apartament => apartament.ApartmentOwner)
             .OnDelete(DeleteBehavior.NoAction);
         base.OnModelCreating(builder);
     }

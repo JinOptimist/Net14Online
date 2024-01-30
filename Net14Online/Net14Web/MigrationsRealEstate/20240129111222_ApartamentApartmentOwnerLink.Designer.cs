@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Net14Web.MigrationsRealEstate
 {
-    [DbContext(typeof(WebDbContextRealEstate))]
+    [DbContext(typeof(WebDbRealEstateContext))]
     [Migration("20240129111222_ApartamentApartmentOwnerLink")]
     partial class ApartamentApartmentOwnerLink
     {
