@@ -3,11 +3,11 @@ using Net14Web.DbStuff.RealEstate.Models;
 
 namespace Net14Web.DbStuff.RealEstate;
 
-public class WebDbContextRealEstate : DbContext
+public class WebRealEstateDbContext : DbContext
 {
     protected readonly IConfiguration Configuration;
 
-    public WebDbContextRealEstate(IConfiguration configuration)
+    public WebRealEstateDbContext(IConfiguration configuration)
     {
         Configuration = configuration;
     }
@@ -15,7 +15,7 @@ public class WebDbContextRealEstate : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
         // connect to postgres with connection string from app settings
-        options.UseNpgsql(Configuration.GetConnectionString("WebApiDatabase"));
+        options.UseNpgsql(Configuration.GetConnectionString("Net14WebRE"));
     }
     
     public DbSet<ApartmentOwner> ApartmentOwners { get; set; } 

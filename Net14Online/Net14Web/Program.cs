@@ -22,7 +22,7 @@ builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString
 builder.Services.AddDbContext<ManagmentCompanyDbContext>(x => x.UseSqlServer(connStringManagmentCompany));
 
 var connectionStringRealEsate = builder.Configuration.GetConnectionString("Net14WebRE");
-builder.Services.AddDbContext<WebDbContextRealEstate>(x => x.UseSqlServer(connectionStringRealEsate));
+builder.Services.AddDbContext<WebRealEstateDbContext>(x => x.UseSqlServer(connectionStringRealEsate));
 //builder.Services.AddScoped<WebDbContext>();
 
 builder.Services.AddScoped<HeroBuilder>(diContainer =>

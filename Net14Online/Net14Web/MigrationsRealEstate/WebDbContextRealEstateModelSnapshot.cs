@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Net14Web.MigrationsRealEstate
 {
-    [DbContext(typeof(WebDbContextRealEstate))]
+    [DbContext(typeof(WebRealEstateDbContext))]
     partial class WebDbContextRealEstateModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
