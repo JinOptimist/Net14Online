@@ -1,0 +1,64 @@
+﻿@model Net14Web.Models.GameShop.GameViewModel
+
+@{
+    Layout = "_LayoutGameShop";
+}
+
+@section Style
+{
+    <link href="~/css/games.css" rel="stylesheet" />
+}
+
+<div class="game">
+    <div class="delete-button">
+        <a href="/gameShop/delete?id=@Model.Id" class="remove-link">X</a>
+    </div>
+
+    <div>
+        <img src="@Model.PosterUrl" />
+    </div>
+
+    <div class="game-footer">
+        <div class="name-block">
+            <div>
+                @Model.Name
+            </div>
+        </div>
+        <div class="raiting-block">
+            <div>
+                @Model.Rating
+            </div>
+        </div>
+        <div class="genre-block">
+            <div>
+                @Model.Genre
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="comments-block">
+    <form action="/gameShop/addComment" method="post">
+        <input type="hidden" name="gameId" value="@Model.Id" />
+        <div>
+            <input type="text" name="comment" />
+        </div>
+
+        <div>
+            <input type="submit" value="Add Comment" />
+        </div>
+    </form>
+
+    <div class="existed-comments">
+        @if (Model.Comments != null)
+        {
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="comment">
+                    @comment;
+                </div>
+            }
+        }
+    </div>
+
+</div>

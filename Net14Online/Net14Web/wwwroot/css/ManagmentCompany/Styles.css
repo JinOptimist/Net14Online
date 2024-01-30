@@ -75,10 +75,23 @@ button {
     width: 400px;
 }
 
-.add-project label, .add-project input, .add-project div {
+.add-project label, .add-project input, .add-project select {
     width: 400px;
 }
 
-.add-user label, .add-user input, .add-user div {
-    width: 400px;
+    .add-user label, .add-user input, .add-user select {
+        width: 400px;
+    }
+
+    .add-user select, .add-project select {
+        font-size: 14px;
+    }
+
+.submit {
+    margin: 10px;
+}
+
+.add-members {
+    font-size: 21px;
+    color: darkblue;
 }

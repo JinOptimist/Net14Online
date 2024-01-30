@@ -5,7 +5,6 @@ using Net14Web.DbStuff;
 using Net14Web.DbStuff.ManagmentCompany.Models;
 using Net14Web.Models.ManagmentCompany;
 
-
 namespace Net14Web.Controllers
 {
     public class ManagmentCompanyController : Controller
@@ -285,6 +284,11 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult Registration(RegistrationViewModel registrationViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(registrationViewModel);
+            }
+
             var user = new User
             {
                 Email = registrationViewModel.Email,
@@ -404,7 +408,7 @@ namespace Net14Web.Controllers
             {
                 return RedirectToAction("Profile");
             }
-            else 
+            else
             {
                 return RedirectToAction("AdminPanel");
             }
