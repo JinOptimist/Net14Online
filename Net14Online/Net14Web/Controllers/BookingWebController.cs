@@ -30,17 +30,7 @@ namespace Net14Web.Controllers
         }
         public IActionResult UserLogin()
         {
-            var dbLoginsBooking = _webDbContext.LoginsBooking.Take(10).ToList();
-
-            var viewModels = dbLoginsBooking.Select(dbLoginsBooking => new UserLoginViewModel
-            {
-                Id = dbLoginsBooking.Id,
-                Name = dbLoginsBooking.Name,
-                Email = dbLoginsBooking.Email,
-                Password = dbLoginsBooking.Password,
-            }).ToList();
-
-            return View(viewModels);
+            return View(userLoginViewModel);
         }
 
         public IActionResult SearchResult()
@@ -59,11 +49,10 @@ namespace Net14Web.Controllers
 
             return View(viewModels);
         }
-        public IActionResult Remove(int Id)
+        public IActionResult Remove(string name)
         {
-            var user = _webDbContext.LoginsBooking.First(x => x.Id == Id);
-            _webDbContext.LoginsBooking.Remove(user);
-            _webDbContext.SaveChanges();
+            var user = userLoginViewModel.First(x => x.Name == name);
+            userLoginViewModel.Remove(user);
             return RedirectToAction("UserLogin");
         }
 
@@ -77,11 +66,9 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateEmail(int Id, string Email)
+        public IActionResult UpdateEmail(string name, string email)
         {
-            var loginsBooking = _webDbContext.LoginsBooking.First(x => x.Id == Id);
-            loginsBooking.Email = Email;
-            _webDbContext.SaveChanges();
+            userLoginViewModel.First(x => x.Name == name).Email = email;
             return RedirectToAction("UserLogin");
         }
 
@@ -103,17 +90,14 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel userLoginViewModel)
+        public IActionResult Login(string name, string email, string password)
         {
-            var loginBooking = new LoginBooking
+            userLoginViewModel.Add(new UserLoginViewModel
             {
-                Name = userLoginViewModel.Name,
-                Email = userLoginViewModel.Email,
-                Password = userLoginViewModel.Password
-            };
-            _webDbContext.LoginsBooking.Add(loginBooking);
-            _webDbContext.SaveChanges();
-
+                Name = name,
+                Email = email,
+                Password = password
+            });
             return RedirectToAction("UserLogin");
         }
 

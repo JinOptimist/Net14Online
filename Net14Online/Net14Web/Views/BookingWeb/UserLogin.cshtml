@@ -10,14 +10,14 @@
 }
 <button><a href="Login">Login</a></button>
 @foreach(var user in Model){
-    <a href="Remove?id=@user.Id">Remove</a>
+    <a href="Remove?name=@user.Name">Remove</a>
 <div>
     Your Name: @user.Name
 </div>
 <div>
     Your E-mail: @user.Email
     <form action="UpdateEmail" method="post">
-        <input type="hidden" name="id" value="@user.Id" />
+        <input type="hidden" name="name" value="@user.Name" />
         <input type="email" name="email" />
         <input type="submit" value="update" />
     </form>

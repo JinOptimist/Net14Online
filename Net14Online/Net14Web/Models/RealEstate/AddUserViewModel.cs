@@ -1,3 +1,5 @@
+using Net14Web.DbStuff.ManagmentCompany.Models;
+
 namespace Net14Web.Models.RealEstate;
 
 public class AddUserViewModel
@@ -7,6 +9,4 @@ public class AddUserViewModel
     public int Age { get; set; }
    
     public string KindOfActivity { get; set; }
-    
-    public string Id { get; set; }
 }
