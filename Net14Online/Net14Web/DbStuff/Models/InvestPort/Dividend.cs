@@ -8,7 +8,7 @@ namespace Net14Web.DbStuff.Models
         public int TheAmountOfTheDividend { get; set; }
         public virtual Stock Stock { get; set; }
 
-        public int StockId;
+        public virtual int StockId { get; set; }
     }
 
 }
