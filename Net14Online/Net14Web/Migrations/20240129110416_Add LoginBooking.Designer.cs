@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Net14Web.DbStuff;
 
@@ -11,9 +12,11 @@ using Net14Web.DbStuff;
 namespace Net14Web.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240129110416_Add LoginBooking")]
+    partial class AddLoginBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,6 +38,31 @@ namespace Net14Web.Migrations
                     b.HasIndex("KnowedWeaponsId");
 
                     b.ToTable("HeroWeapon");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoginsBooking");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
@@ -69,7 +97,7 @@ namespace Net14Web.Migrations
                     b.ToTable("Searches");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.Game", b =>
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Game", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,28 +123,6 @@ namespace Net14Web.Migrations
                     b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.GameComment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CommentedGameId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommentedGameId");
-
-                    b.ToTable("GameComments");
-                });
-
             modelBuilder.Entity("Net14Web.DbStuff.Models.Hero", b =>
                 {
                     b.Property<int>("Id")
@@ -140,9 +146,6 @@ namespace Net14Web.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Race")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -357,17 +360,6 @@ namespace Net14Web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.GameComment", b =>
-                {
-                    b.HasOne("Net14Web.DbStuff.Models.GameShop.Game", "CommentedGame")
-                        .WithMany("Comments")
-                        .HasForeignKey("CommentedGameId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CommentedGame");
-                });
-
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
                 {
                     b.HasOne("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", "LoginBooking")
@@ -406,11 +398,6 @@ namespace Net14Web.Migrations
                     b.Navigation("Movie");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.Game", b =>
-                {
-                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>

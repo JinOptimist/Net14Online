@@ -15,7 +15,6 @@ namespace Net14Web.DbStuff
         public DbSet<Weapon> Weapons { get; set; }
         public DbSet<UsersPcShop> UserPcShop { get; set; }
         public DbSet<Search> Searches { get; set; }
-
         public DbSet<Game> Games { get; set; }
         public DbSet<GameComment> GameComments { get; set; }
         public DbSet<User> Users { get; set; }
@@ -24,6 +23,7 @@ namespace Net14Web.DbStuff
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<TaskInfo> TaskInfos { get; set; }
         public DbSet<RetroUser> RetroUsers { get; set; }
+        public DbSet<LoginBooking> LoginsBooking { get; set; }
         public WebDbContext(DbContextOptions<WebDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -53,6 +53,11 @@ namespace Net14Web.DbStuff
                 .HasMany(game => game.Comments)
                 .WithOne(comment => comment.CommentedGame)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<LoginBooking>()
+                .HasMany(loginBooking => loginBooking.Searches)
+                .WithOne(search => search.LoginBooking);
+
         }
     }
 }

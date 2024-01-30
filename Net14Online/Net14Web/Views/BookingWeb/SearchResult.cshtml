@@ -9,24 +9,27 @@
     <link href="~/css/booking.css" rel="stylesheet" />
 }
 
-@foreach (var user in Model)
+@foreach (var search in Model)
 {
-    <a href="RemoveSearch?id=@user.Id">Remove</a>
+    <a href="RemoveSearch?id=@search.Id">Remove</a>
     <div>
-        Country: @user.Country
+        Country: @search.Country
     </div>
     <div>
-        City: @user.City
+        City: @search.City
         <form action="UpdateCity" method="post">
-            <input type="hidden" name="Id" value="@user.Id" />
+            <input type="hidden" name="Id" value="@search.Id" />
             <input name="city" />
             <input type="submit" value="Update" />
         </form>
     </div>
     <div> 
-        Check-in Date: @user.CheckinDate
+        Check-in Date: @search.CheckinDate
     </div>
     <div>
-        Check-out Date: @user.CheckoutDate
+        Check-out Date: @search.CheckoutDate
+    </div>
+    <div>
+        Email: @search.LoginEmail
     </div>
 }
