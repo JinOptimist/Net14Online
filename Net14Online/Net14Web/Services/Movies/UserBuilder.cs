@@ -31,7 +31,7 @@ namespace Net14Web.Services.Movies
             var user = new User
             {
                 Login = addUser.Login,
-                Email = "test@test.com",
+                Email = addUser.Email,
                 Password = addUser.Password,
                 AvatarUrl = "https://e7.pngegg.com/pngimages/184/821/png-clipart-mangalore-united-states-management-computer-science-business-profile-angle-white.png"
             };
