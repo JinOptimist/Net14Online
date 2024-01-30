@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
+using Net14Web.DbStuff.RealEstate;
 using Net14Web.Services;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
@@ -20,6 +21,8 @@ builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString
 
 builder.Services.AddDbContext<ManagmentCompanyDbContext>(x => x.UseSqlServer(connStringManagmentCompany));
 
+var connectionStringRealEsate = builder.Configuration.GetConnectionString("Net14WebRE");
+builder.Services.AddDbContext<WebRealEstateDbContext>(x => x.UseSqlServer(connectionStringRealEsate));
 //builder.Services.AddScoped<WebDbContext>();
 
 builder.Services.AddScoped<HeroBuilder>(diContainer =>
@@ -43,7 +46,6 @@ builder.Services.AddScoped<LoginHelper>();
 builder.Services.AddScoped<ObjectBuilder>();
 
 builder.Services.AddScoped<DeleteUser>();
-builder.Services.AddScoped<IdBuilder>();
 builder.Services.AddScoped<UpdateUser>();
 builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
 var app = builder.Build();

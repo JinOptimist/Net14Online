@@ -5,6 +5,9 @@
     {
     <link rel="stylesheet" href="~/css/movies.css" />
     <link rel="stylesheet" href="~/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }
 
 <section class="vh-100">
@@ -21,6 +24,7 @@
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             @Html.TextBoxFor(x => x.Login, new { placeholder = "Логин", @class="form-control" })
+                                            @Html.ValidationMessageFor(x =>x .Login)
                                         </div>
                                     </div>
 
@@ -28,6 +32,7 @@
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             @Html.TextBoxFor(x => x.Password, new { @type="password", placeholder = "Пароль", @class="form-control" })
+                                            @Html.ValidationMessageFor(x =>x .Password)
                                         </div>
                                     </div>
 
