@@ -7,7 +7,6 @@ using Net14Web.Services.GameShop;
 using Net14Web.Services.Movies;
 using Net14Web.Services.RealEstate;
 using Net14Web.Services.Sattelite;
-using Net14Web.DbStuff.SeedData;
 
 
 var builder = WebApplication.CreateBuilder(args);
