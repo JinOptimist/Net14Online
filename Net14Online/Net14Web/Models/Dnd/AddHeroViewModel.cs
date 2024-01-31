@@ -1,4 +1,5 @@
-﻿using Net14Web.Models.ValidationAttributes;
+﻿using Net14Web.DbStuff.Models.Enums;
+using Net14Web.Models.ValidationAttributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Net14Web.Models.Dnd
@@ -17,6 +18,8 @@ namespace Net14Web.Models.Dnd
 
         [HpCoinSummMaxValue]
         public int? Coin { get; set; }
+
+        public Race Race { get; set; }
 
         public int? Hp { get; set; }
     }

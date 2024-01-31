@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.VisualBasic;
 using Net14Web.DbStuff;
@@ -11,7 +13,7 @@ namespace Net14Web.Controllers
 {
     public class BookingWebController : Controller
     {
-        private  WebDbContext _webDbContext;
+        private WebDbContext _webDbContext;
 
         public static List<UserLoginViewModel> userLoginViewModel = new List<UserLoginViewModel>();
 
@@ -33,15 +35,16 @@ namespace Net14Web.Controllers
 
         public IActionResult SearchResult()
         {
-            var dbCountries = _webDbContext.Searches.Take(10).ToList();
+            var searches = _webDbContext.Searches.Include(x => x.LoginBooking).Take(10).ToList();
 
-            var viewModels = dbCountries.Select(dbCountries => new SearchResultViewModel
+            var viewModels = searches.Select(search => new SearchResultViewModel
             {
-                Id = dbCountries.Id,    
-                Country = dbCountries.Country,
-                City = dbCountries.City,
-                CheckinDate = dbCountries.Checkin,
-                CheckoutDate = dbCountries.Checkout
+                Id = search.Id,
+                Country = search.Country,
+                City = search.City,
+                CheckinDate = search.Checkin,
+                CheckoutDate = search.Checkout,
+                LoginEmail = search.LoginBooking.Email
             }).ToList();
 
             return View(viewModels);
@@ -72,13 +75,13 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult UpdateCity(int Id, string City)
         {
-            var searches = _webDbContext.Searches.First(x=>x.Id == Id);
+            var searches = _webDbContext.Searches.First(x => x.Id == Id);
             searches.City = City;
             _webDbContext.SaveChanges();
 
-                return RedirectToAction("SearchResult");
+            return RedirectToAction("SearchResult");
         }
-            
+
 
         [HttpGet]
         public IActionResult Login()
@@ -107,16 +110,34 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult Index(IndexViewModel searchResultViewModel)
         {
-            var search = new Search {
+            var login = _webDbContext.LoginsBooking.FirstOrDefault();
 
-                Country = searchResultViewModel.Country, 
-                City = searchResultViewModel.City, 
+            var search = new Search
+            {
+                Country = searchResultViewModel.Country,
+                City = searchResultViewModel.City,
                 Checkin = searchResultViewModel.CheckinDate, 
                 Checkout = searchResultViewModel.CheckoutDate
-        };
+            };
             _webDbContext.Searches.Add(search);
             _webDbContext.SaveChanges();
             return RedirectToAction("SearchResult");
+        }
+
+        [HttpGet]
+        public IActionResult UserCountrySearch()
+        {
+            var viewModel = new UserSearchViewModel();
+
+            viewModel.Logins = _webDbContext.LoginsBooking.Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList();
+            viewModel.Searches = _webDbContext.Searches.Select(x => new SelectListItem(x.Country, x.Id.ToString())).ToList();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult UserCountrySearch(int loginId, int searchId)
+        {
+            return RedirectToAction("Index");
         }
     }
 }

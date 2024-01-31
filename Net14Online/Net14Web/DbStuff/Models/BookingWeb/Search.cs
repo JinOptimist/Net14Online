@@ -6,5 +6,7 @@
         public string City { get; set; }
         public DateTime Checkin { get; set; }
         public DateTime Checkout { get; set; }
+        public virtual LoginBooking LoginBooking { get; set; }
+
     }
 }
