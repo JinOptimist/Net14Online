@@ -51,7 +51,10 @@ builder.Services.AddScoped<ObjectBuilder>();
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();
 builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
+
 var app = builder.Build();
+
+SeedExtentoin.Seed(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
