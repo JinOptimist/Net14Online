@@ -1,0 +1,69 @@
+﻿@using Net14Web.Models.ManagmentCompany
+@model List<CompanyViewModel>
+
+@{
+    Layout = "_LayoutManagmentCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagmentCompany/ManagmentCompany.css" rel="stylesheet" />
+    <link href="~/css/ManagmentCompany/Styles.css" rel="stylesheet" />
+}
+
+<div class="regContainer">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+        </button>
+        <div class="dropdown-content">
+            <a href="/ManagmentCompany/Index">На главную</a>
+            <a href="/ManagmentCompany/About">О нас</a>
+            <a href="/ManagmentCompany/Contacts">Контакты</a>
+            <a class="login" href="/ManagmentCompany/Login">Вход</a>
+            <a class="reg" href="/ManagmentCompany/Registration">Регистрация</a>
+        </div>
+    </div>
+    <h2>Панель администратора</h2>
+    <div>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <div class="add-company">
+                <h2>Изменить данные компании</h2>
+                <form method="post" action="/ManagmentCompany/UpdateCompany">
+                    <input type="hidden" name="id" value="@Model[i].Id" />
+                    <label for="name"> Название компании:</label>
+                    @Html.TextBoxFor(x => x[i].CompanyName)
+                    @Html.ValidationMessageFor(model => model[i].CompanyName)
+
+                    <label for="shortName">Сокращенное название:</label>
+                    @Html.TextBoxFor(x => x[i].CompanyShortName)
+                    @Html.ValidationMessageFor(x => x[i].CompanyShortName)
+
+                    <label for="email">Электронная почта:</label>
+                    @Html.TextBoxFor(x => x[i].CompanyEmail)
+                    @Html.ValidationMessageFor(x => x[i].CompanyEmail)
+
+                    <label for="adress">Адрес:</label>
+                    @Html.TextBoxFor(x => x[i].CompanyAdress)
+                    @Html.ValidationMessageFor(x => x[i].CompanyAdress)
+
+                    <label for="phoneNumber">Номер телефона:</label>
+                    @Html.TextBoxFor(x => x[i].CompanyPhoneNumber)
+                    @Html.ValidationMessageFor(x => x[i].CompanyPhoneNumber)
+
+                    <label for="companyStatus">Статус:</label>
+                    <div class="change-status">
+                        @Html.TextBoxFor(x => x[i].CompanyStatus, new { @class = "company-status", @readonly = "readonly" })
+                        @Html.DropDownList("statusId", Model[i].Statuses, new { @class = "company-status-list" })
+                    </div>
+
+                    <input class="submit" type="submit" value="Обновить информацию" />
+                </form>
+            </div>
+        }
+    </div>
+</div>
+
+
+

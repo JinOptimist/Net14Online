@@ -34,10 +34,10 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("KnowedWeaponsId");
 
-                    b.ToTable("HeroWeapon");
+                    b.ToTable("HeroWeapon", (string)null);
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.Game", b =>
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,22 +45,21 @@ namespace Net14Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Genre")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogoUrl")
+                    b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Raiting")
-                        .HasColumnType("float");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Games");
+                    b.ToTable("LoginsBooking", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
@@ -85,9 +84,62 @@ namespace Net14Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("LoginBookingId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Searches");
+                    b.HasIndex("LoginBookingId");
+
+                    b.ToTable("Searches", (string)null);
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.Game", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Genre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Raiting")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Games", (string)null);
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.GameComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CommentedGameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentedGameId");
+
+                    b.ToTable("GameComments", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Hero", b =>
@@ -97,6 +149,10 @@ namespace Net14Web.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AvatarUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
@@ -114,11 +170,100 @@ namespace Net14Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Race")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FavoriteWeaponId");
 
-                    b.ToTable("Heroes");
+                    b.ToTable("Heroes", (string)null);
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.Player", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Assists")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Goals")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("Players", (string)null);
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.SportGame", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Team1Goals")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Team2Goals")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeamIDWin")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SportGames", (string)null);
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.Team", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liga")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teams", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Comment", b =>
@@ -147,7 +292,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Movie", b =>
@@ -169,7 +314,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.User", b =>
@@ -194,7 +339,73 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.RetroUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Login")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RetroUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Stock", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Stocks", (string)null);
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TaskInfos", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.UsersPcShop", b =>
@@ -223,7 +434,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserPcShop");
+                    b.ToTable("UserPcShop", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Weapon", b =>
@@ -243,7 +454,22 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Weapons");
+                    b.ToTable("Weapons", (string)null);
+                });
+
+            modelBuilder.Entity("SportGameTeam", b =>
+                {
+                    b.Property<int>("GamesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GamesId", "TeamsId");
+
+                    b.HasIndex("TeamsId");
+
+                    b.ToTable("SportGameTeam", (string)null);
                 });
 
             modelBuilder.Entity("HeroWeapon", b =>
@@ -261,6 +487,28 @@ namespace Net14Web.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", "LoginBooking")
+                        .WithMany("Searches")
+                        .HasForeignKey("LoginBookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LoginBooking");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.GameComment", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.GameShop.Game", "CommentedGame")
+                        .WithMany("Comments")
+                        .HasForeignKey("CommentedGameId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CommentedGame");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.Hero", b =>
                 {
                     b.HasOne("Net14Web.DbStuff.Models.Weapon", "FavoriteWeapon")
@@ -269,6 +517,17 @@ namespace Net14Web.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("FavoriteWeapon");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.Player", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.LifeScore.Team", "Team")
+                        .WithMany("Players")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Comment", b =>
@@ -290,6 +549,36 @@ namespace Net14Web.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SportGameTeam", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.LifeScore.SportGame", null)
+                        .WithMany()
+                        .HasForeignKey("GamesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Net14Web.DbStuff.Models.LifeScore.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+                {
+                    b.Navigation("Searches");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.Game", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.Team", b =>
+                {
+                    b.Navigation("Players");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Movie", b =>
                 {
                     b.Navigation("Comments");
@@ -304,23 +593,6 @@ namespace Net14Web.Migrations
                 {
                     b.Navigation("HeroesWhoLikeTheWeapon");
                 });
-            modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-                b.Property<string>("Description")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-                b.Property<string>("Name")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-                b.Property<int>("Priority")
-                    .HasColumnType("int");
-                b.HasKey("Id");
-                b.ToTable("TaskInfos");
-            });
 #pragma warning restore 612, 618
         }
     }

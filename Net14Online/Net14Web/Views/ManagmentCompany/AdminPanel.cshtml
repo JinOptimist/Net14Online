@@ -11,100 +11,178 @@
     <link href="~/css/ManagmentCompany/Styles.css" rel="stylesheet" />
 }
 
+
 <div class="regContainer">
     <div class="dropdown">
         <button class="dropbtn">
             <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
         </button>
         <div class="dropdown-content">
-            @* @foreach (var myPage in Model.Pages)
-            {
-            <a href="/ManagmentCompany/@myPage">@myPage</a>
-            } *@
             <a href="/ManagmentCompany/Index">На главную</a>
             <a href="/ManagmentCompany/About">О нас</a>
             <a href="/ManagmentCompany/Contacts">Контакты</a>
-            @* <a href="statistics.html">Статистика</a> *@
             <a class="login" href="/ManagmentCompany/Login">Вход</a>
             <a class="reg" href="/ManagmentCompany/Registration">Регистрация</a>
         </div>
     </div>
     <h2>Панель администратора</h2>
-    <div>
-        <div class="add-company">
-            <h2>Добавить компанию</h2>
-            <form method="post" action="/ManagmentCompany/AddCompany">
-                <label for="name"> Название компании:</label>
-                <input type="text" id="name" name="name" required>
+    <h1>Список компаний</h1>
+    <details open>
+        <summary>Показать компании</summary>
+        <table border="1">
+            <thead>
+                <tr>
+                    @if (Model.Companies.Count > 0)
+                    {
+                        @foreach (var companyField in Model.Companies.FirstOrDefault().GetType().GetProperties()
+                       .Where(x => x.Name != "CompanyShortName")
+                       .Where(x => x.Name != "CompanyPhoneNumber"))
+                        {
+                            <th>@companyField.Name</th>
+                        }
+                    }
 
-                <label for="shortName">Сокращенное название:</label>
-                <input type="text" id="shortName" name="shortName" required>
-
-                <label for="email">Электронная почта:</label>
-                <input type="text" id="email" name="email" required>
-
-                <label for="adress">Адрес:</label>
-                <input type="text" id="adress" name="adress" required>
-
-                <label for="phoneNumber">Номер телефона:</label>
-                <input type="text" id="phoneNumber" name="phoneNumber" required>
-
-                <button type="submit">Добавить компанию</button>
-            </form>
-        </div>
-        <div class="add-project">
-            <h2>Добавить проект</h2>
-            <form method="post" action="/ManagmentCompany/AddProject">
-                <label for="name"> Название проекта:</label>
-                <input type="text" id="name" name="name" required>
-
-                <label for="shortName">Сокращенное название:</label>
-                <input type="text" id="shortName" name="shortName" required>
-
-                <label for="adress">Адрес:</label>
-                <input type="text" id="adress" name="adress" required>
-
-                <label for="company">Компания:</label>
-                @Html.DropDownList("companyId", Model.Companies)
-
-                <button type="submit" value="Добавить проект">Добавить проект</button>
-            </form>
-        </div>
-        <div class="add-user">
-            <h2>Добавить исполнителя</h2>
-            <form method="post" action="/ManagmentCompany/AddExecutor">
-                <label for="firstName"> Имя:</label>
-                <input type="text" id="firstName" name="firstName" required>
-
-                <label for="lastName"> Фамилия:</label>
-                <input type="text" id="lastName" name="lastName" required>
-
-                <label for="nickName"> Ник на сайте:</label>
-                <input type="text" id="nickName" name="nickName" required>
-
-                <label for="email">Электронная почта:</label>
-                <input type="text" id="email" name="email" required>
-
-                <label for="password">Пароль для пользователя:</label>
-                <input type="text" id="password" name="password" required>
-
-                <label for="phoneNumber">Номер телефона:</label>
-                <input type="text" id="phoneNumber" name="phoneNumber" required>
-
-                <label for="expireDate">Выберите дату:</label>
-                <input type="date" id="expireDate" name="expireDate">
-
-                <label for="permission">Уровень доступа:</label>
-                @Html.DropDownList("permissionId", Model.Permissions)
-
-                <label for="project">Проект:</label>
-                @Html.DropDownList("projectId", Model.Projects)
-
-                <button type="submit" value="Добавить пользователя">Добавить пользователя</button>
-            </form>
-        </div>
-    </div>
-
+                    <th>Изменить</th>
+                    <th>Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var company in Model.Companies)
+                {
+                    <tr>
+                        @foreach (var companyField in Model.Companies.FirstOrDefault().GetType().GetProperties()
+                       .Where(x => x.Name != "CompanyShortName")
+                       .Where(x => x.Name != "CompanyPhoneNumber"))
+                        {
+                            <td> @companyField.GetValue(company)</td>
+                        }
+                        <td>
+                            <button class="admin-panel-button">
+                                <a asp-controller="ManagmentCompany" asp-action="UpdateCompany" asp-route-id="@company.Id">Изменить</a>
+                            </button>
+                        </td>
+                        <td>
+                            <form action="/ManagmentCompany/RemoveCompany" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@company.Id" />
+                                <button class="admin-panel-button" type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <a href="/ManagmentCompany/AddCompany">Добавить</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </details>
+    <h1>Список проектов</h1>
+    <details>
+        <summary>Показать проекты</summary>
+        <table border="1">
+            <thead>
+                <tr>
+                    @if (Model.Projects.Count > 0)
+                    {
+                        @foreach (var projectField in Model.Projects.FirstOrDefault().GetType().GetProperties()
+                       .Where(x => x.Name != "ProjectShortName"))
+                        {
+                            <th>@projectField.Name</th>
+                        }
+                    }
+                    <th>Изменить</th>
+                    <th>Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var project in Model.Projects)
+                {
+                    <tr>
+                        @foreach (var projectField in Model.Projects.FirstOrDefault().GetType().GetProperties()
+                       .Where(x => x.Name != "ProjectShortName"))
+                        {
+                            <td> @projectField.GetValue(project)</td>
+                        }
+                        <td>
+                            <button class="admin-panel-button">
+                                <a asp-controller="ManagmentCompany" asp-action="UpdateProject" asp-route-id="@project.Id">Изменить</a>
+                            </button>
+                        </td>
+                        <td>
+                            <form action="/ManagmentCompany/RemoveProject" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@project.Id" />
+                                <button class="admin-panel-button" type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <a href="/ManagmentCompany/AddProject">Добавить</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </details>
+    <h1>Список исполнителей</h1>
+    <details>
+        <summary>Показать исполнителей</summary>
+        <table border="1">
+            <thead>
+                <tr>
+                    @if (Model.Executors.Count > 0)
+                    {
+                        @foreach (var ExecutorField in Model.Executors
+                       .FirstOrDefault()
+                       .GetType()
+                       .GetProperties()
+                       .Where(x => x.Name != "ExecutorPassword")
+                       .Where(x => x.Name != "ExecutorExpireDate")
+                       .Where(x => x.Name != "ExecutorNickName"))
+                        {
+                            <th>@ExecutorField.Name</th>
+                        }
+                    }
+                    <th>Изменить</th>
+                    <th>Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var executor in Model.Executors)
+                {
+                    <tr>
+                        @foreach (var ExecutorField in Model.Executors
+                       .FirstOrDefault()
+                       .GetType()
+                       .GetProperties()
+                       .Where(x => x.Name != "ExecutorPassword")
+                       .Where(x => x.Name != "ExecutorExpireDate")
+                       .Where(x => x.Name != "ExecutorNickName"))
+                        {
+                            <td> @ExecutorField.GetValue(executor)</td>
+                        }
+                        <td>
+                            <button class="admin-panel-button">
+                                <a asp-controller="ManagmentCompany" asp-action="UpdateExecutor" asp-route-id="@executor.Id">Изменить</a>
+                            </button>
+                        </td>
+                        <td>
+                            <form action="/ManagmentCompany/RemoveExecutor" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@executor.Id" />
+                                <button class="admin-panel-button" type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <a href="/ManagmentCompany/AddExecutor">Добавить</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </details>
 </div>
 
 

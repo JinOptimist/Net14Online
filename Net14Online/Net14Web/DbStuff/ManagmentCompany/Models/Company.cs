@@ -2,8 +2,6 @@
 {
     public class Company : BaseModel
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public string? ShortName { get; set; }
@@ -14,8 +12,10 @@
 
         public string? PhoneNumber { get; set; }
 
-        public MemberStatus? CompanyStatus { get; set; }
+        public virtual MemberStatus? Status { get; set; }
 
-        public List<Project>? Projects { get; set; }
+        public virtual List<Project>? Projects { get; set; }
+
+        public virtual List<User>? Executors { get; set; }
     }
 }

@@ -44,6 +44,10 @@ namespace Net14Web.Controllers
         [HttpPost]
         public ActionResult Registration(AddUserViewModel UserViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(UserViewModel);
+            }
             var user = new UsersPcShop
             {
                 Name = UserViewModel.Name,

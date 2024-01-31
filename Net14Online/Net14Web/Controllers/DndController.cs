@@ -1,38 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Repositories;
 using Net14Web.Models.Dnd;
-using Net14Web.Services.DndServices;
-using System.Xml.Linq;
 
 namespace Net14Web.Controllers
 {
     public class DndController : Controller
     {
-        private readonly HeroBuilder _heroBuilder;
-        private WebDbContext _webDbContext;
+        private HeroRepository _heroRepository;
+        private WeaponRepository _weaponRepository;
+        private IWebHostEnvironment _webHostEnvironment;
 
-        /// <summary>
-        /// TEMP SOLUTION. DONT DO THIS IN PRODUCT
-        /// </summary>
-        public static List<HeroViewModel> heroViewModels = new List<HeroViewModel>();
-
-        public DndController(HeroBuilder heroBuilder, WebDbContext webDbContext)
+        public DndController(HeroRepository heroRepository,
+            WeaponRepository weaponRepository,
+            IWebHostEnvironment webHostEnvironment)
         {
-            _heroBuilder = heroBuilder;
-            _webDbContext = webDbContext;
+            _heroRepository = heroRepository;
+            _weaponRepository = weaponRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
         {
-            var dbHeroes = _webDbContext
-                .Heroes
-                //.Include(x => x.FavoriteWeapon)
-                .Take(10)
-                .ToList();
-
+            var dbHeroes = _heroRepository.GetHeroesWithWeapon(10);
             var viewModels = dbHeroes
                 .Select(dbHero =>
                 {
@@ -42,6 +33,8 @@ namespace Net14Web.Controllers
                         Age = DateTime.Now.Year - dbHero.Birthday.Year,
                         Name = dbHero.Name,
                         Coins = dbHero.Coins,
+                        Race = dbHero.Race,
+                        AvatarUrl = dbHero.AvatarUrl,
                         FavWeaponName = dbHero.FavoriteWeapon?.Name ?? "---"
                     };
                 })
@@ -56,40 +49,54 @@ namespace Net14Web.Controllers
             return View(dndIndexViewModel);
         }
 
-        public IActionResult Profile()
+        public IActionResult Profile(int heroId)
         {
+            var hero = _heroRepository.GetById(heroId);
             var viewModel = new HeroViewModel();
-
-            viewModel.Name = "Test";
-            viewModel.Coins = DateTime.Now.Second;
-            viewModel.Tools = new List<string> { "Hammer", "Shuffle" };
+            viewModel.Id = heroId;
+            viewModel.AvatarUrl = hero.AvatarUrl;
+            viewModel.Name = hero.Name;
+            viewModel.Coins = hero.Coins;
+            viewModel.Race = hero.Race;
 
             return View(viewModel);
         }
 
+        public IActionResult UpdateAvatar(int heroId, IFormFile avatar)
+        {
+            // upload image
+            var extension = Path.GetExtension(avatar.FileName);
+
+            var fileName = $"heroAvatar{heroId}{extension}";
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "dndAvatars", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                avatar.CopyTo(fileStream);
+            }
+
+            var avatarUrl = $"/images/dndAvatars/{fileName}";
+            _heroRepository.UpdateAvatar(heroId, avatarUrl);
+
+            return RedirectToAction("Profile", new { heroId });
+        }
+
         public IActionResult Remove(int id)
         {
-            var hero = _webDbContext.Heroes.First(x => x.Id == id);
-            _webDbContext.Heroes.Remove(hero);
-            _webDbContext.SaveChanges();
-
+            _heroRepository.Delete(id);
             return RedirectToAction("Index");
         }
 
         public IActionResult AddRandomHero()
         {
-            var hero = _heroBuilder.BuildRandomHero();
-            heroViewModels.Add(hero);
+            //var hero = _heroBuilder.BuildRandomHero();
+            //heroViewModels.Add(hero);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult UpdateCoin(int heroId, int coin)
         {
-            var hero = _webDbContext.Heroes.First(x => x.Id == heroId);
-            hero.Coins = coin;
-            _webDbContext.SaveChanges();
-
+            _heroRepository.UpdateCoin(heroId, coin);
             return RedirectToAction("Index");
         }
 
@@ -111,12 +118,11 @@ namespace Net14Web.Controllers
             {
                 Name = heroViewModel.Name,
                 Birthday = DateTime.Now,
-                Coins = heroViewModel.Coin ?? default
+                Coins = heroViewModel.Coin ?? default,
+                Race = heroViewModel.Race
             };
 
-            _webDbContext.Heroes.Add(hero);
-
-            _webDbContext.SaveChanges();
+            _heroRepository.Add(hero);
 
             return RedirectToAction("Index");
         }
@@ -126,13 +132,13 @@ namespace Net14Web.Controllers
         {
             var viewModel = new FavoriteWeaponViewModel();
 
-            viewModel.Heroes = _webDbContext
-                .Heroes
+            viewModel.Heroes = _heroRepository
+                .GetAll()
                 .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
                 .ToList();
 
-            viewModel.Weapons = _webDbContext
-                .Weapons
+            viewModel.Weapons = _weaponRepository
+                .GetAll()
                 .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
                 .ToList();
 
@@ -142,10 +148,7 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult ChooseFavoriteWeapon(int heroId, int weaponId)
         {
-            var hero = _webDbContext.Heroes.First(x => x.Id == heroId);
-            var weapon = _webDbContext.Weapons.First(x => x.Id == weaponId);
-            hero.FavoriteWeapon = weapon;
-            _webDbContext.SaveChanges();
+            _heroRepository.SetFavoriteWeapone(heroId, weaponId);
 
             return RedirectToAction("Index");
         }
