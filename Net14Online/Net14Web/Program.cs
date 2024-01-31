@@ -38,10 +38,10 @@ builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
 // Repositories
-builder.Services.AddScoped<IGameShopRepository, GameShopRepository>();
+builder.Services.AddScoped<GameShopRepository>();
 builder.Services.AddScoped<HeroRepository>();
 builder.Services.AddScoped<MoviesRepository>();
-builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<Net14Web.DbStuff.Repositories.Movies.UserRepository>();
 builder.Services.AddScoped<CommentRepository>();
 builder.Services.AddScoped<WeaponRepository>();
 builder.Services.AddScoped<HeroRepository>();
