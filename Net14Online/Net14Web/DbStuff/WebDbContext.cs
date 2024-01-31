@@ -1,17 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff.Models;
-using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Models.BookingWeb;
-using Net14Web.DbStuff.Models.TaskTracker;
+using Net14Web.DbStuff.Models.LifeScore;
+using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Models.RetroConsoles;
 using Net14Web.DbStuff.Models.GameShop;
+using Net14Web.DbStuff.Models.TaskTracker;
 
 namespace Net14Web.DbStuff
 {
     public class WebDbContext : DbContext
     {
         public DbSet<Hero> Heroes { get; set; }
-
         public DbSet<Weapon> Weapons { get; set; }
         public DbSet<UsersPcShop> UserPcShop { get; set; }
         public DbSet<Search> Searches { get; set; }
@@ -24,6 +24,11 @@ namespace Net14Web.DbStuff
         public DbSet<TaskInfo> TaskInfos { get; set; }
         public DbSet<RetroUser> RetroUsers { get; set; }
         public DbSet<LoginBooking> LoginsBooking { get; set; }
+        // LifeScore
+        public DbSet<SportGame> SportGames { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<Player> Players { get; set; }
+
         public WebDbContext(DbContextOptions<WebDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -58,6 +63,14 @@ namespace Net14Web.DbStuff
                 .HasMany(loginBooking => loginBooking.Searches)
                 .WithOne(search => search.LoginBooking);
 
+
+            builder.Entity<Team>()
+                .HasMany(team => team.Games)
+                .WithMany(nextGame => nextGame.Teams);
+
+            builder.Entity<Player>()
+                .HasOne(player => player.Team)
+                .WithMany(team => team.Players);
         }
     }
 }
