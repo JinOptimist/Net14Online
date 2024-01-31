@@ -12,9 +12,9 @@ namespace Net14Web.Controllers
         private readonly ErrorBuilder _errorBuilder;
         private readonly UserBuilder _userBuilder;
         private readonly CommentBuilder _commentBuilder;
-        private readonly LoginHelper _loginHelper;
         private readonly MovieEditHelper _movieEditHelper;
         private readonly UserEditHelper _userEditHelper;
+        private readonly RegistrationHelper _registrationHelper;
 
         public static AdminPanelViewModel AdminPanelViewModel = new AdminPanelViewModel();
 
@@ -24,16 +24,16 @@ namespace Net14Web.Controllers
         private const int COUNT_MOVIES_ON_INDEX = 10;
 
         public MoviesController(MovieBuilder movieBuilder, ErrorBuilder errorBuilder, UserBuilder userBuilder, CommentBuilder commentBuilder, 
-            LoginHelper loginHelper, MovieEditHelper movieEditHelper, UserEditHelper userEditHelper,
+            MovieEditHelper movieEditHelper, UserEditHelper userEditHelper, RegistrationHelper registrationHelper,
             WebDbContext webDbContext)
         {
             _movieBuilder = movieBuilder;
             _errorBuilder = errorBuilder;
             _userBuilder = userBuilder;
             _commentBuilder = commentBuilder;
-            _loginHelper = loginHelper;
             _movieEditHelper = movieEditHelper;
             _userEditHelper = userEditHelper;
+            _registrationHelper = registrationHelper;
             _webDbContext = webDbContext;
             AdminPanelViewModel.Movies = _webDbContext.Movies.
                 Select(m => _movieBuilder.RebuildMovieToMovieViewModel(m)).ToList();
@@ -86,6 +86,11 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult Registration(AddUserViewModel addUser)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(addUser);
+            }
+
             var user = _userBuilder.BuildUser(addUser);
             _webDbContext.Add(user);
             _webDbContext.SaveChanges();
@@ -96,7 +101,7 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult Login(LoginUserViewModel loginUser)
         {
-            var user = _loginHelper.FindLoggedUser(_webDbContext.Users.ToList(), loginUser);
+            var user = _webDbContext.Users.FirstOrDefault(user => user.Login.ToLower() == loginUser.Login.ToLower() && user.Password == loginUser.Password);
             if (user != null)
             {
                 activeUserId = user.Id;
@@ -153,9 +158,21 @@ namespace Net14Web.Controllers
         {
             var comment = _webDbContext.Comments.First(comment => comment.Id == commentId);
             var movieId = comment.Movie.Id;
-            _webDbContext.Remove(comment);
+            _webDbContext.Comments.Remove(comment);
             _webDbContext.SaveChanges();
             return RedirectToAction("Movie", RedirectMovieById(movieId));
+        }
+
+        /// <summary>
+        /// AdminPanel
+        /// </summary>
+        [HttpPost]
+        public IActionResult RemoveUser(int userId)
+        {
+            var user = _webDbContext.Users.First(user => user.Id == userId);
+            _webDbContext.Users.Remove(user);
+            _webDbContext.SaveChanges();
+            return RedirectToAction("AdminPanel");
         }
 
         /// <summary>
@@ -180,6 +197,27 @@ namespace Net14Web.Controllers
             _movieEditHelper.EditMovie(movie, editMovie);
             _webDbContext.SaveChanges();
             return RedirectToAction("AdminPanel");
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult VerifyEmail(string email)
+        {
+            var emailExists = _registrationHelper.IsEmailExists(email);
+            return Json(!emailExists);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult VerifyLogin(string login)
+        {
+            var loginExists = _registrationHelper.IsLoginExists(login);
+            return Json(!loginExists);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult VerifyLoginAuthorization(string login)
+        {
+            var loginExists = _registrationHelper.IsLoginExists(login);
+            return Json(loginExists);
         }
 
         public object RedirectMovieById(int id)
