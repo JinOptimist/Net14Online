@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.RealEstate;
+using Net14Web.DbStuff.Repositories;
+using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Services;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
@@ -35,7 +37,16 @@ builder.Services.AddScoped<HeroBuilder>(diContainer =>
 builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
+// Repositories
 builder.Services.AddScoped<IGameShopRepository, GameShopRepository>();
+builder.Services.AddScoped<HeroRepository>();
+builder.Services.AddScoped<MoviesRepository>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<CommentRepository>();
+builder.Services.AddScoped<WeaponRepository>();
+builder.Services.AddScoped<HeroRepository>();
+
+// Services
 builder.Services.AddScoped<CommentBuilder>();
 builder.Services.AddScoped<ErrorBuilder>();
 builder.Services.AddScoped<MovieBuilder>();
@@ -43,10 +54,12 @@ builder.Services.AddScoped<Net14Web.Services.Movies.UserBuilder>();
 builder.Services.AddScoped<UserEditHelper>();
 builder.Services.AddScoped<MovieEditHelper>();
 builder.Services.AddScoped<ObjectBuilder>();
+builder.Services.AddScoped<RegistrationHelper>();
 
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();
 builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
