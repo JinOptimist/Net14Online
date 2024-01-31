@@ -14,7 +14,7 @@ namespace Net14Web.DbStuff.Repositories
             _context = context;
             _entyties = _context.Set<DbModel>();
         }
-        
+
         public virtual DbModel GetById(int id)
         {
             return _entyties.SingleOrDefault(ent => ent.Id == id);
@@ -39,5 +39,8 @@ namespace Net14Web.DbStuff.Repositories
             return _entyties
                 .ToList();
         }
+
+        public virtual bool Any()
+            => _entyties.Any();
     }
 }

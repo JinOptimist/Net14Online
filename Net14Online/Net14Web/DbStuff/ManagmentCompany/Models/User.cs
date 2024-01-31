@@ -2,8 +2,6 @@
 {
     public class User : BaseModel
     {
-        public int Id { get; set; }
-
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
@@ -14,12 +12,20 @@
 
         public string? PhoneNumber { get; set; }
 
-        public MemberStatus? UserStatus { get; set; }
-
-        public MemberPermission? MemberPermission { get; set; }
-
         public string Password { get; set; }
 
-        public List<UserTask>? UserTasks { get; set; }
+        public DateTime? ExpireDate { get; set; }
+
+        public virtual Company? Company { get; set; }
+
+        public virtual MemberStatus Status { get; set; }
+
+        public virtual MemberPermission MemberPermission { get; set; }
+
+        public virtual List<Project>? Projects { get; set; }
+
+        public virtual List<UserTask>? UserCreatedTasks { get; set; }
+
+        public virtual List<UserTask>? UserExecutedTasks { get; set; }
     }
 }

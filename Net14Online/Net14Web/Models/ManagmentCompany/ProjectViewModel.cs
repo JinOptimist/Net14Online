@@ -1,15 +1,32 @@
-﻿using Net14Web.DbStuff.ManagmentCompany.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Net14Web.DbStuff.ManagmentCompany.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Net14Web.Models.ManagmentCompany
 {
     public class ProjectViewModel
     {
-        public string Name { get; set; }
+        public int Id { get; set; }
 
-        public string? ShortName { get; set; }
+        [Required(ErrorMessage = "Обязательное поле")]
+        public string ProjectName { get; set; }
 
-        public string? Adress { get; set; }
+        [MaxLength(10, ErrorMessage = "Максимальная длина 10 символов")]
+        [RegularExpression(@"^[A-Z0-9_]+$", ErrorMessage = "Допустимы заглавные буквы, цифры от 0-9, знак _")]
+        public string ProjectShortName { get; set; }
 
-        public string Company { get; set; }
+        public string? ProjectAdress { get; set; }
+
+        public string? ProjectStatus { get; set; }
+
+        public string ProjectLinkCompany { get; set; }
+
+        internal List<SelectListItem> Companies { get; set; }
+
+        internal List<SelectListItem> Projects { get; set; }
+
+        internal List<SelectListItem> Permissions { get; set; }
+
+        internal List<SelectListItem> Statuses { get; set; }
     }
 }

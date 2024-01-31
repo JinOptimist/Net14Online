@@ -1,22 +1,18 @@
 ﻿@using Net14Web.Models.Dnd
 @model HeroViewModel
 
-@{
-    Layout = "_LayoutDnd";
-}
+<div>
+    Это лист пресонажа по имени @Model.Name мне @Model.Age
+</div>
+<div>
+    У персонажа @Model.Coins монеток. Он из @Model.Race
+</div>
+<div>
+    <img src="@Model.AvatarUrl" />
+</div>
 
-<div>
-    Это лист пресонажа по имени @Model.Name
-</div>
-<div>
-    У персонажа @Model.Coins монеток
-</div>
-<div>
-    У меня в рюкзаме лежит
-    @foreach(var item in Model.Tools)
-    {
-        <span id="@item">
-            @item
-        </span>
-    }
-</div>
+<form action="/dnd/updateAvatar" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="heroId" value="@Model.Id" />
+    <input type="file" name="avatar" accept=".jpg" />
+    <input type="submit" value="Обновить аватар" />
+</form>

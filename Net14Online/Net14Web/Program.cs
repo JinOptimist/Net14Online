@@ -2,10 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.RealEstate;
 using Net14Web.DbStuff.Repositories;
+using Net14Web.DbStuff.Repositories.GameShop;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Services;
 using Net14Web.Services.DndServices;
-using Net14Web.Services.GameShop;
 using Net14Web.Services.Movies;
 using Net14Web.Services.RealEstate;
 using Net14Web.Services.Sattelite;
@@ -45,6 +45,8 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<CommentRepository>();
 builder.Services.AddScoped<WeaponRepository>();
 builder.Services.AddScoped<HeroRepository>();
+builder.Services.AddScoped<GameCommentRepository>();
+builder.Services.AddScoped<GameShopRepository>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
@@ -61,6 +63,8 @@ builder.Services.AddScoped<UpdateUser>();
 builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
 
 var app = builder.Build();
+
+SeedExtentoin.Seed(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
