@@ -16,12 +16,13 @@
             <input type="hidden" name="id" value="@Model.Id">
 
             @Html.TextBoxFor(x => x.Name, new { placeholder = Model.Name, @class = "add-form__input" })
+            @Html.ValidationMessageFor(x => x.Name)
 
             @Html.TextAreaFor(x => x.Description, new { placeholder = Model.Description, @class = "add-form__input add-form__input_description" })
+            @Html.ValidationMessageFor(x => x.Description)
 
             <label class="add-form__dropdown-label">Приоритет</label>
             @Html.DropDownListFor(x => x.Priority, new SelectList(Model.PriorityOptions.Select(p => new SelectListItem { Value = p.ToString(), Text = p.ToString() }), "Value", "Text"), new { placeholder = "Приоритет", @class = "add-form__dropdown" })
-
 
             <input type="submit" value="Обновить заметку" class="add-form__button" />
 

@@ -82,12 +82,18 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateTask(int id, string name, string description, int priority)
+        public IActionResult UpdateTask(AddTaskViewModel taskViewModel)
         {
-            var task = _webDbContext.TaskInfos.First(x => x.Id == id);
-            task.Name = name;
-            task.Description = description;
-            task.Priority = priority;
+            if (!ModelState.IsValid)
+            {
+                taskViewModel.PriorityOptions = new List<int> { 1, 2, 3 };
+                return View(taskViewModel);
+            }
+
+            var task = _webDbContext.TaskInfos.First(x => x.Id == taskViewModel.Id);
+            task.Name = taskViewModel.Name;
+            task.Description = taskViewModel.Description;
+            task.Priority = taskViewModel.Priority;
             _webDbContext.SaveChanges();
 
             return RedirectToAction("Index");

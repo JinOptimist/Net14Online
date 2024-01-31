@@ -7,13 +7,17 @@ namespace Net14Web.Models.TaskTracker
 {
     public class AddTaskViewModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
-        public string Name { get; set; }
+        [Required(ErrorMessage = "Введите название")]
+        [TaskTrackerValidation(ErrorMessage = "Название не должно содержать символы <>&")]
+        public string? Name { get; set; }
 
-        public string Description { get; set; }
+        [Required(ErrorMessage = "Введите описание")]
+        [TaskTrackerValidation(ErrorMessage = "Описание не должно содержать символы <>&")]
+        public string? Description { get; set; }
         public int Priority { get; set; }
-        public List<int> PriorityOptions { get; set; }
+        public List<int>? PriorityOptions { get; set; }
 
     }
 }

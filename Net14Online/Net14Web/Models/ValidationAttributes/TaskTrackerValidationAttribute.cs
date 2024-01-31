@@ -9,17 +9,15 @@ namespace Net14Web.Models.ValidationAttributes
 
         public TaskTrackerValidationAttribute()
         {
-            _regex = new Regex(@"^[a-zA-Z0-9]*$");
+            _regex = new Regex(@"^[^<>&]+$");
         }
 
         public override bool IsValid(object? value)
         {
-          
-            if (value is not null && value is not string)
+            if (value == null)
             {
-                throw new ArgumentException("TaskTrackerValidationAttribute can be only on string");
+                return false;
             }
-
             var someStringValue = (string)value;
             return _regex.IsMatch(someStringValue);
         }
