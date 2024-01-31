@@ -34,7 +34,32 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("KnowedWeaponsId");
 
-                    b.ToTable("HeroWeapon");
+                    b.ToTable("HeroWeapon", (string)null);
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoginsBooking", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
@@ -66,7 +91,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("LoginBookingId");
 
-                    b.ToTable("Searches");
+                    b.ToTable("Searches", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.Game", b =>
@@ -92,7 +117,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Games");
+                    b.ToTable("Games", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.GameComment", b =>
@@ -114,7 +139,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("CommentedGameId");
 
-                    b.ToTable("GameComments");
+                    b.ToTable("GameComments", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Hero", b =>
@@ -124,6 +149,10 @@ namespace Net14Web.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AvatarUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
@@ -148,7 +177,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("FavoriteWeaponId");
 
-                    b.ToTable("Heroes");
+                    b.ToTable("Heroes", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.Player", b =>
@@ -180,7 +209,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Players", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.SportGame", b =>
@@ -205,7 +234,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SportGames");
+                    b.ToTable("SportGames", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.Team", b =>
@@ -234,7 +263,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teams");
+                    b.ToTable("Teams", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Comment", b =>
@@ -263,7 +292,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Movie", b =>
@@ -285,7 +314,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.User", b =>
@@ -310,7 +339,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.RetroUser", b =>
@@ -332,7 +361,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RetroUsers");
+                    b.ToTable("RetroUsers", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Stock", b =>
@@ -352,7 +381,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Stocks");
+                    b.ToTable("Stocks", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>
@@ -376,7 +405,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TaskInfos");
+                    b.ToTable("TaskInfos", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.UsersPcShop", b =>
@@ -405,7 +434,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserPcShop");
+                    b.ToTable("UserPcShop", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Weapon", b =>
@@ -425,7 +454,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Weapons");
+                    b.ToTable("Weapons", (string)null);
                 });
 
             modelBuilder.Entity("SportGameTeam", b =>
@@ -440,7 +469,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("TeamsId");
 
-                    b.ToTable("SportGameTeam");
+                    b.ToTable("SportGameTeam", (string)null);
                 });
 
             modelBuilder.Entity("HeroWeapon", b =>
@@ -458,17 +487,6 @@ namespace Net14Web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.GameComment", b =>
-                {
-                    b.HasOne("Net14Web.DbStuff.Models.GameShop.Game", "CommentedGame")
-                        .WithMany("Comments")
-                        .HasForeignKey("CommentedGameId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CommentedGame");
-                });
-
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
                 {
                     b.HasOne("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", "LoginBooking")
@@ -478,6 +496,17 @@ namespace Net14Web.Migrations
                         .IsRequired();
 
                     b.Navigation("LoginBooking");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.GameComment", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.GameShop.Game", "CommentedGame")
+                        .WithMany("Comments")
+                        .HasForeignKey("CommentedGameId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CommentedGame");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Hero", b =>
@@ -520,16 +549,6 @@ namespace Net14Web.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.Game", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
-                {
-                    b.Navigation("Searches");
-                });
-
             modelBuilder.Entity("SportGameTeam", b =>
                 {
                     b.HasOne("Net14Web.DbStuff.Models.LifeScore.SportGame", null)
@@ -543,6 +562,16 @@ namespace Net14Web.Migrations
                         .HasForeignKey("TeamsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+                {
+                    b.Navigation("Searches");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.Game", b =>
+                {
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.Team", b =>

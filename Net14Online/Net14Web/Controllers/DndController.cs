@@ -57,13 +57,15 @@ namespace Net14Web.Controllers
             return View(dndIndexViewModel);
         }
 
-        public IActionResult Profile()
+        public IActionResult Profile(int heroId)
         {
+            var hero = _heroRepository.GetById(heroId);
             var viewModel = new HeroViewModel();
-
-            viewModel.Name = "Test";
-            viewModel.Coins = DateTime.Now.Second;
-            viewModel.Tools = new List<string> { "Hammer", "Shuffle" };
+            viewModel.Id = heroId;
+            viewModel.AvatarUrl = hero.AvatarUrl;
+            viewModel.Name = hero.Name;
+            viewModel.Coins = hero.Coins;
+            viewModel.Race = hero.Race;
 
             return View(viewModel);
         }
