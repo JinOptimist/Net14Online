@@ -2,18 +2,16 @@
 {
     public class Project : BaseModel
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public string? ShortName { get; set; }
 
         public string? Adress { get; set; }
 
-        public MemberStatus? ProjectStatus { get; set; }
+        public virtual MemberStatus? Status { get; set; }
 
-        public Company? Company { get; set; }
+        public virtual Company? Company { get; set; }
 
-        public List<Executor>? Executors { get; set; }
+        public virtual List<User>? Executors { get; set; }
     }
 }

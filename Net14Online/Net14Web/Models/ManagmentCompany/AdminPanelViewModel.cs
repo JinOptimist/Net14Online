@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Net14Web.DbStuff;
+using Net14Web.DbStuff.ManagmentCompany.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace Net14Web.Models.ManagmentCompany
@@ -69,12 +71,10 @@ namespace Net14Web.Models.ManagmentCompany
 
         public DateTime? ExecutorExpireDate { get; set; }
 
-        public List<SelectListItem> Companies { get; set; }
+        public List<CompanyViewModel> Companies { get; set; }
 
-        public List<SelectListItem> Projects { get; set; }
+        public List<ProjectViewModel> Projects { get; set; }
 
-        public List<SelectListItem> Permissions { get; set; }
-
-        public List<SelectListItem> Statuses { get; set; }
+        public List<ExecutorViewModel> Executors { get; set; }
     }
 }

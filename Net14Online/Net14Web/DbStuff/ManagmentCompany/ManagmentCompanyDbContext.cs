@@ -13,8 +13,6 @@ namespace Net14Web.DbStuff
 
         public DbSet<UserTask> UserTasks { get; set; }
 
-        public DbSet<Executor> Executors { get; set; }
-
         public DbSet<MemberPermission> MemberPermissions { get; set; }
 
         public DbSet<MemberStatus> MemberStatuses { get; set; }
@@ -22,5 +20,22 @@ namespace Net14Web.DbStuff
         public DbSet<UserTaskStatus> TaskStatuses { get; set; }
 
         public ManagmentCompanyDbContext(DbContextOptions<ManagmentCompanyDbContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder
+                .Entity<UserTask>()
+                .HasOne(user => user.Author)
+                .WithMany(task => task.UserCreatedTasks)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .Entity<UserTask>()
+                .HasOne(user => user.Executor)
+                .WithMany(task => task.UserExecutedTasks)
+                .OnDelete(DeleteBehavior.NoAction);
+        }
     }
 }
