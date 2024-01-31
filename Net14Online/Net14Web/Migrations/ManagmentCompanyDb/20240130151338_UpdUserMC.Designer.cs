@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Net14Web.DbStuff;
 
@@ -11,9 +12,11 @@ using Net14Web.DbStuff;
 namespace Net14Web.Migrations.ManagmentCompanyDb
 {
     [DbContext(typeof(ManagmentCompanyDbContext))]
-    partial class ManagmentCompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240130151338_UpdUserMC")]
+    partial class UpdUserMC
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,7 +165,7 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MemberPermissionId")
+                    b.Property<int?>("MemberPermissionId")
                         .HasColumnType("int");
 
                     b.Property<string>("NickName")
@@ -304,9 +307,7 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
 
                     b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberPermission", "MemberPermission")
                         .WithMany("Users")
-                        .HasForeignKey("MemberPermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MemberPermissionId");
 
                     b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", "Status")
                         .WithMany("Users")

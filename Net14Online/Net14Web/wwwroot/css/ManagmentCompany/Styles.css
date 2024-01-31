@@ -71,13 +71,13 @@ button {
     display: inline-block;
 }
 
-.add-company label, .add-company input {
-    width: 400px;
-}
+    .add-company label, .add-company input {
+        width: 400px;
+    }
 
-.add-project label, .add-project input, .add-project select {
-    width: 400px;
-}
+    .add-project label, .add-project input, .add-project select {
+        width: 400px;
+    }
 
     .add-user label, .add-user input, .add-user select {
         width: 400px;
@@ -94,4 +94,25 @@ button {
 .add-members {
     font-size: 21px;
     color: darkblue;
+}
+
+.admin-panel-button {
+    all: unset;
+}
+
+.change {
+    display: flex;
+    width: 400px;
+}
+
+.company-status {
+    width: 280px;
+    margin-right: 10px;
+}
+
+.company-status-list {
+    width: 70px;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
 }

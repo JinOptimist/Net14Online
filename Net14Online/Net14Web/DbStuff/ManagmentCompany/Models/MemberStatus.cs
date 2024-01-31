@@ -2,16 +2,12 @@
 {
     public class MemberStatus : BaseModel
     {
-        public int Id { get; set; }
-
         public string Status { get; set; }
 
-        public List<Company>? Companies { get; set; }
+        public virtual List<Company>? Companies { get; set; }
 
-        public List<Project>? Projects { get; set; }
+        public virtual List<Project>? Projects { get; set; }
 
-        public List<User>? Users { get; set; }
-
-        public List<Executor>? Executors { get; set; }
+        public virtual List<User>? Users { get; set; }
     }
 }
