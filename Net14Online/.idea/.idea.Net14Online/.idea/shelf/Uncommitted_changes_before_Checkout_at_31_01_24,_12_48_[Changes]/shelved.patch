@@ -1,0 +1,853 @@
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_.xml
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_.xml b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_.xml
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_.xml	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
++++ /dev/null	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]" date="1701964042259" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 7.12.23, 09:47 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_44__Changes_1.xml
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_44__Changes_1.xml b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_44__Changes_1.xml
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_44__Changes_1.xml	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
++++ /dev/null	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Checkout_at_7_12_23,_09_44_[Changes]1" date="1701963986129" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_44_[Changes]1/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 7.12.23, 09:44 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_15_01_24__12_32__Changes_.xml
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_15_01_24__12_32__Changes_.xml b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_15_01_24__12_32__Changes_.xml
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_15_01_24__12_32__Changes_.xml	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
++++ /dev/null	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Merge_at_15_01_24,_12_32_[Changes]" date="1705343554318" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_15_01_24,_12_32_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Merge at 15.01.24, 12:32 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_44_[Changes]1/shelved.patch
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_44_[Changes]1/shelved.patch b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_44_[Changes]1/shelved.patch
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_44_[Changes]1/shelved.patch	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
++++ /dev/null	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
+@@ -1,349 +0,0 @@
+-Index: Maze/Cells/Heart.cs
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>using Maze.LevelStaff;\nusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\n\nnamespace Maze.Cells\n{\n    public class Heart : BaseCell\n    {\n        public override string Symbol => \"♥\";\n\n        public Heart(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)\n        {\n        }\n    }\n}\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/Maze/Cells/Heart.cs b/Maze/Cells/Heart.cs
+---- a/Maze/Cells/Heart.cs	
+-+++ b/Maze/Cells/Heart.cs	
+-@@ -4,15 +4,24 @@
+- using System.Linq;
+- using System.Text;
+- using System.Threading.Tasks;
+-+using Maze.Cells.Creatures;
+- 
+- namespace Maze.Cells
+- {
+-     public class Heart : BaseCell
+-     {
+-         public override string Symbol => "♥";
+-+        
+- 
+-         public Heart(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+-         {
+-         }
+-+        
+-+        public override bool Step(BaseCreature creature)
+-+        {
+-+            creature.Hp += 5;
+-+            return true;
+-+
+-+        }
+-     }
+- }
+-Index: Maze/Cells/Diamond.cs
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>using Maze.Cells.Creatures;\nusing Maze.LevelStaff;\n\nnamespace Maze.Cells\n{\n    internal class Diamond: BaseCell \n    {\n        public Diamond(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)\n        {\n        }\n\n        public override string Symbol => \"@\";\n\n        public override bool Step(BaseCreature creature)\n        {\n            creature.Money += 10;\n            return true;\n        }\n    }\n}\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/Maze/Cells/Diamond.cs b/Maze/Cells/Diamond.cs
+---- a/Maze/Cells/Diamond.cs	
+-+++ b/Maze/Cells/Diamond.cs	
+-@@ -3,8 +3,9 @@
+- 
+- namespace Maze.Cells
+- {
+--    internal class Diamond: BaseCell 
+-+    internal class Diamond: BaseCell
+-     {
+-+        private Level _level;
+-         public Diamond(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+-         {
+-         }
+-Index: Maze/Cells/Berry.cs
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>using Maze.Cells.Creatures;\nusing Maze.LevelStaff;\n\nnamespace Maze.Cells\n{\n    public class Berry : BaseCell\n    {\n        public Berry(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)\n        {\n        }\n\n        public override string Symbol => \"@\";\n\n        public override bool Step(BaseCreature creature)\n        {\n            creature.Hp++;\n            return true;\n        }\n    }\n}\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/Maze/Cells/Berry.cs b/Maze/Cells/Berry.cs
+---- a/Maze/Cells/Berry.cs	
+-+++ b/Maze/Cells/Berry.cs	
+-@@ -5,16 +5,20 @@
+- {
+-     public class Berry : BaseCell
+-     {
+-+        
+-         public Berry(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)
+-         {
+-         }
+- 
+-         public override string Symbol => "@";
+--
+-+       
+-         public override bool Step(BaseCreature creature)
+-         {
+-+           
+-             creature.Hp++;
+-             return true;
+-         }
+-+       
+-+        
+-     }
+- }
+-Index: Maze/Cells/Chest.cs
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>using Maze.Cells.Creatures;\nusing Maze.LevelStaff;\n\nnamespace Maze.Cells\n{\n    internal class Chest : BaseCell\n    {\n        public Chest(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)\n        {\n        }\n\n        public override string Symbol => \"4\"; //Symbol 4 = [Ch]est\n\n        public override bool Step(BaseCreature creature)\n        {\n            return false;\n        }\n    }\n}
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/Maze/Cells/Chest.cs b/Maze/Cells/Chest.cs
+---- a/Maze/Cells/Chest.cs	
+-+++ b/Maze/Cells/Chest.cs	
+-@@ -16,4 +16,4 @@
+-             return false;
+-         }
+-     }
+--}
+-\ No newline at end of file
+-+}    
+-\ No newline at end of file
+-Index: Maze/LevelStaff/LevelDrawer.cs
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>namespace Maze.LevelStaff\n{\n    public class LevelDrawer\n    {\n        public void Draw(Level level)\n        {\n            foreach (var cell in level.Cells)\n            {\n                Console.SetCursorPosition(cell.CoordinateX, cell.CoordinateY);\n                Console.Write(cell.Symbol);\n            }\n\n            Console.SetCursorPosition(level.Hero.CoordinateX, level.Hero.CoordinateY);\n            Console.Write(level.Hero.Symbol);\n\n            //Console.ReadLine();\n        }\n    }\n}\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/Maze/LevelStaff/LevelDrawer.cs b/Maze/LevelStaff/LevelDrawer.cs
+---- a/Maze/LevelStaff/LevelDrawer.cs	
+-+++ b/Maze/LevelStaff/LevelDrawer.cs	
+-@@ -1,18 +1,23 @@
+-+using Maze.Cells.Creatures;
+-+
+- namespace Maze.LevelStaff
+- {
+-     public class LevelDrawer
+-     {
+-+       
+-         public void Draw(Level level)
+-         {
+-+           
+-             foreach (var cell in level.Cells)
+-             {
+-+                Console.WriteLine();
+-                 Console.SetCursorPosition(cell.CoordinateX, cell.CoordinateY);
+-                 Console.Write(cell.Symbol);
+-             }
+--
+-+            
+-             Console.SetCursorPosition(level.Hero.CoordinateX, level.Hero.CoordinateY);
+-             Console.Write(level.Hero.Symbol);
+--
+-+            
+-             //Console.ReadLine();
+-         }
+-     }
+-Index: Maze/Cells/Secret.cs
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>using Maze.LevelStaff;\n\nnamespace Maze.Cells\n{\n    internal class Secret : BaseCell\n    {\n        public Secret(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)\n        {\n        }\n\n        public override string Symbol => \"?\";\n    }\n}
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/Maze/Cells/Secret.cs b/Maze/Cells/Secret.cs
+---- a/Maze/Cells/Secret.cs	
+-+++ b/Maze/Cells/Secret.cs	
+-@@ -1,3 +1,4 @@
+-+using Maze.Cells.Creatures;
+- using Maze.LevelStaff;
+- 
+- namespace Maze.Cells
+-@@ -9,5 +10,11 @@
+-         }
+- 
+-         public override string Symbol => "?";
+-+        public override bool Step(BaseCreature creature)
+-+        {
+-+            creature.Money++;
+-+            return true;
+-+        }
+-+        
+-     }
+- }
+-\ No newline at end of file
+-Index: Maze/Cells/Ring.cs
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>using Maze.LevelStaff;\nusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\n\nnamespace Maze.Cells\n{\n    public class Ring : BaseCell\n    {\n        public Ring(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)\n        {\n        }\n\n        public override string Symbol => \"o\";\n    }\n}\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/Maze/Cells/Ring.cs b/Maze/Cells/Ring.cs
+---- a/Maze/Cells/Ring.cs	
+-+++ b/Maze/Cells/Ring.cs	
+-@@ -4,6 +4,7 @@
+- using System.Linq;
+- using System.Text;
+- using System.Threading.Tasks;
+-+using Maze.Cells.Creatures;
+- 
+- namespace Maze.Cells
+- {
+-@@ -14,5 +15,10 @@
+-         }
+- 
+-         public override string Symbol => "o";
+-+        public override bool Step(BaseCreature creature)
+-+        {
+-+            creature.Hp++;
+-+            return true;
+-+        }
+-     }
+- }
+-Index: Maze/Cells/Moon.cs
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>using Maze.LevelStaff;\nusing System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\n\nnamespace Maze.Cells\n{\n    public class Moon : BaseCell\n    {\n        public Moon(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)\n        {\n        }\n\n        public override string Symbol => \")\";\n    }\n}\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/Maze/Cells/Moon.cs b/Maze/Cells/Moon.cs
+---- a/Maze/Cells/Moon.cs	
+-+++ b/Maze/Cells/Moon.cs	
+-@@ -4,6 +4,7 @@
+- using System.Linq;
+- using System.Text;
+- using System.Threading.Tasks;
+-+using Maze.Cells.Creatures;
+- 
+- namespace Maze.Cells
+- {
+-@@ -14,5 +15,10 @@
+-         }
+- 
+-         public override string Symbol => ")";
+-+        public override bool Step(BaseCreature creature)
+-+        {
+-+            creature.Money++;
+-+            return true;
+-+        }
+-     }
+- }
+-Index: Maze/Cells/Fountain.cs
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>using Maze.LevelStaff;\n\nnamespace Maze.Cells;\n\npublic class Fountain : BaseCell\n{\n    public Fountain(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)\n    {\n    }\n\n    public override string Symbol => \"@\";\n}
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/Maze/Cells/Fountain.cs b/Maze/Cells/Fountain.cs
+---- a/Maze/Cells/Fountain.cs	
+-+++ b/Maze/Cells/Fountain.cs	
+-@@ -1,3 +1,4 @@
+-+using Maze.Cells.Creatures;
+- using Maze.LevelStaff;
+- 
+- namespace Maze.Cells;
+-@@ -9,4 +10,9 @@
+-     }
+- 
+-     public override string Symbol => "@";
+-+    public override bool Step(BaseCreature creature)
+-+    {
+-+        creature.Hp--;
+-+        return true;
+-+    }
+- }
+-\ No newline at end of file
+-Index: .idea/.idea.Net14Online/.idea/workspace.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoGeneratedRunConfigurationManager\">\n    <projectFile>Maze/Maze.csproj</projectFile>\n    <projectFile>Net14OnlineConsole/Net14OnlineConsole.csproj</projectFile>\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"7a62691b-0334-4537-aa2b-dfc4581283f1\" name=\"Changes\" comment=\"\" />\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2Z4U79BQbAFhEOED6yCYl7WSkCw\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"WebServerToolWindowFactoryState\": \"false\",\n    \"settings.editor.selected.configurable\": \"preferences.pluginManager\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  },\n  \"keyToStringList\": {\n    \"rider.external.source.directories\": [\n      \"/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache\",\n      \"/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache\",\n      \"/Users/antonkupalov/.local/share/Symbols/src\"\n    ]\n  }\n}]]></component>\n  <component name=\"RunManager\" selected=\".NET Project.Maze\">\n    <configuration name=\"Maze\" type=\"DotNetProject\" factoryName=\".NET Project\">\n      <option name=\"EXE_PATH\" value=\"\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <option name=\"USE_MONO\" value=\"0\" />\n      <option name=\"RUNTIME_ARGUMENTS\" value=\"\" />\n      <option name=\"PROJECT_PATH\" value=\"$PROJECT_DIR$/Maze/Maze.csproj\" />\n      <option name=\"PROJECT_EXE_PATH_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_ARGUMENTS_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_WORKING_DIRECTORY_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_KIND\" value=\"DotNetCore\" />\n      <option name=\"PROJECT_TFM\" value=\"\" />\n      <method v=\"2\">\n        <option name=\"Build\" />\n      </method>\n    </configuration>\n    <configuration name=\"Net14OnlineConsole\" type=\"DotNetProject\" factoryName=\".NET Project\">\n      <option name=\"EXE_PATH\" value=\"\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <option name=\"USE_MONO\" value=\"0\" />\n      <option name=\"RUNTIME_ARGUMENTS\" value=\"\" />\n      <option name=\"PROJECT_PATH\" value=\"$PROJECT_DIR$/Net14OnlineConsole/Net14OnlineConsole.csproj\" />\n      <option name=\"PROJECT_EXE_PATH_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_ARGUMENTS_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_WORKING_DIRECTORY_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_KIND\" value=\"DotNetCore\" />\n      <option name=\"PROJECT_TFM\" value=\"\" />\n      <method v=\"2\">\n        <option name=\"Build\" />\n      </method>\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"7a62691b-0334-4537-aa2b-dfc4581283f1\" name=\"Changes\" comment=\"\" />\n      <created>1701680675708</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1701680675708</updated>\n      <workItem from=\"1701680676963\" duration=\"352000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"UnityUnitTestConfiguration\" currentTestLauncher=\"NUnit\" />\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"CLEAR_INITIAL_COMMIT_MESSAGE\" value=\"true\" />\n  </component>\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/.idea/.idea.Net14Online/.idea/workspace.xml b/.idea/.idea.Net14Online/.idea/workspace.xml
+---- a/.idea/.idea.Net14Online/.idea/workspace.xml	
+-+++ b/.idea/.idea.Net14Online/.idea/workspace.xml	
+-@@ -5,12 +5,31 @@
+-     <projectFile>Net14OnlineConsole/Net14OnlineConsole.csproj</projectFile>
+-   </component>
+-   <component name="ChangeListManager">
+--    <list default="true" id="7a62691b-0334-4537-aa2b-dfc4581283f1" name="Changes" comment="" />
+-+    <list default="true" id="b6857001-0b5a-4cf8-851c-5714cbb9ccee" name="Changes" comment="">
+-+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Berry.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Berry.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Chest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Chest.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Diamond.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Diamond.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Fountain.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Fountain.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Heart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Heart.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Moon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Moon.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Ring.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Ring.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Secret.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Secret.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/ConsolePlay/ConsoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/ConsolePlay/ConsoleController.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/LevelStaff/LevelDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/LevelStaff/LevelDrawer.cs" afterDir="false" />
+-+    </list>
+-     <option name="SHOW_DIALOG" value="false" />
+-     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+-     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+-     <option name="LAST_RESOLUTION" value="IGNORE" />
+-   </component>
+-+  <component name="Git.Settings">
+-+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+-+      <map>
+-+        <entry key="$PROJECT_DIR$/.." value="main" />
+-+      </map>
+-+    </option>
+-+  </component>
+-   <component name="MarkdownSettingsMigration">
+-     <option name="stateVersion" value="1" />
+-   </component>
+-@@ -19,22 +38,22 @@
+-     <option name="hideEmptyMiddlePackages" value="true" />
+-     <option name="showLibraryContents" value="true" />
+-   </component>
+--  <component name="PropertiesComponent"><![CDATA[{
+--  "keyToString": {
+--    "RunOnceActivity.OpenProjectViewOnStart": "true",
+--    "RunOnceActivity.ShowReadmeOnStart": "true",
+--    "WebServerToolWindowFactoryState": "false",
+--    "settings.editor.selected.configurable": "preferences.pluginManager",
+--    "vue.rearranger.settings.migration": "true"
+-+  <component name="PropertiesComponent">{
+-+  &quot;keyToString&quot;: {
+-+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+-+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+-+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+-+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+-   },
+--  "keyToStringList": {
+--    "rider.external.source.directories": [
+--      "/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache",
+--      "/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache",
+--      "/Users/antonkupalov/.local/share/Symbols/src"
+-+  &quot;keyToStringList&quot;: {
+-+    &quot;rider.external.source.directories&quot;: [
+-+      &quot;/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
+-+      &quot;/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
+-+      &quot;/Users/antonkupalov/.local/share/Symbols/src&quot;
+-     ]
+-   }
+--}]]></component>
+-+}</component>
+-   <component name="RunManager" selected=".NET Project.Maze">
+-     <configuration name="Maze" type="DotNetProject" factoryName=".NET Project">
+-       <option name="EXE_PATH" value="" />
+-@@ -76,12 +95,14 @@
+-   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+-   <component name="TaskManager">
+-     <task active="true" id="Default" summary="Default task">
+--      <changelist id="7a62691b-0334-4537-aa2b-dfc4581283f1" name="Changes" comment="" />
+-+      <changelist id="b6857001-0b5a-4cf8-851c-5714cbb9ccee" name="Changes" comment="" />
+-       <created>1701680675708</created>
+-       <option name="number" value="Default" />
+-       <option name="presentableId" value="Default" />
+-       <updated>1701680675708</updated>
+-       <workItem from="1701680676963" duration="352000" />
+-+      <workItem from="1701791730850" duration="5192000" />
+-+      <workItem from="1701849794699" duration="5386000" />
+-     </task>
+-     <servers />
+-   </component>
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_1.xml
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_1.xml b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_1.xml
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_1.xml	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
++++ /dev/null	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]1" date="1701964054247" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]1/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 7.12.23, 09:47 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]/shelved.patch b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]/shelved.patch	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
++++ /dev/null	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
+@@ -1,113 +0,0 @@
+-Index: Maze/Cells/Fountain.cs
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>using Maze.LevelStaff;\n\nnamespace Maze.Cells;\n\npublic class Fountain : BaseCell\n{\n    public Fountain(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)\n    {\n    }\n\n    public override string Symbol => \"@\";\n}
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/Maze/Cells/Fountain.cs b/Maze/Cells/Fountain.cs
+---- a/Maze/Cells/Fountain.cs	(revision 1ccbd19f7547cdb02b91492345d8cd35a5fccde5)
+-+++ b/Maze/Cells/Fountain.cs	(date 1701964037837)
+-@@ -9,4 +9,6 @@
+-     }
+- 
+-     public override string Symbol => "@";
+-+    
+-+    
+- }
+-\ No newline at end of file
+-Index: .idea/.idea.Net14Online/.idea/workspace.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoGeneratedRunConfigurationManager\">\n    <projectFile>Maze/Maze.csproj</projectFile>\n    <projectFile>Net14OnlineConsole/Net14OnlineConsole.csproj</projectFile>\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"7a62691b-0334-4537-aa2b-dfc4581283f1\" name=\"Changes\" comment=\"\" />\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2Z4U79BQbAFhEOED6yCYl7WSkCw\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"WebServerToolWindowFactoryState\": \"false\",\n    \"settings.editor.selected.configurable\": \"preferences.pluginManager\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  },\n  \"keyToStringList\": {\n    \"rider.external.source.directories\": [\n      \"/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache\",\n      \"/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache\",\n      \"/Users/antonkupalov/.local/share/Symbols/src\"\n    ]\n  }\n}]]></component>\n  <component name=\"RunManager\" selected=\".NET Project.Maze\">\n    <configuration name=\"Maze\" type=\"DotNetProject\" factoryName=\".NET Project\">\n      <option name=\"EXE_PATH\" value=\"\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <option name=\"USE_MONO\" value=\"0\" />\n      <option name=\"RUNTIME_ARGUMENTS\" value=\"\" />\n      <option name=\"PROJECT_PATH\" value=\"$PROJECT_DIR$/Maze/Maze.csproj\" />\n      <option name=\"PROJECT_EXE_PATH_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_ARGUMENTS_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_WORKING_DIRECTORY_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_KIND\" value=\"DotNetCore\" />\n      <option name=\"PROJECT_TFM\" value=\"\" />\n      <method v=\"2\">\n        <option name=\"Build\" />\n      </method>\n    </configuration>\n    <configuration name=\"Net14OnlineConsole\" type=\"DotNetProject\" factoryName=\".NET Project\">\n      <option name=\"EXE_PATH\" value=\"\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <option name=\"USE_MONO\" value=\"0\" />\n      <option name=\"RUNTIME_ARGUMENTS\" value=\"\" />\n      <option name=\"PROJECT_PATH\" value=\"$PROJECT_DIR$/Net14OnlineConsole/Net14OnlineConsole.csproj\" />\n      <option name=\"PROJECT_EXE_PATH_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_ARGUMENTS_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_WORKING_DIRECTORY_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_KIND\" value=\"DotNetCore\" />\n      <option name=\"PROJECT_TFM\" value=\"\" />\n      <method v=\"2\">\n        <option name=\"Build\" />\n      </method>\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"7a62691b-0334-4537-aa2b-dfc4581283f1\" name=\"Changes\" comment=\"\" />\n      <created>1701680675708</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1701680675708</updated>\n      <workItem from=\"1701680676963\" duration=\"352000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"UnityUnitTestConfiguration\" currentTestLauncher=\"NUnit\" />\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"CLEAR_INITIAL_COMMIT_MESSAGE\" value=\"true\" />\n  </component>\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/.idea/.idea.Net14Online/.idea/workspace.xml b/.idea/.idea.Net14Online/.idea/workspace.xml
+---- a/.idea/.idea.Net14Online/.idea/workspace.xml	(revision 1ccbd19f7547cdb02b91492345d8cd35a5fccde5)
+-+++ b/.idea/.idea.Net14Online/.idea/workspace.xml	(date 1701963937214)
+-@@ -5,12 +5,31 @@
+-     <projectFile>Net14OnlineConsole/Net14OnlineConsole.csproj</projectFile>
+-   </component>
+-   <component name="ChangeListManager">
+--    <list default="true" id="7a62691b-0334-4537-aa2b-dfc4581283f1" name="Changes" comment="" />
+-+    <list default="true" id="b6857001-0b5a-4cf8-851c-5714cbb9ccee" name="Changes" comment="">
+-+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Berry.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Berry.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Chest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Chest.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Diamond.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Diamond.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Fountain.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Fountain.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Heart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Heart.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Moon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Moon.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Ring.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Ring.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Secret.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Secret.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/ConsolePlay/ConsoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/ConsolePlay/ConsoleController.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/LevelStaff/LevelDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/LevelStaff/LevelDrawer.cs" afterDir="false" />
+-+    </list>
+-     <option name="SHOW_DIALOG" value="false" />
+-     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+-     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+-     <option name="LAST_RESOLUTION" value="IGNORE" />
+-   </component>
+-+  <component name="Git.Settings">
+-+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+-+      <map>
+-+        <entry key="$PROJECT_DIR$/.." value="main" />
+-+      </map>
+-+    </option>
+-+  </component>
+-   <component name="MarkdownSettingsMigration">
+-     <option name="stateVersion" value="1" />
+-   </component>
+-@@ -19,22 +38,22 @@
+-     <option name="hideEmptyMiddlePackages" value="true" />
+-     <option name="showLibraryContents" value="true" />
+-   </component>
+--  <component name="PropertiesComponent"><![CDATA[{
+--  "keyToString": {
+--    "RunOnceActivity.OpenProjectViewOnStart": "true",
+--    "RunOnceActivity.ShowReadmeOnStart": "true",
+--    "WebServerToolWindowFactoryState": "false",
+--    "settings.editor.selected.configurable": "preferences.pluginManager",
+--    "vue.rearranger.settings.migration": "true"
+-+  <component name="PropertiesComponent">{
+-+  &quot;keyToString&quot;: {
+-+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+-+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+-+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+-+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+-   },
+--  "keyToStringList": {
+--    "rider.external.source.directories": [
+--      "/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache",
+--      "/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache",
+--      "/Users/antonkupalov/.local/share/Symbols/src"
+-+  &quot;keyToStringList&quot;: {
+-+    &quot;rider.external.source.directories&quot;: [
+-+      &quot;/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
+-+      &quot;/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
+-+      &quot;/Users/antonkupalov/.local/share/Symbols/src&quot;
+-     ]
+-   }
+--}]]></component>
+-+}</component>
+-   <component name="RunManager" selected=".NET Project.Maze">
+-     <configuration name="Maze" type="DotNetProject" factoryName=".NET Project">
+-       <option name="EXE_PATH" value="" />
+-@@ -76,12 +95,14 @@
+-   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+-   <component name="TaskManager">
+-     <task active="true" id="Default" summary="Default task">
+--      <changelist id="7a62691b-0334-4537-aa2b-dfc4581283f1" name="Changes" comment="" />
+-+      <changelist id="b6857001-0b5a-4cf8-851c-5714cbb9ccee" name="Changes" comment="" />
+-       <created>1701680675708</created>
+-       <option name="number" value="Default" />
+-       <option name="presentableId" value="Default" />
+-       <updated>1701680675708</updated>
+-       <workItem from="1701680676963" duration="352000" />
+-+      <workItem from="1701791730850" duration="5192000" />
+-+      <workItem from="1701849794699" duration="5386000" />
+-     </task>
+-     <servers />
+-   </component>
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]1/shelved.patch
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]1/shelved.patch b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]1/shelved.patch
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]1/shelved.patch	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
++++ /dev/null	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
+@@ -1,121 +0,0 @@
+-Index: Maze/Cells/Fountain.cs
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>using Maze.Cells.Creatures;\nusing Maze.LevelStaff;\n\nnamespace Maze.Cells;\n\npublic class Fountain : BaseCell\n{\n    public Fountain(int coordinateX, int coordinateY, Level level) : base(coordinateX, coordinateY, level)\n    {\n    }\n\n    public override string Symbol => \"@\";\n\n    public override bool Step(BaseCreature creature)\n    {\n        throw new NotImplementedException();\n    }\n}
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/Maze/Cells/Fountain.cs b/Maze/Cells/Fountain.cs
+---- a/Maze/Cells/Fountain.cs	(revision 5fe57c254032961966a2e3b49249c8fb660dfd59)
+-+++ b/Maze/Cells/Fountain.cs	(date 1701964042215)
+-@@ -1,4 +1,3 @@
+--using Maze.Cells.Creatures;
+- using Maze.LevelStaff;
+- 
+- namespace Maze.Cells;
+-@@ -10,9 +9,4 @@
+-     }
+- 
+-     public override string Symbol => "@";
+--
+--    public override bool Step(BaseCreature creature)
+--    {
+--        throw new NotImplementedException();
+--    }
+- }
+-\ No newline at end of file
+-Index: .idea/.idea.Net14Online/.idea/workspace.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoGeneratedRunConfigurationManager\">\n    <projectFile>Maze/Maze.csproj</projectFile>\n    <projectFile>Net14OnlineConsole/Net14OnlineConsole.csproj</projectFile>\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"7a62691b-0334-4537-aa2b-dfc4581283f1\" name=\"Changes\" comment=\"\" />\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2Z4U79BQbAFhEOED6yCYl7WSkCw\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"WebServerToolWindowFactoryState\": \"false\",\n    \"settings.editor.selected.configurable\": \"preferences.pluginManager\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  },\n  \"keyToStringList\": {\n    \"rider.external.source.directories\": [\n      \"/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache\",\n      \"/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache\",\n      \"/Users/antonkupalov/.local/share/Symbols/src\"\n    ]\n  }\n}]]></component>\n  <component name=\"RunManager\" selected=\".NET Project.Maze\">\n    <configuration name=\"Maze\" type=\"DotNetProject\" factoryName=\".NET Project\">\n      <option name=\"EXE_PATH\" value=\"\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <option name=\"USE_MONO\" value=\"0\" />\n      <option name=\"RUNTIME_ARGUMENTS\" value=\"\" />\n      <option name=\"PROJECT_PATH\" value=\"$PROJECT_DIR$/Maze/Maze.csproj\" />\n      <option name=\"PROJECT_EXE_PATH_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_ARGUMENTS_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_WORKING_DIRECTORY_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_KIND\" value=\"DotNetCore\" />\n      <option name=\"PROJECT_TFM\" value=\"\" />\n      <method v=\"2\">\n        <option name=\"Build\" />\n      </method>\n    </configuration>\n    <configuration name=\"Net14OnlineConsole\" type=\"DotNetProject\" factoryName=\".NET Project\">\n      <option name=\"EXE_PATH\" value=\"\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <option name=\"USE_MONO\" value=\"0\" />\n      <option name=\"RUNTIME_ARGUMENTS\" value=\"\" />\n      <option name=\"PROJECT_PATH\" value=\"$PROJECT_DIR$/Net14OnlineConsole/Net14OnlineConsole.csproj\" />\n      <option name=\"PROJECT_EXE_PATH_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_ARGUMENTS_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_WORKING_DIRECTORY_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_KIND\" value=\"DotNetCore\" />\n      <option name=\"PROJECT_TFM\" value=\"\" />\n      <method v=\"2\">\n        <option name=\"Build\" />\n      </method>\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"7a62691b-0334-4537-aa2b-dfc4581283f1\" name=\"Changes\" comment=\"\" />\n      <created>1701680675708</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1701680675708</updated>\n      <workItem from=\"1701680676963\" duration=\"352000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"UnityUnitTestConfiguration\" currentTestLauncher=\"NUnit\" />\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"CLEAR_INITIAL_COMMIT_MESSAGE\" value=\"true\" />\n  </component>\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/.idea/.idea.Net14Online/.idea/workspace.xml b/.idea/.idea.Net14Online/.idea/workspace.xml
+---- a/.idea/.idea.Net14Online/.idea/workspace.xml	(revision 5fe57c254032961966a2e3b49249c8fb660dfd59)
+-+++ b/.idea/.idea.Net14Online/.idea/workspace.xml	(date 1701964042233)
+-@@ -5,12 +5,31 @@
+-     <projectFile>Net14OnlineConsole/Net14OnlineConsole.csproj</projectFile>
+-   </component>
+-   <component name="ChangeListManager">
+--    <list default="true" id="7a62691b-0334-4537-aa2b-dfc4581283f1" name="Changes" comment="" />
+-+    <list default="true" id="b6857001-0b5a-4cf8-851c-5714cbb9ccee" name="Changes" comment="">
+-+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Berry.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Berry.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Chest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Chest.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Diamond.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Diamond.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Fountain.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Fountain.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Heart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Heart.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Moon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Moon.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Ring.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Ring.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/Cells/Secret.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/Cells/Secret.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/ConsolePlay/ConsoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/ConsolePlay/ConsoleController.cs" afterDir="false" />
+-+      <change beforePath="$PROJECT_DIR$/Maze/LevelStaff/LevelDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Maze/LevelStaff/LevelDrawer.cs" afterDir="false" />
+-+    </list>
+-     <option name="SHOW_DIALOG" value="false" />
+-     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+-     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+-     <option name="LAST_RESOLUTION" value="IGNORE" />
+-   </component>
+-+  <component name="Git.Settings">
+-+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+-+      <map>
+-+        <entry key="$PROJECT_DIR$/.." value="main" />
+-+      </map>
+-+    </option>
+-+  </component>
+-   <component name="MarkdownSettingsMigration">
+-     <option name="stateVersion" value="1" />
+-   </component>
+-@@ -19,22 +38,22 @@
+-     <option name="hideEmptyMiddlePackages" value="true" />
+-     <option name="showLibraryContents" value="true" />
+-   </component>
+--  <component name="PropertiesComponent"><![CDATA[{
+--  "keyToString": {
+--    "RunOnceActivity.OpenProjectViewOnStart": "true",
+--    "RunOnceActivity.ShowReadmeOnStart": "true",
+--    "WebServerToolWindowFactoryState": "false",
+--    "settings.editor.selected.configurable": "preferences.pluginManager",
+--    "vue.rearranger.settings.migration": "true"
+-+  <component name="PropertiesComponent">{
+-+  &quot;keyToString&quot;: {
+-+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+-+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+-+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+-+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+-   },
+--  "keyToStringList": {
+--    "rider.external.source.directories": [
+--      "/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache",
+--      "/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache",
+--      "/Users/antonkupalov/.local/share/Symbols/src"
+-+  &quot;keyToStringList&quot;: {
+-+    &quot;rider.external.source.directories&quot;: [
+-+      &quot;/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
+-+      &quot;/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
+-+      &quot;/Users/antonkupalov/.local/share/Symbols/src&quot;
+-     ]
+-   }
+--}]]></component>
+-+}</component>
+-   <component name="RunManager" selected=".NET Project.Maze">
+-     <configuration name="Maze" type="DotNetProject" factoryName=".NET Project">
+-       <option name="EXE_PATH" value="" />
+-@@ -76,12 +95,14 @@
+-   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+-   <component name="TaskManager">
+-     <task active="true" id="Default" summary="Default task">
+--      <changelist id="7a62691b-0334-4537-aa2b-dfc4581283f1" name="Changes" comment="" />
+-+      <changelist id="b6857001-0b5a-4cf8-851c-5714cbb9ccee" name="Changes" comment="" />
+-       <created>1701680675708</created>
+-       <option name="number" value="Default" />
+-       <option name="presentableId" value="Default" />
+-       <updated>1701680675708</updated>
+-       <workItem from="1701680676963" duration="352000" />
+-+      <workItem from="1701791730850" duration="5192000" />
+-+      <workItem from="1701849794699" duration="5386000" />
+-     </task>
+-     <servers />
+-   </component>
+Index: Net14Web/Net14Web.csproj
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><Project Sdk=\"Microsoft.NET.Sdk.Web\">\n\n  <PropertyGroup>\n\t<TargetFramework>net6.0</TargetFramework>\n\t<Nullable>enable</Nullable>\n\t<ImplicitUsings>enable</ImplicitUsings>\n  </PropertyGroup>\n\n  <ItemGroup>\n\t<PackageReference Include=\"Microsoft.EntityFrameworkCore\" Version=\"7.0.15\" />\n\t<PackageReference Include=\"Microsoft.EntityFrameworkCore.SqlServer\" Version=\"7.0.15\" />\n\t<PackageReference Include=\"Microsoft.EntityFrameworkCore.Tools\" Version=\"7.0.15\">\n\t  <PrivateAssets>all</PrivateAssets>\n\t  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>\n\t</PackageReference>\n\t<PackageReference Include=\"Npgsql\" Version=\"6.0.0\" />\n\t<PackageReference Include=\"Npgsql.EntityFrameworkCore.PostgreSQL\" Version=\"6.0.0\" />\n\t  \n  </ItemGroup>\n\n  <ItemGroup>\n    <Folder Include=\"wwwroot\\images\\dndAvatars\\\" />\n  </ItemGroup>\n\n</Project>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Net14Web/Net14Web.csproj b/Net14Web/Net14Web.csproj
+--- a/Net14Web/Net14Web.csproj	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
++++ b/Net14Web/Net14Web.csproj	(date 1706726836380)
+@@ -7,13 +7,12 @@
+   </PropertyGroup>
+ 
+   <ItemGroup>
+-	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.15" />
+-	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.15" />
+-	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.15">
++	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
++	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
++	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
+ 	  <PrivateAssets>all</PrivateAssets>
+ 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+ 	</PackageReference>
+-	<PackageReference Include="Npgsql" Version="6.0.0" />
+ 	<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.0" />
+ 	  
+   </ItemGroup>
+Index: .idea/.idea.Net14Online/.idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoGeneratedRunConfigurationManager\">\n    <projectFile>Maze/Maze.csproj</projectFile>\n    <projectFile>Net14OnlineConsole/Net14OnlineConsole.csproj</projectFile>\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"b6857001-0b5a-4cf8-851c-5714cbb9ccee\" name=\"Changes\" comment=\"\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Maze/Cells/Heart.cs\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Maze/Cells/Moon.cs\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Maze/Cells/Ring.cs\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Maze/Cells/Secret.cs\" beforeDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$/..\" value=\"main\" />\n      </map>\n    </option>\n  </component>\n  <component name=\"HighlightingSettingsPerFile\">\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2Z4U79BQbAFhEOED6yCYl7WSkCw\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">{\n  &quot;keyToString&quot;: {\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\n  },\n  &quot;keyToStringList&quot;: {\n    &quot;rider.external.source.directories&quot;: [\n      &quot;/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,\n      &quot;/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,\n      &quot;/Users/antonkupalov/.local/share/Symbols/src&quot;\n    ]\n  }\n}</component>\n  <component name=\"RunManager\" selected=\".NET Project.Maze\">\n    <configuration name=\"Maze\" type=\"DotNetProject\" factoryName=\".NET Project\">\n      <option name=\"EXE_PATH\" value=\"\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <option name=\"USE_MONO\" value=\"0\" />\n      <option name=\"RUNTIME_ARGUMENTS\" value=\"\" />\n      <option name=\"PROJECT_PATH\" value=\"$PROJECT_DIR$/Maze/Maze.csproj\" />\n      <option name=\"PROJECT_EXE_PATH_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_ARGUMENTS_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_WORKING_DIRECTORY_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_KIND\" value=\"DotNetCore\" />\n      <option name=\"PROJECT_TFM\" value=\"\" />\n      <method v=\"2\">\n        <option name=\"Build\" />\n      </method>\n    </configuration>\n    <configuration name=\"Net14OnlineConsole\" type=\"DotNetProject\" factoryName=\".NET Project\">\n      <option name=\"EXE_PATH\" value=\"\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <option name=\"USE_MONO\" value=\"0\" />\n      <option name=\"RUNTIME_ARGUMENTS\" value=\"\" />\n      <option name=\"PROJECT_PATH\" value=\"$PROJECT_DIR$/Net14OnlineConsole/Net14OnlineConsole.csproj\" />\n      <option name=\"PROJECT_EXE_PATH_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_ARGUMENTS_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_WORKING_DIRECTORY_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_KIND\" value=\"DotNetCore\" />\n      <option name=\"PROJECT_TFM\" value=\"\" />\n      <method v=\"2\">\n        <option name=\"Build\" />\n      </method>\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"b6857001-0b5a-4cf8-851c-5714cbb9ccee\" name=\"Changes\" comment=\"\" />\n      <created>1701680675708</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1701680675708</updated>\n      <workItem from=\"1701680676963\" duration=\"352000\" />\n      <workItem from=\"1701791730850\" duration=\"5192000\" />\n      <workItem from=\"1701849794699\" duration=\"5818000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"UnityUnitTestConfiguration\" currentTestLauncher=\"NUnit\" />\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"CLEAR_INITIAL_COMMIT_MESSAGE\" value=\"true\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/workspace.xml b/.idea/.idea.Net14Online/.idea/workspace.xml
+--- a/.idea/.idea.Net14Online/.idea/workspace.xml	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
++++ b/.idea/.idea.Net14Online/.idea/workspace.xml	(date 1706726890338)
+@@ -2,15 +2,24 @@
+ <project version="4">
+   <component name="AutoGeneratedRunConfigurationManager">
+     <projectFile>Maze/Maze.csproj</projectFile>
+-    <projectFile>Net14OnlineConsole/Net14OnlineConsole.csproj</projectFile>
++    <projectFile profileName="Net14OnlineConsole">Net14OnlineConsole/Net14OnlineConsole.csproj</projectFile>
++    <projectFile profileName="Net14Web">Net14Web/Net14Web.csproj</projectFile>
++    <projectFile>OopExamples/OopExamples.csproj</projectFile>
++    <projectFile profileName="http">WebApplication1/WebApplication1.csproj</projectFile>
++    <projectFile profileName="https">WebApplication1/WebApplication1.csproj</projectFile>
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="b6857001-0b5a-4cf8-851c-5714cbb9ccee" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_44_[Changes]1/shelved.patch" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]/shelved.patch" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]1/shelved.patch" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_44__Changes_1.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_1.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_15_01_24__12_32__Changes_.xml" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Maze/Cells/Heart.cs" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Maze/Cells/Moon.cs" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Maze/Cells/Ring.cs" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Maze/Cells/Secret.cs" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/Net14Web/Migrations/ManagmentCompanyDb/20240120181624_AddExecutorTable.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Net14Web/Migrations/ManagmentCompanyDb/20240120181624_AddExecutorTable.Designer.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Net14Web/Net14Web.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Net14Web/Net14Web.csproj" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -20,17 +29,17 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$/.." value="main" />
++        <entry key="$PROJECT_DIR$/.." value="Task_290" />
+       </map>
+     </option>
+   </component>
+   <component name="HighlightingSettingsPerFile">
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/127a1481741126db33fbe0aca7424c7f4ba912e86443e36b5d9a5989e913c53/EntityGraphAttacher.cs" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2ff32d9e6a8ae52479379f35545f9a152fde5adb58a20dc4526c1c59bafe3/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3685646f2f29e671aaf1cda7eb01c84daaec2ae61820d2c444edc3121d696/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7262732eee179af215faab36a7f3c3cfac93ba12af52a3888d839fe7e53420/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/aacc74311ca994f12b71cddb22241be9d6654c65e94f5985c5488dee396916f/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bebd253e21dcf766929bfdfd74615bfe46e6e1693b289273dbdb82152893/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+     <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+     <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+   </component>
+@@ -51,6 +60,10 @@
+     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   },
+   &quot;keyToStringList&quot;: {
++    &quot;DatabaseDriversLRU&quot;: [
++      &quot;cassandra&quot;,
++      &quot;postgresql&quot;
++    ],
+     &quot;rider.external.source.directories&quot;: [
+       &quot;/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
+       &quot;/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
+@@ -58,7 +71,7 @@
+     ]
+   }
+ }</component>
+-  <component name="RunManager" selected=".NET Project.Maze">
++  <component name="RunManager" selected=".NET Launch Settings Profile.Net14Web">
+     <configuration name="Maze" type="DotNetProject" factoryName=".NET Project">
+       <option name="EXE_PATH" value="" />
+       <option name="PROGRAM_PARAMETERS" value="" />
+@@ -95,6 +108,35 @@
+         <option name="Build" />
+       </method>
+     </configuration>
++    <configuration name="Net14Web" type="LaunchSettings" factoryName=".NET Launch Settings Profile" temporary="true">
++      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Net14Web/Net14Web.csproj" />
++      <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
++      <option name="LAUNCH_PROFILE_NAME" value="Net14Web" />
++      <option name="USE_EXTERNAL_CONSOLE" value="0" />
++      <option name="USE_MONO" value="0" />
++      <option name="RUNTIME_ARGUMENTS" value="" />
++      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
++      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
++      <option name="SEND_DEBUG_REQUEST" value="1" />
++      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
++      <method v="2">
++        <option name="Build" />
++      </method>
++    </configuration>
++    <list>
++      <item itemvalue=".NET Launch Settings Profile.Net14Web" />
++      <item itemvalue=".NET Project.Maze" />
++      <item itemvalue=".NET Project.Net14OnlineConsole" />
++    </list>
++    <recent_temporary>
++      <list>
++        <item itemvalue=".NET Launch Settings Profile.Net14Web" />
++        <item itemvalue=".NET Launch Settings Profile.Net14Web" />
++        <item itemvalue=".NET Launch Settings Profile.Net14Web" />
++        <item itemvalue=".NET Launch Settings Profile.Net14Web" />
++        <item itemvalue=".NET Launch Settings Profile.Net14Web" />
++      </list>
++    </recent_temporary>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+@@ -107,6 +149,8 @@
+       <workItem from="1701680676963" duration="352000" />
+       <workItem from="1701791730850" duration="5192000" />
+       <workItem from="1701849794699" duration="5818000" />
++      <workItem from="1706698506266" duration="1033000" />
++      <workItem from="1706699546123" duration="7867000" />
+     </task>
+     <servers />
+   </component>
+@@ -117,4 +161,23 @@
+   <component name="VcsManagerConfiguration">
+     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+   </component>
++  <component name="XDebuggerManager">
++    <breakpoint-manager>
++      <breakpoints>
++        <line-breakpoint enabled="true" type="DotNet Breakpoints">
++          <url>file://$PROJECT_DIR$/Net14Web/Services/RealEstate/DeleteUser.cs</url>
++          <line>13</line>
++          <properties documentPath="$PROJECT_DIR$/Net14Web/Services/RealEstate/DeleteUser.cs" initialLine="10" containingFunctionPresentation="method 'UserDelete'">
++            <startOffsets>
++              <option value="-1" />
++            </startOffsets>
++            <endOffsets>
++              <option value="-1" />
++            </endOffsets>
++          </properties>
++          <option name="timeStamp" value="4" />
++        </line-breakpoint>
++      </breakpoints>
++    </breakpoint-manager>
++  </component>
+ </project>
+\ No newline at end of file
+Index: Net14Web/Migrations/ManagmentCompanyDb/20240120181624_AddExecutorTable.Designer.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// <auto-generated />\nusing System;\nusing Microsoft.EntityFrameworkCore;\nusing Microsoft.EntityFrameworkCore.Infrastructure;\nusing Microsoft.EntityFrameworkCore.Metadata;\nusing Microsoft.EntityFrameworkCore.Migrations;\nusing Microsoft.EntityFrameworkCore.Storage.ValueConversion;\nusing Net14Web.DbStuff;\n\n#nullable disable\n\nnamespace Net14Web.Migrations.ManagmentCompanyDb\n{\n    [DbContext(typeof(ManagmentCompanyDbContext))]\n    [Migration(\"20240120181624_AddExecutorTable\")]\n    partial class AddExecutorTable\n    {\n        /// <inheritdoc />\n        protected override void BuildTargetModel(ModelBuilder modelBuilder)\n        {\n#pragma warning disable 612, 618\n            modelBuilder\n                .HasAnnotation(\"ProductVersion\", \"7.0.15\")\n                .HasAnnotation(\"Relational:MaxIdentifierLength\", 128);\n\n            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);\n\n            modelBuilder.Entity(\"Net14Web.DbStuff.ManagmentCompany.Models.Company\", b =>\n                {\n                    b.Property<int>(\"Id\")\n                        .ValueGeneratedOnAdd()\n                        .HasColumnType(\"int\");\n\n                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>(\"Id\"));\n\n                    b.Property<string>(\"Adress\")\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<string>(\"Email\")\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<Guid>(\"Guid\")\n                        .HasColumnType(\"uniqueidentifier\");\n\n                    b.Property<string>(\"Name\")\n                        .IsRequired()\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<string>(\"PhoneNumber\")\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<string>(\"ShortName\")\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.HasKey(\"Id\");\n\n                    b.ToTable(\"Companies\");\n                });\n\n            modelBuilder.Entity(\"Net14Web.DbStuff.ManagmentCompany.Models.Project\", b =>\n                {\n                    b.Property<int>(\"Id\")\n                        .ValueGeneratedOnAdd()\n                        .HasColumnType(\"int\");\n\n                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>(\"Id\"));\n\n                    b.Property<string>(\"Adress\")\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<int?>(\"CompanyId\")\n                        .HasColumnType(\"int\");\n\n                    b.Property<int?>(\"ExecutorId\")\n                        .HasColumnType(\"int\");\n\n                    b.Property<Guid>(\"Guid\")\n                        .HasColumnType(\"uniqueidentifier\");\n\n                    b.Property<string>(\"Name\")\n                        .IsRequired()\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<string>(\"ShortName\")\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.HasKey(\"Id\");\n\n                    b.HasIndex(\"CompanyId\");\n\n                    b.HasIndex(\"ExecutorId\");\n\n                    b.ToTable(\"Projects\");\n                });\n\n            modelBuilder.Entity(\"Net14Web.DbStuff.ManagmentCompany.Models.User\", b =>\n                {\n                    b.Property<int>(\"Id\")\n                        .ValueGeneratedOnAdd()\n                        .HasColumnType(\"int\");\n\n                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>(\"Id\"));\n\n                    b.Property<string>(\"Discriminator\")\n                        .IsRequired()\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<string>(\"Email\")\n                        .IsRequired()\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<string>(\"FirstName\")\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<Guid>(\"Guid\")\n                        .HasColumnType(\"uniqueidentifier\");\n\n                    b.Property<string>(\"LastName\")\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<string>(\"NickName\")\n                        .IsRequired()\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<string>(\"Password\")\n                        .IsRequired()\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<string>(\"PhoneNumber\")\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<int?>(\"ProjectId\")\n                        .HasColumnType(\"int\");\n\n                    b.Property<string>(\"UserPermission\")\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<string>(\"UserRole\")\n                        .IsRequired()\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.HasKey(\"Id\");\n\n                    b.HasIndex(\"ProjectId\");\n\n                    b.ToTable(\"Users\");\n\n                    b.HasDiscriminator<string>(\"Discriminator\").HasValue(\"User\");\n\n                    b.UseTphMappingStrategy();\n                });\n\n            modelBuilder.Entity(\"Net14Web.DbStuff.ManagmentCompany.Models.UserTask\", b =>\n                {\n                    b.Property<int?>(\"Id\")\n                        .ValueGeneratedOnAdd()\n                        .HasColumnType(\"int\");\n\n                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>(\"Id\"));\n\n                    b.Property<int?>(\"AuthorId\")\n                        .HasColumnType(\"int\");\n\n                    b.Property<DateTime?>(\"CompletionDate\")\n                        .HasColumnType(\"datetime2\");\n\n                    b.Property<DateTime?>(\"CreationDate\")\n                        .HasColumnType(\"datetime2\");\n\n                    b.Property<string>(\"Description\")\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<int?>(\"ExecutorId\")\n                        .HasColumnType(\"int\");\n\n                    b.Property<Guid>(\"Guid\")\n                        .HasColumnType(\"uniqueidentifier\");\n\n                    b.Property<string>(\"Name\")\n                        .IsRequired()\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.Property<DateTime?>(\"StartDate\")\n                        .HasColumnType(\"datetime2\");\n\n                    b.Property<string>(\"Status\")\n                        .HasColumnType(\"nvarchar(max)\");\n\n                    b.HasKey(\"Id\");\n\n                    b.HasIndex(\"AuthorId\");\n\n                    b.HasIndex(\"ExecutorId\");\n\n                    b.ToTable(\"UserTasks\");\n                });\n\n            modelBuilder.Entity(\"Net14Web.DbStuff.ManagmentCompany.Models.Executor\", b =>\n                {\n                    b.HasBaseType(\"Net14Web.DbStuff.ManagmentCompany.Models.User\");\n\n                    b.HasDiscriminator().HasValue(\"Executor\");\n                });\n\n            modelBuilder.Entity(\"Net14Web.DbStuff.ManagmentCompany.Models.Project\", b =>\n                {\n                    b.HasOne(\"Net14Web.DbStuff.ManagmentCompany.Models.Company\", \"Company\")\n                        .WithMany(\"Projects\")\n                        .HasForeignKey(\"CompanyId\");\n\n                    b.HasOne(\"Net14Web.DbStuff.ManagmentCompany.Models.Executor\", null)\n                        .WithMany(\"Projects\")\n                        .HasForeignKey(\"ExecutorId\");\n\n                    b.Navigation(\"Company\");\n                });\n\n            modelBuilder.Entity(\"Net14Web.DbStuff.ManagmentCompany.Models.User\", b =>\n                {\n                    b.HasOne(\"Net14Web.DbStuff.ManagmentCompany.Models.Project\", null)\n                        .WithMany(\"Users\")\n                        .HasForeignKey(\"ProjectId\");\n                });\n\n            modelBuilder.Entity(\"Net14Web.DbStuff.ManagmentCompany.Models.UserTask\", b =>\n                {\n                    b.HasOne(\"Net14Web.DbStuff.ManagmentCompany.Models.User\", \"Author\")\n                        .WithMany(\"UserTasks\")\n                        .HasForeignKey(\"AuthorId\");\n\n                    b.HasOne(\"Net14Web.DbStuff.ManagmentCompany.Models.Executor\", \"Executor\")\n                        .WithMany(\"ExecutorTasks\")\n                        .HasForeignKey(\"ExecutorId\");\n\n                    b.Navigation(\"Author\");\n\n                    b.Navigation(\"Executor\");\n                });\n\n            modelBuilder.Entity(\"Net14Web.DbStuff.ManagmentCompany.Models.Company\", b =>\n                {\n                    b.Navigation(\"Projects\");\n                });\n\n            modelBuilder.Entity(\"Net14Web.DbStuff.ManagmentCompany.Models.Project\", b =>\n                {\n                    b.Navigation(\"Users\");\n                });\n\n            modelBuilder.Entity(\"Net14Web.DbStuff.ManagmentCompany.Models.User\", b =>\n                {\n                    b.Navigation(\"UserTasks\");\n                });\n\n            modelBuilder.Entity(\"Net14Web.DbStuff.ManagmentCompany.Models.Executor\", b =>\n                {\n                    b.Navigation(\"ExecutorTasks\");\n\n                    b.Navigation(\"Projects\");\n                });\n#pragma warning restore 612, 618\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Net14Web/Migrations/ManagmentCompanyDb/20240120181624_AddExecutorTable.Designer.cs b/Net14Web/Migrations/ManagmentCompanyDb/20240120181624_AddExecutorTable.Designer.cs
+--- a/Net14Web/Migrations/ManagmentCompanyDb/20240120181624_AddExecutorTable.Designer.cs	(revision c878500f3caf6aa58d82a55aa2ace75333144a3b)
++++ b/Net14Web/Migrations/ManagmentCompanyDb/20240120181624_AddExecutorTable.Designer.cs	(date 1706726836387)
+@@ -147,7 +147,7 @@
+ 
+                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
+ 
+-                    b.UseTphMappingStrategy();
++                   // b.UseTphMappingStrategy();
+                 });
+ 
+             modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.UserTask", b =>

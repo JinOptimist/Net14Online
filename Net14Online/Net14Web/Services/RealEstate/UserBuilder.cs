@@ -13,7 +13,7 @@ public class UserBuilder
         {
             Name = addUser.Name,
             Age = addUser.Age,
-            KindOfActivity = addUser.KindOfActivity
+            KindOfActivity = addUser.KindOfActivity,
         };
         return user;
     }
