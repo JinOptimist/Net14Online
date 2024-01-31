@@ -31,6 +31,7 @@
             <div class="add-user">
                 <h2>Добавить исполнителя</h2>
                 <form method="post" action="/ManagmentCompany/UpdateExecutor">
+                    <input type="hidden" name="id" value="@Model[i].Id" />
                     <label for="firstName"> Имя:</label>
                     @Html.TextBoxFor(x => x[i].ExecutorFirstName)
                     @Html.ValidationMessageFor(x => x[i].ExecutorFirstName)
