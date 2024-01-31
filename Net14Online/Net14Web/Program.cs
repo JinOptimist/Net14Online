@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
+using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.RealEstate;
+using Net14Web.DbStuff.Repositories.RealEstate;
 using Net14Web.Services;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
@@ -47,6 +49,7 @@ builder.Services.AddScoped<ObjectBuilder>();
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();
 builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
+builder.Services.AddScoped<ApartmentOwnerRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
