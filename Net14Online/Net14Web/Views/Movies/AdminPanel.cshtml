@@ -46,7 +46,7 @@
                                     @foreach (var movie in @Model.Movies)
                                     {
                                         <div>
-                                            @using (Html.BeginForm(nameof(Net14Web.Controllers.MoviesController.EditMovie), nameof(Net14Web.Controllers.MoviesController), FormMethod.Post))
+                                            @using (Html.BeginForm(nameof(Net14Web.Controllers.MoviesController.EditMovie), "Movies", FormMethod.Post))
                                             {
                                                 <input type="hidden" name="id" value="@movie.Id" />
                                                 <p>Title:</p> <input type="text" name="title" value="@movie.Title" /><br />
