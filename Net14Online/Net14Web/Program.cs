@@ -26,12 +26,6 @@ var connectionStringRealEsate = builder.Configuration.GetConnectionString("Net14
 builder.Services.AddDbContext<WebRealEstateDbContext>(x => x.UseSqlServer(connectionStringRealEsate));
 //builder.Services.AddScoped<WebDbContext>();
 
-//using var scope = app.Services.CreateScope();
-//var db = scope.ServiceProvider.GetService<WebDbContext>();
-//await db.Database.MigrateAsync();
-//await LifeScoreSeedData.AddDefaultTeams(db);
-//await LifeScoreSeedData.AddDefaultSportGames(db);
-
 builder.Services.AddScoped<HeroBuilder>(diContainer =>
 {
     var randomHelper = diContainer.GetService<RandomHelper>();
