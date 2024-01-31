@@ -3,6 +3,7 @@ using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.RealEstate;
 using Net14Web.DbStuff.RealEstate.Models;
+using Net14Web.DbStuff.Repositories.RealEstate;
 using Net14Web.Models.RealEstate;
 using Net14Web.Services.RealEstate;
 
@@ -13,16 +14,16 @@ public class RealEstateController : Controller
     public readonly UserBuilder _userBuilder;
     public readonly DeleteUser _deleteUser;
     public readonly UpdateUser _updateUser;
-    private WebRealEstateDbContext _webRealEstateDbContext;
+    private ApartmentOwnerRepository _apartmentOwnerRepository;
         
     public static List<UserViewModel> userViewModels = new();
 
-    public RealEstateController(UserBuilder userBuilder,DeleteUser deleteUser,UpdateUser updateUser,WebRealEstateDbContext webRealEstateDbContext)
+    public RealEstateController(UserBuilder userBuilder,DeleteUser deleteUser,UpdateUser updateUser, ApartmentOwnerRepository apartmentOwnerRepository)
     {
         _userBuilder = userBuilder;
         _deleteUser = deleteUser;
         _updateUser = updateUser;
-        _webRealEstateDbContext = webRealEstateDbContext;
+        _apartmentOwnerRepository = apartmentOwnerRepository;
     }
     public IActionResult Main()
     {
@@ -31,9 +32,9 @@ public class RealEstateController : Controller
     
     public IActionResult DataBase()
     {
-        var dbUsers = _webRealEstateDbContext.ApartmentOwners.Take(10).ToList();
+        var dbApartmentOwners = _apartmentOwnerRepository.GetApartamentOwners(10);
 
-        var viewModels = dbUsers
+        var viewModels = dbApartmentOwners
             .Select(dbUser => new UserViewModel()
             {
                 Age = dbUser.Age,
@@ -42,7 +43,7 @@ public class RealEstateController : Controller
             })
             .ToList();
 
-        return View(dbUsers);
+        return View(dbApartmentOwners);
     }
     
     [HttpGet]
@@ -59,41 +60,30 @@ public class RealEstateController : Controller
     [HttpGet]
     public IActionResult Update(int id)
     {
-        var user = _webRealEstateDbContext.ApartmentOwners.ToList().FirstOrDefault(x => x.Id == id);
+        var user = _apartmentOwnerRepository.GetById(id);
         return View(user);
     }
     
     [HttpPost]
     public IActionResult Update(int id,string name,int age,string kindOfActivity)
     {
-        _updateUser.Update(_webRealEstateDbContext.ApartmentOwners.ToList(),id,name,age,kindOfActivity);
-        _webRealEstateDbContext.SaveChanges();
+        var user = _apartmentOwnerRepository.GetById(id);
+        _apartmentOwnerRepository.Update(user,name, age, kindOfActivity);
         return RedirectToAction("DataBase");
     }
 
     public IActionResult Delete(int id)
     {
-        var user = _deleteUser.UserDelete(_webRealEstateDbContext.ApartmentOwners.ToList(),id);
-        _webRealEstateDbContext.ApartmentOwners.Remove(user);
-        _webRealEstateDbContext.SaveChanges();
-        
+        _apartmentOwnerRepository.Delete(id);
         return RedirectToAction("DataBase");
     }
     
     
     [HttpPost]
-    public IActionResult AddUser(AddUserViewModel userViewModel)
+    public IActionResult AddUser(AddUserViewModel user)
     {
-        if (!ModelState.IsValid)
-        {
-            return View(userViewModel);
-        }
-        
-        var newUser = _userBuilder.BuilderUser(userViewModel);
-        
-        _webRealEstateDbContext.ApartmentOwners.Add(newUser);
-     
-        _webRealEstateDbContext.SaveChanges();
+        var newUser = _userBuilder.BuilderUser(user);
+        _apartmentOwnerRepository.Add(newUser);
         
         return RedirectToAction("DataBase");
     }
