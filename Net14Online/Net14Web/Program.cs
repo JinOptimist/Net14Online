@@ -1,11 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
-using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.RealEstate;
-using Net14Web.DbStuff.Repositories.RealEstate;
+using Net14Web.DbStuff.Repositories;
+using Net14Web.DbStuff.Repositories.GameShop;
 using Net14Web.Services;
 using Net14Web.Services.DndServices;
-using Net14Web.Services.GameShop;
 using Net14Web.Services.Movies;
 using Net14Web.Services.RealEstate;
 using Net14Web.Services.Sattelite;
@@ -37,7 +36,10 @@ builder.Services.AddScoped<HeroBuilder>(diContainer =>
 builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
-builder.Services.AddScoped<IGameShopRepository, GameShopRepository>();
+builder.Services.AddScoped<HeroRepository>();
+builder.Services.AddScoped<WeaponRepository>();
+builder.Services.AddScoped<GameCommentRepository>();
+builder.Services.AddScoped<GameShopRepository>();
 builder.Services.AddScoped<CommentBuilder>();
 builder.Services.AddScoped<ErrorBuilder>();
 builder.Services.AddScoped<MovieBuilder>();
@@ -49,8 +51,10 @@ builder.Services.AddScoped<ObjectBuilder>();
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();
 builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
-builder.Services.AddScoped<ApartmentOwnerRepository>();
+
 var app = builder.Build();
+
+SeedExtentoin.Seed(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

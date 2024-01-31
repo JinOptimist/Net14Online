@@ -29,5 +29,11 @@ namespace Net14Web.DbStuff.Repositories
             hero.FavoriteWeapon = weapon;
             _context.SaveChanges();
         }
+
+        internal void UpdateAvatar(int heroId, string avatarUrl)
+        {
+            GetById(heroId).AvatarUrl = avatarUrl;
+            _context.SaveChanges();
+        }
     }
 }
