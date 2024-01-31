@@ -7,8 +7,7 @@
         public string ShortName { get; set; }
         public string Country { get; set; }
 
-        public ICollection<SportGame> NextGames { get; set; } = default!;
-        public ICollection<SportGame> LastGames { get; set; } = default!;
+        public ICollection<SportGame> Games { get; set; } = default!;
         public ICollection<Player> Players { get; set; } = default!;
     }
 }

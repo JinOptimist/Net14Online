@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Models.BookingWeb;
 using Net14Web.DbStuff.Models.LifeScore;
 using Net14Web.DbStuff.Models.Movies;
-using Net14Web.DbStuff.Models.BookingWeb;
-using Net14Web.DbStuff.Models.TaskTracker;
 using Net14Web.DbStuff.Models.RetroConsoles;
+using Net14Web.DbStuff.Models.TaskTracker;
 
 namespace Net14Web.DbStuff
 {
@@ -31,7 +31,6 @@ namespace Net14Web.DbStuff
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfigurationsFromAssembly(typeof(WebDbContext).Assembly);
 
             builder
                 .Entity<Hero>()
@@ -50,6 +49,14 @@ namespace Net14Web.DbStuff
             builder.Entity<Movie>()
                 .HasMany(movie => movie.Comments)
                 .WithOne(comment => comment.Movie);
+
+            builder.Entity<Team>()
+                .HasMany(team => team.Games)
+                .WithMany(nextGame => nextGame.Teams);
+
+            builder.Entity<Player>()
+                .HasOne(player => player.Team)
+                .WithMany(team => team.Players);
         }
     }
 }
