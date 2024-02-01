@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Models.GameShop;
 
 namespace Net14Web.DbStuff.Repositories
 {
@@ -38,6 +39,29 @@ namespace Net14Web.DbStuff.Repositories
         {
             return _entyties
                 .ToList();
+        }
+
+        public virtual async Task<DbModel?>? GetByIdAsync(int id)
+        {
+            return await _entyties.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public virtual async Task AddAsync(DbModel entity)
+        {
+            await _context.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public virtual async Task DeleteAsync(int id)
+        {
+            var entity = await _entyties.FirstAsync(x => x.Id == id);
+            _entyties.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public virtual async Task<List<DbModel>> GetAllAsync()
+        {
+            return await _entyties.Where(x => x.Id > 0).ToListAsync();
         }
 
         public virtual bool Any()
