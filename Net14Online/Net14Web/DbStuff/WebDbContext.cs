@@ -6,6 +6,7 @@ using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Models.RetroConsoles;
 using Net14Web.DbStuff.Models.GameShop;
 using Net14Web.DbStuff.Models.TaskTracker;
+using Net14Web.DbStuff.Models.InvestPort;
 
 namespace Net14Web.DbStuff
 {
@@ -21,6 +22,7 @@ namespace Net14Web.DbStuff
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Stock> Stocks { get; set; }
+        public DbSet<Dividend> Dividend { get; set; }
         public DbSet<TaskInfo> TaskInfos { get; set; }
         public DbSet<RetroUser> RetroUsers { get; set; }
         public DbSet<LoginBooking> LoginsBooking { get; set; }
