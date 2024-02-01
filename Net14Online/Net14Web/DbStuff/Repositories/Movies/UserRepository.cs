@@ -16,7 +16,8 @@ namespace Net14Web.DbStuff.Repositories.Movies
 
         public User? GetUserByLoginAndPassword(string login, string password)
         {
-            return _entyties.FirstOrDefault(user => user.Login.ToLower() == login.ToLower() && user.Password == password);
+            return _entyties
+                .FirstOrDefault(user => user.Login!.ToLower() == login.ToLower() && user.Password == password);
         }
 
         public User? GetUserWithComments(int userId)
@@ -24,6 +25,22 @@ namespace Net14Web.DbStuff.Repositories.Movies
             return _entyties
                 .Include(u => u.Comments)
                 .FirstOrDefault(u => u.Id == userId);
+        }
+
+        public async Task<User?> GetUserByLoginAndPasswordAsync(string login, string password)
+        {
+            return await _entyties
+                .AsNoTracking()
+                .FirstOrDefaultAsync(user => user.Login!.ToLower() == login.ToLower() && user.Password == password);
+        }
+
+        public async Task<User?> GetUserWithCommentsAsync(int userId)
+        {
+            return await _entyties
+                .Include(u => u.Comments!)
+                .ThenInclude(c => c.Movie)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == userId);
         }
 
         public void UpdateUser(User oldUser, UserViewModel updateUser)
