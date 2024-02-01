@@ -10,7 +10,5 @@ namespace Net14Web.Models.InvestPortfolio
         public int TheAmountOfTheDividend { get; set; }
         public List<SelectListItem> Stocks { get; set; }
 
-        //public int IdStock { get; set; }
-
     }
 }
