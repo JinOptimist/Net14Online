@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff.Models;
-using Net14Web.DbStuff.Models.GameShop;
 
 namespace Net14Web.DbStuff.Repositories
 {
