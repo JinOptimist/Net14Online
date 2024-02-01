@@ -1,0 +1,29 @@
+﻿@using Net14Web.Models.InvestPortfolio
+@model AddDividendViewModel
+
+@{
+    Layout = "_LayoutInvestPortfolio";
+}
+
+<div>
+    <form method="post">
+        <div>
+            Выберите акцию
+            @Html.DropDownList("stockId", Model.Stocks)
+        </div>
+
+        <div>
+            Дата выплаты дивидендов
+            @Html.TextBoxFor(x => x.DateOfReplenishment)
+        </div>
+
+        <div>
+            Размер дивидендов
+            @Html.TextBoxFor(x => x.TheAmountOfTheDividend, new { @type = "number" })
+        </div>
+
+        <div>
+            <input type="submit" value="Зафиксировать дивиденд" />
+        </div>
+    </form>
+</div>

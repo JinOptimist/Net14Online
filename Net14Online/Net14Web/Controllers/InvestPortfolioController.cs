@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Models.InvestPort;
 using Net14Web.Models.InvestPortfolio;
 using Net14Web.Services;
 
