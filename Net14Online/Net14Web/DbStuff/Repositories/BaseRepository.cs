@@ -60,7 +60,7 @@ namespace Net14Web.DbStuff.Repositories
 
         public virtual async Task<List<DbModel>> GetAllAsync()
         {
-            return await _entyties.Where(x => x.Id > 0).ToListAsync();
+            return await _entyties.ToListAsync();
         }
 
         public virtual bool Any()

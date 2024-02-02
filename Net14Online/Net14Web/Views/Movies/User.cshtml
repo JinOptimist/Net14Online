@@ -13,7 +13,14 @@
     <div class="col-12 row container d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-3">
             <div class="align-middle text-center">
-                <img src="@Model.AvatarUrl" class="rounded mx-auto d-block avatar-img" alt="avatar">
+                <a>
+                    <img type="image" src="@Model.AvatarUrl" class="rounded mx-auto d-block avatar-img" alt="avatar">
+                    <form action="/movies/UpdateUserAvatar" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="userId" value="@Model.Id" />
+                        <input type="file" name="avatar" />
+                        <input type="submit" value="Обновить аватар" />
+                    </form>
+                </a>
                 <h4 class="card-title">@Model.Login</h4>
                 <span class="badge bg-success">Онлайн</span>
                 <h6 class="card-title">Подписчиков: 10</h6>

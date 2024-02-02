@@ -49,9 +49,15 @@
                                             @using (Html.BeginForm(nameof(Net14Web.Controllers.MoviesController.EditMovie), "Movies", FormMethod.Post))
                                             {
                                                 <input type="hidden" name="id" value="@movie.Id" />
-                                                <p>Title:</p> <input type="text" name="title" value="@movie.Title" /><br />
-                                                <p>Description:</p> <input type="text" name="description" value="@movie.Description" /><br />
+                                                <p>Title: <input type="text" name="title" value="@movie.Title" /></p>
+                                                <p>Description: <input type="text" name="description" value="@movie.Description" /></p>
+                                                <p>PosterUrl: <input type="text" name="posterUrl" value="@movie.PosterUrl" /></p>
                                                 <input type="submit" value="Обновить" />
+                                            }
+                                            @using(Html.BeginForm(nameof(Net14Web.Controllers.MoviesController.RemoveMovie), "Movies", FormMethod.Post))
+                                            {
+                                                <input type="hidden" name="movieId" value="@movie.Id" />
+                                                <input type="submit" value="Удалить" />
                                             }
                                         </div>
                                         <hr />

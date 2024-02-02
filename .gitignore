@@ -398,3 +398,6 @@ FodyWeavers.xsd
 *.sln.iml
 /Net14Online/Net14Web/wwwroot/images/dndAvatars/*.png
 /Net14Online/Net14Web/wwwroot/images/dndAvatars/*.jpg
+/Net14Online/Net14Web/wwwroot/images/movies/userAvatars/*
+!/Net14Online/Net14Web/wwwroot/images/movies/userAvatars/default.png
+/Net14Online/Net14Web/wwwroot/images/movies/moviePosters/*
