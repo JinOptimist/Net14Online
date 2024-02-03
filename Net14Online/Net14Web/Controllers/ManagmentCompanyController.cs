@@ -5,6 +5,7 @@ using Net14Web.DbStuff.ManagmentCompany.Models;
 using Net14Web.DbStuff.ManagmentCompany.Models.Enums;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.Models.ManagmentCompany;
+using System.ComponentModel.Design;
 
 namespace Net14Web.Controllers
 {
@@ -12,7 +13,7 @@ namespace Net14Web.Controllers
     {
         private CompanyRepository _companyRepository;
         private ProjectRepository _projectRepository;
-        private UserRepository _userRepository;
+        private McUserRepository _userRepository;
         private UserTaskRepository _userTaskRepository;
         private MemberPermissionRepository _memberPermissionRepository;
         private MemberStatusRepository _memberStatusRepository;
@@ -20,10 +21,10 @@ namespace Net14Web.Controllers
         public ManagmentCompanyController(
             CompanyRepository companyRepository,
             ProjectRepository projectRepository,
-            UserRepository userRepository,
+            McUserRepository userRepository,
             UserTaskRepository userTaskRepository,
-             MemberPermissionRepository memberPermissionRepository,
-             MemberStatusRepository memberStatusRepository)
+            MemberPermissionRepository memberPermissionRepository,
+            MemberStatusRepository memberStatusRepository)
         {
             _companyRepository = companyRepository;
             _projectRepository = projectRepository;
@@ -232,6 +233,10 @@ namespace Net14Web.Controllers
         [HttpGet]
         public IActionResult AdminPanel()
         {
+            var dbStatuses = _memberStatusRepository.GetAll();
+
+            var dbPermissions = _memberPermissionRepository.GetAll();
+
             var dbCompanies = _companyRepository.GetCompaniesWithStatus();
 
             var dbProjects = _projectRepository.GetProjectsWithStatus();
@@ -239,6 +244,22 @@ namespace Net14Web.Controllers
             var dbExecuters = _userRepository.GetExecutors();
 
             var viewModel = new AdminPanelViewModel();
+
+            viewModel.Statuses = dbStatuses
+                .Select(dbStatus => new StatusViewModel
+                {
+                    Id = dbStatus.Id,
+                    Status = dbStatus.Status,
+                })
+                .ToList();
+
+            viewModel.Permissions = dbPermissions
+                .Select(dbPermission => new PermissionViewModel
+                {
+                    Id = dbPermission.Id,
+                    Permission = dbPermission.Permission,
+                })
+                .ToList();
 
             viewModel.Companies = dbCompanies
                 .Select(dbCompany => new CompanyViewModel
@@ -311,6 +332,114 @@ namespace Net14Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult AddPermission()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddPermission(PermissionViewModel viewModel)
+        {
+            var permission = new MemberPermission
+            {
+                Permission = viewModel.Permission
+            };
+
+            _memberPermissionRepository.Add(permission);
+
+            return RedirectToAction("AdminPanel");
+        }
+
+        [HttpGet]
+        public IActionResult UpdatePermission(int permissionId)
+        {
+            if (permissionId > 0)
+            {
+                var permission = _memberPermissionRepository.GetById(permissionId);
+
+                var viewModel = new PermissionViewModel()
+                {
+                    Id = permissionId,
+                    Permission = permission.Permission
+                };
+
+                return View(viewModel);
+            }
+
+            return NotFound("Not Found");
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePermission(PermissionViewModel viewModel, int id)
+        {
+            _memberPermissionRepository.UpdatePermission(viewModel, id);
+
+            return RedirectToAction("AdminPanel");
+        }
+
+        [HttpPost]
+        public IActionResult RemovePermission(int id)
+        {
+            _memberPermissionRepository.Delete(id);
+
+            return RedirectToAction("AdminPanel");
+        }
+
+        [HttpGet]
+        public IActionResult AddStatus()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddStatus(StatusViewModel viewModel)
+        {
+            var status = new MemberStatus 
+            {
+                Status = viewModel.Status 
+            };
+
+            _memberStatusRepository.Add(status);
+
+            return RedirectToAction("AdminPanel");
+        }
+
+        [HttpGet]
+        public IActionResult UpdateStatus(int statusId)
+        {
+            if (statusId > 0)
+            {
+                var status = _memberStatusRepository.GetById(statusId);
+
+                var viewModel = new StatusViewModel()
+                {
+                    Id = statusId,
+                    Status = status.Status
+                };
+
+                return View(viewModel);
+            }
+
+            return NotFound("Not Found");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateStatus(StatusViewModel viewModel, int id)
+        {
+            _memberStatusRepository.UpdateStatus(viewModel, id);
+
+            return RedirectToAction("AdminPanel");
+        }
+
+        [HttpPost]
+        public IActionResult RemoveStatus(int id)
+        {
+            _memberStatusRepository.Delete(id);
+
+            return RedirectToAction("AdminPanel");
+        }
+
+        [HttpGet]
         public IActionResult AddCompany()
         {
             return View();
@@ -351,27 +480,30 @@ namespace Net14Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateCompany(int id)
+        public IActionResult UpdateCompany(int companyId)
         {
-            var company = _companyRepository.GetCompaniesWithStatus()
-                .First(x => x.Id == id);
-
-            var viewModel = new CompanyViewModel
-
+            if (companyId > 0)
             {
-                Id = company.Id,
-                CompanyName = company.Name,
-                CompanyShortName = company.ShortName,
-                CompanyAdress = company.Adress,
-                CompanyEmail = company.Email,
-                CompanyPhoneNumber = company.PhoneNumber,
-                CompanyStatus = company.Status.Status,
-                Statuses = _memberStatusRepository.GetAll()
-                    .Select(x => new SelectListItem(x.Status, x.Id.ToString()))
-                    .ToList()
-            };
+                var company = _companyRepository.GetCompaniesWithStatus()
+                .SingleOrDefault(x => x.Id == companyId);
 
-            return View(viewModel);
+                var viewModel = new CompanyViewModel();
+
+                viewModel.Id = company.Id;
+                viewModel.CompanyName = company.Name;
+                viewModel.CompanyShortName = company.ShortName;
+                viewModel.CompanyAdress = company.Adress;
+                viewModel.CompanyEmail = company.Email;
+                viewModel.CompanyPhoneNumber = company.PhoneNumber;
+                viewModel.CompanyStatus = company.Status.Status;
+                viewModel.Statuses = _memberStatusRepository.GetAll()
+                    .Select(x => new SelectListItem(x.Status, x.Id.ToString()))
+                    .ToList();
+
+                return View(viewModel);
+            }
+
+            return NotFound("Not Found");
         }
 
         [HttpPost]

@@ -25,6 +25,94 @@
         </div>
     </div>
     <h2>Панель администратора</h2>
+    <h1>Список статусов</h1>
+    <details>
+        <summary>Показать статусы</summary>
+        <table border="1">
+            <thead>
+                <tr>
+                    @if (Model.Statuses.Count > 0)
+                    {
+                        @foreach (var statusField in Model.Statuses.FirstOrDefault().GetType().GetProperties())
+                        {
+                            <th>@statusField.Name</th>
+                        }
+                    }
+                    <th>Изменить</th>
+                    <th>Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var status in Model.Statuses)
+                {
+                    <tr>
+                        @foreach (var statusField in Model.Statuses.FirstOrDefault().GetType().GetProperties())
+                        {
+                            <td> @statusField.GetValue(status)</td>
+                        }
+                        <td>
+                            <a href="/ManagmentCompany/UpdateStatus?statusId=@status.Id">Изменить</a>
+                        </td>
+                        <td>
+                            <form action="/ManagmentCompany/RemoveStatus" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@status.Id" />
+                                <button class="admin-panel-button" type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <a href="/ManagmentCompany/AddStatus">Добавить</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </details>
+    <h1>Список уровней доступа</h1>
+    <details>
+        <summary>Показать уровни доступа</summary>
+        <table border="1">
+            <thead>
+                <tr>
+                    @if (Model.Permissions.Count > 0)
+                    {
+                        @foreach (var permissionField in Model.Permissions.FirstOrDefault().GetType().GetProperties())
+                        {
+                            <th>@permissionField.Name</th>
+                        }
+                    }
+                    <th>Изменить</th>
+                    <th>Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var permission in Model.Permissions)
+                {
+                    <tr>
+                        @foreach (var permissionField in Model.Permissions.FirstOrDefault().GetType().GetProperties())
+                        {
+                            <td> @permissionField.GetValue(permission)</td>
+                        }
+                        <td>
+                            <a href="/ManagmentCompany/UpdatePermission?permissionId=@permission.Id">Изменить</a>
+                        </td>
+                        <td>
+                            <form action="/ManagmentCompany/RemovePermission" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@permission.Id" />
+                                <button class="admin-panel-button" type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <a href="/ManagmentCompany/AddPermission">Добавить</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </details>
     <h1>Список компаний</h1>
     <details open>
         <summary>Показать компании</summary>
@@ -55,9 +143,8 @@
                             <td> @companyField.GetValue(company)</td>
                         }
                         <td>
-                            <button class="admin-panel-button">
-                                <a asp-controller="ManagmentCompany" asp-action="UpdateCompany" asp-route-id="@company.Id">Изменить</a>
-                            </button>
+                            <a href="/ManagmentCompany/UpdateCompany?companyId=@company.Id">Изменить</a>
+                           @*  <a asp-controller="ManagmentCompany" asp-action="UpdateCompany" asp-route-id="@company.Id">Изменить</a> *@
                         </td>
                         <td>
                             <form action="/ManagmentCompany/RemoveCompany" class="remove-form" method="post">
@@ -103,9 +190,7 @@
                             <td> @projectField.GetValue(project)</td>
                         }
                         <td>
-                            <button class="admin-panel-button">
-                                <a asp-controller="ManagmentCompany" asp-action="UpdateProject" asp-route-id="@project.Id">Изменить</a>
-                            </button>
+                            <a href="/ManagmentCompany/UpdateProject?projectId=@project.Id">Изменить</a>
                         </td>
                         <td>
                             <form action="/ManagmentCompany/RemoveProject" class="remove-form" method="post">
@@ -161,9 +246,7 @@
                             <td> @ExecutorField.GetValue(executor)</td>
                         }
                         <td>
-                            <button class="admin-panel-button">
-                                <a asp-controller="ManagmentCompany" asp-action="UpdateExecutor" asp-route-id="@executor.Id">Изменить</a>
-                            </button>
+                            <a href="/ManagmentCompany/RemoveExecutor?executorId=@executor.Id">Изменить</a>
                         </td>
                         <td>
                             <form action="/ManagmentCompany/RemoveExecutor" class="remove-form" method="post">

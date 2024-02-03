@@ -40,10 +40,10 @@ builder.Services.AddScoped<RandomHelper>();
 // Repositories
 builder.Services.AddScoped<CompanyRepository>();
 builder.Services.AddScoped<ProjectRepository>();
-builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<McUserRepository>();
 builder.Services.AddScoped<UserTaskRepository>();
 builder.Services.AddScoped<MemberPermissionRepository>();
-builder.Services.AddScoped<MemberStatusRepository>();
+builder.Services.AddScoped<MemberStatusRepository>(); 
 builder.Services.AddScoped<GameShopRepository>();
 builder.Services.AddScoped<HeroRepository>();
 builder.Services.AddScoped<MoviesRepository>();

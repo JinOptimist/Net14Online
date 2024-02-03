@@ -1,4 +1,6 @@
-﻿using Net14Web.DbStuff.Models;
+﻿using Net14Web.DbStuff.ManagmentCompany.Models;
+using Net14Web.DbStuff.ManagmentCompany.Models.Enums;
+using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Repositories;
 
 namespace Net14Web.DbStuff
@@ -11,6 +13,9 @@ namespace Net14Web.DbStuff
             {
                 SeedHeroes(serviceScope.ServiceProvider);
                 SeedWeapon(serviceScope.ServiceProvider);
+                SeedUser(serviceScope.ServiceProvider);
+                SeedStatus(serviceScope.ServiceProvider);
+                SeedPermission(serviceScope.ServiceProvider);
             }
         }
 
@@ -61,6 +66,55 @@ namespace Net14Web.DbStuff
                     Damage = 10
                 };
                 weaponRepository.Add(sword);
+            }
+        }
+
+        private static MemberStatus SeedStatus(IServiceProvider di)
+        {
+            var statusRepository = di.GetService<MemberStatusRepository>();
+
+            var status = new MemberStatus();
+
+            if (statusRepository.Any() == false)
+            {
+                status.Status = "Active";
+
+                statusRepository.Add(status);
+            }
+
+            return status;
+        }
+
+        private static MemberPermission SeedPermission(IServiceProvider di)
+        {
+            var permissionRepository = di.GetService<MemberPermissionRepository>();
+
+            var permission = new MemberPermission();
+
+            if (permissionRepository.Any() == false)
+            {
+                permission.Permission = "SuperAdmin";
+
+                permissionRepository.Add(permission);
+            }
+
+            return permission;
+        }
+
+        private static void SeedUser(IServiceProvider di)
+        {
+            var userRepository = di.GetService<McUserRepository>();
+            if (userRepository.Any() == false)
+            {
+                var admin = new User
+                {
+                    NickName = "Admin",
+                    Email = "Admin",
+                    Password = "Admin",
+                    Status = SeedStatus(di),
+                    MemberPermission = SeedPermission(di)
+                };
+                userRepository.Add(admin);
             }
         }
     }

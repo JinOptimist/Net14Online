@@ -5,9 +5,9 @@ using Net14Web.Models.ManagmentCompany;
 
 namespace Net14Web.DbStuff.Repositories
 {
-    public class UserRepository : ManagmentCompanyBaseRepository<User>
+    public class McUserRepository : ManagmentCompanyBaseRepository<User>
     {
-        public UserRepository(ManagmentCompanyDbContext context) : base(context) { }
+        public McUserRepository(ManagmentCompanyDbContext context) : base(context) { }
 
         public override IEnumerable<User> GetAll()
         {
