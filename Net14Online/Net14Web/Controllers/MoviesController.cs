@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Net14Web.DbStuff;
+using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Models.Movies;
 using Net14Web.Services.Movies;
 
@@ -12,40 +11,43 @@ namespace Net14Web.Controllers
         private readonly ErrorBuilder _errorBuilder;
         private readonly UserBuilder _userBuilder;
         private readonly CommentBuilder _commentBuilder;
-        private readonly MovieEditHelper _movieEditHelper;
-        private readonly UserEditHelper _userEditHelper;
         private readonly RegistrationHelper _registrationHelper;
 
-        public static AdminPanelViewModel AdminPanelViewModel = new AdminPanelViewModel();
-
-        private WebDbContext _webDbContext;
+        private MoviesRepository _movieRepository;
+        private UserRepository _userRepository;
+        private CommentRepository _commentRepository;
+        private AdminPanelViewModel _adminPanelViewModel;
 
         private static int activeUserId = -1;
         private const int COUNT_MOVIES_ON_INDEX = 10;
 
         public MoviesController(MovieBuilder movieBuilder, ErrorBuilder errorBuilder, UserBuilder userBuilder, CommentBuilder commentBuilder, 
-            MovieEditHelper movieEditHelper, UserEditHelper userEditHelper, RegistrationHelper registrationHelper,
-            WebDbContext webDbContext)
+            RegistrationHelper registrationHelper,
+            MoviesRepository moviesRepository, UserRepository userRepository, CommentRepository commentRepository)
         {
             _movieBuilder = movieBuilder;
             _errorBuilder = errorBuilder;
             _userBuilder = userBuilder;
             _commentBuilder = commentBuilder;
-            _movieEditHelper = movieEditHelper;
-            _userEditHelper = userEditHelper;
             _registrationHelper = registrationHelper;
-            _webDbContext = webDbContext;
-            AdminPanelViewModel.Movies = _webDbContext.Movies.
-                Select(m => _movieBuilder.RebuildMovieToMovieViewModel(m)).ToList();
-            AdminPanelViewModel.Users = _webDbContext.Users.
-                Select(u => userBuilder.RebuildUserToUserView(u)).ToList();
+            _movieRepository = moviesRepository;
+            _userRepository = userRepository;
+            _commentRepository = commentRepository;
+            _adminPanelViewModel = new AdminPanelViewModel();
+            _adminPanelViewModel.Movies = _movieRepository.GetAll()
+                .Select(m => _movieBuilder.RebuildMovieToMovieViewModel(m)).ToList();
+            _adminPanelViewModel.Users = _userRepository.GetAll()
+                .Select(u => userBuilder.RebuildUserToUserView(u)).ToList();
+            _commentRepository = commentRepository;
         }
 
         public IActionResult Index()
         {
-            var movies = _webDbContext.Movies
-                .Take(COUNT_MOVIES_ON_INDEX)
-                .Select(m => _movieBuilder.RebuildMovieToMovieViewModel(m)).ToList();
+            var movies = _movieRepository
+                .GetMoviesAsync(COUNT_MOVIES_ON_INDEX)
+                .Result
+                .Select(m => _movieBuilder.RebuildMovieToMovieViewModel(m))
+                .ToList();
             return View(movies);
         }
 
@@ -71,20 +73,19 @@ namespace Net14Web.Controllers
 
         public IActionResult AdminPanel()
         {
-            return View(AdminPanelViewModel);
+            return View(_adminPanelViewModel);
         }
 
         [HttpPost]
-        public IActionResult AddMovie(AddMovieViewModel addMovie)
+        public async Task<IActionResult> AddMovie(AddMovieViewModel addMovie)
         {
             var movie = _movieBuilder.BuildMovie(addMovie);
-            _webDbContext.Movies.Add(movie);
-            _webDbContext.SaveChanges();
+            await _movieRepository.AddAsync(movie);
             return RedirectToAction("Movie", RedirectMovieById(movie.Id));
         }
 
         [HttpPost]
-        public IActionResult Registration(AddUserViewModel addUser)
+        public async Task<IActionResult> Registration(AddUserViewModel addUser)
         {
             if (!ModelState.IsValid)
             {
@@ -92,16 +93,15 @@ namespace Net14Web.Controllers
             }
 
             var user = _userBuilder.BuildUser(addUser);
-            _webDbContext.Add(user);
-            _webDbContext.SaveChanges();
+            await _userRepository.AddAsync(user);
             activeUserId = user.Id;
             return RedirectToAction("User", RedirectUserById(activeUserId));
         }
 
         [HttpPost]
-        public IActionResult Login(LoginUserViewModel loginUser)
+        public async Task<IActionResult> Login(LoginUserViewModel loginUser)
         {
-            var user = _webDbContext.Users.FirstOrDefault(user => user.Login.ToLower() == loginUser.Login.ToLower() && user.Password == loginUser.Password);
+            var user = await _userRepository.GetUserByLoginAndPasswordAsync(loginUser.Login, loginUser.Password);
             if (user != null)
             {
                 activeUserId = user.Id;
@@ -111,11 +111,9 @@ namespace Net14Web.Controllers
         }
 
         [HttpGet]
-        public new IActionResult User(int userId)
+        public new async Task<IActionResult> User(int userId)
         {
-            var user = _webDbContext.Users
-                .Include(u => u.Comments)
-                .FirstOrDefault(u => u.Id == userId);
+            var user = await _userRepository.GetUserWithCommentsAsync(userId);
             if (user != null)
             {
                 var userView = _userBuilder.RebuildUserToUserView(user);
@@ -125,11 +123,9 @@ namespace Net14Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Movie(int movieId)
+        public async Task<IActionResult> Movie(int movieId)
         {
-            var movie = _webDbContext.Movies
-                .Include(m => m.Comments)
-                .FirstOrDefault(movie => movie.Id == movieId);
+            var movie = await _movieRepository.GetMovieWithCommentsAsync(movieId);
             if (movie != null)
             {
                 var movieView = _movieBuilder.RebuildMovieToMovieViewModel(movie);
@@ -139,27 +135,25 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddCommentOnMovie(int movieId, string description)
+        public async Task<IActionResult> AddCommentOnMovie(int movieId, string description)
         {
             if (activeUserId == -1)
             {
                 return RedirectToAction("Movie", RedirectMovieById(movieId));
             }
             var timeOfWriting = DateTime.Now;
-            var movie = _webDbContext.Movies.First(movie => movie.Id == movieId);
-            var user = _webDbContext.Users.First(u => u.Id == activeUserId);
+            var movie = _movieRepository.GetById(movieId);
+            var user = _userRepository.GetById(activeUserId);
             var comment = _commentBuilder.BuildComment(timeOfWriting, description, user, movie);
-            _webDbContext.Comments.Add(comment);
-            _webDbContext.SaveChanges();
+            await _commentRepository.AddAsync(comment);
             return RedirectToAction("Movie", RedirectMovieById(movieId));
         }
 
-        public IActionResult RemoveCommentOnMovie(int commentId)
+        public async Task<IActionResult> RemoveCommentOnMovie(int commentId)
         {
-            var comment = _webDbContext.Comments.First(comment => comment.Id == commentId);
-            var movieId = comment.Movie.Id;
-            _webDbContext.Comments.Remove(comment);
-            _webDbContext.SaveChanges();
+            var comment = await _commentRepository.GetByIdAsync(commentId)!;
+            var movieId = comment!.Movie.Id;
+            await _commentRepository.DeleteAsync(commentId);
             return RedirectToAction("Movie", RedirectMovieById(movieId));
         }
 
@@ -167,11 +161,9 @@ namespace Net14Web.Controllers
         /// AdminPanel
         /// </summary>
         [HttpPost]
-        public IActionResult RemoveUser(int userId)
+        public async Task<IActionResult> RemoveUser(int userId)
         {
-            var user = _webDbContext.Users.First(user => user.Id == userId);
-            _webDbContext.Users.Remove(user);
-            _webDbContext.SaveChanges();
+            await _userRepository.DeleteAsync(userId);
             return RedirectToAction("AdminPanel");
         }
 
@@ -179,11 +171,10 @@ namespace Net14Web.Controllers
         /// AdminPanel
         /// </summary>
         [HttpPost]
-        public IActionResult EditUser(UserViewModel editUser)
+        public async Task<IActionResult> EditUser(UserViewModel editUser)
         {
-            var user = _webDbContext.Users.First(user => user.Id == editUser.Id);
-            _userEditHelper.EditUser(user, editUser);
-            _webDbContext.SaveChanges();
+            var user = await _userRepository.GetByIdAsync(editUser.Id)!;
+            _userRepository.UpdateUser(user!, editUser);
             return RedirectToAction("AdminPanel");
         }
 
@@ -191,11 +182,10 @@ namespace Net14Web.Controllers
         /// AdminPanel
         /// </summary>
         [HttpPost]
-        public IActionResult EditMovie(MovieViewModel editMovie)
+        public async Task<IActionResult> EditMovie(MovieViewModel editMovie)
         {
-            var movie = _webDbContext.Movies.First(m => m.Id == editMovie.Id);
-            _movieEditHelper.EditMovie(movie, editMovie);
-            _webDbContext.SaveChanges();
+            var movie = await _movieRepository.GetByIdAsync(editMovie.Id)!;
+            _movieRepository.UpdateMovie(movie!, editMovie);
             return RedirectToAction("AdminPanel");
         }
 

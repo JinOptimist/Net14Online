@@ -34,8 +34,8 @@ namespace Net14Web.Services.Movies
             var comment = new CommentUserOnMovie
             {
                 UserId = user.Id,
-                Username = user.Login,
-                AvatarUrl = user.AvatarUrl
+                Username = user.Login ?? "",
+                AvatarUrl = user.AvatarUrl ?? ""
             };
             return comment;
         }
@@ -44,7 +44,7 @@ namespace Net14Web.Services.Movies
         {
             var newComment = new UserCommentViewModel
             {
-                Description = comment.Description,
+                Description = comment.Description ?? "",
                 TimeOfWritng = comment.TimeOfWriting,
                 Movie = BuildMovieUserComment(comment.Movie)
             };
@@ -57,9 +57,9 @@ namespace Net14Web.Services.Movies
             var movieComment = new MovieUserComment
             {
                 MovieId = movie.Id,
-                PosterUrl = movie.PosterUrl,
-                Title = movie.Title,
-                Description = movie.Description
+                PosterUrl = movie.PosterUrl ?? "",
+                Title = movie.Title ?? "",
+                Description = movie.Description ?? ""
             };
             return movieComment;
         }
