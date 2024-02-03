@@ -12,6 +12,6 @@
 
         public virtual Company? Company { get; set; }
 
-        public virtual List<User>? Executors { get; set; }
+        public virtual List<User>? Executors { get; set; } = new List<User>();
     }
 }

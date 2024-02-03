@@ -82,7 +82,7 @@ namespace Net14Web.Controllers
                 .ToList();
 
             viewModel.Users =
-                dbUsers
+                dbAllUsers
                 .Select(dbUser => new UserViewModel
                 {
                     Id = dbUser.Id,
@@ -228,7 +228,7 @@ namespace Net14Web.Controllers
         {
             return View();
         }
-        
+
         [HttpGet]
         public IActionResult AdminPanel()
         {
@@ -353,31 +353,29 @@ namespace Net14Web.Controllers
         [HttpGet]
         public IActionResult UpdateCompany(int id)
         {
-            var companies = _companyRepository.GetCompaniesWithStatus()
-                .Where(x => x.Id == id)
-                .ToList();
+            var company = _companyRepository.GetCompaniesWithStatus()
+                .First(x => x.Id == id);
 
-            var viewModel = companies
-                .Select(company => new CompanyViewModel
-                {
-                    Id = company.Id,
-                    CompanyName = company.Name,
-                    CompanyShortName = company.ShortName,
-                    CompanyAdress = company.Adress,
-                    CompanyEmail = company.Email,
-                    CompanyPhoneNumber = company.PhoneNumber,
-                    CompanyStatus = company.Status.Status,
-                    Statuses = _memberStatusRepository.GetAll()
+            var viewModel = new CompanyViewModel
+
+            {
+                Id = company.Id,
+                CompanyName = company.Name,
+                CompanyShortName = company.ShortName,
+                CompanyAdress = company.Adress,
+                CompanyEmail = company.Email,
+                CompanyPhoneNumber = company.PhoneNumber,
+                CompanyStatus = company.Status.Status,
+                Statuses = _memberStatusRepository.GetAll()
                     .Select(x => new SelectListItem(x.Status, x.Id.ToString()))
                     .ToList()
-                })
-                .ToList();
+            };
 
             return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult UpdateCompany(List<CompanyViewModel> companyViewModels, int id, int statusId)
+        public IActionResult UpdateCompany(CompanyViewModel companyViewModels, int id, int statusId)
         {
             _companyRepository.UpdateCompany(companyViewModels, id, statusId);
 
@@ -525,44 +523,43 @@ namespace Net14Web.Controllers
         [HttpGet]
         public IActionResult UpdateExecutor(int id)
         {
-            var users = _userRepository.GetExecutors()
-                .Where(x => x.Id == id)
-                .ToList();
+            var viewModel = new ExecutorViewModel();
 
-            var viewModel = users
-                .Select(user => new ExecutorViewModel
-                {
-                    Id = user.Id,
-                    ExecutorFirstName = user.FirstName,
-                    ExecutorLastName = user.LastName,
-                    ExecutorEmail = user.Email,
-                    ExecutorPhoneNumber = user.PhoneNumber,
-                    ExecutorExpireDate = user.ExpireDate,
-                    ExecutorPassword = user.Password,
-                    ExecutorMemberPermission = user.MemberPermission.Permission,
-                    ExecutorMemberStatus = user.Status.Status,
-                    ExecutorNickName = user.NickName,
-                    Company = user.Company.Name,
-                    Companies = _companyRepository.GetAll()
+            if (id != 0)
+            {
+                var user = _userRepository.GetExecutor(id);
+                //.ToList();
+
+                viewModel.Id = user.Id;
+                viewModel.ExecutorFirstName = user.FirstName;
+                viewModel.ExecutorLastName = user.LastName;
+                viewModel.ExecutorEmail = user.Email;
+                viewModel.ExecutorPhoneNumber = user.PhoneNumber;
+                viewModel.ExecutorExpireDate = user.ExpireDate;
+                viewModel.ExecutorPassword = user.Password;
+                viewModel.ExecutorMemberPermission = user.MemberPermission.Permission;
+                viewModel.ExecutorMemberStatus = user.Status.Status;
+                viewModel.ExecutorNickName = user.NickName;
+                viewModel.Company = user.Company.Name;
+                viewModel.Companies = _companyRepository.GetAll()
                     .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
-                    .ToList(),
-                    Projects = _projectRepository.GetAll()
+                    .ToList();
+                viewModel.Projects = _projectRepository.GetAll()
                     .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
-                    .ToList(),
-                    Statuses = _memberStatusRepository.GetAll()
+                    .ToList();
+                viewModel.Statuses = _memberStatusRepository.GetAll()
                     .Select(x => new SelectListItem(x.Status, x.Id.ToString()))
-                    .ToList(),
-                    Permissions = _memberPermissionRepository.GetAll()
+                    .ToList();
+                viewModel.Permissions = _memberPermissionRepository.GetAll()
                     .Select(x => new SelectListItem(x.Permission, x.Id.ToString()))
-                    .ToList()
-                })
-                .ToList();
+                    .ToList();
 
+            }
             return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult UpdateExecutor(List<ExecutorViewModel> executorViewModels, int id, int statusId, int companyId, int projectId, int permissionId)
+        public IActionResult UpdateExecutor(ExecutorViewModel executorViewModels, int id, int statusId, int companyId, int projectId, int permissionId)
         {
             _userRepository.UpdateExecutor(executorViewModels, id, statusId, companyId, projectId, permissionId);
 
