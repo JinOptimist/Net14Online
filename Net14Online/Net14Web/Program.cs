@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.RealEstate;
 using Net14Web.DbStuff.Repositories;
+using Net14Web.DbStuff.Repositories.Booking;
 using Net14Web.DbStuff.Repositories.GameShop;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Services;
@@ -47,6 +48,8 @@ builder.Services.AddScoped<WeaponRepository>();
 builder.Services.AddScoped<HeroRepository>();
 builder.Services.AddScoped<GameCommentRepository>();
 builder.Services.AddScoped<GameShopRepository>();
+builder.Services.AddScoped<SearchRepository>();
+builder.Services.AddScoped<LoginRepository>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();

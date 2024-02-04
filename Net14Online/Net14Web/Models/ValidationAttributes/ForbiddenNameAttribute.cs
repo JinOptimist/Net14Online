@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace Net14Web.Models.ValidationAttributes
 {
@@ -7,13 +8,14 @@ namespace Net14Web.Models.ValidationAttributes
         public override bool IsValid(object? value)
         {
 
-            if (value is not string && value is not null)
+            if (value is not string || value is null)
             {
-                throw new ArgumentException("ForbidenSymbolsAttribute can be only string");
+                throw new ArgumentException("Name can be only string");
             }
 
             var stringValue = (string)value;
-            return stringValue != "Name";
+
+            return !Regex.IsMatch(stringValue, @"\d+");
         }
     }
 }
