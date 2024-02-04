@@ -7,6 +7,7 @@ using Net14Web.DbStuff.Models.RetroConsoles;
 using Net14Web.DbStuff.Models.GameShop;
 using Net14Web.DbStuff.Models.TaskTracker;
 using Net14Web.DbStuff.Models.InvestPort;
+using Net14Web.DbStuff.Models.Sattelite;
 
 namespace Net14Web.DbStuff
 {
@@ -30,6 +31,8 @@ namespace Net14Web.DbStuff
         public DbSet<SportGame> SportGames { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Player> Players { get; set; }
+
+        public DbSet<ObjectDict> Sattelite { get; set; }
 
         public WebDbContext(DbContextOptions<WebDbContext> options) : base(options) { }
 
