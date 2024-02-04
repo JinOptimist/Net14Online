@@ -23,8 +23,21 @@
                 @foreach (var bond in Model)
                 {
                     <tr>
-                        <td>@bond.Name</td>
-                        <td>@bond.Price</td>
+                        <td>
+                            @bond.Name 
+                            <a href="/Bonds/Remove?name=@bond.Name">
+                                <img src="/images/Bonds/logo_delete.webp"
+                                     width="17"
+                                     height="17">
+                            </a>
+                        </td>
+                        <td>@bond.Price рублей
+                            <form action="/Bonds/UpdatePrice" method="post">
+                                <input type="hidden" name="name" value="@bond.Name" />
+                                <input type="number" name="price" />
+                                <input type="submit" value="Обновить" />
+                            </form>
+                        </td>
                     </tr>
                 }
             </tbody>
