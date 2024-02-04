@@ -2,10 +2,8 @@
 {
     public class UserTaskStatus : BaseModel
     {
-        public int Id { get; set; }
-
         public string Status { get; set; }
 
-        public List<UserTask>? UserTasks { get; set; }
+        public virtual List<UserTask>? UserTasks { get; set; }
     }
 }

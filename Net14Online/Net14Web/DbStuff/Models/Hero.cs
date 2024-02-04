@@ -7,6 +7,7 @@ namespace Net14Web.DbStuff.Models
         public string Name { get; set; }
         public int Coins { get; set; }
         public int Hp {  get; set; }
+        public string AvatarUrl { get; set; }
         public DateTime Birthday { get; set; }
 
         public Race Race { get; set; } = Race.Human;

@@ -6,10 +6,10 @@
 }
 
 @section Style
-    {
+{
     <link href="~/css/InvestPortfolio/investPortfolio.css" rel="stylesheet" />
-   
-    }
+
+}
 
 <body>
     <div class="the-left-part">
@@ -19,6 +19,10 @@
                 <button type="submit">Поиск</button>
             </form>
         </div>
+        <div>
+            <a href="/InvestPortfolio/AddDividend">Добавить дивиденды</a>
+        </div>
+
         <div class="table-with-shares">
             <table>
                 <tr>
@@ -30,7 +34,8 @@
                 {
                     <tr>
                         <td>@stock.NameStock</td>
-                        <td>@stock.Price рублей
+                        <td>
+                            @stock.Price рублей
                             <form action="/InvestPortfolio/UpdatePrice" method="post">
                                 <input type="hidden" name="id" value="@stock.Id">
                                 <input type="number" name="price" value="@stock.Price">
@@ -38,9 +43,9 @@
                             </form>
                         </td>
                         <td></td>
-                        <td><a href="/InvestPortfolio/remove?id=@stock.Id">Удалить</a></td>             
+                        <td><a href="/InvestPortfolio/remove?id=@stock.Id">Удалить</a></td>
                     </tr>
-                   
+
                 }
 
             </table>

@@ -2,13 +2,9 @@
 {
     public class UserTask : BaseModel
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public string? Description { get; set; }
-
-        public UserTaskStatus? Status { get; set; }
 
         public DateTime? CreationDate { get; set; }
 
@@ -16,8 +12,10 @@
 
         public DateTime? CompletionDate { get; set; }
 
-        public User? Author { get; set; }
+        public virtual UserTaskStatus? Status { get; set; }
 
-        public Executor? Executor { get; set; }
+        public virtual User? Author { get; set; }
+
+        public virtual User? Executor { get; set; }
     }
 }

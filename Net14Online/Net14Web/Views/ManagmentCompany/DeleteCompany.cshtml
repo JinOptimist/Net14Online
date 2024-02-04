@@ -1,0 +1,61 @@
+﻿@using Net14Web.Models.ManagmentCompany
+@model CompanyViewModel
+
+@{
+    Layout = "_LayoutManagmentCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagmentCompany/ManagmentCompany.css" rel="stylesheet" />
+    <link href="~/css/ManagmentCompany/Styles.css" rel="stylesheet" />
+}
+
+
+<div class="regContainer">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+        </button>
+        <div class="dropdown-content">
+            <a href="/ManagmentCompany/Index">На главную</a>
+            <a href="/ManagmentCompany/About">О нас</a>
+            <a href="/ManagmentCompany/Contacts">Контакты</a>
+            <a class="login" href="/ManagmentCompany/Login">Вход</a>
+            <a class="reg" href="/ManagmentCompany/Registration">Регистрация</a>
+        </div>
+    </div>
+    <h2>Панель администратора</h2>
+    <div>
+        @Model.Id.ToString()
+        rrrrrrrrrrrrrrrrrrrr
+        <div class="add-company">
+            <h2>Изменить данные компании</h2>
+            <form method="post" action="/ManagmentCompany/AddCompany">
+                <label for="name"> Название компании:</label>
+                @Html.TextBoxFor(x => x.CompanyName, new { @type = "string", value = Model.CompanyName })
+                @Html.ValidationMessageFor(x => x.CompanyName)
+
+                <label for="shortName">Сокращенное название:</label>
+                @Html.TextBoxFor(x => x.CompanyShortName)
+                @Html.ValidationMessageFor(x => x.CompanyShortName)
+
+                <label for="email">Электронная почта:</label>
+                @Html.TextBoxFor(x => x.CompanyEmail)
+                @Html.ValidationMessageFor(x => x.CompanyEmail)
+
+                <label for="adress">Адрес:</label>
+                @Html.TextBoxFor(x => x.CompanyAdress)
+                @Html.ValidationMessageFor(x => x.CompanyAdress)
+
+                <label for="phoneNumber">Номер телефона:</label>
+                @Html.TextBoxFor(x => x.CompanyPhoneNumber)
+                @Html.ValidationMessageFor(x => x.CompanyPhoneNumber)
+
+                <input class="submit" type="submit" value="Добавить компанию" />
+            </form>
+        </div>
+    </div>
+</div>
+
+

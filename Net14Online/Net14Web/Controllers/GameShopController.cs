@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Net14Web.DbStuff.Models.GameShop;
 using Net14Web.Models.GameShop;
-using Net14Web.Services.GameShop;
+using Net14Web.DbStuff.Repositories.GameShop;
 
 namespace Net14Web.Controllers
 {
@@ -9,10 +9,10 @@ namespace Net14Web.Controllers
     {
         private Random _random = new Random();
 
-        private readonly IGameShopRepository _gamesRepository;
-        private readonly IGameCommentsRepository _commentsRepository;
+        private readonly GameShopRepository _gamesRepository;
+        private readonly GameCommentRepository _commentsRepository;
 
-        public GameShopController(IGameShopRepository repository, IGameCommentsRepository commentsRepository)
+        public GameShopController(GameShopRepository repository, GameCommentRepository commentsRepository)
         {
             _gamesRepository = repository;
             _commentsRepository = commentsRepository;

@@ -1,33 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.Models.Dnd;
-using Net14Web.Services.DndServices;
-using System.Xml.Linq;
 
 namespace Net14Web.Controllers
 {
     public class DndController : Controller
     {
-        private readonly HeroBuilder _heroBuilder;
         private HeroRepository _heroRepository;
         private WeaponRepository _weaponRepository;
+        private IWebHostEnvironment _webHostEnvironment;
 
-        /// <summary>
-        /// TEMP SOLUTION. DONT DO THIS IN PRODUCT
-        /// </summary>
-        public static List<HeroViewModel> heroViewModels = new List<HeroViewModel>();
-
-        public DndController(HeroBuilder heroBuilder, 
-            HeroRepository heroRepository, 
-            WeaponRepository weaponRepository)
+        public DndController(HeroRepository heroRepository,
+            WeaponRepository weaponRepository,
+            IWebHostEnvironment webHostEnvironment)
         {
-            _heroBuilder = heroBuilder;
             _heroRepository = heroRepository;
             _weaponRepository = weaponRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -43,6 +34,7 @@ namespace Net14Web.Controllers
                         Name = dbHero.Name,
                         Coins = dbHero.Coins,
                         Race = dbHero.Race,
+                        AvatarUrl = dbHero.AvatarUrl,
                         FavWeaponName = dbHero.FavoriteWeapon?.Name ?? "---"
                     };
                 })
@@ -57,15 +49,35 @@ namespace Net14Web.Controllers
             return View(dndIndexViewModel);
         }
 
-        public IActionResult Profile()
+        public IActionResult Profile(int heroId)
         {
+            var hero = _heroRepository.GetById(heroId);
             var viewModel = new HeroViewModel();
-
-            viewModel.Name = "Test";
-            viewModel.Coins = DateTime.Now.Second;
-            viewModel.Tools = new List<string> { "Hammer", "Shuffle" };
+            viewModel.Id = heroId;
+            viewModel.AvatarUrl = hero.AvatarUrl;
+            viewModel.Name = hero.Name;
+            viewModel.Coins = hero.Coins;
+            viewModel.Race = hero.Race;
 
             return View(viewModel);
+        }
+
+        public IActionResult UpdateAvatar(int heroId, IFormFile avatar)
+        {
+            // upload image
+            var extension = Path.GetExtension(avatar.FileName);
+
+            var fileName = $"heroAvatar{heroId}{extension}";
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "dndAvatars", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                avatar.CopyTo(fileStream);
+            }
+
+            var avatarUrl = $"/images/dndAvatars/{fileName}";
+            _heroRepository.UpdateAvatar(heroId, avatarUrl);
+
+            return RedirectToAction("Profile", new { heroId });
         }
 
         public IActionResult Remove(int id)
@@ -76,8 +88,8 @@ namespace Net14Web.Controllers
 
         public IActionResult AddRandomHero()
         {
-            var hero = _heroBuilder.BuildRandomHero();
-            heroViewModels.Add(hero);
+            //var hero = _heroBuilder.BuildRandomHero();
+            //heroViewModels.Add(hero);
             return RedirectToAction("Index");
         }
 

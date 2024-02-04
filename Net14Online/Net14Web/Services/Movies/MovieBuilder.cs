@@ -17,9 +17,9 @@ namespace Net14Web.Services.Movies
             var movieView = new MovieViewModel
             {
                 Id = movie.Id,
-                Title = movie.Title,
-                Description = movie.Description,
-                PosterUrl = movie.PosterUrl,
+                Title = movie.Title ?? "",
+                Description = movie.Description ?? "",
+                PosterUrl = movie.PosterUrl ?? "",
                 Comments = movie.Comments?.Select(c => _commentBuilder.BuildCommentToMovie(c)).ToList() ?? new List<CommentOnMovieViewModel>()
             };
             return movieView;
