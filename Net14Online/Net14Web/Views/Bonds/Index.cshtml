@@ -1,0 +1,34 @@
+﻿@using Net14Web.Models.Bonds
+@model List<BondsViewModel>
+@{
+    Layout = "_LayoutBonds";
+}
+@section Style
+{
+    <link href="~/css/Bonds/Bonds.css" rel="stylesheet" />
+
+}
+<div class="scroll-table">
+    <table>
+        <thead>
+            <tr>
+                <th>Название облигации</th>
+                <th>Цена</th>
+            </tr>
+        </thead>
+    </table>
+    <div class="scroll-table-body">
+        <table>
+            <tbody>               
+                @foreach (var bond in Model)
+                {
+                    <tr>
+                        <td>@bond.Name</td>
+                        <td>@bond.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
