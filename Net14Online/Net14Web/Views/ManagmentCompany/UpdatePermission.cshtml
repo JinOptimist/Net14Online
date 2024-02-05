@@ -1,5 +1,5 @@
 ﻿@using Net14Web.Models.ManagmentCompany
-@model ProjectViewModel
+@model PermissionViewModel
 
 @{
     Layout = "_LayoutManagmentCompany";
@@ -26,28 +26,19 @@
     </div>
     <h2>Панель администратора</h2>
     <div>
-        <div class="add-project">
-            <h2>Добавить проект</h2>
-            <form method="post" action="/ManagmentCompany/AddProject">
-                <label for="name"> Название проекта:</label>
-                @Html.TextBoxFor(x => x.ProjectName)
-                @Html.ValidationMessageFor(x => x.ProjectName)
+        <div class="update-permission">
+            <h2>Изменить доступ</h2>
+            <form method="post" action="/ManagmentCompany/UpdatePermission">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <label for="name"> Название компании:</label>
+                @Html.TextBoxFor(x => x.Permission)
+                @Html.ValidationMessageFor(model => model.Permission)
 
-                <label for="shortName">Сокращенное название:</label>
-                @Html.TextBoxFor(x => x.ProjectShortName)
-                @Html.ValidationMessageFor(x => x.ProjectShortName)
-
-                <label for="adress">Адрес:</label>
-                @Html.TextBoxFor(x => x.ProjectAdress)
-                @Html.ValidationMessageFor(x => x.ProjectAdress)
-
-                <label for="company">Компания:</label>
-                @Html.DropDownList("companyId", Model.Companies)
-
-                <input class="submit" type="submit" value="Добавить проект" />
+                <input class="submit" type="submit" value="Обновить информацию" />
             </form>
         </div>
     </div>
 </div>
+
 
 

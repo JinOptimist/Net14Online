@@ -38,6 +38,12 @@ builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
 // Repositories
+builder.Services.AddScoped<CompanyRepository>();
+builder.Services.AddScoped<ProjectRepository>();
+builder.Services.AddScoped<McUserRepository>();
+builder.Services.AddScoped<UserTaskRepository>();
+builder.Services.AddScoped<MemberPermissionRepository>();
+builder.Services.AddScoped<MemberStatusRepository>(); 
 builder.Services.AddScoped<GameShopRepository>();
 builder.Services.AddScoped<HeroRepository>();
 builder.Services.AddScoped<MoviesRepository>();
@@ -45,6 +51,7 @@ builder.Services.AddScoped<Net14Web.DbStuff.Repositories.Movies.UserRepository>(
 builder.Services.AddScoped<CommentRepository>();
 builder.Services.AddScoped<WeaponRepository>();
 builder.Services.AddScoped<HeroRepository>();
+
 builder.Services.AddScoped<GameCommentRepository>();
 builder.Services.AddScoped<GameShopRepository>();
 builder.Services.AddScoped<StockRepository>();

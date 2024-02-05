@@ -22,10 +22,8 @@ namespace Net14Web.DbStuff.Repositories
                 .First(x => x.Id == id);
         }
 
-        public void UpdateCompany(List<CompanyViewModel> companyViewModels, int id, int statusId)
+        public void UpdateCompany(CompanyViewModel viewModel, int id, int statusId)
         {
-            var viewModel = companyViewModels.First();
-
             var company = _context.Companies.Include(x => x.Status).First(x => x.Id == id);
 
             company.Name = viewModel.CompanyName;
