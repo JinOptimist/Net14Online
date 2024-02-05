@@ -30,7 +30,16 @@ namespace Net14Web.Controllers
         }
         public IActionResult UserLogin()
         {
-            return View(userLoginViewModel);
+            var logins = _webDbContext.LoginsBooking.Take(10).ToList();
+
+            var viweModel = logins.Select(login => new UserLoginViewModel
+            {
+                Name = login.Name,
+                Email = login.Email,
+                Password = login.Password,
+            }).ToList();
+
+            return View(viweModel);
         }
 
         public IActionResult SearchResult()
@@ -49,10 +58,12 @@ namespace Net14Web.Controllers
 
             return View(viewModels);
         }
-        public IActionResult Remove(string name)
+        public IActionResult Remove(int id)
         {
-            var user = userLoginViewModel.First(x => x.Name == name);
-            userLoginViewModel.Remove(user);
+            var user = _webDbContext.LoginsBooking.First(x => x.Id == id);
+            _webDbContext.LoginsBooking.Remove(user);
+            _webDbContext.SaveChanges();
+
             return RedirectToAction("UserLogin");
         }
 
@@ -66,9 +77,12 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateEmail(string name, string email)
+        public IActionResult UpdateEmail(int Id, string Email)
         {
-            userLoginViewModel.First(x => x.Name == name).Email = email;
+            var logins = _webDbContext.LoginsBooking.FirstOrDefault(x => x.Id == Id);
+            logins.Email = Email;
+            _webDbContext.SaveChanges();
+
             return RedirectToAction("UserLogin");
         }
 
@@ -90,14 +104,22 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string name, string email, string password)
+        public IActionResult Login(LoginViewModel userLoginViewModel)
         {
-            userLoginViewModel.Add(new UserLoginViewModel
+            if (!ModelState.IsValid)
             {
-                Name = name,
-                Email = email,
-                Password = password
-            });
+                return View();
+            }
+
+            var search = _webDbContext.Searches.FirstOrDefault();
+            var login = new LoginBooking
+            {
+                Name = userLoginViewModel.Name,
+                Email = userLoginViewModel.Email,
+                Password = userLoginViewModel.Password
+            };
+            _webDbContext.LoginsBooking.Add(login);
+            _webDbContext.SaveChanges();
             return RedirectToAction("UserLogin");
         }
 
@@ -110,7 +132,7 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult Index(IndexViewModel searchResultViewModel)
         {
-            var login = _webDbContext.LoginsBooking.FirstOrDefault();
+            var login = _webDbContext.LoginsBooking.First();
 
             var search = new Search
             {
