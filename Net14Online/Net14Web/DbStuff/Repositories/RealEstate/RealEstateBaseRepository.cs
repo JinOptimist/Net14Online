@@ -25,15 +25,15 @@ public abstract class RealEstateBaseRepository<DbModel> where DbModel : BaseMode
 
     public virtual void Delete( int id)
     {
-        var user = _entyties.First(x => x.Id == id);
-        _entyties.Remove(user);
+        var apartmentOwner = _entyties.First(x => x.Id == id);
+        _entyties.Remove(apartmentOwner);
         _webRealEstateDbContext.SaveChanges();
     }
 
     public virtual DbModel GetById(int id)
     {
-        var user = _entyties.SingleOrDefault(x => x.Id == id);
-        return user;
+        var apartmentOwner = _entyties.SingleOrDefault(x => x.Id == id);
+        return apartmentOwner;
     }
     
 }
