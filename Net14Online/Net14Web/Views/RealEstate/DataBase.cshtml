@@ -1,5 +1,5 @@
 @using Net14Web.Models.RealEstate
-@model List<UserViewModel>
+@model List<Net14Web.DbStuff.RealEstate.Models.ApartmentOwner>
 
 <div>
     <a href="/RealEstate/AddUser">AddUser</a>
@@ -17,9 +17,9 @@
             <div>
                 Вид деятельности @user.KindOfActivity
             </div>
-            <div>
-                Id @user.Id
-            </div> 
+             <div>
+                 Количество квартир @user.Apartaments.Count
+             </div>
             <div class="delete-block">
                 <a href="/realestate/delete?id=@user.Id">X</a>
             </div>

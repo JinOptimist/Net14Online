@@ -17,10 +17,10 @@ namespace Net14Web.Services.Movies
             var userView = new UserViewModel
             {
                 Id = user.Id,
-                Login = user.Login,
-                Email = user.Email,
-                Password = user.Password,
-                AvatarUrl = user.AvatarUrl,
+                Login = user.Login ?? "",
+                Email = user.Email ?? "",
+                Password = user.Password ?? "",
+                AvatarUrl = user.AvatarUrl ?? "",
                 Comments = user.Comments?.Select(c => _commentBuilder.BuildUserCommentView(c)).ToList() ?? new List<UserCommentViewModel>()
             };
             return userView;
@@ -31,7 +31,7 @@ namespace Net14Web.Services.Movies
             var user = new User
             {
                 Login = addUser.Login,
-                Email = "test@test.com",
+                Email = addUser.Email,
                 Password = addUser.Password,
                 AvatarUrl = "https://e7.pngegg.com/pngimages/184/821/png-clipart-mangalore-united-states-management-computer-science-business-profile-angle-white.png"
             };

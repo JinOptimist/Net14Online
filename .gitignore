@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Net14Online/Net14Web/wwwroot/images/dndAvatars/*.png
+/Net14Online/Net14Web/wwwroot/images/dndAvatars/*.jpg

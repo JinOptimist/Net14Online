@@ -10,21 +10,25 @@
         <div>
             Имя
             @Html.TextBoxFor(x => x.Name, new { placeholder = "Имя" })
+            @Html.ValidationMessageFor(x => x.Name)
         </div>
 
         <div>
             Логин
             @Html.TextBoxFor(x => x.Login, new { placeholder = "Логин" })
+            @Html.ValidationMessageFor(x => x.Login)
         </div>
 
         <div>
             Пароль
             @Html.TextBoxFor(x => x.Password, new { placeholder = "Пароль" })
+            @Html.ValidationMessageFor(x => x.Password)
         </div>
 
         <div>
             Почта
             @Html.TextBoxFor(x => x.Email, new { placeholder = "Почта" })
+            @Html.ValidationMessageFor(x => x.Email)
         </div>
 
         <div>

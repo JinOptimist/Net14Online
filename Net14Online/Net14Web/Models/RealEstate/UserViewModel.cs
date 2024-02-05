@@ -8,5 +8,5 @@ public class UserViewModel
    
    public string KindOfActivity { get; set; }
    
-   public string Id { get; set; }
+   public int CountApartaments { get; set; }
 }

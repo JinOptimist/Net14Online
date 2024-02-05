@@ -2,7 +2,7 @@
 {
     public class AdminPanelViewModel
     {
-        public List<UserViewModel> Users = new List<UserViewModel>();
-        public List<MovieViewModel> Movies = new List<MovieViewModel>();
+        public List<UserViewModel> Users { get; set; }
+        public List<MovieViewModel> Movies { get; set; }
     }
 }
