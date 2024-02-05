@@ -2,6 +2,7 @@
 using Net14Web.DbStuff.ManagmentCompany.Models.Enums;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Repositories;
+using Net14Web.DbStuff.Repositories.Movies;
 
 namespace Net14Web.DbStuff
 {
@@ -14,8 +15,27 @@ namespace Net14Web.DbStuff
                 SeedHeroes(serviceScope.ServiceProvider);
                 SeedWeapon(serviceScope.ServiceProvider);
                 SeedUser(serviceScope.ServiceProvider);
+
+                // Seed ManagmentCompany database
+                SeedMcUser(serviceScope.ServiceProvider);
                 SeedStatus(serviceScope.ServiceProvider);
                 SeedPermission(serviceScope.ServiceProvider);
+            }
+        }
+
+        private static void SeedUser(IServiceProvider serviceProvider)
+        {
+            var userRepository = serviceProvider.GetService<UserRepository>();
+            if (!userRepository.AnyUserWithName("Admin"))
+            {
+                var admin = new DbStuff.Models.Movies.User()
+                {
+                    Login = "admin",
+                    Password = "123",
+                    Email = "test@test.com",
+                };
+
+                userRepository.Add(admin);
             }
         }
 
@@ -101,7 +121,7 @@ namespace Net14Web.DbStuff
             return permission;
         }
 
-        private static void SeedUser(IServiceProvider di)
+        private static void SeedMcUser(IServiceProvider di)
         {
             var userRepository = di.GetService<McUserRepository>();
             if (userRepository.Any() == false)

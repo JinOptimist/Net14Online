@@ -54,6 +54,11 @@ namespace Net14Web.DbStuff
                 .HasMany(user => user.Comments)
                 .WithOne(comment => comment.User);
 
+            builder.Entity<User>()
+                .HasMany(user => user.MyHeroes)
+                .WithOne(comment => comment.Owner)
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.Entity<Movie>()
                 .HasMany(movie => movie.Comments)
                 .WithOne(comment => comment.Movie);

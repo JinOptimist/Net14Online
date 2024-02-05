@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Net14Web.Controllers;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.RealEstate;
 using Net14Web.DbStuff.Repositories;
@@ -12,6 +13,13 @@ using Net14Web.Services.Sattelite;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddAuthentication(AuthController.AUTH_KEY)
+    .AddCookie(AuthController.AUTH_KEY, option =>
+    {
+        option.LoginPath = "/Auth/Login";
+    });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -68,10 +76,13 @@ builder.Services.AddScoped<ObjectBuilder>();
 builder.Services.AddScoped<RegistrationHelper>();
 builder.Services.AddScoped<CreateFilePathHelper>();
 builder.Services.AddScoped<UploadFileHelper>();
+builder.Services.AddScoped<AuthService>();
 
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();
 builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -90,7 +101,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication(); // Who I am?
+app.UseAuthorization(); // May I?
 
 app.MapControllerRoute(
     name: "default",

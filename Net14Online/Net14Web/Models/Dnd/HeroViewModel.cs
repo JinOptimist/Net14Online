@@ -11,6 +11,7 @@ namespace Net14Web.Models.Dnd
         public int Coins { get; set; }
         public int Age { get; set; }
         public Race Race { get; set; }
+        public string OwnerName { get; set; }
         public List<string> Tools { get; set; }
     }
 }
