@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
-namespace Net14Web.Services.LifeScore.Repositories
+namespace Net14Web.DbStuff.Repositories.LifeScore.Repositories
 {
     public interface ILifeScoreGenericRepository<TEntity> where TEntity : class
     {

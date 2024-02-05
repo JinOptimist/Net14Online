@@ -1,11 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Net14Web.Models.LifeScore;
+using Net14Web.Services.LifeScore;
 using GameViewModel = Net14Web.Models.LifeScore.GameViewModel;
 
 namespace Net14Web.Controllers;
 
 public class LifeScoreController : Controller
 {
+    private readonly ITeamsService _teamsService;
+    private readonly IPlayersService _playersService;
+
+    public LifeScoreController(ITeamsService teamsService, IPlayersService playersService)
+    {
+        _teamsService = teamsService;
+        _playersService = playersService;
+    }
+
     public static LifeScoreViewModel lifeScoreViewModel = new LifeScoreViewModel
     {
         Games = new List<GameViewModel>(),
@@ -33,8 +43,40 @@ public class LifeScoreController : Controller
         return View();
     }
 
-    public IActionResult Teams()
+    public async Task<IActionResult> Teams()
     {
+        var teams = await _teamsService.GetAllAsync();
+        lifeScoreViewModel.Teams = teams;
+        return View(lifeScoreViewModel);
+    }
+
+    [HttpGet]
+    public IActionResult CreateTeam()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult CreateTeam(TeamViewModel teamViewModel)
+     {
+        var newTeamViewModel = _teamsService.CreateAsync(teamViewModel);
+
+        return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> CreatePlayer()
+    {
+        var teams = await _teamsService.GetAllAsync();
+        lifeScoreViewModel.Teams = teams;
+        return View(lifeScoreViewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreatePlayer(PlayerViewModel playerViewModel)
+    {
+        var newPlayer = await _playersService.CreateAsync(playerViewModel);
+
         return View();
     }
 

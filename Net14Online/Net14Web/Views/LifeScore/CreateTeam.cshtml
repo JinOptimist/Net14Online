@@ -1,0 +1,31 @@
+﻿@using Net14Web.Models.LifeScore
+@model TeamViewModel
+
+<div>
+    <form method="post">
+        <div>
+            Имя
+            @Html.TextBoxFor(x => x.Name, new { placeholder = "Название команды" })
+        </div>
+
+        <div>
+            Короткое имя
+            @Html.TextBoxFor(x => x.ShortName, new { placeholder = "Сокращение" })
+        </div>
+
+        <div>
+            Лига
+            @Html.TextBoxFor(x => x.Liga)
+        </div>
+
+        <div>
+            Страна
+            @Html.TextBoxFor(x => x.Country)
+            @Html.ValidationMessageFor(x => x.Country)
+        </div>
+
+        <div>
+            <input type="submit" value="Создать команду" />
+        </div>
+    </form>
+</div>

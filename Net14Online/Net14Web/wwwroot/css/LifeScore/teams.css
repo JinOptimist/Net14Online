@@ -1,1 +1,8 @@
-﻿
+﻿.table-header{
+    display: flex;
+}
+
+.team {
+    display: flex;
+}
+

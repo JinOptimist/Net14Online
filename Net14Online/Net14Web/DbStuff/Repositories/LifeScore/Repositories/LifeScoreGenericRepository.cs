@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff;
 
-namespace Net14Web.Services.LifeScore.Repositories
+namespace Net14Web.DbStuff.Repositories.LifeScore.Repositories
 {
     public class LifeScoreGenericRepository<TEntity> : ILifeScoreGenericRepository<TEntity> where TEntity : BaseModel
     {
