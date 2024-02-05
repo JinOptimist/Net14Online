@@ -47,6 +47,8 @@ builder.Services.AddScoped<WeaponRepository>();
 builder.Services.AddScoped<HeroRepository>();
 builder.Services.AddScoped<GameCommentRepository>();
 builder.Services.AddScoped<GameShopRepository>();
+builder.Services.AddScoped<StockRepository>();
+builder.Services.AddScoped<DividendRepository>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
