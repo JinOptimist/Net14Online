@@ -8,6 +8,7 @@ using Net14Web.DbStuff.Repositories.GameShop;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Services;
 using Net14Web.Services.DndServices;
+using Net14Web.Services.GameShop;
 using Net14Web.Services.Movies;
 using Net14Web.Services.RealEstate;
 using Net14Web.Services.Sattelite;
@@ -84,6 +85,8 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();
 builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
+builder.Services.AddScoped<GamesService>();
+builder.Services.AddScoped<GameCommentService>();
 
 builder.Services.AddHttpContextAccessor();
 

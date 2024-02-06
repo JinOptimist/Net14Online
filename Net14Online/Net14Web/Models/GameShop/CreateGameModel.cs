@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Net14Web.Models.GameShop
 {
-    public class AddGameViewModel
+    public class CreateGameModel
     {
         [Required(ErrorMessage = "Имя обязательно")]
         [MaxLength(30)]
         [ForbidenNameAttribure]
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
-        public string? PosterUrl { get; set; }
+        public string? LogoUrl { get; set; }
 
         public string? Genre { get; set; }
     }
