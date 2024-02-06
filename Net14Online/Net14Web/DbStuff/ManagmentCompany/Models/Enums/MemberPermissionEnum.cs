@@ -2,10 +2,10 @@
 {
     public enum MemberPermissionEnum
     {
-        User = 1,
+        SuperAdmin = 1,
         Executor = 2,
-        Manager = 4,
-        Admin = 5,
-        SuperAdmin = 6,
+        Manager = 3,
+        Admin = 4,
+        User = 5,
     }
 }

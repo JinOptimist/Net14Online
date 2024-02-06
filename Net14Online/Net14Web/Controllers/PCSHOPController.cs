@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
-using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Models.PcShop;
 using Net14Web.Models.PcShop;
 
 namespace Net14Web.Controllers
@@ -35,7 +36,12 @@ namespace Net14Web.Controllers
 
             return View(viewModels);
         }
-        
+        public ActionResult PCs()
+        {
+            var dbPCModel = _webDbContext.PCModel.Include(x=>x.CPU).Take(10).ToList();
+            return View(dbPCModel);
+        }
+
         public ActionResult Registration()
         {
             return View();

@@ -1,4 +1,5 @@
 ﻿using Net14Web.DbStuff.Models.Enums;
+using Net14Web.DbStuff.Models.Movies;
 
 namespace Net14Web.DbStuff.Models
 {
@@ -11,6 +12,8 @@ namespace Net14Web.DbStuff.Models
         public DateTime Birthday { get; set; }
 
         public Race Race { get; set; } = Race.Human;
+
+        public virtual User? Owner { get; set; }
 
         public virtual Weapon? FavoriteWeapon { get; set; }
         public virtual List<Weapon> KnowedWeapons { get; set; }

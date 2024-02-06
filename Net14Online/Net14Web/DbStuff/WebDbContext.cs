@@ -7,6 +7,7 @@ using Net14Web.DbStuff.Models.RetroConsoles;
 using Net14Web.DbStuff.Models.GameShop;
 using Net14Web.DbStuff.Models.TaskTracker;
 using Net14Web.DbStuff.Models.InvestPort;
+using Net14Web.DbStuff.Models.PcShop;
 
 namespace Net14Web.DbStuff
 {
@@ -15,6 +16,8 @@ namespace Net14Web.DbStuff
         public DbSet<Hero> Heroes { get; set; }
         public DbSet<Weapon> Weapons { get; set; }
         public DbSet<UsersPcShop> UserPcShop { get; set; }
+        public DbSet<PCModel> PCModel { get; set;}
+        public DbSet<CpuModel> CpuModel { get; set; }
         public DbSet<Search> Searches { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<GameComment> GameComments { get; set; }
@@ -50,6 +53,11 @@ namespace Net14Web.DbStuff
             builder.Entity<User>()
                 .HasMany(user => user.Comments)
                 .WithOne(comment => comment.User);
+
+            builder.Entity<User>()
+                .HasMany(user => user.MyHeroes)
+                .WithOne(comment => comment.Owner)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<Movie>()
                 .HasMany(movie => movie.Comments)

@@ -1,5 +1,5 @@
 ﻿@using Net14Web.Models.ManagmentCompany
-@model List<ExecutorViewModel>
+@model ExecutorViewModel
 
 @{
     Layout = "_LayoutManagmentCompany";
@@ -26,69 +26,74 @@
     </div>
     <h2>Панель администратора</h2>
     <div>
-        @for (int i = 0; i < Model.Count; i++)
-        {
+
             <div class="add-user">
                 <h2>Добавить исполнителя</h2>
                 <form method="post" action="/ManagmentCompany/UpdateExecutor">
+                    <input type="hidden" name="id" value=" Model.Id" />
                     <label for="firstName"> Имя:</label>
-                    @Html.TextBoxFor(x => x[i].ExecutorFirstName)
-                    @Html.ValidationMessageFor(x => x[i].ExecutorFirstName)
+                    @Html.TextBoxFor(x => x.ExecutorFirstName)
+                    @Html.ValidationMessageFor(x => x.ExecutorFirstName)
 
                     <label for="lastName"> Фамилия:</label>
-                    @Html.TextBoxFor(x => x[i].ExecutorLastName)
-                    @Html.ValidationMessageFor(x => x[i].ExecutorLastName)
+                    @Html.TextBoxFor(x => x.ExecutorLastName)
+                    @Html.ValidationMessageFor(x => x.ExecutorLastName)
 
                     <label for="nickName"> Ник на сайте:</label>
-                    @Html.TextBoxFor(x => x[i].ExecutorNickName)
-                    @Html.ValidationMessageFor(x => x[i].ExecutorNickName)
+                    @Html.TextBoxFor(x => x.ExecutorNickName)
+                    @Html.ValidationMessageFor(x => x.ExecutorNickName)
 
                     <label for="email">Электронная почта:</label>
-                    @Html.TextBoxFor(x => x[i].ExecutorEmail)
-                    @Html.ValidationMessageFor(x => x[i].ExecutorEmail)
+                    @Html.TextBoxFor(x => x.ExecutorEmail)
+                    @Html.ValidationMessageFor(x => x.ExecutorEmail)
 
                     <label for="password">Пароль для пользователя:</label>
-                    @Html.TextBoxFor(x => x[i].ExecutorPassword)
-                    @Html.ValidationMessageFor(x => x[i].ExecutorPassword)
+                    @Html.TextBoxFor(x => x.ExecutorPassword)
+                    @Html.ValidationMessageFor(x => x.ExecutorPassword)
 
                     <label for="phoneNumber">Номер телефона:</label>
-                    @Html.TextBoxFor(x => x[i].ExecutorPhoneNumber)
-                    @Html.ValidationMessageFor(x => x[i].ExecutorPhoneNumber)
+                    @Html.TextBoxFor(x => x.ExecutorPhoneNumber)
+                    @Html.ValidationMessageFor(x => x.ExecutorPhoneNumber)
 
                     <label for="expireDate">Выберите дату:</label>
                     <div class="change">
-                        @Html.TextBoxFor(x => x[i].ExecutorExpireDate, new { @class = "company-status", @readonly = "readonly" })
-                        @Html.TextBoxFor(x => x[i].ExecutorExpireDate, new { type = "date" })
+                        @Html.TextBoxFor(x => x.ExecutorExpireDate, new { @class = "company-status", @readonly = "readonly" })
+                        @Html.TextBoxFor(x => x.ExecutorExpireDate, new { type = "date" })
                     </div>
-                    @Html.ValidationMessageFor(x => x[i].ExecutorExpireDate)
+                    @Html.ValidationMessageFor(x => x.ExecutorExpireDate)
 
                     <label for="permission">Уровень доступа:</label>
                     <div class="change">
-                        @Html.TextBoxFor(x => x[i].ExecutorMemberPermission, new { @class = "company-status", @readonly = "readonly" })
-                        @Html.DropDownList("permissionId", Model[i].Permissions, new { @class = "company-status-list" })
+                        @Html.TextBoxFor(x => x.ExecutorMemberPermission, new { @class = "company-status", @readonly = "readonly" })
+                        @Html.DropDownList("permissionId", Model.Permissions, new { @class = "company-status-list" })
                     </div>
 
-                    <label for="project">Компания:</label>
+                    <label for="status">Статус:</label>
+                    <div class="change-status">
+                        @Html.TextBoxFor(x => x.ExecutorMemberStatus, new { @class = "company-status", @readonly = "readonly" })
+                        @Html.DropDownList("statusId", Model.Statuses, new { @class = "company-status-list" })
+                    </div>
+
+                    <label for="company">Компания:</label>
                     <div class="change">
-                        @Html.TextBoxFor(x => x[i].Company, new { @class = "company-status", @readonly = "readonly" })
-                        @Html.DropDownList("companyId", Model[i].Companies, new { @class = "company-status-list" })
+                        @Html.TextBoxFor(x => x.Company, new { @class = "company-status", @readonly = "readonly" })
+                        @Html.DropDownList("companyId", Model.Companies, new { @class = "company-status-list" })
                     </div>
 
                     <label for="project">Проект:</label>
                     <div class="change">
-                        @for (int j = 0; j < Model[i].Projects.Count; j++)
+                        @for (int j = 0; j < Model.Projects.Count; j++)
                         {
                             <div class="change">
-                                @Html.TextBoxFor(x => x[j].Projects[j].Text, new { @class = "company-status", @readonly = "readonly" })
+                                @Html.TextBoxFor(x => x.Projects[j].Text, new { @class = "company-status", @readonly = "readonly" })
                                 <a href="Delete">Delete</a>
                             </div>
                         }
                     </div>
-                    @Html.DropDownList("projectId", Model[i].Projects, new { @class = "company-status-list" })
+                    @Html.DropDownList("projectId", Model.Projects, new { @class = "company-status-list" })
                     <input class="submit" type="submit" value="Обновить информацию" />
                 </form>
             </div>
-        }
     </div>
 </div>
 

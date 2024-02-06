@@ -71,6 +71,10 @@ namespace Net14Web.Models.ManagmentCompany
 
         public DateTime? ExecutorExpireDate { get; set; }
 
+        public List<StatusViewModel> Statuses { get; set; }
+
+        public List<PermissionViewModel> Permissions { get; set; }
+
         public List<CompanyViewModel> Companies { get; set; }
 
         public List<ProjectViewModel> Projects { get; set; }

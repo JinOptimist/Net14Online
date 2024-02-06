@@ -16,11 +16,11 @@
                         <div class="card-body p-md-5">
                             <br>
                             <div class="row">
-                                <form class="col-12" method="post">
+                                <form class="col-12" method="post" enctype="multipart/form-data">
                                     <div class="input-group">
-                                        @Html.TextBoxFor(x => x.Title, new { placeholder = "Название фильма", @class="form-control" })
-                                        @Html.TextBoxFor(x => x.Description, new { placeholder = "Описание фильма", @class="form-control" })
-                                        @Html.TextBoxFor(x => x.PosterUrl, new { placeholder = "Poster Url", @class="form-control" })
+                                        <input type="file" name="poster" />
+                                        @Html.TextBoxFor(x => x.Title, new { placeholder = "Название фильма", @class = "form-control" })
+                                        @Html.TextBoxFor(x => x.Description, new { placeholder = "Описание фильма", @class = "form-control" })
                                         <button type="submit" class="btn btn-outline-secondary"
                                                 id="input-group-button-right">
                                             Добавить фильм

@@ -4,6 +4,6 @@
     {
         public string Status { get; set; }
 
-        public virtual List<UserTask>? UserTasks { get; set; }
+        public virtual List<UserTask>? UserTasks { get; set; } = new List<UserTask>();
     }
 }

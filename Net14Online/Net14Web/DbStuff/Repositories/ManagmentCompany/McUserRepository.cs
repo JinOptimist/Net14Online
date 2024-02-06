@@ -5,9 +5,9 @@ using Net14Web.Models.ManagmentCompany;
 
 namespace Net14Web.DbStuff.Repositories
 {
-    public class UserRepository : ManagmentCompanyBaseRepository<User>
+    public class McUserRepository : ManagmentCompanyBaseRepository<User>
     {
-        public UserRepository(ManagmentCompanyDbContext context) : base(context) { }
+        public McUserRepository(ManagmentCompanyDbContext context) : base(context) { }
 
         public override IEnumerable<User> GetAll()
         {
@@ -35,6 +35,17 @@ namespace Net14Web.DbStuff.Repositories
                 .ToList();
         }
 
+        public User GetExecutor(int id)
+        {
+            return _entities
+                .Include(x => x.Status)
+                .Include(x => x.MemberPermission)
+                .Include(x => x.Company)
+                .Where(x => x.MemberPermission.Id != (int)MemberPermissionEnum.User)
+                .Where(x => x.MemberPermission.Id != (int)MemberPermissionEnum.SuperAdmin)
+                .FirstOrDefault(x => x.Id == id);
+        }
+
         public IEnumerable<User> GetExecutors()
         {
             return _entities
@@ -59,18 +70,16 @@ namespace Net14Web.DbStuff.Repositories
         public User GetLogUser(string email, string password)
         {
             var user = _context.Users.Include(x => x.MemberPermission)
-                .FirstOrDefault(x => x.Email == email && x.Password == password);
+                .SingleOrDefault(x => x.Email == email && x.Password == password);
 
             return user;
         }
 
-        public void UpdateExecutor(List<ExecutorViewModel> executorViewModels, int id, int statusId, int companyId, int projectId, int permissionId)
+        public void UpdateExecutor(ExecutorViewModel viewModel, int id, int statusId, int companyId, int projectId, int permissionId)
         {
-            var executor = _context.Users.First(x => x.Id == id);
+            var executor = _context.Users.Include(x => x.Company).Include(x => x.Status).First(x => x.Id == id);
 
-            var viewModel = executorViewModels.First();
-
-            var project = _context.Projects.Single(x => x.Id == projectId);
+            //var project = _context.Projects.Include(x => x.Executors).Single(x => x.Id == projectId);
 
             executor.Id = id;
             executor.FirstName = viewModel.ExecutorFirstName;
@@ -81,10 +90,10 @@ namespace Net14Web.DbStuff.Repositories
             executor.Password = viewModel.ExecutorPassword;
             executor.ExpireDate = viewModel.ExecutorExpireDate;
             executor.MemberPermission = _context.MemberPermissions.Single(x => x.Id == permissionId);
-            executor.Company = _context.Companies.Single(x => x.Id != companyId);
+            executor.Company = _context.Companies.Single(x => x.Id == companyId);
             executor.Status = _context.MemberStatuses.Single(x => x.Id == statusId);
 
-            executor.Projects.Add(project);
+            //executor.Projects.Add(project);
 
             _context.SaveChanges();
         }

@@ -1,4 +1,4 @@
-﻿namespace Net14Web.DbStuff.Models
+﻿namespace Net14Web.DbStuff.Models.PcShop
 {
     public class UsersPcShop : BaseModel
     {
