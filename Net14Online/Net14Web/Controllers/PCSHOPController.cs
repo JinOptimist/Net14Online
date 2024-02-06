@@ -10,7 +10,6 @@ namespace Net14Web.Controllers
     {
         private UserRepositoryPcShop _userRepositoryPcShop;
         private PcsRepositoryPcShop _pcsRepositoryPcShop;
-        private WebDbContext _webDbContext;
 
         public PcShopController(UserRepositoryPcShop userRepositoryPcShop, PcsRepositoryPcShop pcsRepositoryPcShop)
         {
