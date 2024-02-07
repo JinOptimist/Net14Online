@@ -1,6 +1,6 @@
 ﻿namespace Net14Web.Models.ManagmentCompany
 {
-    public class AddUserViewModel
+    public class AddUserViewModel : BaseViewModel
     {
         public string Name { get; set; }
 

@@ -1,5 +1,6 @@
-﻿@using Net14Web.Models.ManagmentCompany
-@model List<UserViewModel>
+﻿@using Net14Web.DbStuff.ManagmentCompany.Models.Enums
+@using Net14Web.Models.ManagmentCompany
+@model UserViewModel
 
 @{
     Layout = "_LayoutManagmentCompany";
@@ -13,6 +14,32 @@
 
 <main>
     <div>
+        @if ((!User?.Identity?.IsAuthenticated) ?? true)
+        {
+            foreach (var myPage in @Model.GuestPages)
+            {
+                <a href="/ManagmentCompany/@myPage.Key">@myPage.Value</a>
+            }
+            <a class="login" href="/ManagmentCompany/Login">Войти</a>
+            <a class="reg" href="/ManagmentCompany/Registration">Зарегистрироваться</a>
+        }
+        else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
+        .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
+        {
+            foreach (var myPage in @Model.UserPages)
+            {
+                <a href="/ManagmentCompany/@myPage.Key">@myPage.Value</a>
+            }
+            <a class="login" href="/auth/McLogout">Выйти</a>
+        }
+        else
+        {
+            foreach (var myPage in @Model.AdminPages)
+            {
+                <a href="/ManagmentCompany/@myPage.Key">@myPage.Value</a>
+            }
+            <a class="login" href="/auth/McLogout">Выйти</a>
+        }
         Здесь будет о нас
     </div>
 </main>

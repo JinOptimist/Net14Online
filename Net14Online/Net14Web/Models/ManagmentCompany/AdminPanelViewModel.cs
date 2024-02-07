@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Net14Web.Models.ManagmentCompany
 {
-    public class AdminPanelViewModel
+    public class AdminPanelViewModel : BaseViewModel
     {
         [Required(ErrorMessage = "Обязательное поле")]
         public string CompanyName { get; set; }

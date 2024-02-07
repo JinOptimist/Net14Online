@@ -1,7 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Net14Web.DbStuff.ManagmentCompany.Models;
+using Net14Web.DbStuff.ManagmentCompany.Models.Enums;
+using Net14Web.DbStuff.Repositories;
+using Net14Web.DbStuff.Repositories.ManagmentCompany;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Models.Auth;
+using Net14Web.Models.ManagmentCompany;
 using System.Security.Claims;
 
 namespace Net14Web.Controllers
@@ -10,11 +15,14 @@ namespace Net14Web.Controllers
     {
         private UserRepository _userRepository;
 
+        private McUserRepository _mcUserRepository;
+
         public const string AUTH_KEY = "Smile";
 
-        public AuthController(UserRepository userRepository)
+        public AuthController(UserRepository userRepository, McUserRepository mcUserRepository)
         {
             _userRepository = userRepository;
+            _mcUserRepository = mcUserRepository;
         }
 
         [HttpGet]
@@ -53,6 +61,45 @@ namespace Net14Web.Controllers
         {
             HttpContext.SignOutAsync().Wait();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public IActionResult McLogin(LoginViewModel loginViewModel)
+        {
+            var user = _mcUserRepository.GetLogUser(loginViewModel.Email, loginViewModel.Password);
+            if (user == null)
+            {
+                ModelState.AddModelError(nameof(LoginViewModel.Email), "Wrong name or password");
+                return View(loginViewModel);
+            }
+
+            var claims = new List<Claim>
+            {
+                new Claim("id", user.Id.ToString()),
+                new Claim("permissionId", user.MemberPermission?.Id.ToString() ?? ""),
+                new Claim("email", user.Email ?? ""),
+            };
+
+            var identity = new ClaimsIdentity(claims, AUTH_KEY);
+            var principal = new ClaimsPrincipal(identity);
+            HttpContext
+                .SignInAsync(AUTH_KEY, principal)
+                .Wait();
+
+            if (user.MemberPermission?.Id == (int)MemberPermissionEnum.User)
+            {
+                return RedirectToAction("Profile", "ManagmentCompany");
+            }
+            else
+            {
+                return RedirectToAction("AdminPanel", "ManagmentCompany");
+            }
+        }
+
+        public IActionResult McLogout()
+        {
+            HttpContext.SignOutAsync().Wait();
+            return RedirectToAction("Index", "ManagmentCompany");
         }
     }
 }

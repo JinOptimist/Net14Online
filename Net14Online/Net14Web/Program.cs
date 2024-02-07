@@ -4,6 +4,7 @@ using Net14Web.DbStuff;
 using Net14Web.DbStuff.RealEstate;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.DbStuff.Repositories.GameShop;
+using Net14Web.DbStuff.Repositories.ManagmentCompany;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Services;
 using Net14Web.Services.DndServices;
@@ -46,6 +47,7 @@ builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
 // Repositories
+builder.Services.AddScoped<TaskStatusRepository>();
 builder.Services.AddScoped<CompanyRepository>();
 builder.Services.AddScoped<ProjectRepository>();
 builder.Services.AddScoped<McUserRepository>();

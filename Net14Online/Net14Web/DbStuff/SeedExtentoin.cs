@@ -2,6 +2,7 @@
 using Net14Web.DbStuff.ManagmentCompany.Models.Enums;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Repositories;
+using Net14Web.DbStuff.Repositories.ManagmentCompany;
 using Net14Web.DbStuff.Repositories.Movies;
 
 namespace Net14Web.DbStuff

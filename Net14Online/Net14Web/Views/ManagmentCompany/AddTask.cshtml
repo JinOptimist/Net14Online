@@ -1,6 +1,7 @@
-﻿@using Net14Web.DbStuff.ManagmentCompany.Models.Enums
+﻿@using Net14Web.DbStuff.ManagmentCompany.Models
+@using Net14Web.DbStuff.ManagmentCompany.Models.Enums
 @using Net14Web.Models.ManagmentCompany
-@model StatusViewModel
+@model TaskViewModel
 
 @{
     Layout = "_LayoutManagmentCompany";
@@ -48,19 +49,21 @@
     </div>
     <h2>Панель администратора</h2>
     <div>
-        <div class="update-status">
-            <h2>Изменить статус</h2>
-            <form method="post" action="/ManagmentCompany/UpdateStatus">
-                <input type="hidden" name="id" value="@Model.Id" />
-                <label for="name"> Название компании:</label>
-                @Html.TextBoxFor(x => x.Status)
-                @Html.ValidationMessageFor(model => model.Status)
+        <div class="add-task">
+            <h2>Добавить компанию</h2>
+            <form method="post" action="/ManagmentCompany/AddTask">
+                <label for="name"> Название заявки:</label>
+                @Html.TextBoxFor(x => x.Name)
+                @Html.ValidationMessageFor(x => x.Name)
 
-                <input class="submit" type="submit" value="Обновить информацию" />
+                <label for="description">Описание:</label>
+                @Html.TextBoxFor(x => x.Description)
+                @Html.ValidationMessageFor(x => x.Description)
+
+                <input class="submit" type="submit" value="Создать заявку" />
             </form>
         </div>
     </div>
 </div>
-
 
 

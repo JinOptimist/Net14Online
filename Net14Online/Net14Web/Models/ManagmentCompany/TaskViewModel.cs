@@ -1,6 +1,6 @@
 ﻿namespace Net14Web.Models.ManagmentCompany
 {
-    public class TaskViewModel
+    public class TaskViewModel : BaseViewModel
     {
         public int Id { get; set; }
 

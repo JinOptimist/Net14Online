@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Net14Web.Models.ManagmentCompany
 {
-    public class ExecutorViewModel
+    public class ExecutorViewModel : BaseViewModel
     {
         public int Id { get; set; }
 

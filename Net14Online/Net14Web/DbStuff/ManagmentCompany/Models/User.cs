@@ -27,5 +27,7 @@
         public virtual List<UserTask>? UserCreatedTasks { get; set; } = new List<UserTask>();
 
         public virtual List<UserTask>? UserExecutedTasks { get; set; } = new List<UserTask>();
+
+        public User() : base() { }
     }
 }

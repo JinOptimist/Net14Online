@@ -5,7 +5,5 @@ namespace Net14Web.Models.ManagmentCompany
     public class IndexViewModel : BaseViewModel
     {
         public List<UserViewModel> Users { get; set; }
-
-        public List<string> Pages { get; set; }
     }
 }

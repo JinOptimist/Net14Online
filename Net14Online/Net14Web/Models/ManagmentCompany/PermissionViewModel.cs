@@ -1,6 +1,6 @@
 ﻿namespace Net14Web.Models.ManagmentCompany
 {
-    public class PermissionViewModel
+    public class PermissionViewModel : BaseViewModel
     {
         public int Id { get; set; }
 

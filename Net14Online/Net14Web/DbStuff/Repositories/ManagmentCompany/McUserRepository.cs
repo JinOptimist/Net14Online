@@ -3,7 +3,7 @@ using Net14Web.DbStuff.ManagmentCompany.Models;
 using Net14Web.DbStuff.ManagmentCompany.Models.Enums;
 using Net14Web.Models.ManagmentCompany;
 
-namespace Net14Web.DbStuff.Repositories
+namespace Net14Web.DbStuff.Repositories.ManagmentCompany
 {
     public class McUserRepository : ManagmentCompanyBaseRepository<User>
     {
@@ -43,7 +43,7 @@ namespace Net14Web.DbStuff.Repositories
                 .Include(x => x.Company)
                 .Where(x => x.MemberPermission.Id != (int)MemberPermissionEnum.User)
                 .Where(x => x.MemberPermission.Id != (int)MemberPermissionEnum.SuperAdmin)
-                .FirstOrDefault(x => x.Id == id);
+                .FirstOrDefault(x => x.Id == id) ;
         }
 
         public IEnumerable<User> GetExecutors()
@@ -70,7 +70,7 @@ namespace Net14Web.DbStuff.Repositories
         public User GetLogUser(string email, string password)
         {
             var user = _context.Users.Include(x => x.MemberPermission)
-                .SingleOrDefault(x => x.Email == email && x.Password == password);
+                .SingleOrDefault(x => x.Email.ToLower() == email.ToLower() && x.Password == password);
 
             return user;
         }

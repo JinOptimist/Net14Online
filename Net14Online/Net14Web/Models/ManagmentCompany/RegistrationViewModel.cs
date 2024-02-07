@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Net14Web.Models.ManagmentCompany
 {
-    public class RegistrationViewModel
+    public class RegistrationViewModel : BaseViewModel
     {
         public int Id { get; set; }
 

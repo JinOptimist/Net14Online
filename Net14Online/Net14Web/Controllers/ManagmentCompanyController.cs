@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff.ManagmentCompany.Models;
 using Net14Web.DbStuff.ManagmentCompany.Models.Enums;
 using Net14Web.DbStuff.Repositories;
+using Net14Web.DbStuff.Repositories.ManagmentCompany;
+using Net14Web.Models.Dnd;
 using Net14Web.Models.ManagmentCompany;
+using Net14Web.Services;
 using System.ComponentModel.Design;
 
 namespace Net14Web.Controllers
@@ -17,6 +21,10 @@ namespace Net14Web.Controllers
         private UserTaskRepository _userTaskRepository;
         private MemberPermissionRepository _memberPermissionRepository;
         private MemberStatusRepository _memberStatusRepository;
+        private TaskStatusRepository _taskStatusRepository;
+        private AuthService _authService;
+
+        private IWebHostEnvironment _webHostEnvironment;
 
         public ManagmentCompanyController(
             CompanyRepository companyRepository,
@@ -24,7 +32,10 @@ namespace Net14Web.Controllers
             McUserRepository userRepository,
             UserTaskRepository userTaskRepository,
             MemberPermissionRepository memberPermissionRepository,
-            MemberStatusRepository memberStatusRepository)
+            MemberStatusRepository memberStatusRepository,
+            AuthService authService,
+            IWebHostEnvironment webHostEnvironment,
+            TaskStatusRepository taskStatusRepository)
         {
             _companyRepository = companyRepository;
             _projectRepository = projectRepository;
@@ -32,6 +43,9 @@ namespace Net14Web.Controllers
             _userTaskRepository = userTaskRepository;
             _memberPermissionRepository = memberPermissionRepository;
             _memberStatusRepository = memberStatusRepository;
+            _authService = authService;
+            _webHostEnvironment = webHostEnvironment;
+            _taskStatusRepository = taskStatusRepository;
         }
 
         public IActionResult Index()
@@ -215,14 +229,9 @@ namespace Net14Web.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public IActionResult Login(LoginViewModel model)
         {
-            return View();
-        }
-
-        public IActionResult Registration()
-        {
-            return View();
+            return View(model);
         }
 
         public IActionResult LogError()
@@ -305,11 +314,49 @@ namespace Net14Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
         public IActionResult Profile()
+        {
+            var user = _authService.GetCurrentMcUser();
+
+            var view = new ProfileViewModel()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                NickName = user.NickName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Password = user.Password,
+            };
+
+            return View(view);
+        }
+
+        [HttpPost]
+        public IActionResult Profile(ProfileViewModel model)
+        {
+            var user = _authService.GetCurrentMcUser();
+
+            var view = new ProfileViewModel()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                NickName = user.NickName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Password = user.Password,
+            };
+
+            return View(view);
+        }
+
+        public IActionResult Registration()
         {
             return View();
         }
-
+        
         [HttpPost]
         public IActionResult Registration(RegistrationViewModel registrationViewModel)
         {
@@ -394,9 +441,9 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult AddStatus(StatusViewModel viewModel)
         {
-            var status = new MemberStatus 
+            var status = new MemberStatus
             {
-                Status = viewModel.Status 
+                Status = viewModel.Status
             };
 
             _memberStatusRepository.Add(status);
@@ -723,66 +770,33 @@ namespace Net14Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Logon(string email, string password)
+        public IActionResult AddTask() 
         {
-            var user = _userRepository.GetLogUser(email, password);
+            var model = new TaskViewModel();
 
-            if (user == null)
-            {
-                return RedirectToAction("LogError");
-            }
-
-            if (user.MemberPermission?.Permission == "Пользователь")
-            {
-                return RedirectToAction("Profile");
-            }
-            else
-            {
-                return RedirectToAction("AdminPanel");
-            }
+            return View(model);
         }
 
-        private List<string> GetAdminPages()
+        [HttpPost]
+        public IActionResult AddTask(TaskViewModel model)
         {
-            return new List<string>
-        {
-            "Index",
-            "IndexUsers",
-            "IndexAdmins",
-            "About",
-            "Contacts",
-            "Logout",
-            "Profile",
-            "AdminPanel"
-        };
-        }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var a = _taskStatusRepository.GetById((int)UserTaskStatusEnum.Create);
 
-        private List<string> GetUserPages()
-        {
-            return new List<string>
-        {
-            "Index",
-            "IndexUsers",
-            "IndexAdmins",
-            "About",
-            "Contacts",
-            "Logout",
-            "Profile"
-        };
-        }
+            var task = new UserTask
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Status = _taskStatusRepository.GetById((int)UserTaskStatusEnum.Create),
+                Author = _authService.GetCurrentMcUser()
+            };
 
-        private List<string> GetGuestPages()
-        {
-            return new List<string>
-        {
-            "Index",
-            "IndexUsers",
-            "IndexAdmins",
-            "About",
-            "Contacts",
-            "Login",
-            "Registration"
-        };
+            _userTaskRepository.Add(task);
+
+            return RedirectToAction("Profile", new {Id = task.Author.Id});
         }
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Net14Web.Models.ManagmentCompany
 {
-    public class ProjectViewModel
+    public class ProjectViewModel : BaseViewModel
     {
         public int Id { get; set; }
 

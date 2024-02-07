@@ -2,7 +2,7 @@
 
 namespace Net14Web.Models.ManagmentCompany
 {
-    public class UserViewModel
+    public class UserViewModel : BaseViewModel
     {
         public int Id { get; set; }
 
