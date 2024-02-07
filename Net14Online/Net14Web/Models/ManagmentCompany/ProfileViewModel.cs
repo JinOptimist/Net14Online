@@ -21,5 +21,7 @@ namespace Net14Web.Models.ManagmentCompany
         public DateTime? ExpireDate { get; set; }
 
         public string? Company { get; set; }
+
+        public List<TaskViewModel>? CurrentUserTasks { get; set; }
     }
 }

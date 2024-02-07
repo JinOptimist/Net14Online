@@ -16,6 +16,6 @@
 
         public virtual User? Executor { get; set; }
 
-        public UserTask(string name = "Заявка") : base() { }
+        public UserTask() : base() { }
     }
 }

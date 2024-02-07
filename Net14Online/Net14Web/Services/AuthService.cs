@@ -29,7 +29,6 @@ namespace Net14Web.Services
 
         public DbStuff.ManagmentCompany.Models.User GetCurrentMcUser()
         {
-            // HttpContext != null
             var idStr = _httpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "id").Value;
             var id = int.Parse(idStr);
             return _mcUserRepository.GetById(id);

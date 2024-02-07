@@ -56,11 +56,17 @@ namespace Net14Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-    
+
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync().Wait();
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult McLogin()
+        {
+            var model = new LoginViewModel();
+            return View(model);
         }
 
         [HttpPost]

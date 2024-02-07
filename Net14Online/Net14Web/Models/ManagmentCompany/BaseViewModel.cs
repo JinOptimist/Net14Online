@@ -2,6 +2,8 @@
 {
     public class BaseViewModel
     {
+        public DateTime? CreationDate { get; set; }
+
         internal List<ProjectViewModel> Projects { get; set; }
 
         internal List<TaskViewModel> AllTasks { get; set; }
@@ -34,5 +36,10 @@
             { "About", "О нас" },
             { "Contacts", "Контакты" },
         };
+
+        public BaseViewModel()
+        {
+            CreationDate = DateTime.Now;
+        }
     }
 }

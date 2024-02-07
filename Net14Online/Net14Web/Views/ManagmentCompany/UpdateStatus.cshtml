@@ -24,7 +24,7 @@
                 {
                     <a href="/ManagmentCompany/@myPage.Key">@myPage.Value</a>
                 }
-                <a class="login" href="/ManagmentCompany/Login">Войти</a>
+                <a class="login" href="/auth/McLogin">Войти</a>
                 <a class="reg" href="/ManagmentCompany/Registration">Зарегистрироваться</a>
             }
             else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims

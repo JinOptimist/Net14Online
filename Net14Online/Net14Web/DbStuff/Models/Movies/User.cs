@@ -1,4 +1,6 @@
-﻿namespace Net14Web.DbStuff.Models.Movies
+﻿using Net14Web.DbStuff.ManagmentCompany.Models;
+
+namespace Net14Web.DbStuff.Models.Movies
 {
     public class User : BaseModel
     {

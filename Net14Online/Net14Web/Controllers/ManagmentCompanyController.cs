@@ -221,22 +221,20 @@ namespace Net14Web.Controllers
 
         public IActionResult About()
         {
-            return View();
+            var model = new BaseViewModel();
+            return View(model);
         }
 
         public IActionResult Contacts()
         {
-            return View();
-        }
-
-        public IActionResult Login(LoginViewModel model)
-        {
+            var model = new BaseViewModel();
             return View(model);
         }
 
         public IActionResult LogError()
         {
-            return View();
+            var model = new BaseViewModel();
+            return View(model);
         }
 
         [HttpGet]
@@ -319,7 +317,9 @@ namespace Net14Web.Controllers
         {
             var user = _authService.GetCurrentMcUser();
 
-            var view = new ProfileViewModel()
+            var userTasks = _userTaskRepository.GetCurrentUserTasks(user);
+
+            var model = new ProfileViewModel()
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
@@ -329,32 +329,46 @@ namespace Net14Web.Controllers
                 PhoneNumber = user.PhoneNumber,
                 Password = user.Password,
             };
-
-            return View(view);
+            model.CurrentUserTasks = userTasks.Select(userTask => new TaskViewModel
+            {
+                Name = userTask.Name,
+                Description = userTask.Description,
+                Status = userTask.Status?.Status ?? "---",
+                CreationDate = userTask.CreationDate,
+                StartDate = userTask.StartDate,
+                CompletionDate = userTask.CompletionDate
+            })
+                .ToList();
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Profile(ProfileViewModel model)
+        public IActionResult Profile(ProfileViewModel model, int id)
         {
+            _userRepository.UpdateUser(model, id);
+
             var user = _authService.GetCurrentMcUser();
 
-            var view = new ProfileViewModel()
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                NickName = user.NickName,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                Password = user.Password,
-            };
+            var userTasks = _userTaskRepository.GetCurrentUserTasks(user);
 
-            return View(view);
+            model.CurrentUserTasks = userTasks.Select(userTask => new TaskViewModel
+            {
+                Name = userTask.Name,
+                Description = userTask.Description,
+                Status = userTask.Status?.Status ?? "---",
+                CreationDate = userTask.CreationDate,
+                StartDate = userTask.StartDate,
+                CompletionDate = userTask.CompletionDate
+            })
+                .ToList();
+
+            return View(model);
         }
 
         public IActionResult Registration()
         {
-            return View();
+            var model = new RegistrationViewModel();
+            return View(model);
         }
         
         [HttpPost]

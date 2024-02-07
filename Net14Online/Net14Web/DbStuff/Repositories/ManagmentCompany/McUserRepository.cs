@@ -19,8 +19,22 @@ namespace Net14Web.DbStuff.Repositories.ManagmentCompany
 
         public void UpdateUser(int id, string nickName)
         {
-            var user = _context.Users.First(x => x.Id == id);
+            var user = _context.Users.SingleOrDefault(x => x.Id == id);
             user.NickName = nickName;
+
+            _context.SaveChanges();
+        }
+
+        public void UpdateUser(ProfileViewModel model, int id)
+        {
+            var user = _context.Users.SingleOrDefault(x => x.Id == id);
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.NickName = model.NickName;
+            user.Email = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+            user.Password = model.Password;
 
             _context.SaveChanges();
         }

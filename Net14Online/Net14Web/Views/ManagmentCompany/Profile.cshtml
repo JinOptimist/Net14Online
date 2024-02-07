@@ -25,7 +25,7 @@
                     {
                         <a href="/ManagmentCompany/@myPage.Key">@myPage.Value</a>
                     }
-                    <a class="login" href="/ManagmentCompany/Login">Войти</a>
+                    <a class="login" href="/auth/McLogin">Войти</a>
                     <a class="reg" href="/ManagmentCompany/Registration">Зарегистрироваться</a>
                 }
                 else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
@@ -50,7 +50,6 @@
         <h2>Личный кабинет</h2>
         <form method="post">
             <img class="avatar" src="img.svg" width="80" height="80" alt="Аватар">
-            @Html.
             <input type="hidden" name="id" value="@Model.Id" />
             <label for="name"> Имя</label>
             @Html.TextBoxFor(x => x.FirstName)
@@ -70,6 +69,52 @@
             <label for="name"> Пароль</label>
             @Html.TextBoxFor(x => x.Password)
             @Html.ValidationMessageFor(x => x.Password)
+
+            <input type="submit" value="Внести изменения" />
         </form>
+
+        <details>
+            <summary>Показать статусы</summary>
+            <table border="1">
+                <thead>
+                    <tr>
+                        @if (Model.CurrentUserTasks.Count > 0)
+                        {
+                            @foreach (var statusField in Model.CurrentUserTasks.FirstOrDefault().GetType().GetProperties())
+                            {
+                                <th>@statusField.Name</th>
+                            }
+                        }
+                        <th>Изменить</th>
+                        <th>Удалить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var status in Model.CurrentUserTasks)
+                    {
+                        <tr>
+                            @foreach (var statusField in Model.CurrentUserTasks.FirstOrDefault().GetType().GetProperties())
+                            {
+                                <td> @statusField.GetValue(status)</td>
+                            }
+                            <td>
+                                <a href="/ManagmentCompany/UpdateStatus?statusId=@status.Id">Изменить</a>
+                            </td>
+                            <td>
+                                <form action="/ManagmentCompany/RemoveStatus" class="remove-form" method="post">
+                                    <input type="hidden" name="id" value="@status.Id" />
+                                    <button class="admin-panel-button" type="submit">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td>
+                            <a href="/ManagmentCompany/AddStatus">Добавить</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </details>
     </div>
 </main>
