@@ -1,14 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Net14Web.DbStuff;
+using Net14Web.DbStuff.Models.Bonds;
 using Net14Web.Models.Bonds;
 
 namespace Net14Web.Controllers
 {
     public class BondsController : Controller
     {
-        public static List<BondsViewModel> bondsViewModels = new List<BondsViewModel>();
+        private WebDbContext _webDbContext;
+
+        //public static List<BondsViewModel> bondsViewModels = new List<BondsViewModel>();
+
+        public BondsController(WebDbContext webDbContext)
+        {
+            _webDbContext = webDbContext;
+        }
         public IActionResult Index()
         {
-            return View(bondsViewModels);
+            var bdBonds = _webDbContext.Bonds.Take(10).ToList();
+            var viewModel = bdBonds
+                .Select(x => new BondsViewModel
+                {
+                    Name = x.Name,
+                    Price = x.Price
+                }).ToList();
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -16,28 +32,37 @@ namespace Net14Web.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult AddBonds(AddBondsViewModel addBondsViewModel)
         {
-            bondsViewModels.Add(new BondsViewModel
+            var bond = new Bond
             {
                 Name = addBondsViewModel.Name,
-                Price = addBondsViewModel.Price
-            });
+                Price = addBondsViewModel.Price,
+                Id = addBondsViewModel.Id
+            };
+            _webDbContext.Bonds.Add(bond);
+            _webDbContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
-        public IActionResult Remove(string name)
+        public IActionResult Remove(int id)
         {
-            var bond = bondsViewModels.First(x => name == x.Name);
-            bondsViewModels.Remove(bond);
+            var bond = _webDbContext.Bonds.First(x => x.Id == id);
+            _webDbContext.Bonds.Remove(bond);
+            _webDbContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public IActionResult UpdatePrice(string name, int price)
+        public IActionResult UpdatePrice(int id, int price)
         {
-            var bond = bondsViewModels.First(x => name == x.Name).Price = price;
+            var bond = _webDbContext.Bonds.First(x => x.Id == id).Price = price;
+            _webDbContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
     }

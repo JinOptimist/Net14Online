@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Models.BookingWeb;
+using Net14Web.DbStuff.Models.GameShop;
+using Net14Web.DbStuff.Models.InvestPort;
 using Net14Web.DbStuff.Models.LifeScore;
 using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Models.RetroConsoles;
-using Net14Web.DbStuff.Models.GameShop;
 using Net14Web.DbStuff.Models.TaskTracker;
-using Net14Web.DbStuff.Models.InvestPort;
-
+using Net14Web.DbStuff.Models.Bonds;
 namespace Net14Web.DbStuff
 {
     public class WebDbContext : DbContext
@@ -26,6 +26,7 @@ namespace Net14Web.DbStuff
         public DbSet<TaskInfo> TaskInfos { get; set; }
         public DbSet<RetroUser> RetroUsers { get; set; }
         public DbSet<LoginBooking> LoginsBooking { get; set; }
+        public DbSet<Bond> Bonds { get; set; }
         // LifeScore
         public DbSet<SportGame> SportGames { get; set; }
         public DbSet<Team> Teams { get; set; }

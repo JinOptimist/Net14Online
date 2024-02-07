@@ -25,7 +25,7 @@
                     <tr>
                         <td>
                             @bond.Name 
-                            <a href="/Bonds/Remove?name=@bond.Name">
+                            <a href="/Bonds/Remove?id=@bond.Id">
                                 <img src="/images/Bonds/logo_delete.webp"
                                      width="17"
                                      height="17">
@@ -33,7 +33,7 @@
                         </td>
                         <td>@bond.Price рублей
                             <form action="/Bonds/UpdatePrice" method="post">
-                                <input type="hidden" name="name" value="@bond.Name" />
+                                <input type="hidden" name="id" value="@bond.Id" />
                                 <input type="number" name="price" />
                                 <input type="submit" value="Обновить" />
                             </form>
