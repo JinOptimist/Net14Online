@@ -9,8 +9,6 @@ namespace Net14Web.Controllers
     {
         private WebDbContext _webDbContext;
 
-        //public static List<BondsViewModel> bondsViewModels = new List<BondsViewModel>();
-
         public BondsController(WebDbContext webDbContext)
         {
             _webDbContext = webDbContext;
@@ -21,6 +19,7 @@ namespace Net14Web.Controllers
             var viewModel = bdBonds
                 .Select(x => new BondsViewModel
                 {
+                    Id = x.Id,
                     Name = x.Name,
                     Price = x.Price
                 }).ToList();
@@ -60,7 +59,8 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult UpdatePrice(int id, int price)
         {
-            var bond = _webDbContext.Bonds.First(x => x.Id == id).Price = price;
+            var bond = _webDbContext.Bonds.First(x => x.Id == id);
+            bond.Price = price;
             _webDbContext.SaveChanges();
 
             return RedirectToAction("Index");
