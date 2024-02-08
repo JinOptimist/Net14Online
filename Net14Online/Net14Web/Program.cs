@@ -12,12 +12,11 @@ using Net14Web.Services.Movies;
 using Net14Web.Services.RealEstate;
 using Net14Web.Services.Sattelite;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddAuthentication(AuthController.AUTH_KEY)
-    .AddCookie(AuthController.AUTH_KEY, option =>
+    .AddAuthentication(AuthController.AUTH_KEY_MC)
+    .AddCookie(AuthController.AUTH_KEY_MC, option =>
     {
         option.LoginPath = "/Auth/McLogin";
     });

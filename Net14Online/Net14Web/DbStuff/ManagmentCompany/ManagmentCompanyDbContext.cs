@@ -19,7 +19,10 @@ namespace Net14Web.DbStuff
 
         public DbSet<UserTaskStatus> TaskStatuses { get; set; }
 
-        public ManagmentCompanyDbContext(DbContextOptions<ManagmentCompanyDbContext> options) : base(options) { }
+        public ManagmentCompanyDbContext(DbContextOptions<ManagmentCompanyDbContext> options) : base(options) 
+        {
+            Database.EnsureCreated();
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

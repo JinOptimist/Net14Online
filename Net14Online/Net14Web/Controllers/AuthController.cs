@@ -19,6 +19,8 @@ namespace Net14Web.Controllers
 
         public const string AUTH_KEY = "Smile";
 
+        public const string AUTH_KEY_MC = "McCompany";
+
         public AuthController(UserRepository userRepository, McUserRepository mcUserRepository)
         {
             _userRepository = userRepository;
@@ -89,7 +91,7 @@ namespace Net14Web.Controllers
             var identity = new ClaimsIdentity(claims, AUTH_KEY);
             var principal = new ClaimsPrincipal(identity);
             HttpContext
-                .SignInAsync(AUTH_KEY, principal)
+                .SignInAsync(AUTH_KEY_MC, principal)
                 .Wait();
 
             if (user.MemberPermission?.Id == (int)MemberPermissionEnum.User)
