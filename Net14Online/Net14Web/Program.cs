@@ -19,6 +19,13 @@ builder.Services
     .AddAuthentication(AuthController.AUTH_KEY)
     .AddCookie(AuthController.AUTH_KEY, option =>
     {
+        option.LoginPath = "/Auth/McLogin";
+    });
+
+builder.Services
+    .AddAuthentication(AuthController.AUTH_KEY)
+    .AddCookie(AuthController.AUTH_KEY, option =>
+    {
         option.LoginPath = "/Auth/Login";
     });
 
