@@ -27,6 +27,8 @@ namespace Net14Web.DbStuff
         public DbSet<RetroUser> RetroUsers { get; set; }
         public DbSet<LoginBooking> LoginsBooking { get; set; }
         public DbSet<Bond> Bonds { get; set; }
+        public DbSet<Coupon> Coupons { get; set; }
+        
         // LifeScore
         public DbSet<SportGame> SportGames { get; set; }
         public DbSet<Team> Teams { get; set; }
