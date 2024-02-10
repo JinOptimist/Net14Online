@@ -387,9 +387,17 @@ namespace Net14Web.Controllers
                 MemberPermission = _memberPermissionRepository.GetById((int)MemberPermissionEnum.User),
                 Status = _memberStatusRepository.GetById((int)MemberStatusEnum.Active)
             };
-            _userRepository.Add(user);
 
-            return RedirectToAction("Login");
+            try
+            {
+                _userRepository.Add(user);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("LogError");
+            }
+
+            return RedirectToAction("McLogin", "Auth");
         }
 
         [HttpGet]
@@ -721,7 +729,6 @@ namespace Net14Web.Controllers
             if (id != 0)
             {
                 var user = _userRepository.GetExecutor(id);
-                //.ToList();
 
                 viewModel.Id = user.Id;
                 viewModel.ExecutorFirstName = user.FirstName;

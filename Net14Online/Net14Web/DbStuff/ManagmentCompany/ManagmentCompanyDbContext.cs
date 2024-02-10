@@ -27,6 +27,16 @@ namespace Net14Web.DbStuff
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            #region Company
+            builder
+                .Entity<Company>()
+                .HasIndex(c => c.ShortName)
+                .IsUnique();
+
+            builder
+                .Entity<Company>()
+                .HasIndex(c => c.Email)
+                .IsUnique();
 
             builder
                 .Entity<Company>()
@@ -45,6 +55,30 @@ namespace Net14Web.DbStuff
                 .HasOne(c => c.Status)
                 .WithMany(e => e.Companies)
                 .OnDelete(DeleteBehavior.NoAction);
+            #endregion
+            #region Permission
+            builder
+                .Entity<MemberPermission>()
+                .HasIndex(mp => mp.Permission)
+                .IsUnique();
+            #endregion
+            #region Status
+            builder
+                .Entity<MemberStatus>()
+                .HasMany(ms => ms.Companies)
+                .WithOne(c => c.Status)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .Entity<MemberStatus>()
+                .HasIndex(ms => ms.Status)
+                .IsUnique();
+            #endregion
+            #region Project
+            builder
+                .Entity<Project>()
+                .HasIndex(p => p.ShortName)
+                .IsUnique();
 
             builder
                 .Entity<Project>()
@@ -56,6 +90,12 @@ namespace Net14Web.DbStuff
                 .Entity<Project>()
                 .HasMany(p => p.Executors)
                 .WithMany(c => c.Projects);
+            #endregion
+            #region User
+            builder
+                .Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
 
             builder
                 .Entity<User>()
@@ -67,13 +107,8 @@ namespace Net14Web.DbStuff
                 .HasOne(u => u.Company)
                 .WithMany(p => p.Executors)
                 .OnDelete(DeleteBehavior.NoAction);
-
-            builder
-                .Entity<MemberStatus>()
-                .HasMany(ms => ms.Companies)
-                .WithOne(c => c.Status)
-                .OnDelete(DeleteBehavior.NoAction);
-
+            #endregion
+            #region Task
             builder
                 .Entity<UserTask>()
                 .HasOne(user => user.Author)
@@ -85,6 +120,13 @@ namespace Net14Web.DbStuff
                 .HasOne(user => user.Executor)
                 .WithMany(task => task.UserExecutedTasks)
                 .OnDelete(DeleteBehavior.NoAction);
+            #endregion
+            #region TaskStatus
+            builder
+                .Entity<UserTaskStatus>()
+                .HasIndex(uts => uts.Status)
+                .IsUnique();
+            #endregion
         }
     }
 }

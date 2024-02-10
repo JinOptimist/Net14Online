@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Net14Web.DbStuff;
 
@@ -11,9 +12,11 @@ using Net14Web.DbStuff;
 namespace Net14Web.Migrations.ManagmentCompanyDb
 {
     [DbContext(typeof(ManagmentCompanyDbContext))]
-    partial class ManagmentCompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240210164840_updateUsers")]
+    partial class updateUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +40,7 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
@@ -50,20 +53,12 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShortName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StatusId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
-
-                    b.HasIndex("ShortName")
-                        .IsUnique();
 
                     b.HasIndex("StatusId");
 
@@ -86,12 +81,9 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
 
                     b.Property<string>("Permission")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Permission")
-                        .IsUnique();
 
                     b.ToTable("MemberPermissions");
                 });
@@ -112,12 +104,9 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Status")
-                        .IsUnique();
 
                     b.ToTable("MemberStatuses");
                 });
@@ -147,7 +136,7 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShortName")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StatusId")
                         .HasColumnType("int");
@@ -155,10 +144,6 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("ShortName")
-                        .IsUnique()
-                        .HasFilter("[ShortName] IS NOT NULL");
 
                     b.HasIndex("StatusId");
 
@@ -289,12 +274,9 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Status")
-                        .IsUnique();
 
                     b.ToTable("TaskStatuses");
                 });
