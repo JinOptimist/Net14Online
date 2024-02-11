@@ -1,4 +1,6 @@
-﻿namespace Net14Web.DbStuff.Models.Movies
+﻿using Net14Web.DbStuff.Models.TaskTracker;
+
+namespace Net14Web.DbStuff.Models.Movies
 {
     public class User : BaseModel
     {
@@ -8,5 +10,6 @@
         public string? AvatarUrl { get; set; }
         public virtual List<Comment>? Comments { get; set; }
         public virtual List<Hero> MyHeroes { get; set; }
+        public virtual List<TaskInfo> TaskInfos { get; set; }
     }
 }
