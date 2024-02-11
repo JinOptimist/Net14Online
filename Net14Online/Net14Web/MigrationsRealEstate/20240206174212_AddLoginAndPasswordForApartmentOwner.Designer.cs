@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Net14Web.DbStuff.RealEstate;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Net14Web.MigrationsRealEstate
 {
     [DbContext(typeof(WebRealEstateDbContext))]
-    partial class WebDbContextRealEstateModelSnapshot : ModelSnapshot
+    [Migration("20240206174212_AddLoginAndPasswordForApartmentOwner")]
+    partial class AddLoginAndPasswordForApartmentOwner
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,20 +32,13 @@ namespace Net14Web.MigrationsRealEstate
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
                     b.Property<int?>("ApartmentOwnerId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("NumberApartament")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Size")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Street")
+                    b.Property<string>("Size")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -51,7 +46,7 @@ namespace Net14Web.MigrationsRealEstate
 
                     b.HasIndex("ApartmentOwnerId");
 
-                    b.ToTable("Apartaments");
+                    b.ToTable("Apartament");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.RealEstate.Models.ApartmentOwner", b =>
@@ -64,9 +59,6 @@ namespace Net14Web.MigrationsRealEstate
 
                     b.Property<int>("Age")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
 
                     b.Property<string>("KindOfActivity")
                         .IsRequired()

@@ -18,5 +18,7 @@ public class WebRealEstateDbContext : DbContext
         options.UseNpgsql(Configuration.GetConnectionString("Net14WebRE"));
     }
     
-    public DbSet<ApartmentOwner> ApartmentOwners { get; set; } 
+    public DbSet<ApartmentOwner> ApartmentOwners { get; set; }
+    
+    public DbSet<Apartament> Apartaments { get; set; }
 }

@@ -1,9 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Net14Web.DbStuff;
-using Net14Web.DbStuff.Models;
-using Net14Web.DbStuff.RealEstate;
 using Net14Web.DbStuff.RealEstate.Models;
 using Net14Web.DbStuff.Repositories.RealEstate;
+using Net14Web.Models.Auth;
 using Net14Web.Models.RealEstate;
 using Net14Web.Services.RealEstate;
 
@@ -12,18 +15,21 @@ namespace Net14Web.Controllers;
 public class RealEstateController : Controller
 {
     public readonly UserBuilder _userBuilder;
-    public readonly DeleteUser _deleteUser;
-    public readonly UpdateUser _updateUser;
     private ApartmentOwnerRepository _apartmentOwnerRepository;
+    private ApartmentRepository _apartmentRepository;
+    private RealEstateAuthService _realEstateAuthService;
         
-    public static List<UserViewModel> userViewModels = new();
+    public static List<ApartmentOwnerViewModel> userViewModels = new();
 
-    public RealEstateController(UserBuilder userBuilder,DeleteUser deleteUser,UpdateUser updateUser, ApartmentOwnerRepository apartmentOwnerRepository)
+    public RealEstateController(UserBuilder userBuilder,
+        ApartmentOwnerRepository apartmentOwnerRepository,
+        RealEstateAuthService realEstateAuthService,
+        ApartmentRepository apartmentRepository)
     {
         _userBuilder = userBuilder;
-        _deleteUser = deleteUser;
-        _updateUser = updateUser;
         _apartmentOwnerRepository = apartmentOwnerRepository;
+        _realEstateAuthService = realEstateAuthService;
+        _apartmentRepository = apartmentRepository;
     }
     public IActionResult Main()
     {
@@ -35,11 +41,11 @@ public class RealEstateController : Controller
         var dbApartmentOwners = _apartmentOwnerRepository.GetApartamentOwners(10);
 
         var viewModels = dbApartmentOwners
-            .Select(dbUser => new UserViewModel()
+            .Select(dbApartmentOwner => new ApartmentOwnerViewModel()
             {
-                Age = dbUser.Age,
-                Name = dbUser.Name,
-                KindOfActivity = dbUser.KindOfActivity,
+                Age = dbApartmentOwner.Age,
+                Name = dbApartmentOwner.Name,
+                KindOfActivity = dbApartmentOwner.KindOfActivity,
             })
             .ToList();
 
@@ -51,13 +57,9 @@ public class RealEstateController : Controller
     {
         return View();
     }
-    
-    public IActionResult Login()
-    {
-        return View();
-    }
 
     [HttpGet]
+    [Authorize]
     public IActionResult Update(int id)
     {
         var user = _apartmentOwnerRepository.GetById(id);
@@ -65,6 +67,7 @@ public class RealEstateController : Controller
     }
     
     [HttpPost]
+    [Authorize]
     public IActionResult Update(int id,string name,int age,string kindOfActivity)
     {
         var user = _apartmentOwnerRepository.GetById(id);
@@ -72,6 +75,7 @@ public class RealEstateController : Controller
         return RedirectToAction("DataBase");
     }
 
+    [Authorize]
     public IActionResult Delete(int id)
     {
         _apartmentOwnerRepository.Delete(id);
@@ -86,5 +90,47 @@ public class RealEstateController : Controller
         _apartmentOwnerRepository.Add(newUser);
         
         return RedirectToAction("DataBase");
+    }
+
+    [HttpGet]
+    [Authorize]
+    public IActionResult AddApartament()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [Authorize]
+    public IActionResult AddApartament(Apartament apartament)
+    {
+        var newApartament = new Apartament
+        {
+            Size = apartament.Size,
+            City = apartament.City,
+            Street = apartament.Street,
+            NumberApartament = apartament.NumberApartament,
+            ApartmentOwner = _realEstateAuthService.GetCurrentUserApartmentOwner()
+        };
+        
+        _apartmentRepository.Add(newApartament);
+        
+        return RedirectToAction("Main");
+    }
+
+    public IActionResult CheckAllApartaments()
+    {
+        var dbAapartaments = _apartmentRepository.GetApartamentsAndApartmentOwners(10);
+        
+        var viewModels = dbAapartaments
+            .Select(dbApartament => new ApartamentViewModel
+            {
+                Size = dbApartament.Size,
+                City = dbApartament.City,
+                Street = dbApartament.Street,
+                NumberApartament = dbApartament.NumberApartament,
+                OwnerName = dbApartament.ApartmentOwner?.Login ?? "Неизвестен"
+            })
+            .ToList();
+        return View(viewModels);
     }
 }

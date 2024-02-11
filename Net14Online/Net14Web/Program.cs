@@ -5,6 +5,7 @@ using Net14Web.DbStuff.RealEstate;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.DbStuff.Repositories.GameShop;
 using Net14Web.DbStuff.Repositories.Movies;
+using Net14Web.DbStuff.Repositories.RealEstate;
 using Net14Web.Services;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.Movies;
@@ -19,6 +20,12 @@ builder.Services
     .AddCookie(AuthController.AUTH_KEY, option =>
     {
         option.LoginPath = "/Auth/Login";
+    });
+
+builder.Services.AddAuthentication(AuthController.REAL_ESTATE_AUTH_KEY)
+    .AddCookie(AuthController.REAL_ESTATE_AUTH_KEY, option =>
+    {
+        option.LoginPath = "/Auth/RealEstateLogin";
     });
 
 // Add services to the container.
@@ -59,6 +66,8 @@ builder.Services.AddScoped<Net14Web.DbStuff.Repositories.Movies.UserRepository>(
 builder.Services.AddScoped<CommentRepository>();
 builder.Services.AddScoped<WeaponRepository>();
 builder.Services.AddScoped<HeroRepository>();
+builder.Services.AddScoped<ApartmentOwnerRepository>();
+builder.Services.AddScoped<ApartmentRepository>();
 
 builder.Services.AddScoped<GameCommentRepository>();
 builder.Services.AddScoped<GameShopRepository>();
@@ -77,6 +86,7 @@ builder.Services.AddScoped<RegistrationHelper>();
 builder.Services.AddScoped<CreateFilePathHelper>();
 builder.Services.AddScoped<UploadFileHelper>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<RealEstateAuthService>();
 
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();

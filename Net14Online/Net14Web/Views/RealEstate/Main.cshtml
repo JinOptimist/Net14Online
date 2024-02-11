@@ -1,10 +1,8 @@
 
-
 @section Style
 {
     <link href="~/css/RealEstate/RealEstate.css" rel="stylesheet" />
 }
-
 <div class="block-right">
         <select class="button-right" name="Money">
             <option value="Money">BYN</option>
@@ -13,8 +11,20 @@
             <option value="Money">RUB</option>
 
         </select>
-        <button class="button-right">Добавть обьявление</button>
-        <a class="button-right" href="/RealEstate/Login">Вход</a>
+    <button class="button-right">Добавть обьявление</button>
+    <div>
+        @if ((!User?.Identity?.IsAuthenticated) ?? true)
+           {
+               <a href="/auth/RealEstateLogin">Вход</a>
+           }
+           else
+           {
+               <a href="/auth/RealEstateLogaut">Покинуть страницу</a>
+               <a href="/RealEstate/AddApartament">Добавить обьявление</a>
+               <a href="/RealEstate/AddUser">AddUser</a>
+               <a href ="/RealEstate/CheckAllApartaments">Посмотреть все обьявления</a>
+           }
+    </div>
 </div>
 
     <div class="block-center">

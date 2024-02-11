@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Net14Web.DbStuff.RealEstate;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Net14Web.MigrationsRealEstate
 {
     [DbContext(typeof(WebRealEstateDbContext))]
-    partial class WebDbContextRealEstateModelSnapshot : ModelSnapshot
+    [Migration("20240209173236_UpdateForTableApartaments")]
+    partial class UpdateForTableApartaments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

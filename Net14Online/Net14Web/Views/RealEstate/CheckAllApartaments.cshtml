@@ -1,0 +1,25 @@
+@model List<Net14Web.Models.RealEstate.ApartamentViewModel>
+
+<div>
+    @foreach (var apartament in Model)
+    {
+        <div class="user">
+            <div>
+               Город @apartament.City
+            </div>
+            <div>
+              Улица @apartament.Street
+            </div>
+            <div>
+                Номер кваритиры @apartament.NumberApartament
+            </div>
+            <div>
+                Количество комнат @apartament.Size
+            </div>
+            <div>
+                Владелец @apartament.OwnerName
+            </div>
+        </div>
+    }
+</div>
+

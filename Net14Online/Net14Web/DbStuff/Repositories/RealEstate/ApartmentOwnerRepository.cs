@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff.RealEstate;
 using Net14Web.DbStuff.RealEstate.Models;
@@ -20,5 +22,10 @@ public class ApartmentOwnerRepository : RealEstateBaseRepository<ApartmentOwner>
         apartmentOwner.Age = age;
         apartmentOwner.KindOfActivity = kindOfActivity;
         _webRealEstateDbContext.SaveChanges();
+    }
+    public ApartmentOwner GetUserByLoginAndPassword(string login, string password)
+    {
+        return _entyties
+            .FirstOrDefault(apartmentOwner => apartmentOwner.Login!.ToLower() == login.ToLower() && apartmentOwner.Password == password);
     }
 }
