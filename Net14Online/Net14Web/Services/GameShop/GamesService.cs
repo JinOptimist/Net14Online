@@ -7,10 +7,12 @@ namespace Net14Web.Services.GameShop
     public class GamesService
     {
         private readonly GameShopRepository _gameShopRepository;
+        private readonly GameCommentRepository _gameCommentRepository;
 
-        public GamesService(GameShopRepository gameShopRepository)
+        public GamesService(GameShopRepository gameShopRepository, GameCommentRepository gameCommentRepository)
         {
             _gameShopRepository = gameShopRepository;
+            _gameCommentRepository = gameCommentRepository;
         }
 
         public async Task<Game> GetAsync(int id)
@@ -50,7 +52,7 @@ namespace Net14Web.Services.GameShop
                 throw new ArgumentNullException();
             }
 
-            _gameShopRepository.Delete(id);
+            await _gameShopRepository.DeleteById(id);
         }
 
         public async Task CreateGame(CreateGameModel entity)
@@ -67,6 +69,8 @@ namespace Net14Web.Services.GameShop
 
         public GameDto ConvertToDto(Game game)
         {
+            var comments = _gameCommentRepository.GetAll().Where(x => x.CommentedGame.Id == game.Id).ToList();
+
             var gameDto = new GameDto()
             {
                 Genre = game.Genre,
@@ -74,7 +78,7 @@ namespace Net14Web.Services.GameShop
                 LogoUrl = game.LogoUrl,
                 Name = game.Name,
                 Raiting = game.Raiting,
-                Comments = game.Comments
+                Comments = comments
             };
 
             return gameDto;
@@ -88,19 +92,13 @@ namespace Net14Web.Services.GameShop
                 throw new ArgumentNullException();
             }
 
-            if (game.Comments == null)
-            {
-                game.Comments = new List<GameComment>();
-            }
-
-            var gameComment = new GameComment()
+            var commentModel = new GameComment()
             {
                 CommentedGame = game,
                 Content = comment
             };
 
-            game.Comments.Add(gameComment);
-            await _gameShopRepository.UpdateAsync(game.Id, game);
+            await _gameCommentRepository.AddAsync(commentModel);
         }
     }
 }

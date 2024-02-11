@@ -11,7 +11,7 @@ namespace Net14Web.DbStuff.Repositories.GameShop
 
         public async Task DeleteById(int id)
         {
-            var entity = _entyties.First(x => x.Id == id);
+            var entity = _entyties.Include(x => x.Comments).First(x => x.Id == id);
             _entyties.Remove(entity);
             await _context.SaveChangesAsync();
         }

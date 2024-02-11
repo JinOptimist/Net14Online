@@ -10,9 +10,12 @@
 }
 
 <div class="game">
-    <div class="delete-button">
-        <a href="/gameShop/delete?id=@Model.Id" class="remove-link">X</a>
-    </div>
+    <form action="/gameShop/delete" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <div>
+            <input type="submit" value="X" />
+        </div>
+    </form>
 
     <div>
         <img src="@Model.LogoUrl" />

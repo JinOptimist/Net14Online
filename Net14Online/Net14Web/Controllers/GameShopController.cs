@@ -47,7 +47,7 @@ public class GameShopController : Controller
 
         await _gameService.Delete(id);
 
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", "GameShop");
     }
 
     [HttpGet]

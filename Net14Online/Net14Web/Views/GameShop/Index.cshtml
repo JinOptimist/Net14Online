@@ -18,9 +18,12 @@
     @foreach (var game in Model)
     {
         <div class="game">
-            <div class="delete-button">
-                <a href="/gameShop/delete?id=@game.Id" class="remove-link">X</a>
-            </div>
+            <form action="/gameShop/delete" method="post">
+                <input type="hidden" name="id" value="@game.Id" />
+                <div>
+                    <input type="submit" value="X" />
+                </div>
+            </form>
 
             <div>
                 <img src="@game.LogoUrl" />
