@@ -88,7 +88,7 @@ namespace Net14Web.Controllers
                 new Claim("email", user.Email ?? ""),
             };
 
-            var identity = new ClaimsIdentity(claims, AUTH_KEY);
+            var identity = new ClaimsIdentity(claims, AUTH_KEY_MC);
             var principal = new ClaimsPrincipal(identity);
             HttpContext
                 .SignInAsync(AUTH_KEY_MC, principal)

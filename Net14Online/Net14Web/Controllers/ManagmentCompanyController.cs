@@ -394,7 +394,7 @@ namespace Net14Web.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("LogError");
+                return RedirectToAction("RegError");
             }
 
             return RedirectToAction("McLogin", "Auth");
