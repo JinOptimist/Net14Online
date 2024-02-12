@@ -6,6 +6,7 @@ using Net14Web.DbStuff.Repositories;
 using Net14Web.DbStuff.Repositories.Booking;
 using Net14Web.DbStuff.Repositories.GameShop;
 using Net14Web.DbStuff.Repositories.Movies;
+using Net14Web.DbStuff.Repositories.PcShop;
 using Net14Web.Services;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.Movies;
@@ -67,6 +68,8 @@ builder.Services.AddScoped<StockRepository>();
 builder.Services.AddScoped<DividendRepository>();
 builder.Services.AddScoped<SearchRepository>();
 builder.Services.AddScoped<LoginRepository>();
+builder.Services.AddScoped<UserRepositoryPcShop>();
+builder.Services.AddScoped<PcsRepositoryPcShop>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
