@@ -19,6 +19,7 @@ builder.Services
     .AddAuthentication(AuthController.AUTH_KEY)
     .AddCookie(AuthController.AUTH_KEY, option =>
     {
+        option.AccessDeniedPath = "/auth/deny";
         option.LoginPath = "/Auth/Login";
     });
 
@@ -80,6 +81,7 @@ builder.Services.AddScoped<RegistrationHelper>();
 builder.Services.AddScoped<CreateFilePathHelper>();
 builder.Services.AddScoped<UploadFileHelper>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<HeroPermissions>();
 
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();
