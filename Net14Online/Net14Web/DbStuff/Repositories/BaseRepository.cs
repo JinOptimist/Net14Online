@@ -40,7 +40,7 @@ namespace Net14Web.DbStuff.Repositories
                 .ToList();
         }
 
-        public virtual async Task<DbModel?>? GetByIdAsync(int id)
+        public virtual async Task<DbModel?> GetByIdAsync(int id)
         {
             return await _entyties.FirstOrDefaultAsync(x => x.Id == id);
         }
