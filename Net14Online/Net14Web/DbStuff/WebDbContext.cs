@@ -76,6 +76,10 @@ namespace Net14Web.DbStuff
             builder.Entity<Player>()
                 .HasOne(player => player.Team)
                 .WithMany(team => team.Players);
+
+            builder.Entity<Bond>()
+                .HasMany(bond => bond.Coupons)
+                .WithOne(coupon => coupon.Bond);
         }
     }
 }
