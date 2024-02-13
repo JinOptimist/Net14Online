@@ -22,12 +22,6 @@ builder.Services
         option.LoginPath = "/Auth/Login";
     });
 
-builder.Services
-    .AddAuthentication(MoviesController.AUTH_KEY)
-    .AddCookie(MoviesController.AUTH_KEY, option =>
-    {
-        option.LoginPath = "/movies/login";
-    });
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

@@ -26,7 +26,6 @@ namespace Net14Web.Controllers
 
         private AdminPanelViewModel _adminPanelViewModel;
 
-        private static int _activeUserId = -1;
         private string _straightPathForUsers = "";
         private string _straightPathForMovies = "";
 
@@ -35,7 +34,6 @@ namespace Net14Web.Controllers
         private const string DEFAULT_MOVIE_POSTER_PATH_FOR_DB = "/images/movies/moviePosters/";
         private const string DEFAULT_USER_AVATAR_NAME = "userAvatar_";
         private const string DEFAULT_MOVIE_POSTER_NAME = "moviePoster_";
-        public const string AUTH_KEY = "MoviesKey";
 
         public MoviesController(MovieBuilder movieBuilder,
                                 ErrorBuilder errorBuilder,
@@ -149,43 +147,7 @@ namespace Net14Web.Controllers
             }
             var user = _userBuilder.BuildUser(addUser);
             await _userRepository.AddAsync(user);
-            _activeUserId = user.Id;
-            return RedirectToAction("User", RedirectUserById(_activeUserId));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginUserViewModel loginUser)
-        {
-            var user = await _userRepository.GetUserByLoginAndPasswordAsync(loginUser.Login, loginUser.Password);
-            if (user == null)
-            {
-                ModelState.AddModelError(nameof(LoginUserViewModel.Login), "Wrong name or passwrod");
-                return View(loginUser);
-            }
-
-            var claims = new List<Claim>
-            {
-                new Claim("id", user.Id.ToString()),
-                new Claim("name", user.Login.ToString()),
-                new Claim("email", user.Email ?? ""),
-            };
-
-            var identity = new ClaimsIdentity(claims, AUTH_KEY);
-            var principal = new ClaimsPrincipal(identity);
-            HttpContext
-                .SignInAsync(AUTH_KEY, principal)
-                .Wait();
-
-            _activeUserId = user.Id;
-
-            return RedirectToAction("User", RedirectUserById(_activeUserId));
-        }
-
-        [HttpPost]
-        public IActionResult Logout()
-        {
-            HttpContext.SignOutAsync().Wait();
-            return RedirectToAction("Index");
+            return RedirectToAction("User", RedirectUserById(user.Id));
         }
 
         [HttpGet]
@@ -216,13 +178,9 @@ namespace Net14Web.Controllers
         [Authorize]
         public async Task<IActionResult> AddCommentOnMovie(int movieId, string description)
         {
-            if (_activeUserId == -1)
-            {
-                return RedirectToAction("Movie", RedirectMovieById(movieId));
-            }
             var timeOfWriting = DateTime.Now;
             var movie = await _movieRepository.GetByIdAsync(movieId)!;
-            var user = await _userRepository.GetByIdAsync(_activeUserId)!;
+            var user = _authService.GetCurrentUser();
             var comment = _commentBuilder.BuildComment(timeOfWriting, description, user, movie);
             await _commentRepository.AddAsync(comment);
             return RedirectToAction("Movie", RedirectMovieById(movieId));
