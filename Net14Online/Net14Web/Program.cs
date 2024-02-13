@@ -6,8 +6,10 @@ using Net14Web.DbStuff.Repositories;
 using Net14Web.DbStuff.Repositories.Booking;
 using Net14Web.DbStuff.Repositories.GameShop;
 using Net14Web.DbStuff.Repositories.Movies;
+using Net14Web.DbStuff.Repositories.PcShop;
 using Net14Web.Services;
 using Net14Web.Services.DndServices;
+using Net14Web.Services.GameShop;
 using Net14Web.Services.Movies;
 using Net14Web.Services.RealEstate;
 using Net14Web.Services.Sattelite;
@@ -19,6 +21,7 @@ builder.Services
     .AddAuthentication(AuthController.AUTH_KEY)
     .AddCookie(AuthController.AUTH_KEY, option =>
     {
+        option.AccessDeniedPath = "/auth/deny";
         option.LoginPath = "/Auth/Login";
     });
 
@@ -67,6 +70,8 @@ builder.Services.AddScoped<StockRepository>();
 builder.Services.AddScoped<DividendRepository>();
 builder.Services.AddScoped<SearchRepository>();
 builder.Services.AddScoped<LoginRepository>();
+builder.Services.AddScoped<UserRepositoryPcShop>();
+builder.Services.AddScoped<PcsRepositoryPcShop>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
@@ -80,10 +85,13 @@ builder.Services.AddScoped<RegistrationHelper>();
 builder.Services.AddScoped<CreateFilePathHelper>();
 builder.Services.AddScoped<UploadFileHelper>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<HeroPermissions>();
 
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();
 builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
+builder.Services.AddScoped<GamesService>();
+builder.Services.AddScoped<GameCommentService>();
 
 builder.Services.AddHttpContextAccessor();
 

@@ -1,5 +1,5 @@
-﻿@using Net14Web.Models.GameShop
-@model List<GameViewModel>
+﻿@using Net14Web.DbStuff.Models.GameShop
+@model List<Game>
 
 @{
     Layout = "_LayoutGameShop";
@@ -18,12 +18,15 @@
     @foreach (var game in Model)
     {
         <div class="game">
-            <div class="delete-button">
-                <a href="/gameShop/delete?id=@game.Id" class="remove-link">X</a>
-            </div>
+            <form action="/gameShop/delete" method="post">
+                <input type="hidden" name="id" value="@game.Id" />
+                <div>
+                    <input type="submit" value="X" />
+                </div>
+            </form>
 
             <div>
-                <img src="@game.PosterUrl" />
+                <img src="@game.LogoUrl" />
             </div>
 
             <div class="game-footer">
@@ -34,8 +37,8 @@
                     <div class="upgrade-name">
                         <form action="/gameShop/upgrade" method="post">
                             <input type="hidden" name="gameModel.Id" value="@game.Id" />
-                            <input type="hidden" name="gameModel.LogoUrl" value="@game.PosterUrl" />
-                            <input type="hidden" name="gameModel.Raiting" value="@game.Rating" />
+                            <input type="hidden" name="gameModel.LogoUrl" value="@game.LogoUrl" />
+                            <input type="hidden" name="gameModel.Raiting" value="@game.Raiting" />
                             <input type="hidden" name="gameModel.Genre" value="@game.Genre" />
                             <div>
                                 <input type="text" name="gameModel.Name" />
@@ -55,7 +58,7 @@
                 </div>
                 <div class="raiting-block">
                     <div>
-                        @game.Rating
+                        @game.Raiting
                     </div>
                 </div>
                 <div class="genre-block">
