@@ -27,6 +27,20 @@ namespace Net14Web.Services.Movies
             return userView;
         }
 
+        public UserViewModel RebuildUserToUserViewWithComments(User user)
+        {
+            var userView = new UserViewModel
+            {
+                Id = user.Id,
+                Login = user.Login ?? "",
+                Email = user.Email ?? "",
+                Password = user.Password ?? "",
+                AvatarUrl = user.AvatarUrl ?? "",
+                Comments = user.Comments?.Select(c => _commentBuilder.BuildUserCommentView(c)).ToList() ?? new List<UserCommentViewModel>()
+            };
+            return userView;
+        }
+
         public User BuildUser(AddUserViewModel addUser)
         {
             var user = new User

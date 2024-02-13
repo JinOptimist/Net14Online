@@ -11,6 +11,7 @@ using Net14Web.Services;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
 using Net14Web.Services.Movies;
+using Net14Web.Services.Movies.Permissions;
 using Net14Web.Services.RealEstate;
 using Net14Web.Services.Sattelite;
 
@@ -63,6 +64,8 @@ builder.Services.AddScoped<Net14Web.DbStuff.Repositories.Movies.UserRepository>(
 builder.Services.AddScoped<CommentRepository>();
 builder.Services.AddScoped<WeaponRepository>();
 builder.Services.AddScoped<HeroRepository>();
+builder.Services.AddScoped<RoleRepository>();
+builder.Services.AddScoped<PermissionRepository>();
 
 builder.Services.AddScoped<GameCommentRepository>();
 builder.Services.AddScoped<GameShopRepository>();
@@ -86,6 +89,10 @@ builder.Services.AddScoped<CreateFilePathHelper>();
 builder.Services.AddScoped<UploadFileHelper>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<HeroPermissions>();
+builder.Services.AddScoped<CommentPermissions>();
+builder.Services.AddScoped<UserPermissions>();
+builder.Services.AddScoped<MoviePermissions>();
+builder.Services.AddScoped<AdminPanelPermissions>();
 
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();

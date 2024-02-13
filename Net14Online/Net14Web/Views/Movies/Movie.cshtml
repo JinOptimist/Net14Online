@@ -27,7 +27,7 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        @if ((User?.Identity?.IsAuthenticated) ?? false)
+                                        @if (((User?.Identity?.IsAuthenticated) ?? false) && Model.CanAddCommentToMovie)
                                         {
                                             <form class="col-12" action="/Movies/AddCommentOnMovie" method="post">
                                                 <div class="input-group">
@@ -55,7 +55,7 @@
                                                                 <p class="card-text">
                                                                     @comment.Description
                                                                 </p>
-                                                                @if ((User?.Identity?.IsAuthenticated) ?? false)
+                                                                @if (((User?.Identity?.IsAuthenticated) ?? false) && comment.CanRemoveCommentFromMovie)
                                                                 {
                                                                     <a class="btn btn-link" href="/movies/RemoveCommentOnMovie?commentId=@comment.Id">Удалить</a>
                                                                 }

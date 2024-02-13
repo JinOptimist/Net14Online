@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Net14Web.Controllers.CustomAuthAttributes;
+using Net14Web.DbStuff;
+using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Repositories;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Models.Movies;
 using Net14Web.Services;
 using Net14Web.Services.Movies;
-using System.Security.Claims;
+using Net14Web.Services.Movies.Permissions;
 
 namespace Net14Web.Controllers
 {
@@ -18,6 +21,9 @@ namespace Net14Web.Controllers
         private readonly RegistrationHelper _registrationHelper;
         private readonly CreateFilePathHelper _createFilePathHelper;
         private readonly UploadFileHelper _uploadFileHelper;
+        private readonly AdminPanelPermissions _adminPanelPermissions;
+        private readonly MoviePermissions _moviePermissions;
+        private readonly UserPermissions _userPermissions;
 
         private MoviesRepository _movieRepository;
         private UserRepository _userRepository;
@@ -45,7 +51,10 @@ namespace Net14Web.Controllers
                                 CommentRepository commentRepository,
                                 CreateFilePathHelper createFilePathHelper,
                                 UploadFileHelper uploadFileHelper,
-                                AuthService authService)
+                                AuthService authService,
+                                AdminPanelPermissions adminPanelPermissions,
+                                MoviePermissions moviePermissions,
+                                UserPermissions userPermissions)
         {
             _movieBuilder = movieBuilder;
             _errorBuilder = errorBuilder;
@@ -66,6 +75,9 @@ namespace Net14Web.Controllers
             _straightPathForUsers = _createFilePathHelper.GetStraightPath("images", "movies", "userAvatars");
             _straightPathForMovies = _createFilePathHelper.GetStraightPath("images", "movies", "moviePosters");
             _authService = authService;
+            _adminPanelPermissions = adminPanelPermissions;
+            _moviePermissions = moviePermissions;
+            _userPermissions = userPermissions;
         }
 
         public IActionResult Index()
@@ -75,7 +87,22 @@ namespace Net14Web.Controllers
                 .Result
                 .Select(m => _movieBuilder.RebuildMovieToMovieViewModel(m))
                 .ToList();
-            return View(movies);
+            var userId = 0;
+            try
+            {
+                userId = _authService.GetCurrentUserId();
+            }
+            catch
+            {
+
+            }
+            var indexViewModel = new MovieIndexViewModel
+            {
+                MovieViewModels = movies,
+                UserId = userId,
+                CanAccessToAdminPanel = _adminPanelPermissions.CanAccessToAdminPanel()
+            };
+            return View(indexViewModel);
         }
 
         public IActionResult Registration()
@@ -99,8 +126,14 @@ namespace Net14Web.Controllers
         }
 
         [Authorize]
+        [Role(SeedExtentoin.ADMIN_ROLE, SeedExtentoin.MODERATOR_ROLE)]
         public IActionResult AdminPanel()
         {
+            _adminPanelViewModel.CanAddMovie = _adminPanelPermissions.CanAddMovie();
+            _adminPanelViewModel.CanUpdateMovie = _adminPanelPermissions.CanUpdateMovie();
+            _adminPanelViewModel.CanDeleteMovie = _adminPanelPermissions.CanDeleteMovie();
+            _adminPanelViewModel.CanUpdateUser = _adminPanelPermissions.CanUpdateUser();
+            _adminPanelViewModel.CanDeleteUser = _adminPanelPermissions.CanDeleteUser();
             return View(_adminPanelViewModel);
         }
 
@@ -123,6 +156,7 @@ namespace Net14Web.Controllers
 
         [HttpPost]
         [Authorize]
+        [Permission(SeedExtentoin.ADD_MOVIE)]
         public async Task<IActionResult> AddMovie(AddMovieViewModel addMovie)
         {
             var extension = Path.GetExtension(addMovie.Poster.FileName);
@@ -156,7 +190,8 @@ namespace Net14Web.Controllers
             var user = await _userRepository.GetUserWithCommentsAsync(userId);
             if (user != null)
             {
-                var userView = _userBuilder.RebuildUserToUserView(user);
+                var userView = _userBuilder.RebuildUserToUserViewWithComments(user);
+                userView.CanUpdateAvatarUser = _userPermissions.CanUpdateAvatarUser(userView.Id);
                 return View(userView);
             }
             return RedirectToAction("Error", _errorBuilder.BuildError("User", "The user was not found"));
@@ -168,7 +203,8 @@ namespace Net14Web.Controllers
             var movie = await _movieRepository.GetMovieWithCommentsAsync(movieId);
             if (movie != null)
             {
-                var movieView = _movieBuilder.RebuildMovieToMovieViewModel(movie);
+                var movieView = _movieBuilder.RebuildMovieToMovieViewModelWithComments(movie);
+                movieView.CanAddCommentToMovie = _moviePermissions.CanAddCommentToMovie(); 
                 return View(movieView);
             }
             return RedirectToAction("Error", _errorBuilder.BuildError("Movie", "The movie was not found"));
@@ -176,6 +212,7 @@ namespace Net14Web.Controllers
 
         [HttpPost]
         [Authorize]
+        [Permission(SeedExtentoin.ADD_COMMENT_TO_MOVIE)]
         public async Task<IActionResult> AddCommentOnMovie(int movieId, string description)
         {
             var timeOfWriting = DateTime.Now;
@@ -187,6 +224,7 @@ namespace Net14Web.Controllers
         }
 
         [Authorize]
+        [Permission(SeedExtentoin.DELETE_COMMENT_ON_MOVIE)]
         public async Task<IActionResult> RemoveCommentOnMovie(int commentId)
         {
             var comment = await _commentRepository.GetByIdAsync(commentId)!;
@@ -200,6 +238,7 @@ namespace Net14Web.Controllers
         /// </summary>
         [HttpPost]
         [Authorize]
+        [Permission(SeedExtentoin.DELETE_USER)]
         public async Task<IActionResult> RemoveUser(int userId)
         {
             await _userRepository.DeleteAsync(userId);
@@ -212,6 +251,7 @@ namespace Net14Web.Controllers
         /// </summary>
         [HttpPost]
         [Authorize]
+        [Permission(SeedExtentoin.DELETE_MOVIE)]
         public async Task<IActionResult> RemoveMovie(int movieId)
         {
             await _movieRepository.DeleteAsync(movieId);
@@ -223,6 +263,7 @@ namespace Net14Web.Controllers
         /// </summary>
         [HttpPost]
         [Authorize]
+        [Permission(SeedExtentoin.EDIT_USER)]
         public async Task<IActionResult> EditUser(UserViewModel editUser)
         {
             var user = await _userRepository.GetByIdAsync(editUser.Id)!;
@@ -235,6 +276,7 @@ namespace Net14Web.Controllers
         /// </summary>
         [HttpPost]
         [Authorize]
+        [Permission(SeedExtentoin.EDIT_MOVIE)]
         public async Task<IActionResult> EditMovie(MovieViewModel editMovie)
         {
             var movie = await _movieRepository.GetByIdAsync(editMovie.Id)!;
