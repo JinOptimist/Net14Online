@@ -78,7 +78,6 @@ builder.Services.AddScoped<PcsRepositoryPcShop>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
-builder.Services.AddScoped<ErrorBuilder>();
 builder.Services.AddScoped<MovieBuilder>();
 builder.Services.AddScoped<Net14Web.Services.Movies.UserBuilder>();
 builder.Services.AddScoped<UserEditHelper>();

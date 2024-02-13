@@ -30,7 +30,7 @@ namespace Net14Web.Services
         public List<DbStuff.Models.Permission> GetCurrentUserPermissions()
         {
             var id = GetCurrentUserId();
-            return _userRepository.GetUserPermissions(id);
+            return _userRepository.GetUserRolePermissions(id);
         }
 
         public int GetCurrentUserId()

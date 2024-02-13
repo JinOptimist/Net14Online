@@ -18,5 +18,9 @@ namespace Net14Web.Services.Movies.Permissions
 
         public bool CanAddCommentToMovie()
             => TherePermision.IsTherePermision(UserRolePermissions, SeedExtentoin.ADD_COMMENT_TO_MOVIE);
+
+        public bool CanAddMovie()
+            => TherePermision.IsTherePermision(UserRolePermissions, SeedExtentoin.ADD_MOVIE) ||
+                (UserRole.Name == SeedExtentoin.ADMIN_ROLE || UserRole.Name == SeedExtentoin.MODERATOR_ROLE);
     }
 }

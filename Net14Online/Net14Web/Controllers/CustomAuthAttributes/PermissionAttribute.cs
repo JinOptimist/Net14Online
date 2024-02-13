@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Net14Web.Services;
-using System.Linq;
 
 namespace Net14Web.Controllers.CustomAuthAttributes
 {
@@ -17,14 +16,15 @@ namespace Net14Web.Controllers.CustomAuthAttributes
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var authService = context.HttpContext.RequestServices.GetService<AuthService>();
-            var userPermissions = authService.GetCurrentUserPermissions();
+            var userPermissions = authService!.GetCurrentUserPermissions();
             foreach (var permission in userPermissions )
             {
-                if (_permissionNames.FirstOrDefault(p => p.Equals(permission.Name)) is not null)
+                if (_permissionNames.Any(p => p.Equals(permission.Name)))
                 {
                     return;
                 }
             }
+
             context.Result = new ForbidResult(AuthController.AUTH_KEY);
         }
     }

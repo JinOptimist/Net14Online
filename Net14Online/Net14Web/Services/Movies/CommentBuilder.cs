@@ -57,7 +57,6 @@ namespace Net14Web.Services.Movies
                 TimeOfWritng = comment.TimeOfWriting,
                 Movie = BuildMovieUserComment(comment.Movie)
             };
-
             return newComment;
         }
 
