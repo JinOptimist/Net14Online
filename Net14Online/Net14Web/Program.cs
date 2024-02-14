@@ -92,7 +92,7 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
-//SeedExtentoin.Seed(app);
+SeedExtentoin.Seed(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
