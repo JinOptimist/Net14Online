@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Net14Web.Controllers;
 using Net14Web.DbStuff;
-using Net14Web.DbStuff.RealEstate;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.DbStuff.Repositories.Booking;
 using Net14Web.DbStuff.Repositories.GameShop;
@@ -11,8 +10,8 @@ using Net14Web.Services;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
 using Net14Web.Services.Movies;
-using Net14Web.Services.RealEstate;
 using Net14Web.Services.Sattelite;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,8 +34,6 @@ builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString
 
 builder.Services.AddDbContext<ManagmentCompanyDbContext>(x => x.UseSqlServer(connStringManagmentCompany));
 
-var connectionStringRealEsate = builder.Configuration.GetConnectionString("Net14WebRE");
-builder.Services.AddDbContext<WebRealEstateDbContext>(x => x.UseSqlServer(connectionStringRealEsate));
 //builder.Services.AddScoped<WebDbContext>();
 
 builder.Services.AddScoped<HeroBuilder>(diContainer =>
@@ -87,9 +84,7 @@ builder.Services.AddScoped<UploadFileHelper>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<HeroPermissions>();
 
-builder.Services.AddScoped<DeleteUser>();
-builder.Services.AddScoped<UpdateUser>();
-builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
+
 builder.Services.AddScoped<GamesService>();
 builder.Services.AddScoped<GameCommentService>();
 
@@ -97,7 +92,7 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
-SeedExtentoin.Seed(app);
+//SeedExtentoin.Seed(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
