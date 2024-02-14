@@ -81,6 +81,11 @@ namespace Net14Web.DbStuff
             builder.Entity<Player>()
                 .HasOne(player => player.Team)
                 .WithMany(team => team.Players);
+
+            builder.Entity<User>()
+                .HasMany(user => user.LoginsBooking)
+                .WithOne(comment => comment.Owner)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
