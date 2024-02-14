@@ -493,6 +493,49 @@ namespace Net14Web.Migrations
                     b.ToTable("UserPcShop");
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.Consoles", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConsoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Consoles");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.ConsolesRetroUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ConsolesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RetroUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsolesId");
+
+                    b.HasIndex("RetroUserId");
+
+                    b.ToTable("ConsolesRetroUsers");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.RetroUser", b =>
                 {
                     b.Property<int>("Id")
@@ -713,6 +756,25 @@ namespace Net14Web.Migrations
                     b.Navigation("Comments");
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.ConsolesRetroUser", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.RetroConsoles.Consoles", "Consoles")
+                        .WithMany("ConsolesRetroUsers")
+                        .HasForeignKey("ConsolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Net14Web.DbStuff.Models.RetroConsoles.RetroUser", "RetroUser")
+                        .WithMany("ConsolesRetroUsers")
+                        .HasForeignKey("RetroUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Consoles");
+
+                    b.Navigation("RetroUser");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.Team", b =>
                 {
                     b.Navigation("Players");
@@ -730,6 +792,16 @@ namespace Net14Web.Migrations
                     b.Navigation("LoginsBooking");
 
                     b.Navigation("MyHeroes");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.Consoles", b =>
+                {
+                    b.Navigation("ConsolesRetroUsers");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.RetroUser", b =>
+                {
+                    b.Navigation("ConsolesRetroUsers");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Weapon", b =>

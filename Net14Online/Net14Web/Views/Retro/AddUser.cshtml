@@ -37,7 +37,15 @@
             Описание
             @Html.TextBoxFor(x => x.Discription, new { placeholder = "Описание вашей консоли"})
         </div>
+        <div>
+            Год выпуска консоли
+            @Html.TextBoxFor(x => x.Year, new { placeholder = "Год выпуска консоли" })
+        </div>
 
+        <div>
+            Название консоли
+            @Html.TextBoxFor(x => x.ConsoleName, new { placeholder = "Название консоли" })
+        </div>
         <div>
             <input type="submit" value="Создать запись" />
         </div>

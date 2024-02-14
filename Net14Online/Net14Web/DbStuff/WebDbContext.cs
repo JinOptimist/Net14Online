@@ -5,6 +5,7 @@ using Net14Web.DbStuff.Models.LifeScore;
 using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Models.RetroConsoles;
 using Net14Web.DbStuff.Models.GameShop;
+using Net14Web.Models.RetroConsoles;
 using Net14Web.DbStuff.Models.TaskTracker;
 using Net14Web.DbStuff.Models.InvestPort;
 using Net14Web.DbStuff.Models.PcShop;
@@ -34,7 +35,13 @@ namespace Net14Web.DbStuff
         public DbSet<Team> Teams { get; set; }
         public DbSet<Player> Players { get; set; }
 
+        public DbSet<Consoles> Consoles { get; set; }
+        public DbSet<ConsolesRetroUser> ConsolesRetroUsers { get; set; }
         public WebDbContext(DbContextOptions<WebDbContext> options) : base(options) { }
+
+        public WebDbContext()
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -62,6 +69,16 @@ namespace Net14Web.DbStuff
             builder.Entity<Movie>()
                 .HasMany(movie => movie.Comments)
                 .WithOne(comment => comment.Movie);
+
+            builder.Entity<RetroUser>()
+                 .HasMany(user => user.ConsolesRetroUsers)
+                 .WithOne(link => link.RetroUser)
+                 .HasForeignKey(link => link.RetroUserId);
+
+            builder.Entity<Consoles>()
+                .HasMany(console => console.ConsolesRetroUsers)
+                .WithOne(link => link.Consoles)
+                .HasForeignKey(link => link.ConsolesId);
 
             builder
                 .Entity<Game>()

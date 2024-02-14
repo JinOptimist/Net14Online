@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.RetroConsoles;
 using Net14Web.Models.RetroConsoles;
@@ -22,7 +23,7 @@ namespace Net14Web.Controllers
         public IActionResult Remove(int id)
         {
             var user = _webDbContext.RetroUsers.FirstOrDefault(x => x.Id == id);
-            
+
             if (user != null)
             {
                 _webDbContext.RetroUsers.Remove(user);
@@ -30,7 +31,6 @@ namespace Net14Web.Controllers
             }
             return RedirectToAction("UserConsoles");
         }
-        [HttpPost]
         [HttpPost]
         public IActionResult UpdateEmail(int id, string email)
         {
@@ -45,10 +45,14 @@ namespace Net14Web.Controllers
             return RedirectToAction("UserConsoles");
         }
 
-
         public IActionResult UserConsoles()
         {
-            var dbRetroUsers = _webDbContext.RetroUsers.Take(10).ToList();
+            var dbRetroUsers = _webDbContext.RetroUsers
+                .Include(user => user.ConsolesRetroUsers)
+                .ThenInclude(link => link.Consoles)
+                .Take(10)
+                .ToList();
+
             var viewRetroModels = dbRetroUsers
                 .Select(dbRetroUser => new UserConsole
                 {
@@ -56,16 +60,24 @@ namespace Net14Web.Controllers
                     Name = dbRetroUser.Login,
                     Email = dbRetroUser.Email,
                     Password = dbRetroUser.Password,
+                    Consoles = dbRetroUser.ConsolesRetroUsers
+                .Select(link => new ConsoleInfo
+                {
+                    ConsoleName = link.Consoles.ConsoleName,
+                    Year = link.Consoles.Year
                 })
-                .ToList();
+                .ToList()
+                })
+        .ToList();
+
             return View(viewRetroModels);
         }
+
         [HttpGet]
         public IActionResult AddUser()
         {
             return View();
         }
-
 
         [HttpPost]
         public IActionResult AddUser(AddUser UserConsole)
@@ -76,10 +88,32 @@ namespace Net14Web.Controllers
                 Email = UserConsole.Email,
                 Password = UserConsole.Password,
             };
+
+            var console = new Consoles
+            {
+                ConsoleName = UserConsole.ConsoleName,
+                Year = UserConsole.Year,
+            };
+
+            var consolesRetroUser = new ConsolesRetroUser
+            {
+                RetroUser = retroUser,
+                Consoles = console
+            };
+
+            // Добавляем объекты в контекст
             _webDbContext.RetroUsers.Add(retroUser);
+            _webDbContext.Consoles.Add(console);
+
+            // Сохраняем изменения
+            _webDbContext.SaveChanges();
+
+            // Добавляем связующий объект после сохранения, чтобы EF установил правильные внешние ключи
+            _webDbContext.ConsolesRetroUsers.Add(consolesRetroUser);
             _webDbContext.SaveChanges();
 
             return RedirectToAction("UserConsoles");
         }
+
     }
 }
