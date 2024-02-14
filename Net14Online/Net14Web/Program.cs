@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.Controllers;
 using Net14Web.DbStuff;
@@ -14,11 +17,29 @@ using Net14Web.Services.Sattelite;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services
-    .AddAuthentication(AuthController.AUTH_KEY)
-    .AddCookie(AuthController.AUTH_KEY, option =>
+//builder.Services
+//    .AddAuthentication(AuthController.AUTH_KEY)
+//    .AddCookie(AuthController.AUTH_KEY, option =>
+//    {
+//        option.LoginPath = "/Auth/Login";
+//    });
+
+
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+})
+    .AddCookie(option =>
     {
         option.LoginPath = "/Auth/Login";
+    })
+    .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
     });
 
 // Add services to the container.
