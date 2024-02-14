@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Net14Web.Controllers.CustomAuthAttributes;
 using Net14Web.Models.GameShop;
 using Net14Web.Services;
 using Net14Web.Services.GameShop;
@@ -36,6 +37,7 @@ public class GameShopController : Controller
     }
 
     [Authorize]
+    [AdminOnly]
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
@@ -57,6 +59,7 @@ public class GameShopController : Controller
     }
 
     [HttpPost]
+    [AdminOnly]
     public async Task<IActionResult> AddGame(CreateGameModel gameModel)
     {
         await _gameService.CreateGame(gameModel);
