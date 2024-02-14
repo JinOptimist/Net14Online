@@ -1,0 +1,30 @@
+
+@model RealEstateNet14Web.Models.AddUserViewModel
+
+<div>
+    <a href="/RealEstate/DataBase">DataBase</a>
+</div>
+<div class="add-user-block">
+    <div class="add-user">
+        <form method="post">
+            <div>
+                Имя
+                @Html.TextBoxFor(x => x.Name, new { placeholder =  "Имя" })
+                @Html.ValidationMessageFor(x => x.Name)
+            </div>
+            <div>
+                Возраст
+                @Html.TextBoxFor(x => x.Age, new { placeholder = "Возраст", @type = "number" })
+                @Html.ValidationMessageFor(x => x.Age)
+            </div>
+            <div>
+                Вид деятельности
+                @Html.TextBoxFor(x => x.KindOfActivity, new { placeholder = " Вид деятельности" })
+                @Html.ValidationMessageFor(x => x.KindOfActivity)
+            </div>
+            <div>
+                <input type="submit" value="Добавить пользователя"/>
+            </div>
+        </form>
+    </div>
+</div>
