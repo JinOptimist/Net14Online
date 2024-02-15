@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.Bonds;
 using Net14Web.DbStuff.Models.InvestPort;
@@ -68,6 +69,27 @@ namespace Net14Web.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Coupons()
+        {
+            var bdCoupons = _webDbContext.Coupons.Include(x=>x.Bond).Take(10).ToList();
+            var viewModel = bdCoupons
+                .Select(x => new CouponsViewModel
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    CouponSize = x.CouponSize,
+                    Bond = x.Bond.Name
+                }).ToList();
+            return View(viewModel);
+        }
+        public IActionResult RemoveCoupon(int id)
+        {
+            var coupon = _webDbContext.Coupons.First(x => x.Id == id);
+            _webDbContext.Coupons.Remove(coupon);
+            _webDbContext.SaveChanges();
+
+            return RedirectToAction("Coupons");
+        }
         [HttpGet]
         public IActionResult AddCoupon()
         {

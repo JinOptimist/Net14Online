@@ -1,0 +1,48 @@
+﻿@using Net14Web.Models.Bonds
+@model List<CouponsViewModel>
+@{
+    Layout = "_LayoutBonds";
+}
+@section Style
+{
+    <link href="~/css/Bonds/Bonds.css" rel="stylesheet" />
+
+}
+<div class="scroll-table">
+    <table>
+        <thead>
+            <tr>
+                <th>Название облигации</th>
+                <th>Размер купона</th>
+                <th>Дата выплаты</th>
+            </tr>
+        </thead>
+    </table>
+    <div class="scroll-table-body">
+        <table>
+            <tbody>               
+                @foreach (var coupon in Model)
+                {
+                    <tr>
+                        <td>
+                            @coupon.Bond
+                            <a href="/Bonds/RemoveCoupon?id=@coupon.Id">
+                                <img src="/images/Bonds/logo_delete.webp"
+                                     width="17"
+                                     height="17">
+                            </a>
+                        </td>
+
+                        <td>
+                            @coupon.CouponSize рублей                           
+                        </td>
+                        <td>
+                            @coupon.Date
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
