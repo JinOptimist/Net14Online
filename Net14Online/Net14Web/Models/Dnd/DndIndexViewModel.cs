@@ -2,6 +2,7 @@
 {
     public class DndIndexViewModel
     {
+        public string UserName { get; set; }
         public List<HeroViewModel> Heroes { get; set; }
         public List<WeaponViewModel> Weapons { get; set; }
     }

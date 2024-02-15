@@ -14,8 +14,8 @@
 
         public virtual MemberStatus? Status { get; set; }
 
-        public virtual List<Project>? Projects { get; set; }
+        public virtual List<Project>? Projects { get; set; } = new List<Project>();
 
-        public virtual List<User>? Executors { get; set; }
+        public virtual List<User>? Executors { get; set; } = new List<User>();
     }
 }

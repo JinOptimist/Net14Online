@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Models.Movies;
+using Net14Web.Services;
 using Net14Web.Services.Movies;
 
 namespace Net14Web.Controllers
@@ -12,18 +13,35 @@ namespace Net14Web.Controllers
         private readonly UserBuilder _userBuilder;
         private readonly CommentBuilder _commentBuilder;
         private readonly RegistrationHelper _registrationHelper;
+        private readonly CreateFilePathHelper _createFilePathHelper;
+        private readonly UploadFileHelper _uploadFileHelper;
 
         private MoviesRepository _movieRepository;
         private UserRepository _userRepository;
         private CommentRepository _commentRepository;
+
         private AdminPanelViewModel _adminPanelViewModel;
 
-        private static int activeUserId = -1;
-        private const int COUNT_MOVIES_ON_INDEX = 10;
+        private static int _activeUserId = -1;
+        private string _straightPathForUsers = "";
+        private string _straightPathForMovies = "";
 
-        public MoviesController(MovieBuilder movieBuilder, ErrorBuilder errorBuilder, UserBuilder userBuilder, CommentBuilder commentBuilder, 
-            RegistrationHelper registrationHelper,
-            MoviesRepository moviesRepository, UserRepository userRepository, CommentRepository commentRepository)
+        private const int COUNT_MOVIES_ON_INDEX = 10;
+        private const string DEFAULT_USER_AVATAR_PATH_FOR_DB = "/images/movies/userAvatars/";
+        private const string DEFAULT_MOVIE_POSTER_PATH_FOR_DB = "/images/movies/moviePosters/";
+        private const string DEFAULT_USER_AVATAR_NAME = "userAvatar_";
+        private const string DEFAULT_MOVIE_POSTER_NAME = "moviePoster_";
+
+        public MoviesController(MovieBuilder movieBuilder,
+                                ErrorBuilder errorBuilder,
+                                UserBuilder userBuilder,
+                                CommentBuilder commentBuilder,
+                                RegistrationHelper registrationHelper,
+                                MoviesRepository moviesRepository,
+                                UserRepository userRepository,
+                                CommentRepository commentRepository,
+                                CreateFilePathHelper createFilePathHelper,
+                                UploadFileHelper uploadFileHelper)
         {
             _movieBuilder = movieBuilder;
             _errorBuilder = errorBuilder;
@@ -33,12 +51,16 @@ namespace Net14Web.Controllers
             _movieRepository = moviesRepository;
             _userRepository = userRepository;
             _commentRepository = commentRepository;
+            _createFilePathHelper = createFilePathHelper;
+            _uploadFileHelper = uploadFileHelper;
             _adminPanelViewModel = new AdminPanelViewModel();
             _adminPanelViewModel.Movies = _movieRepository.GetAll()
                 .Select(m => _movieBuilder.RebuildMovieToMovieViewModel(m)).ToList();
             _adminPanelViewModel.Users = _userRepository.GetAll()
-                .Select(u => userBuilder.RebuildUserToUserView(u)).ToList();
+                .Select(u => _userBuilder.RebuildUserToUserView(u)).ToList();
             _commentRepository = commentRepository;
+            _straightPathForUsers = _createFilePathHelper.GetStraightPath("images", "movies", "userAvatars");
+            _straightPathForMovies = _createFilePathHelper.GetStraightPath("images", "movies", "moviePosters");
         }
 
         public IActionResult Index()
@@ -76,12 +98,37 @@ namespace Net14Web.Controllers
             return View(_adminPanelViewModel);
         }
 
+        public async Task<IActionResult> UpdateUserAvatar(int userId, IFormFile avatar)
+        {
+            var extension = Path.GetExtension(avatar.FileName);
+            var fileName = $"{DEFAULT_USER_AVATAR_NAME}{userId}{extension}";
+            var path = _createFilePathHelper.GetCombinePath(_straightPathForUsers, fileName);
+            await _uploadFileHelper.UploadFile(path, avatar);
+            var urlPath = $"{DEFAULT_USER_AVATAR_PATH_FOR_DB}{fileName}";
+            await _userRepository.UpdateAvatar(userId, urlPath);
+            return RedirectToAction("User", RedirectUserById(userId));
+        }
+
+        public async Task<bool> SaveMoviePoster(IFormFile poster, string fileName)
+        {
+            var path = _createFilePathHelper.GetCombinePath(_straightPathForMovies, fileName);
+            return await _uploadFileHelper.UploadFile(path, poster);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddMovie(AddMovieViewModel addMovie)
         {
-            var movie = _movieBuilder.BuildMovie(addMovie);
-            await _movieRepository.AddAsync(movie);
-            return RedirectToAction("Movie", RedirectMovieById(movie.Id));
+            var extension = Path.GetExtension(addMovie.Poster.FileName);
+            var movie = _movieBuilder.BuildMovie(addMovie, "");
+            var fileName = $"{DEFAULT_MOVIE_POSTER_NAME}{movie.Id}{extension}";
+            if (await SaveMoviePoster(addMovie.Poster, fileName))
+            {
+                var urlPath = $"{DEFAULT_MOVIE_POSTER_PATH_FOR_DB}{fileName}";
+                movie.PosterUrl = urlPath;
+                await _movieRepository.AddAsync(movie);
+                return RedirectToAction("Movie", RedirectMovieById(movie.Id));
+            }
+            return RedirectToAction("Error", _errorBuilder.BuildError("MovieAdd", "The movie wasn't added."));
         }
 
         [HttpPost]
@@ -91,11 +138,10 @@ namespace Net14Web.Controllers
             {
                 return View(addUser);
             }
-
             var user = _userBuilder.BuildUser(addUser);
             await _userRepository.AddAsync(user);
-            activeUserId = user.Id;
-            return RedirectToAction("User", RedirectUserById(activeUserId));
+            _activeUserId = user.Id;
+            return RedirectToAction("User", RedirectUserById(_activeUserId));
         }
 
         [HttpPost]
@@ -104,8 +150,8 @@ namespace Net14Web.Controllers
             var user = await _userRepository.GetUserByLoginAndPasswordAsync(loginUser.Login, loginUser.Password);
             if (user != null)
             {
-                activeUserId = user.Id;
-                return RedirectToAction("User", RedirectUserById(activeUserId));
+                _activeUserId = user.Id;
+                return RedirectToAction("User", RedirectUserById(_activeUserId));
             }
             return View();
         }
@@ -137,13 +183,13 @@ namespace Net14Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCommentOnMovie(int movieId, string description)
         {
-            if (activeUserId == -1)
+            if (_activeUserId == -1)
             {
                 return RedirectToAction("Movie", RedirectMovieById(movieId));
             }
             var timeOfWriting = DateTime.Now;
-            var movie = _movieRepository.GetById(movieId);
-            var user = _userRepository.GetById(activeUserId);
+            var movie = await _movieRepository.GetByIdAsync(movieId)!;
+            var user = await _userRepository.GetByIdAsync(_activeUserId)!;
             var comment = _commentBuilder.BuildComment(timeOfWriting, description, user, movie);
             await _commentRepository.AddAsync(comment);
             return RedirectToAction("Movie", RedirectMovieById(movieId));
@@ -164,6 +210,17 @@ namespace Net14Web.Controllers
         public async Task<IActionResult> RemoveUser(int userId)
         {
             await _userRepository.DeleteAsync(userId);
+            return RedirectToAction("AdminPanel");
+        }
+
+
+        /// <summary>
+        /// AdminPanel
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> RemoveMovie(int movieId)
+        {
+            await _movieRepository.DeleteAsync(movieId);
             return RedirectToAction("AdminPanel");
         }
 

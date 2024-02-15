@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.Models.Dnd;
+using Net14Web.Services;
 
 namespace Net14Web.Controllers
 {
@@ -10,20 +12,26 @@ namespace Net14Web.Controllers
     {
         private HeroRepository _heroRepository;
         private WeaponRepository _weaponRepository;
+        private AuthService _authService;
+        
         private IWebHostEnvironment _webHostEnvironment;
 
         public DndController(HeroRepository heroRepository,
             WeaponRepository weaponRepository,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            AuthService authService)
         {
             _heroRepository = heroRepository;
             _weaponRepository = weaponRepository;
             _webHostEnvironment = webHostEnvironment;
+            _authService = authService;
         }
 
         public IActionResult Index()
         {
-            var dbHeroes = _heroRepository.GetHeroesWithWeapon(10);
+            var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Гость";
+
+            var dbHeroes = _heroRepository.GetHeroesWithWeaponAndOwner(10);
             var viewModels = dbHeroes
                 .Select(dbHero =>
                 {
@@ -35,7 +43,8 @@ namespace Net14Web.Controllers
                         Coins = dbHero.Coins,
                         Race = dbHero.Race,
                         AvatarUrl = dbHero.AvatarUrl,
-                        FavWeaponName = dbHero.FavoriteWeapon?.Name ?? "---"
+                        FavWeaponName = dbHero.FavoriteWeapon?.Name ?? "---",
+                        OwnerName = dbHero.Owner?.Login ?? "Неизвестен"
                     };
                 })
                 .ToList();
@@ -43,7 +52,8 @@ namespace Net14Web.Controllers
             var dndIndexViewModel = new DndIndexViewModel()
             {
                 Heroes = viewModels,
-                Weapons = new List<WeaponViewModel> { new WeaponViewModel { Name = "Кинжал", Damadge = 3 } }
+                Weapons = new List<WeaponViewModel> { new WeaponViewModel { Name = "Кинжал", Damadge = 3 } },
+                UserName = userName
             };
 
             return View(dndIndexViewModel);
@@ -101,12 +111,14 @@ namespace Net14Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult AddHero()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult AddHero(AddHeroViewModel heroViewModel)
         {
             if (!ModelState.IsValid)
@@ -119,7 +131,9 @@ namespace Net14Web.Controllers
                 Name = heroViewModel.Name,
                 Birthday = DateTime.Now,
                 Coins = heroViewModel.Coin ?? default,
-                Race = heroViewModel.Race
+                Race = heroViewModel.Race,
+                AvatarUrl = heroViewModel.AvatarUrl ?? "default.jpg",
+                Owner = _authService.GetCurrentUser()
             };
 
             _heroRepository.Add(hero);

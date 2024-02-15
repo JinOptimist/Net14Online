@@ -26,6 +26,52 @@ namespace Net14Web.DbStuff
             base.OnModelCreating(builder);
 
             builder
+                .Entity<Company>()
+                .HasMany(c => c.Projects)
+                .WithOne(p => p.Company)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .Entity<Company>()
+                .HasMany(c => c.Executors)
+                .WithOne(e => e.Company)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .Entity<Company>()
+                .HasOne(c => c.Status)
+                .WithMany(e => e.Companies)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .Entity<Project>()
+                .HasOne(p => p.Company)
+                .WithMany(c => c.Projects)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .Entity<Project>()
+                .HasMany(p => p.Executors)
+                .WithMany(c => c.Projects);
+
+            builder
+                .Entity<User>()
+                .HasMany(u => u.Projects)
+                .WithMany(p => p.Executors);
+
+            builder
+                .Entity<User>()
+                .HasOne(u => u.Company)
+                .WithMany(p => p.Executors)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .Entity<MemberStatus>()
+                .HasMany(ms => ms.Companies)
+                .WithOne(c => c.Status)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
                 .Entity<UserTask>()
                 .HasOne(user => user.Author)
                 .WithMany(task => task.UserCreatedTasks)

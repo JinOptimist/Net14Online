@@ -1,0 +1,18 @@
+﻿@using Net14Web.Models.Auth
+@model AuthViewModel
+
+<div>
+    <form method="post">
+        <div>
+            @Html.TextBoxFor(x => x.UserName)
+            @Html.ValidationMessageFor(x => x.UserName)
+        </div>
+        <div>
+            @Html.TextBoxFor(x => x.Password, new { @type = "password" })
+            @Html.ValidationMessageFor(x => x.Password)
+        </div>
+        <div>
+            <input type="submit" value="Login" />
+        </div>
+    </form>
+</div>

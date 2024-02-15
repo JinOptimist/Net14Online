@@ -25,13 +25,13 @@ namespace Net14Web.Services.Movies
             return movieView;
         }
 
-        public Movie BuildMovie(AddMovieViewModel addMovie)
+        public Movie BuildMovie(AddMovieViewModel addMovie, string posterUrl)
         {
             var movie = new Movie
             {
                 Title = addMovie.Title,
                 Description = addMovie.Description,
-                PosterUrl = addMovie.PosterUrl
+                PosterUrl = posterUrl
             };
             return movie;
         }

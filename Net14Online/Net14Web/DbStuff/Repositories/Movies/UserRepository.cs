@@ -14,6 +14,11 @@ namespace Net14Web.DbStuff.Repositories.Movies
             _userEditHelper = userEditHelper;
         }
 
+        public bool AnyUserWithName(string name)
+        {
+            return _entyties.Any(x => x.Login == name);
+        }
+
         public User? GetUserByLoginAndPassword(string login, string password)
         {
             return _entyties
@@ -47,6 +52,14 @@ namespace Net14Web.DbStuff.Repositories.Movies
         {
             _userEditHelper.EditUser(oldUser, updateUser);
             _context.SaveChanges();
+        }
+
+        public async Task<bool> UpdateAvatar(int userId, string avatarUrl)
+        {
+            var user = await GetByIdAsync(userId)!;
+            user!.AvatarUrl = avatarUrl;
+            _context.SaveChanges();
+            return true;
         }
     }
 }
