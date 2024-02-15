@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.Bonds;
+using Net14Web.DbStuff.Models.InvestPort;
 using Net14Web.Models.Bonds;
 
 namespace Net14Web.Controllers
@@ -61,6 +63,35 @@ namespace Net14Web.Controllers
         {
             var bond = _webDbContext.Bonds.First(x => x.Id == id);
             bond.Price = price;
+            _webDbContext.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult AddCoupon()
+        {
+            var viewModel = new AddCouponViewModel();
+
+           viewModel.Bonds =  _webDbContext
+                .Bonds
+                .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
+                .ToList();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult AddCoupon(AddCouponViewModel addCouponViewModel, int bondsId)
+        {
+            var bond = _webDbContext.Bonds.First(x => x.Id == bondsId);
+            var coupon = new Coupon
+            {
+                CouponSize = addCouponViewModel.CouponSize,
+                Date = addCouponViewModel.Date,
+
+                Bond = bond
+            };
+            _webDbContext.Coupons.Add(coupon);
             _webDbContext.SaveChanges();
 
             return RedirectToAction("Index");
