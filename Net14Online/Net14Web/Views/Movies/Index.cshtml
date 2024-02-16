@@ -20,14 +20,23 @@
                     <li><a href="/movies/adminPanel" class="nav-link px-2 text-white">Админ панель</a></li>
                 </ul>
 
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post">
                     <input type="search" class="form-control form-control-dark" placeholder="Поиск..." aria-label="Search">
                 </form>
-
-                <div class="text-end">
-                    <button type="button" class="btn btn-outline-light me-2"><a class="navbar-a" href="/movies/login">Войти</a></button>
-                    <button type="button" class="btn btn-warning"><a class="navbar-a" href="/movies/registration">Зарегистрироваться</a></button>
-                </div>
+                
+                @if ((!User?.Identity?.IsAuthenticated) ?? true)
+                {
+                    <div class="text-end">
+                        <button type="button" class="btn btn-outline-light me-2"><a class="navbar-a" href="/movies/login">Войти</a></button>
+                        <button type="button" class="btn btn-warning"><a class="navbar-a" href="/movies/registration">Зарегистрироваться</a></button>
+                    </div>
+                }
+                else
+                {
+                    <form action="/movies/logout" method="post">
+                        <button type="submit" class="btn btn-warning"><a class="navbar-a" >Выйти</a></button>
+                    </form>
+                }
             </div>
         </div>
     </header>
