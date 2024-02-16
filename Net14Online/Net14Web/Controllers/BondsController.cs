@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.Bonds;
-using Net14Web.DbStuff.Models.InvestPort;
 using Net14Web.Models.Bonds;
 
 namespace Net14Web.Controllers
@@ -71,7 +70,7 @@ namespace Net14Web.Controllers
 
         public IActionResult Coupons()
         {
-            var bdCoupons = _webDbContext.Coupons.Include(x=>x.Bond).Take(10).ToList();
+            var bdCoupons = _webDbContext.Coupons.Include(x => x.Bond).Take(10).ToList();
             var viewModel = bdCoupons
                 .Select(x => new CouponsViewModel
                 {
@@ -95,10 +94,10 @@ namespace Net14Web.Controllers
         {
             var viewModel = new AddCouponViewModel();
 
-           viewModel.Bonds =  _webDbContext
-                .Bonds
-                .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
-                .ToList();
+            viewModel.Bonds = _webDbContext
+                 .Bonds
+                 .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
+                 .ToList();
             return View(viewModel);
         }
 
