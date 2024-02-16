@@ -37,6 +37,10 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult AddBonds(AddBondsViewModel addBondsViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(addBondsViewModel);
+            }
             var bond = new Bond
             {
                 Name = addBondsViewModel.Name,
@@ -115,7 +119,7 @@ namespace Net14Web.Controllers
             _webDbContext.Coupons.Add(coupon);
             _webDbContext.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Coupons");
         }
     }
 }
