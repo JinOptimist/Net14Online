@@ -1,0 +1,16 @@
+﻿@using Net14Web.DbStuff.Models.PcShop
+@model List<PCModel>
+
+@{
+    Layout = "_LayoutPcShop";
+}
+
+<div>
+    <table>
+        <tr><th>Id компьютера</th><th>Компьютер</th><th>Описание</th><th>Процессор</th></tr>
+        @foreach (var PC in Model)
+        {
+            <tr><td>@PC.Id</td><td>@PC.Name</td><td>@PC.Description</td><td>@PC.CPU?.ToString()</td></tr>
+        }  
+    </table>
+</div>

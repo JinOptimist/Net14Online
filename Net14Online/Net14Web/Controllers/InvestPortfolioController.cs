@@ -3,23 +3,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Models.InvestPort;
+using Net14Web.DbStuff.Repositories;
 using Net14Web.Models.InvestPortfolio;
-using Net14Web.Services;
 
 namespace Net14Web.Controllers
 {
     public class InvestPortfolioController : Controller
     {
-        private WebDbContext _webDbContext;
+        private StockRepository _stockRepository;
+        private DividendRepository _dividendRepository;
 
-        public InvestPortfolioController(WebDbContext webDbContext)
+
+        public InvestPortfolioController(WebDbContext webDbContext, StockRepository stockRepository,
+            DividendRepository dividendRepository)
         {
-            _webDbContext = webDbContext;
+            _stockRepository = stockRepository;
+            _dividendRepository = dividendRepository;
         }
 
         public IActionResult Index()
         {
-            var dbStocks = _webDbContext.Stocks.Take(10).ToList();
+            var dbStocks = _stockRepository.GetStocks(10);
 
             var viewModels = dbStocks.Select(dbStock => new StockViewModel
             {
@@ -30,6 +34,7 @@ namespace Net14Web.Controllers
 
             return View(viewModels);
         }
+
 
         [HttpGet]
         public IActionResult AddStock()
@@ -49,25 +54,18 @@ namespace Net14Web.Controllers
                 Name = StockViewModel.NameStock,
                 Price = StockViewModel.Price,
             };
-
-            _webDbContext.Stocks.Add(stock);
-            _webDbContext.SaveChanges();
-
+            _stockRepository.Add(stock);
             return RedirectToAction("Index");
         }
         public IActionResult Remove(int id)
         {
-            var stock = _webDbContext.Stocks.First(x => x.Id == id);
-            _webDbContext.Stocks.Remove(stock);
-            _webDbContext.SaveChanges();
+            _stockRepository.Delete(id);
             return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult UpdatePrice(int id, int price)
         {
-            var stock = _webDbContext.Stocks.First(x => x.Id == id);
-            stock.Price = price;
-            _webDbContext.SaveChanges();
+            _stockRepository.UpdatePrice(id, price);
             return RedirectToAction("Index");
         }
 
@@ -75,8 +73,8 @@ namespace Net14Web.Controllers
         public IActionResult AddDividend()
         {
             var viewModel = new AddDividendViewModel();
-            viewModel.Stocks = _webDbContext
-                .Stocks
+            viewModel.Stocks = _stockRepository
+                .GetAll()
                 .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
                 .ToList();
             return View(viewModel);
@@ -85,7 +83,7 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult AddDividend(AddDividendViewModel AddDividendViewModel, int stockId)
         {
-            var stock = _webDbContext.Stocks.First(x => x.Id == stockId);
+            var stock = _stockRepository.GetById(stockId);
             var dividend = new Dividend
             {
                 DateOfReplenishment = AddDividendViewModel.DateOfReplenishment,
@@ -97,9 +95,7 @@ namespace Net14Web.Controllers
 
             };
 
-            _webDbContext.Dividend.Add(dividend);
-            _webDbContext.SaveChanges();
-
+            _dividendRepository.Add(dividend);
             return RedirectToAction("Index");
         }
 

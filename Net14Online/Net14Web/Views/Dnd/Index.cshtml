@@ -11,23 +11,30 @@
     <link href="~/css/dnd2.css" rel="stylesheet" />
 }
 <div class="hero-content">
+    <div>Привет @Model.UserName</div>
     <div>
         <a href="/Dnd/AddHero">AddHero</a>
     </div>
     <div>
         <a href="/Dnd/AddRandomHero">AddRandomHero</a>
     </div>
-    <div>
-        <a href="/Dnd/ChooseFavoriteWeapon">ChooseFavoriteWeapon</a>
-    </div>
-    
+    @if (Model.CanChooseFavoriteWeapon)
+    {
+        <div>
+            <a href="/Dnd/ChooseFavoriteWeapon">ChooseFavoriteWeapon</a>
+        </div>
+    }
+
     <div class="heroes">
         @foreach (var hero in Model.Heroes)
         {
             <div class="hero">
-                <div class="remove-block">
-                    <a href="/dnd/remove?id=@hero.Id" class="remove-link">X</a>
-                </div>
+                @if (hero.CanDelete)
+                {
+                    <div class="remove-block">
+                        <a href="/dnd/remove?id=@hero.Id" class="remove-link">X</a>
+                    </div>
+                }
                 <div class="name-and-coin-block">
                     <div class="name-block">
                         <div class="hero-title">
@@ -37,7 +44,7 @@
                             <img src="@hero.AvatarUrl" />
                         </div>
                         <div class="hero-name">
-                            @hero.Name (@hero.Race)
+                            @hero.Name созданный @hero.OwnerName (@hero.Race)
                         </div>
                         <div class="weapon">
                             Любимое оружие: @hero.FavWeaponName

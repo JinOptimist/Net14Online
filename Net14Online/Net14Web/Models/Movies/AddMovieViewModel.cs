@@ -2,7 +2,7 @@
 {
     public class AddMovieViewModel
     {
-        public string PosterUrl { get; set; }
+        public IFormFile Poster { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
     }

@@ -6,6 +6,7 @@ namespace Net14Web.Services.Movies
     public class UserBuilder
     {
         private readonly CommentBuilder _commentBuilder;
+        private const string DEFAULT_USER_AVATAR_IMAGE_PATH = "/images/movies/userAvatars/default.png";
 
         public UserBuilder(CommentBuilder commentBuilder)
         {
@@ -33,7 +34,7 @@ namespace Net14Web.Services.Movies
                 Login = addUser.Login,
                 Email = addUser.Email,
                 Password = addUser.Password,
-                AvatarUrl = "https://e7.pngegg.com/pngimages/184/821/png-clipart-mangalore-united-states-management-computer-science-business-profile-angle-white.png"
+                AvatarUrl = DEFAULT_USER_AVATAR_IMAGE_PATH
             };
             return user;
         }

@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.VisualBasic;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.BookingWeb;
+using Net14Web.DbStuff.Repositories.Booking;
 using Net14Web.Models.BookingWeb;
+using Net14Web.Models.Dnd;
+using Net14Web.Services;
 using System.ComponentModel.Design;
 using System.Linq;
 
@@ -13,15 +17,19 @@ namespace Net14Web.Controllers
 {
     public class BookingWebController : Controller
     {
-        private WebDbContext _webDbContext;
-
         public static List<UserLoginViewModel> userLoginViewModel = new List<UserLoginViewModel>();
 
         public static List<SearchResultViewModel> searchResultViewModel = new List<SearchResultViewModel>();
 
-        public BookingWebController(WebDbContext webDbContext)
+        private SearchRepository _searchRepository;
+        private LoginRepository _loginRepository;
+        private AuthService _authService;
+        
+        public BookingWebController (SearchRepository searchRepository, LoginRepository loginRepository, AuthService authService)
         {
-            _webDbContext = webDbContext;
+            _searchRepository = searchRepository;
+            _loginRepository = loginRepository;
+            _authService = authService;
         }
 
         public IActionResult Help()
@@ -30,12 +38,21 @@ namespace Net14Web.Controllers
         }
         public IActionResult UserLogin()
         {
-            return View(userLoginViewModel);
+            var logins = _loginRepository.GetLogin(10);
+
+            var viweModel = logins.Select(login => new UserLoginViewModel
+                {
+                    Name = login.Name,
+                    Email = login.Email,
+                    Password = login.Password,
+            }).ToList();
+
+            return View(viweModel);
         }
 
         public IActionResult SearchResult()
         {
-            var searches = _webDbContext.Searches.Include(x => x.LoginBooking).Take(10).ToList();
+            var searches = _searchRepository.GetSearchLoginConnection(10);
 
             var viewModels = searches.Select(search => new SearchResultViewModel
             {
@@ -49,39 +66,36 @@ namespace Net14Web.Controllers
 
             return View(viewModels);
         }
-        public IActionResult Remove(string name)
+
+        [Authorize]
+        public IActionResult Remove(int id)
         {
-            var user = userLoginViewModel.First(x => x.Name == name);
-            userLoginViewModel.Remove(user);
+            _loginRepository.Delete(id);
+
             return RedirectToAction("UserLogin");
         }
 
+        [Authorize]
         public IActionResult RemoveSearch(int id)
         {
-            var user = _webDbContext.Searches.First(x => x.Id == id);
-            _webDbContext.Searches.Remove(user);
-            _webDbContext.SaveChanges();
-
+            _searchRepository.Delete(id);
             return RedirectToAction("SearchResult");
         }
 
         [HttpPost]
-        public IActionResult UpdateEmail(string name, string email)
+        public IActionResult UpdateEmail(int loginId, string email)
         {
-            userLoginViewModel.First(x => x.Name == name).Email = email;
+            _loginRepository.UpdateEmail(loginId, email);
+
             return RedirectToAction("UserLogin");
         }
 
         [HttpPost]
-        public IActionResult UpdateCity(int Id, string City)
+        public IActionResult UpdateCity(int id, string city)
         {
-            var searches = _webDbContext.Searches.First(x => x.Id == Id);
-            searches.City = City;
-            _webDbContext.SaveChanges();
-
+            _searchRepository.UpdateCity(id, city);
             return RedirectToAction("SearchResult");
         }
-
 
         [HttpGet]
         public IActionResult Login()
@@ -90,14 +104,21 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string name, string email, string password)
+        public IActionResult Login(LoginViewModel userLoginViewModel)
         {
-            userLoginViewModel.Add(new UserLoginViewModel
+            if (!ModelState.IsValid)
             {
-                Name = name,
-                Email = email,
-                Password = password
-            });
+                return View();
+            }
+
+            var login = new LoginBooking
+            {
+                Name = userLoginViewModel.Name,
+                Email = userLoginViewModel.Email,
+                Password = userLoginViewModel.Password,
+                Owner = _authService.GetCurrentUser()
+            };
+            _loginRepository.Add(login);
             return RedirectToAction("UserLogin");
         }
 
@@ -110,27 +131,32 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult Index(IndexViewModel searchResultViewModel)
         {
-            var login = _webDbContext.LoginsBooking.FirstOrDefault();
+            var login = _loginRepository.GetFirst();
 
             var search = new Search
             {
                 Country = searchResultViewModel.Country,
                 City = searchResultViewModel.City,
-                Checkin = searchResultViewModel.CheckinDate, 
-                Checkout = searchResultViewModel.CheckoutDate
+                Checkin = searchResultViewModel.CheckinDate,
+                Checkout = searchResultViewModel.CheckoutDate,
+                LoginBooking = login
             };
-            _webDbContext.Searches.Add(search);
-            _webDbContext.SaveChanges();
+
+            _searchRepository.Add(search);
+
             return RedirectToAction("SearchResult");
         }
 
         [HttpGet]
         public IActionResult UserCountrySearch()
         {
+            var userName = HttpContext.User.Claims.FirstOrDefault(x=> x.Type =="name")?.Value ?? "Guest";
+
             var viewModel = new UserSearchViewModel();
 
-            viewModel.Logins = _webDbContext.LoginsBooking.Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList();
-            viewModel.Searches = _webDbContext.Searches.Select(x => new SelectListItem(x.Country, x.Id.ToString())).ToList();
+            viewModel.UserName = userName;
+            viewModel.Logins = _loginRepository.GetAll().Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList();
+            viewModel.Searches = _searchRepository.GetAll().Select(x => new SelectListItem(x.Country, x.Id.ToString())).ToList();
             return View(viewModel);
         }
 

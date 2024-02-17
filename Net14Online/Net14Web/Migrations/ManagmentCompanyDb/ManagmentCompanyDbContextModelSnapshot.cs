@@ -162,7 +162,7 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MemberPermissionId")
+                    b.Property<int?>("MemberPermissionId")
                         .HasColumnType("int");
 
                     b.Property<string>("NickName")
@@ -176,7 +176,7 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StatusId")
+                    b.Property<int?>("StatusId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -276,7 +276,8 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                 {
                     b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", "Status")
                         .WithMany("Companies")
-                        .HasForeignKey("StatusId");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Status");
                 });
@@ -285,7 +286,8 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                 {
                     b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.Company", "Company")
                         .WithMany("Projects")
-                        .HasForeignKey("CompanyId");
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", "Status")
                         .WithMany("Projects")
@@ -300,19 +302,16 @@ namespace Net14Web.Migrations.ManagmentCompanyDb
                 {
                     b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.Company", "Company")
                         .WithMany("Executors")
-                        .HasForeignKey("CompanyId");
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberPermission", "MemberPermission")
                         .WithMany("Users")
-                        .HasForeignKey("MemberPermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MemberPermissionId");
 
                     b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", "Status")
                         .WithMany("Users")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StatusId");
 
                     b.Navigation("Company");
 

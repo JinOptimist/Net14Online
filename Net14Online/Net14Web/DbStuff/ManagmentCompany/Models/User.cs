@@ -18,14 +18,14 @@
 
         public virtual Company? Company { get; set; }
 
-        public virtual MemberStatus Status { get; set; }
+        public virtual MemberStatus? Status { get; set; }
 
-        public virtual MemberPermission MemberPermission { get; set; }
+        public virtual MemberPermission? MemberPermission { get; set; }
 
-        public virtual List<Project>? Projects { get; set; }
+        public virtual List<Project>? Projects { get; set; } = new List<Project>();
 
-        public virtual List<UserTask>? UserCreatedTasks { get; set; }
+        public virtual List<UserTask>? UserCreatedTasks { get; set; } = new List<UserTask>();
 
-        public virtual List<UserTask>? UserExecutedTasks { get; set; }
+        public virtual List<UserTask>? UserExecutedTasks { get; set; } = new List<UserTask>();
     }
 }

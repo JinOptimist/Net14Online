@@ -13,12 +13,15 @@
     <form method="post">
         <div>
             Name <input placeholder="Name" name="name" />
+            <div>@Html.ValidationMessageFor(x => x.Name)</div>
         </div>
         <div>
             E-mail <input placeholder="Email" name="email" />
+            <div>@Html.ValidationMessageFor(x => x.Email)</div>
         </div>
         <div>
             Password <input placeholder="Password" type="password" name="password" />
+            <div>@Html.ValidationMessageFor(x => x.Password)</div>
         </div>
         <div>
             <input type="submit" value="Continue" />

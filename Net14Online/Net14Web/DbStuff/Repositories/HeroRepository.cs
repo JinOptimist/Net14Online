@@ -7,12 +7,20 @@ namespace Net14Web.DbStuff.Repositories
     {
         public HeroRepository(WebDbContext context) : base(context) { }
 
-        public IEnumerable<Hero> GetHeroesWithWeapon(int maxCount = 10)
+        public IEnumerable<Hero> GetHeroesWithWeaponAndOwner(int maxCount = 10)
         {
             return _entyties
                 .Include(x => x.FavoriteWeapon)
+                .Include(x => x.Owner)
                 .Take(maxCount)
                 .ToList();
+        }
+
+        public Hero GetByIdWithOwner(int heroId)
+        {
+            return _entyties
+                .Include(x => x.Owner)
+                .First(x => x.Id == heroId);
         }
 
         public void UpdateCoin(int heroId, int coin)

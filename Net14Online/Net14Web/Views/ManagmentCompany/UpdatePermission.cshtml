@@ -1,0 +1,44 @@
+﻿@using Net14Web.Models.ManagmentCompany
+@model PermissionViewModel
+
+@{
+    Layout = "_LayoutManagmentCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagmentCompany/ManagmentCompany.css" rel="stylesheet" />
+    <link href="~/css/ManagmentCompany/Styles.css" rel="stylesheet" />
+}
+
+<div class="regContainer">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+        </button>
+        <div class="dropdown-content">
+            <a href="/ManagmentCompany/Index">На главную</a>
+            <a href="/ManagmentCompany/About">О нас</a>
+            <a href="/ManagmentCompany/Contacts">Контакты</a>
+            <a class="login" href="/ManagmentCompany/Login">Вход</a>
+            <a class="reg" href="/ManagmentCompany/Registration">Регистрация</a>
+        </div>
+    </div>
+    <h2>Панель администратора</h2>
+    <div>
+        <div class="update-permission">
+            <h2>Изменить доступ</h2>
+            <form method="post" action="/ManagmentCompany/UpdatePermission">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <label for="name"> Название компании:</label>
+                @Html.TextBoxFor(x => x.Permission)
+                @Html.ValidationMessageFor(model => model.Permission)
+
+                <input class="submit" type="submit" value="Обновить информацию" />
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
