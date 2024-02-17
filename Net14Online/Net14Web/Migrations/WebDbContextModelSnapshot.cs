@@ -470,7 +470,7 @@ namespace Net14Web.Migrations
 
                     b.ToTable("PCModel");
                     b.ToTable("Sattelite");
-                });
+                }));
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.PcShop.UsersPcShop", b =>
                 {
