@@ -9,7 +9,7 @@ namespace Net14Web.Models.BookingWeb
 
         [Required]
         [MaxLength(10, ErrorMessage = "The name shouldnt be longer than 10 symbols!")]
-        [ForbiddenNameAttribute(ErrorMessage = "Name Name is forbidden")]
+        [ForbiddenNameAttribute(ErrorMessage = "Field Name can only contain letters")]
         public string Name { get; set; }   
         public string Email { get; set; }
 

@@ -1,0 +1,29 @@
+
+@model List<RealEstateNet14Web.DbStuff.Models.ApartmentOwner>
+
+<div>
+    <a href="/RealEstate/AddUser">AddUser</a>
+</div>
+<div>
+    @foreach (var user in Model)
+    {
+        <div class="user">
+            <div>
+                Пользователь @user.Name
+            </div>
+            <div>
+                Возраст @user.Age
+            </div>
+            <div>
+                Вид деятельности @user.KindOfActivity
+            </div>
+            <div>
+                Количество квартир @user.Apartaments.Count
+            </div>
+            <div class="delete-block">
+                <a href="/realestate/delete?id=@user.Id">X</a>
+            </div>
+            <a href="/RealEstate/Update?id=@user.Id">Update</a> 
+        </div>
+    }
+</div>

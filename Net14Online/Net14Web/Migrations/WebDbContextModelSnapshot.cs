@@ -53,11 +53,16 @@ namespace Net14Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OwnerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("LoginsBooking");
                 });
@@ -194,7 +199,7 @@ namespace Net14Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OwnerId")
+                    b.Property<int?>("OwnerId")
                         .HasColumnType("int");
 
                     b.Property<int>("Race")
@@ -384,6 +389,9 @@ namespace Net14Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -581,6 +589,16 @@ namespace Net14Web.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
+                        .WithMany("LoginsBooking")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
                 {
                     b.HasOne("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", "LoginBooking")
@@ -624,8 +642,7 @@ namespace Net14Web.Migrations
                     b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
                         .WithMany("MyHeroes")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("FavoriteWeapon");
 
@@ -709,6 +726,8 @@ namespace Net14Web.Migrations
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.User", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("LoginsBooking");
 
                     b.Navigation("MyHeroes");
                 });

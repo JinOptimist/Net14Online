@@ -67,7 +67,7 @@ namespace Net14Web.DbStuff
                 .Entity<Game>()
                 .HasMany(game => game.Comments)
                 .WithOne(comment => comment.CommentedGame)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<LoginBooking>()
                 .HasMany(loginBooking => loginBooking.Searches)
@@ -81,6 +81,11 @@ namespace Net14Web.DbStuff
             builder.Entity<Player>()
                 .HasOne(player => player.Team)
                 .WithMany(team => team.Players);
+
+            builder.Entity<User>()
+                .HasMany(user => user.LoginsBooking)
+                .WithOne(comment => comment.Owner)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

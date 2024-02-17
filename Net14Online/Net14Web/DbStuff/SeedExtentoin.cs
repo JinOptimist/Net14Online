@@ -27,7 +27,7 @@ namespace Net14Web.DbStuff
         private static void SeedUser(IServiceProvider serviceProvider)
         {
             var userRepository = serviceProvider.GetService<UserRepository>();
-            if (!userRepository.AnyUserWithName("Admin"))
+            if (!userRepository.AnyUserWithName("admin"))
             {
                 var admin = new DbStuff.Models.Movies.User()
                 {
@@ -37,6 +37,18 @@ namespace Net14Web.DbStuff
                 };
 
                 userRepository.Add(admin);
+            }
+
+            if (!userRepository.AnyUserWithName("user"))
+            {
+                var user = new DbStuff.Models.Movies.User()
+                {
+                    Login = "user",
+                    Password = "123",
+                    Email = "test@test.com",
+                };
+
+                userRepository.Add(user);
             }
         }
 
