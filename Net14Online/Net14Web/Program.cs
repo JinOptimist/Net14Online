@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.Controllers;
 using Net14Web.DbStuff;
@@ -69,6 +70,7 @@ builder.Services.AddScoped<SearchRepository>();
 builder.Services.AddScoped<LoginRepository>();
 builder.Services.AddScoped<UserRepositoryPcShop>();
 builder.Services.AddScoped<PcsRepositoryPcShop>();
+builder.Services.AddScoped<SatteliteController>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
