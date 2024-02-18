@@ -95,7 +95,7 @@ namespace Net14Web.Controllers.MoviesControllers
 
         [HttpPost]
         [Authorize]
-        [Permission(SeedExtentoin.ADD_MOVIE)]
+        [Permission(PermissionType.AddMovie)]
         public async Task<IActionResult> AddMovie(AddMovieViewModel addMovie)
         {
             if (addMovie.Poster is null)
@@ -123,10 +123,10 @@ namespace Net14Web.Controllers.MoviesControllers
 
         [HttpPost]
         [Authorize]
-        [Permission(SeedExtentoin.ADD_COMMENT_TO_MOVIE)]
+        [Permission(PermissionType.AddCommentToMovie)]
         public async Task<IActionResult> AddCommentOnMovie(int movieId, string description)
         {
-            if (description != "")
+            if (description == "")
             {
                 return Content("Comment is empty.");
             }
@@ -139,7 +139,7 @@ namespace Net14Web.Controllers.MoviesControllers
         }
 
         [Authorize]
-        [Permission(SeedExtentoin.DELETE_COMMENT_ON_MOVIE)]
+        [Permission(PermissionType.DeleteCommentOnMovie)]
         public async Task<IActionResult> DeleteCommentOnMovie(int commentId)
         {
             var comment = await _commentRepository.GetByIdCommentWithMovieAsync(commentId)!;

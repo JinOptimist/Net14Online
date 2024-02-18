@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Net14Web.Controllers.CustomAuthAttributes;
 using Net14Web.DbStuff;
+using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Models.Movies;
 using Net14Web.Services.Movies;
@@ -65,7 +66,7 @@ namespace Net14Web.Controllers.MoviesControllers
 
         [HttpPost]
         [Authorize]
-        [Permission(SeedExtentoin.DELETE_USER)]
+        [Permission(PermissionType.DeleteUser)]
         public async Task<IActionResult> DeleteUser(int userId)
         {
             await _userRepository.DeleteAsync(userId);
@@ -74,7 +75,7 @@ namespace Net14Web.Controllers.MoviesControllers
 
         [HttpPost]
         [Authorize]
-        [Permission(SeedExtentoin.DELETE_MOVIE)]
+        [Permission(PermissionType.DeleteMovie)]
         public async Task<IActionResult> DeleteMovie(int movieId)
         {
             await _movieRepository.DeleteAsync(movieId);
@@ -83,7 +84,7 @@ namespace Net14Web.Controllers.MoviesControllers
 
         [HttpPost]
         [Authorize]
-        [Permission(SeedExtentoin.EDIT_USER)]
+        [Permission(PermissionType.EditUser)]
         public async Task<IActionResult> EditUser(UserViewModel editUser)
         {
             var user = await _userRepository.GetByIdAsync(editUser.Id)!;
@@ -93,7 +94,7 @@ namespace Net14Web.Controllers.MoviesControllers
 
         [HttpPost]
         [Authorize]
-        [Permission(SeedExtentoin.EDIT_MOVIE)]
+        [Permission(PermissionType.EditMovie)]
         public async Task<IActionResult> EditMovie(MovieViewModel editMovie)
         {
             var movie = await _movieRepository.GetByIdAsync(editMovie.Id)!;

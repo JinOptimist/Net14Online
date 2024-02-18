@@ -1,42 +1,47 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Models.Movies;
+using Net14Web.Services;
 
 namespace Net14Web.DbStuff.Repositories
 {
     public class PermissionRepository : BaseRepository<Permission>
     {
-        public PermissionRepository(WebDbContext context) : base(context)
+        private AuthService _authService;
+
+        public PermissionRepository(WebDbContext context, AuthService authService) : base(context)
         {
+            _authService = authService;
         }
 
-        public Permission GetPermissionByName(string permissionName)
+        public List<Permission> GetCurrentUserPermissions()
+        {
+            var currentUser = _authService.GetCurrentUser();
+            return GetUserPermissions(currentUser);
+        }
+
+        public List<Permission> GetUserPermissions(User user)
         {
             return _entyties
                 .Include(e => e.Roles)
-                .FirstOrDefault(x => x.Name == permissionName);
+                .ThenInclude(r => r.Users)
+                .Where(p => p.Roles.Where(r => r.Users.Contains(user)).Count() > 0)
+                .ToList();
         }
 
-        public void AddRoleToPermission(Role role, string permissionName)
+        public Permission GetPermissionByType(PermissionType type)
         {
-            var permission = GetPermissionByName(permissionName);
+            return _entyties
+                .Include(e => e.Roles)
+                .FirstOrDefault(x => x.Type == type);
+        }
 
-            if (permission.Roles is not null)
-            {
-                if (role.Permissions?.FirstOrDefault(p => p.Name == permissionName) is not null)
-                {
-                    return;
-                }
-
-                permission.Roles.Add(role);
-            }
-            else
-            {
-                permission.Roles = new List<Role>
-                {
-                    role
-                };
-            }
-            _context.SaveChanges();
+        public List<Permission> GetRolePermissions(Role role)
+        {
+            return _entyties
+                .Include(e => e.Roles)
+                .Where(r => r.Roles.Contains(role))
+                .ToList();
         }
     }
 }

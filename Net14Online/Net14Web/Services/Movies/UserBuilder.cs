@@ -1,4 +1,5 @@
-﻿using Net14Web.DbStuff.Models.Movies;
+﻿using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.Models.Movies;
 
@@ -52,7 +53,7 @@ namespace Net14Web.Services.Movies
                 Password = addUser.Password,
                 AvatarUrl = DEFAULT_USER_AVATAR_IMAGE_PATH,
                 Comments = new List<Comment>(),
-                Role = _roleRepository.GetRoleByName("User")
+                Roles = new List<Role> { _roleRepository.GetRoleByName("User") }
             };
             return user;
         }

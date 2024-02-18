@@ -1,43 +1,47 @@
 ﻿using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Repositories;
 
 namespace Net14Web.Services.Movies.Permissions
 {
     public class AdminPanelPermissions
     {
-        private AuthService _authService;
+        private RoleRepository _roleRepository;
+        private PermissionRepository _permissionRepository;
 
-        public AdminPanelPermissions(AuthService authService)
+        public AdminPanelPermissions(RoleRepository roleRepository, PermissionRepository permissionRepository)
         {
-            _authService = authService;
+            _roleRepository = roleRepository;
+            _permissionRepository = permissionRepository;
         }
 
-        private Role UserRole => _authService.GetCurrentUserRole();
+        private List<Role> UserRoles => _roleRepository.GetCurrentUserRoles();
 
-        private List<Permission> UserRolePermissions => _authService.GetCurrentUserPermissions();
+        private List<Permission> UserRolePermissions => _permissionRepository.GetCurrentUserPermissions();
 
         public bool CanAddMovie()
-            => TherePermision.IsTherePermision(UserRolePermissions, SeedExtentoin.ADD_MOVIE) ||
-                (UserRole.Name == SeedExtentoin.ADMIN_ROLE || UserRole.Name == SeedExtentoin.MODERATOR_ROLE);
+            => TherePermision.IsTherePermision(UserRolePermissions, PermissionType.AddMovie) ||
+               RolePermision.IsThereRole(UserRoles, SeedExtentoin.ADMIN_ROLE, SeedExtentoin.MODERATOR_ROLE);
+
 
         public bool CanUpdateMovie()
-            => TherePermision.IsTherePermision(UserRolePermissions, SeedExtentoin.EDIT_MOVIE) ||
-                (UserRole.Name == SeedExtentoin.ADMIN_ROLE || UserRole.Name == SeedExtentoin.MODERATOR_ROLE);
+            => TherePermision.IsTherePermision(UserRolePermissions, PermissionType.EditMovie) ||
+               RolePermision.IsThereRole(UserRoles, SeedExtentoin.ADMIN_ROLE, SeedExtentoin.MODERATOR_ROLE);
 
         public bool CanDeleteMovie()
-            => TherePermision.IsTherePermision(UserRolePermissions, SeedExtentoin.DELETE_MOVIE) ||
-                (UserRole.Name == SeedExtentoin.ADMIN_ROLE);
+            => TherePermision.IsTherePermision(UserRolePermissions, PermissionType.DeleteMovie) ||
+               RolePermision.IsThereRole(UserRoles, SeedExtentoin.ADMIN_ROLE);
 
         public bool CanUpdateUser()
-            => TherePermision.IsTherePermision(UserRolePermissions, SeedExtentoin.EDIT_USER) ||
-                (UserRole.Name == SeedExtentoin.ADMIN_ROLE);
+            => TherePermision.IsTherePermision(UserRolePermissions, PermissionType.EditUser) ||
+               RolePermision.IsThereRole(UserRoles, SeedExtentoin.ADMIN_ROLE);
 
         public bool CanDeleteUser()
-            => TherePermision.IsTherePermision(UserRolePermissions, SeedExtentoin.DELETE_USER) ||
-                (UserRole.Name == SeedExtentoin.ADMIN_ROLE);
+            => TherePermision.IsTherePermision(UserRolePermissions, PermissionType.DeleteUser) ||
+               RolePermision.IsThereRole(UserRoles, SeedExtentoin.ADMIN_ROLE);
 
         public bool CanAccessToAdminPanel()
-            => TherePermision.IsTherePermision(UserRolePermissions, SeedExtentoin.ACCESS_TO_ADMIN_PANEL) &&
-                (UserRole.Name == SeedExtentoin.ADMIN_ROLE || UserRole.Name == SeedExtentoin.MODERATOR_ROLE);
+            => TherePermision.IsTherePermision(UserRolePermissions, PermissionType.AccessToAdminPanel) &&
+               RolePermision.IsThereRole(UserRoles, SeedExtentoin.ADMIN_ROLE, SeedExtentoin.MODERATOR_ROLE);
     }
 }

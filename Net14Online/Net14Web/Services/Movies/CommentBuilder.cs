@@ -33,7 +33,7 @@ namespace Net14Web.Services.Movies
                 Description = comment.Description,
                 TimeOfWriting = comment.TimeOfWriting,
                 User = BuildCommentUserOnMovie(comment.User),
-                CanRemoveCommentFromMovie = _commentPermissions.CanRemoveCommentFromMovie(comment.User.Id)
+                CanRemoveCommentFromMovie = _commentPermissions.CanDeleteCommentFromMovie(comment.User.Id)
             };
             return newComment;
         }

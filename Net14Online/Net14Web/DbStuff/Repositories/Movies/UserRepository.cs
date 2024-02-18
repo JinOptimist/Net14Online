@@ -37,26 +37,6 @@ namespace Net14Web.DbStuff.Repositories.Movies
                 .FirstOrDefaultAsync(user => user.Login == login && user.Password!.Equals(password));
         }
 
-        public Role GetUserRole(int userId)
-        {
-            return _entyties
-                .Include(x => x.Role)
-                .AsNoTracking()
-                .FirstOrDefault(u => u.Id == userId)
-                .Role;
-        }
-
-        public List<Permission> GetUserRolePermissions(int userId)
-        {
-            return _entyties
-                .Include(x => x.Role)
-                .ThenInclude(r => r.Permissions)
-                .AsNoTracking()
-                .FirstOrDefault(u => u.Id == userId)
-                .Role
-                .Permissions;
-        }
-
         public User? GetUserWithComments(int userId)
         {
             return _entyties

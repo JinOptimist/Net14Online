@@ -23,6 +23,6 @@ namespace Net14Web.Services.DndServices
                 || IsCurrentUserAdmin;
 
         public bool CanChooseFavoriteWeapon()
-            => _authService.GetCurrentUser().Role.Name == "dm";
+            => _authService.GetCurrentUser().Roles.Any(r => r.Name == "dm");
     }
 }
