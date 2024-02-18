@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Net14Web.Services;
+using Net14Web.DbStuff.Repositories;
 
 namespace Net14Web.Controllers.CustomAuthAttributes
 {
@@ -15,10 +15,10 @@ namespace Net14Web.Controllers.CustomAuthAttributes
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var authService = context.HttpContext.RequestServices.GetService<AuthService>();
-            var role = authService.GetCurrentUserRole();
-            var isValidRole = _roleNames.FirstOrDefault(r => r == role?.Name);
-            if (isValidRole is null)
+            var authUserRole = context.HttpContext.RequestServices.GetService<RoleRepository>();
+            var role = authUserRole!.GetCurrentUserRoles();
+            var isValidRole = _roleNames.Any(roleName => role.Any(r => r.Name == roleName));
+            if (!isValidRole)
             {
                 context.Result = new ForbidResult(AuthController.AUTH_KEY);
             }

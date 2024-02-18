@@ -1,12 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Models.Movies;
+using Net14Web.Services;
 
 namespace Net14Web.DbStuff.Repositories
 {
     public class RoleRepository : BaseRepository<Role>
     {
-        public RoleRepository(WebDbContext context) : base(context)
+        private AuthService _authService;
+
+        public RoleRepository(WebDbContext context, AuthService authService) : base(context)
         {
+            _authService = authService;
         }
 
         public Role GetRoleByName(string roleName)
@@ -16,20 +21,36 @@ namespace Net14Web.DbStuff.Repositories
                 .FirstOrDefault(x => x.Name == roleName);
         }
 
-        public void AddPermissionToRole(Permission permission, string roleName)
+        public List<Role> GetCurrentUserRoles()
         {
-            var role = GetRoleByName(roleName);
-            if (role.Permissions is not null)
+            var currentUser = _authService.GetCurrentUser();
+            return GetUserRoles(currentUser);
+        }
+
+        public List<Role> GetUserRoles(User user)
+        {
+            return _entyties
+                .Include(e => e.Users)
+                .Where(r => r.Users.Contains(user))
+                .ToList();
+        }
+
+        public List<Role> GetUserRolesAndPermissions(User user)
+        {
+            return _entyties
+                .Include(e => e.Users)
+                .Include(r => r.Permissions)
+                .Where(r => r.Users.Contains(user))
+                .ToList();
+        }
+
+        public void AddPermissionToRole(Permission permission, Role role)
+        {
+            if (role.Permissions is null)
             {
-                role.Permissions.Add(permission);
+                role.Permissions = new List<Permission>();
             }
-            else
-            {
-                role.Permissions = new List<Permission>
-                {
-                    permission
-                };
-            }
+            role.Permissions.Add(permission);
             _context.SaveChanges();
         }
     }

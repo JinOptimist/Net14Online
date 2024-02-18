@@ -1,23 +1,13 @@
 ﻿using Net14Web.DbStuff.ManagmentCompany.Models;
 using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.DbStuff.Repositories.Movies;
-using Net14Web.Services.RealEstate;
-using System.Security;
 
 namespace Net14Web.DbStuff
 {
     public static class SeedExtentoin
     {
-        public const string ADD_COMMENT_TO_MOVIE = "ADD_COMMENT_TO_MOVIE";
-        public const string DELETE_COMMENT_ON_MOVIE = "DELETE_COMMENT_ON_MOVIE";
-        public const string EDIT_COMMENT_ON_MOVIE = "EDIT_COMMENT_ON_MOVIE";
-        public const string ACCESS_TO_ADMIN_PANEL = "ACCESS_TO_ADMIN_PANEL";
-        public const string ADD_MOVIE = "ADD_MOVIE";
-        public const string DELETE_MOVIE = "DELETE_MOVIE";
-        public const string EDIT_MOVIE = "EDIT_MOVIE";
-        public const string DELETE_USER = "DELETE_USER";
-        public const string EDIT_USER = "EDIT_USER";
         public const string ADMIN_ROLE = "Admin";
         public const string MODERATOR_ROLE = "Moderator";
         public const string USER_ROLE = "User";
@@ -50,6 +40,7 @@ namespace Net14Web.DbStuff
                     Login = "admin",
                     Password = "123",
                     Email = "test@test.com",
+                    Roles = new List<Role> { GetRole(serviceProvider, "admin") }
                 };
 
                 userRepository.Add(admin);
@@ -62,19 +53,20 @@ namespace Net14Web.DbStuff
                     Login = "user",
                     Password = "123",
                     Email = "test@test.com",
+                    Roles = new List<Role> { GetRole(serviceProvider, "user") }
                 };
 
                 userRepository.Add(user);
             }
 
-            if (!userRepository.AnyUserWithName("superAdmin"))
+            if (!userRepository.AnyUserWithName("moderator"))
             {
                 var user = new DbStuff.Models.Movies.User()
                 {
-                    Login = "superAdmin",
+                    Login = "moderator",
                     Password = "123",
                     Email = "test@test.com",
-                    Role = GetRole(serviceProvider, "admin")
+                    Roles = new List<Role> { GetRole(serviceProvider, "moderator") }
                 };
 
                 userRepository.Add(user);
@@ -198,60 +190,28 @@ namespace Net14Web.DbStuff
         private static void SeedRolePermissions(IServiceProvider di)
         {
             var permissionRepository = di.GetService<PermissionRepository>();
-
-            if (permissionRepository.GetPermissionByName(ADD_COMMENT_TO_MOVIE) is null)
+            List<PermissionType> permissionTypes = new List<PermissionType>
             {
-                AddPermission(permissionRepository, ADD_COMMENT_TO_MOVIE);
-            }
-
-            if (permissionRepository.GetPermissionByName(DELETE_COMMENT_ON_MOVIE) is null)
-            {
-                AddPermission(permissionRepository, DELETE_COMMENT_ON_MOVIE);
-            }
-
-            if (permissionRepository.GetPermissionByName(EDIT_COMMENT_ON_MOVIE) is null)
-            {
-                AddPermission(permissionRepository, EDIT_COMMENT_ON_MOVIE);
-            }
-
-            if (permissionRepository.GetPermissionByName(ADD_MOVIE) is null)
-            {
-                AddPermission(permissionRepository, ADD_MOVIE);
-            }
-
-            if (permissionRepository.GetPermissionByName(EDIT_MOVIE) is null)
-            {
-                AddPermission(permissionRepository, EDIT_MOVIE);
-            }
-
-            if (permissionRepository.GetPermissionByName(EDIT_USER) is null)
-            {
-                AddPermission(permissionRepository, EDIT_USER);
-            }
-
-            if (permissionRepository.GetPermissionByName(DELETE_MOVIE) is null)
-            {
-                AddPermission(permissionRepository, DELETE_MOVIE);
-            }
-
-            if (permissionRepository.GetPermissionByName(DELETE_USER) is null)
-            {
-                AddPermission(permissionRepository, DELETE_USER);
-            }
-
-            if (permissionRepository.GetPermissionByName(ACCESS_TO_ADMIN_PANEL) is null)
-            {
-                AddPermission(permissionRepository, ACCESS_TO_ADMIN_PANEL);
-            }
-        }
-
-        private static void AddPermission(PermissionRepository permissionRepository, string permissionName)
-        {
-            var permission = new Permission
-            {
-                Name = permissionName
+                PermissionType.AddCommentToMovie,
+                PermissionType.DeleteCommentOnMovie,
+                PermissionType.EditCommentOnMovie,
+                PermissionType.AccessToAdminPanel,
+                PermissionType.AddMovie,
+                PermissionType.DeleteMovie,
+                PermissionType.DeleteUser,
+                PermissionType.EditMovie,
+                PermissionType.EditUser
             };
-            permissionRepository.Add(permission);
+            var permissionsInDb = permissionRepository.GetAll();
+            var missingPermissions = permissionTypes.Where(p => permissionsInDb.Any(pR => pR.Type == p) == false);
+            foreach (var missingPermission in missingPermissions)
+            {
+                var permission = new Permission
+                {
+                    Type = missingPermission
+                };
+                permissionRepository.Add(permission);
+            }
         }
 
         private static void SeedAddPermissionToRoles(IServiceProvider di)
@@ -259,29 +219,40 @@ namespace Net14Web.DbStuff
             var permissionRepository = di.GetService<PermissionRepository>();
             var roleRepository = di.GetService<RoleRepository>();
 
-            var admin = roleRepository.GetRoleByName(ADMIN_ROLE);
-            permissionRepository.AddRoleToPermission(admin, ADD_COMMENT_TO_MOVIE);
-            permissionRepository.AddRoleToPermission(admin, DELETE_COMMENT_ON_MOVIE);
-            permissionRepository.AddRoleToPermission(admin, EDIT_COMMENT_ON_MOVIE);
-            permissionRepository.AddRoleToPermission(admin, ADD_MOVIE);
-            permissionRepository.AddRoleToPermission(admin, EDIT_MOVIE);
-            permissionRepository.AddRoleToPermission(admin, DELETE_MOVIE);
-            permissionRepository.AddRoleToPermission(admin, EDIT_USER);
-            permissionRepository.AddRoleToPermission(admin, DELETE_USER);
-            permissionRepository.AddRoleToPermission(admin, ACCESS_TO_ADMIN_PANEL);
-
-            var moderator = roleRepository.GetRoleByName(MODERATOR_ROLE);
-            permissionRepository.AddRoleToPermission(moderator, ADD_COMMENT_TO_MOVIE);
-            permissionRepository.AddRoleToPermission(moderator, DELETE_COMMENT_ON_MOVIE);
-            permissionRepository.AddRoleToPermission(moderator, EDIT_COMMENT_ON_MOVIE);
-            permissionRepository.AddRoleToPermission(moderator, ADD_MOVIE);
-            permissionRepository.AddRoleToPermission(moderator, EDIT_MOVIE);
-            permissionRepository.AddRoleToPermission(moderator, ACCESS_TO_ADMIN_PANEL);
+            List<PermissionType> userPermissions = new List<PermissionType>
+            {
+                PermissionType.AddCommentToMovie,
+                PermissionType.DeleteCommentOnMovie,
+                PermissionType.EditCommentOnMovie
+            };
+            List<PermissionType> moderatorPermissions = new List<PermissionType>(userPermissions)
+            {
+                PermissionType.AddMovie,
+                PermissionType.EditMovie,
+                PermissionType.AccessToAdminPanel
+            };
+            List<PermissionType> adminPermissions = new List<PermissionType>(moderatorPermissions)
+            {
+                PermissionType.DeleteMovie,
+                PermissionType.EditUser,
+                PermissionType.DeleteUser
+            };
 
             var user = roleRepository.GetRoleByName(USER_ROLE);
-            permissionRepository.AddRoleToPermission(user, ADD_COMMENT_TO_MOVIE);
-            permissionRepository.AddRoleToPermission(user, DELETE_COMMENT_ON_MOVIE);
-            permissionRepository.AddRoleToPermission(user, EDIT_COMMENT_ON_MOVIE);
+            AddPermissionToRole(user, userPermissions, roleRepository, permissionRepository);
+            var moderator = roleRepository.GetRoleByName(MODERATOR_ROLE);
+            AddPermissionToRole(moderator, moderatorPermissions, roleRepository, permissionRepository);
+            var admin = roleRepository.GetRoleByName(ADMIN_ROLE);
+            AddPermissionToRole(admin, adminPermissions, roleRepository, permissionRepository);
+        }
+
+        private static void AddPermissionToRole(Role role, List<PermissionType> permissions, RoleRepository roleRepository, PermissionRepository permissionRepository)
+        {
+            foreach (var aPerm in permissions)
+            {
+                var permission = permissionRepository.GetPermissionByType(aPerm);
+                roleRepository.AddPermissionToRole(permission, role);
+            }
         }
 
         private static void SeedMcUser(IServiceProvider di)
@@ -289,7 +260,7 @@ namespace Net14Web.DbStuff
             var userRepository = di.GetService<McUserRepository>();
             if (userRepository.Any() == false)
             {
-                var admin = new User
+                var admin = new ManagmentCompany.Models.User
                 {
                     NickName = "Admin",
                     Email = "Admin",

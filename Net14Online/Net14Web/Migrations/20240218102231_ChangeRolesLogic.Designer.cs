@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Net14Web.DbStuff;
 
@@ -11,9 +12,11 @@ using Net14Web.DbStuff;
 namespace Net14Web.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240218102231_ChangeRolesLogic")]
+    partial class ChangeRolesLogic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,16 +56,11 @@ namespace Net14Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OwnerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("LoginsBooking");
                 });
@@ -437,7 +435,6 @@ namespace Net14Web.Migrations
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.PcShop.PCModel", b =>
-            modelBuilder.Entity("Net14Web.DbStuff.Models.Sattelite.ObjectDict", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -451,23 +448,16 @@ namespace Net14Web.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IconURL")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CPUId");
 
                     b.ToTable("PCModel");
-                    b.ToTable("Sattelite");
-                }));
+                });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.PcShop.UsersPcShop", b =>
                 {
@@ -657,16 +647,6 @@ namespace Net14Web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
-                {
-                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
-                        .WithMany("LoginsBooking")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Owner");
-                });
-
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
                 {
                     b.HasOne("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", "LoginBooking")
@@ -824,8 +804,6 @@ namespace Net14Web.Migrations
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.User", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("LoginsBooking");
 
                     b.Navigation("MyHeroes");
                 });

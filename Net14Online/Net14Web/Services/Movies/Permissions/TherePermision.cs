@@ -4,9 +4,9 @@ namespace Net14Web.Services.Movies.Permissions
 {
     public static class TherePermision
     {
-        public static bool IsTherePermision(List<Permission> permissions, string permissionName)
+        public static bool IsTherePermision(List<Permission> permissions, PermissionType permissionType)
         {
-            return permissions.Where(perm => perm.Name == permissionName).Count() > 0;
+            return permissions.Any(perm => perm.Type == permissionType);
         }
     }
 }

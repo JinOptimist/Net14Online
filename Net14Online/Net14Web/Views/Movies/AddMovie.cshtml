@@ -18,7 +18,7 @@
                             <div class="row">
                                 @if (Model.CanAddMovie)
                                 {
-                                    <form class="col-12" method="post" enctype="multipart/form-data">
+                                    <form class="col-12" action="/movies/addmovie" method="post" enctype="multipart/form-data">
                                         <div class="input-group">
                                             <input type="file" name="poster" />
                                             @Html.TextBoxFor(x => x.Title, new { placeholder = "Название фильма", @class = "form-control" })

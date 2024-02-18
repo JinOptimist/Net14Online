@@ -1,22 +1,29 @@
 ﻿using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Repositories;
 
 namespace Net14Web.Services.Movies.Permissions
 {
     public class MoviePermissions
     {
-        private AuthService _authService;
+        private RoleRepository _roleRepository;
+        private PermissionRepository _permissionRepository;
 
-        public MoviePermissions(AuthService authService)
+        public MoviePermissions(RoleRepository roleRepository, PermissionRepository permissionRepository)
         {
-            _authService = authService;
+            _roleRepository = roleRepository;
+            _permissionRepository = permissionRepository;
         }
 
-        private Role UserRole => _authService.GetCurrentUserRole();
+        private List<Role> UserRoles => _roleRepository.GetCurrentUserRoles();
 
-        private List<Permission> UserRolePermissions => _authService.GetCurrentUserPermissions();
+        private List<Permission> UserRolePermissions => _permissionRepository.GetCurrentUserPermissions();
 
         public bool CanAddCommentToMovie()
-            => TherePermision.IsTherePermision(UserRolePermissions, SeedExtentoin.ADD_COMMENT_TO_MOVIE);
+            => TherePermision.IsTherePermision(UserRolePermissions, PermissionType.AddCommentToMovie);
+
+        public bool CanAddMovie()
+            => TherePermision.IsTherePermision(UserRolePermissions, PermissionType.AddMovie) ||
+               RolePermision.IsThereRole(UserRoles, SeedExtentoin.ADMIN_ROLE, SeedExtentoin.MODERATOR_ROLE);
     }
 }

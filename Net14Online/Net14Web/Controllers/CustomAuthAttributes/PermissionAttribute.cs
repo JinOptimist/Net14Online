@@ -1,31 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
-using Net14Web.Services;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Repositories;
 
 namespace Net14Web.Controllers.CustomAuthAttributes
 {
     public class PermissionAttribute : Attribute, IAuthorizationFilter
     {
-        private string[] _permissionNames;
+        private PermissionType[] _permissionTypes;
 
-        public PermissionAttribute(params string[] permissionNames)
+        public PermissionAttribute(params PermissionType[] permissionTypes)
         {
-            _permissionNames = permissionNames;
+            _permissionTypes = permissionTypes;
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var authService = context.HttpContext.RequestServices.GetService<AuthService>();
-            var userPermissions = authService.GetCurrentUserPermissions();
-            foreach (var permission in userPermissions )
+            var authUserPermissions = context.HttpContext.RequestServices.GetService<PermissionRepository>();
+            var userPermissions = authUserPermissions!.GetCurrentUserPermissions();
+            var isValid = userPermissions.Any(permission => _permissionTypes.Any(p => p == permission.Type));
+            if (!isValid)
             {
-                if (_permissionNames.FirstOrDefault(p => p.Equals(permission.Name)) is not null)
-                {
-                    return;
-                }
+                context.Result = new ForbidResult(AuthController.AUTH_KEY);
             }
-            context.Result = new ForbidResult(AuthController.AUTH_KEY);
         }
     }
 }

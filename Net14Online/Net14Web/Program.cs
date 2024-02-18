@@ -12,7 +12,6 @@ using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
 using Net14Web.Services.Movies;
 using Net14Web.Services.Movies.Permissions;
-using Net14Web.Services.RealEstate;
 using Net14Web.Services.Sattelite;
 
 
@@ -78,7 +77,6 @@ builder.Services.AddScoped<SatteliteController>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
-builder.Services.AddScoped<ErrorBuilder>();
 builder.Services.AddScoped<MovieBuilder>();
 builder.Services.AddScoped<Net14Web.Services.Movies.UserBuilder>();
 builder.Services.AddScoped<UserEditHelper>();
