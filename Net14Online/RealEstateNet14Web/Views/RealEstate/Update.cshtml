@@ -1,0 +1,30 @@
+
+@model RealEstateNet14Web.DbStuff.Models.ApartmentOwner
+
+
+<div class="update-user-block">
+    <div class="update-user">
+        <div class="new-user-paremtr-block">
+            <form action="/realestate/update" method="post">
+                <div>
+                    Имя
+                    <input type="text" name="Name" value="@Model.Name"/>
+                </div>
+                <div>
+                    Возраст
+                    <input type="number" name="age" value="@Model.Age"/>
+                </div>
+                <div>
+                    Вид деятельности
+                    <input type="text" name="KindOfActivity" value="@Model.KindOfActivity"/>
+                </div>
+                <div>
+                    <input type="hidden" name="Id" value="@Model.Id"/>
+                </div>
+                <div>
+                    <input type="submit" value="Обновить" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
