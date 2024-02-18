@@ -35,7 +35,7 @@ namespace Net14Web.Controllers
                     Name = dbTask.Name,
                     Description = dbTask.Description,
                     Priority = dbTask.Priority,
-                    Owner = dbTask.Owner?.Login
+                    Owner = dbTask.Owner?.Login ?? ""
                 };
                 }).ToList();
             return View(viewModels);

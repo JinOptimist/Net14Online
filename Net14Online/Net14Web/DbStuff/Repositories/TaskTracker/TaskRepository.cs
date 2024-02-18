@@ -2,49 +2,52 @@
 using Net14Web.DbStuff.Models.TaskTracker;
 using Net14Web.Models.TaskTracker;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
+
 
 namespace Net14Web.DbStuff.Repositories.TaskTracker
 {
-    public class TaskRepository
+    public class TaskRepository : BaseRepository<TaskInfo>
     {
-        private WebDbContext _webDbContext;
-
-        public TaskRepository(WebDbContext context)
+        public TaskRepository(WebDbContext context) : base(context) 
         {
-            _webDbContext = context;
         }
 
         public IEnumerable<TaskInfo> GetTasks(int maxCount = 30)
         {
-            return _webDbContext.TaskInfos.Take(30).ToList();
+            return _entyties
+                .Include(x => x.Owner)
+                .Take(maxCount)
+                .ToList();
         }
 
         public void DeleteTask(int id)
         {
-            var task = _webDbContext.TaskInfos.First(x => x.Id == id);
-            _webDbContext.TaskInfos.Remove(task);
-            _webDbContext.SaveChanges();
+            var task = _context.TaskInfos.First(x => x.Id == id);
+            _context.TaskInfos.Remove(task);
+            _context.SaveChanges();
 
         }
 
         public TaskInfo GetTaskById(int id)
         {
-            return _webDbContext.TaskInfos.First(x => x.Id == id);
+            return _context.TaskInfos.First(x => x.Id == id);
         }
 
         public void UpdateTask(AddTaskViewModel taskViewModel)
         {
-            var task = _webDbContext.TaskInfos.First(x => x.Id == taskViewModel.Id);
+            var task = _context.TaskInfos.First(x => x.Id == taskViewModel.Id);
             task.Name = taskViewModel.Name;
             task.Description = taskViewModel.Description;
             task.Priority = taskViewModel.Priority;
-            _webDbContext.SaveChanges();
+            _context.SaveChanges();
         }
 
         public void AddTask(TaskInfo task)
         {
-            _webDbContext.TaskInfos.Add(task);
-            _webDbContext.SaveChanges();
+            _context.TaskInfos.Add(task);
+            _context.SaveChanges();
         }
     }
 }
