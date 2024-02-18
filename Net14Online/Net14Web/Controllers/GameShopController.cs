@@ -1,77 +1,126 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Net14Web.Controllers.CustomAuthAttributes;
+﻿using Microsoft.AspNetCore.Mvc;
+using Net14Web.DbStuff.Models.GameShop;
 using Net14Web.Models.GameShop;
-using Net14Web.Services;
-using Net14Web.Services.GameShop;
+using Net14Web.DbStuff.Repositories.GameShop;
 
-namespace Net14Web.Controllers;
-
-public class GameShopController : Controller
+namespace Net14Web.Controllers
 {
-
-    private readonly GamesService _gameService;
-    private readonly AuthService _authService;
-
-    public GameShopController(GamesService gameService, AuthService authService)
+    public class GameShopController : Controller
     {
-        _gameService = gameService;
-        _authService = authService;
-    }
+        private Random _random = new Random();
 
-    [HttpGet]
-    public async Task<IActionResult> Index()
-    {
-        var games = await _gameService.GetItems();
+        private readonly GameShopRepository _gamesRepository;
+        private readonly GameCommentRepository _commentsRepository;
 
-        return View(games.ToList());
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> Profile(int id)
-    {
-        var game = await _gameService.GetAsync(id);
-        var gameDto = _gameService.ConvertToDto(game);
-
-        return View(gameDto);
-    }
-
-    [Authorize]
-    [AdminOnly]
-    [HttpPost]
-    public async Task<IActionResult> Delete(int id)
-    {
-        var user = _authService.GetCurrentUser();
-        if(user.Login!.Length >= 7)
+        public GameShopController(GameShopRepository repository, GameCommentRepository commentsRepository)
         {
-            return View("Forbidden");
+            _gamesRepository = repository;
+            _commentsRepository = commentsRepository;
         }
 
-        await _gameService.Delete(id);
+        public async Task<IActionResult> Index()
+        {
+            var games = await _gamesRepository.GetAllAsync();
 
-        return RedirectToAction("Index", "GameShop");
-    }
+            var gameViewModels = games.Select(
+                game => new GameViewModel
+                {
+                    Id = game.Id,
+                    Genre = game.Genre,
+                    Name = game.Name,
+                    PosterUrl = game.LogoUrl,
+                    Rating = game.Raiting
+                }
+                ).ToList();
 
-    [HttpGet]
-    public IActionResult AddGame()
-    {
-        return View();
-    }
+            return View("Index", gameViewModels);
+        }
 
-    [HttpPost]
-    [AdminOnly]
-    public async Task<IActionResult> AddGame(CreateGameModel gameModel)
-    {
-        await _gameService.CreateGame(gameModel);
+        [HttpGet]
+        public IActionResult AddGame()
+        {
+            return View();
+        }
 
-        return RedirectToAction("Index");
-    }
+        [HttpPost]
+        public async Task<IActionResult> AddGame(AddGameViewModel gameModel)
+        {
+            var raiting = _random.NextDouble() * 5;
+            var newGame = new Game()
+            {
+                Name = gameModel.Name!,
+                LogoUrl = gameModel.PosterUrl,
+                Genre = gameModel.Genre,
+                Raiting = Math.Round(raiting, 1)
+            };
 
-    [HttpPost]
-    public async Task<IActionResult> AddComment(int gameId, string comment) 
-    {
-        await _gameService.AddComment(gameId, comment);
+            await _gamesRepository.AddAsync(newGame);
 
-        return RedirectToAction("Profile", "GameShop", new {id = gameId});
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Upgrade(Game gameModel)
+        {
+            _gamesRepository.UpdateAsync(gameModel);
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            _gamesRepository.DeleteById(id);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddComment(int gameId, string comment)
+        {
+            var game = await _gamesRepository.GetById(gameId)!;
+
+            if (game.Comments == null)
+            {
+                game.Comments = new List<GameComment>();
+            }
+
+            var gameComment = new GameComment()
+            {
+                CommentedGame = game,
+                Content = comment
+            };
+
+            await _commentsRepository.AddAsync(gameComment);
+
+            var gameViewModel = new GameViewModel()
+            {
+                Comments = game.Comments.Select(x => x.Content).ToList(),
+                Genre = game!.Genre,
+                Name = game.Name,
+                PosterUrl = game.LogoUrl,
+                Rating = 5d
+            };
+
+            return RedirectToAction("Profile", new { id = gameId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile(int id)
+        {
+            var game = await _gamesRepository.GetById(id)!;
+
+            var gameViewModel = new GameViewModel()
+            {
+                Id= game!.Id,
+                Comments = game?.Comments?.Select(x => x.Content).ToList() ?? null,
+                Genre = game!.Genre,
+                Name = game.Name,
+                PosterUrl = game.LogoUrl,
+                Rating = 5d
+            };
+
+            return View("Profile", gameViewModel);
+        }
+
     }
 }

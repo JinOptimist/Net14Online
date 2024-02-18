@@ -27,53 +27,48 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        @if ((User?.Identity?.IsAuthenticated ?? false) && Model.CanAddCommentToMovie)
-                                        {
-                                            @using (Html.BeginForm(nameof(Net14Web.Controllers.MoviesControllers.MoviesController.AddCommentOnMovie), "Movies", FormMethod.Post, new { @class = "col-12" }))
+                                        <form class="col-12" action="/Movies/AddCommentOnMovie" method="post">
+                                            <div class="input-group">
+                                                <input type="hidden" name="movieId" value="@Model.Id" />
+                                                <input type="text" class="form-control" name="description" placeholder="Комментарий" aria-describedby="input-group-button-right">
+                                                <button type="submit" class="btn btn-outline-secondary"
+                                                        id="input-group-button-right">
+                                                    Оставить комментарий
+                                                </button>
+                                            </div>
+                                            <br>
+                                        </form>
+                                        <div>
+                                            @foreach (var comment in @Model.Comments)
                                             {
-                                                <div class="input-group">
-                                                    <input type="hidden" name="movieId" value="@Model.Id" />
-                                                    <input type="text" class="form-control" name="description" placeholder="Комментарий" aria-describedby="input-group-button-right">
-                                                    <button type="submit" class="btn btn-outline-secondary"
-                                                            id="input-group-button-right">
-                                                        Оставить комментарий
-                                                    </button>
-                                                </div>
-                                                <br>
-                                            }
-                                        }
-                                        @foreach (var comment in @Model.Comments)
-                                        {
-                                            <div>
-                                                <a class="comment-a rounded" href="/movies/user/@comment.User.UserId">
-                                                    <div class="row">
-                                                        <div class="col-md-2">
-                                                            <img src="@comment.User.AvatarUrl" class="rounded comment-image">
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <div class="card-body">
-                                                                <p class="h5">@comment.User.Username</p>
+                                                <div>
+                                                    <a class="comment-a rounded" href="/movies/user?userId=@comment.User.UserId">
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <img src="@comment.User.AvatarUrl" class="rounded comment-image">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="card-body">
+                                                                    <p class="h5">@comment.User.Username</p>
+                                                                    <p class="card-text">
+                                                                        @comment.Description
+                                                                    </p>
+                                                                    <a class="btn btn-link" href="/movies/RemoveCommentOnMovie?commentId=@comment.Id">Удалить</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
                                                                 <p class="card-text">
-                                                                    @comment.Description
+                                                                    <small class="text-muted">
+                                                                        @comment.TimeOfWriting
+                                                                    </small>
                                                                 </p>
-                                                                @if ((User?.Identity?.IsAuthenticated ?? false) && comment.CanRemoveCommentFromMovie)
-                                                                {
-                                                                    <a class="btn btn-link" href="/movies/deleteCommentOnMovie?commentId=@comment.Id">Удалить</a>
-                                                                }
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-2">
-                                                            <p class="card-text">
-                                                                <small class="text-muted">
-                                                                    @comment.TimeOfWriting
-                                                                </small>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <br/>
-                                        }
+                                                    </a>
+                                                </div>
+                                                <br/>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>

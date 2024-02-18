@@ -1,24 +1,34 @@
-﻿using Net14Web.DbStuff.Repositories.Movies;
+﻿using Net14Web.DbStuff;
 
 namespace Net14Web.Services.Movies
 {
     public class RegistrationHelper
     {
-        private UserRepository _userRepository;
+        private WebDbContext _db;
 
-        public RegistrationHelper(UserRepository db)
+        public RegistrationHelper(WebDbContext db)
         {
-            _userRepository = db;
+            _db = db;
         }
 
         public bool IsLoginExists(string login)
         {
-            return _userRepository.AnyUserWithName(login);
+            var user = _db.Users.FirstOrDefault(user => user.Login == login);
+            if (user is not null)
+            {
+                return true;
+            }
+            return false;
         }
 
         public bool IsEmailExists(string email)
         {
-            return _userRepository.AnyUserWithEmail(email);
+            var user = _db.Users.FirstOrDefault(user => user.Email == email);
+            if (user is not null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -25,16 +25,6 @@ namespace Net14Web.DbStuff.Repositories.Booking
         {
             return _context.LoginsBooking.FirstOrDefault();
         }
-
-        public LoginBooking? GetUserByNameAndPassword(string name, string password)
-        {
-            return _entyties
-                .FirstOrDefault(login => login.Name.ToLower() == name && login.Password == password);
-        }
-        public bool AnyUserWithName(string name)
-        {
-            return _entyties.Any(x => x.Name == name);
-        }
     }
 }
  

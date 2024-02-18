@@ -16,13 +16,6 @@ namespace Net14Web.DbStuff.Repositories
                 .ToList();
         }
 
-        public Hero GetByIdWithOwner(int heroId)
-        {
-            return _entyties
-                .Include(x => x.Owner)
-                .First(x => x.Id == heroId);
-        }
-
         public void UpdateCoin(int heroId, int coin)
         {
             var hero = _entyties.First(x => x.Id == heroId);

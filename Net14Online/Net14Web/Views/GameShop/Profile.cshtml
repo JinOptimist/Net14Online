@@ -1,4 +1,4 @@
-﻿@model Net14Web.Models.GameShop.GameDto
+﻿@model Net14Web.Models.GameShop.GameViewModel
 
 @{
     Layout = "_LayoutGameShop";
@@ -10,15 +10,12 @@
 }
 
 <div class="game">
-    <form action="/gameShop/delete" method="post">
-        <input type="hidden" name="id" value="@Model.Id" />
-        <div>
-            <input type="submit" value="X" />
-        </div>
-    </form>
+    <div class="delete-button">
+        <a href="/gameShop/delete?id=@Model.Id" class="remove-link">X</a>
+    </div>
 
     <div>
-        <img src="@Model.LogoUrl" />
+        <img src="@Model.PosterUrl" />
     </div>
 
     <div class="game-footer">
@@ -29,7 +26,7 @@
         </div>
         <div class="raiting-block">
             <div>
-                @Model.Raiting
+                @Model.Rating
             </div>
         </div>
         <div class="genre-block">
@@ -58,7 +55,7 @@
             @foreach (var comment in Model.Comments)
             {
                 <div class="comment">
-                    @comment.Content;
+                    @comment;
                 </div>
             }
         }

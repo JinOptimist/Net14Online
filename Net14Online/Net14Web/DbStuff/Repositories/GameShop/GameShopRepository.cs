@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.GameShop;
 
 namespace Net14Web.DbStuff.Repositories.GameShop
@@ -9,28 +10,32 @@ namespace Net14Web.DbStuff.Repositories.GameShop
         public GameShopRepository(WebDbContext context) : base(context)
         { }
 
+        public async Task AddAsync(Game entity)
+        {
+            await _context.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task DeleteById(int id)
         {
-            var entity = _entyties.Include(x => x.Comments).First(x => x.Id == id);
+            var entity = _entyties.First(x => x.Id == id);
             _entyties.Remove(entity);
             await _context.SaveChangesAsync();
         }
 
-        public override async Task<List<Game>> GetAllAsync()
+        public async Task<List<Game>> GetAllAsync()
         {
             return await _entyties.Where(x => x.Id > 0).ToListAsync();
         }
 
-        public async Task UpdateAsync(int id, Game entity)
+        public async Task<Game?>? GetById(int id)
         {
-            var game = _entyties.First(x => x.Id == id);
+            return await _entyties.FirstOrDefaultAsync(x => x.Id == id);
+        }
 
-            game.LogoUrl = entity.LogoUrl;
-            game.Name = entity.Name;
-            game.Comments = entity.Comments;
-            game.Genre = entity.Genre;
-            game.Raiting = entity.Raiting;
-
+        public async Task UpdateAsync(Game entity)
+        {
+            _context.Update(entity);
             await _context.SaveChangesAsync();
         }
     }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -8,8 +7,6 @@ using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.BookingWeb;
 using Net14Web.DbStuff.Repositories.Booking;
 using Net14Web.Models.BookingWeb;
-using Net14Web.Models.Dnd;
-using Net14Web.Services;
 using System.ComponentModel.Design;
 using System.Linq;
 
@@ -23,13 +20,12 @@ namespace Net14Web.Controllers
 
         private SearchRepository _searchRepository;
         private LoginRepository _loginRepository;
-        private AuthService _authService;
-        
-        public BookingWebController (SearchRepository searchRepository, LoginRepository loginRepository, AuthService authService)
+        private WebDbContext _webDbContext;
+
+        public BookingWebController (WebDbContext _webDbContext, SearchRepository searchRepository, LoginRepository loginRepository)
         {
             _searchRepository = searchRepository;
             _loginRepository = loginRepository;
-            _authService = authService;
         }
 
         public IActionResult Help()
@@ -41,10 +37,10 @@ namespace Net14Web.Controllers
             var logins = _loginRepository.GetLogin(10);
 
             var viweModel = logins.Select(login => new UserLoginViewModel
-                {
-                    Name = login.Name,
-                    Email = login.Email,
-                    Password = login.Password,
+            {
+                Name = login.Name,
+                Email = login.Email,
+                Password = login.Password,
             }).ToList();
 
             return View(viweModel);
@@ -66,8 +62,6 @@ namespace Net14Web.Controllers
 
             return View(viewModels);
         }
-
-        [Authorize]
         public IActionResult Remove(int id)
         {
             _loginRepository.Delete(id);
@@ -75,7 +69,6 @@ namespace Net14Web.Controllers
             return RedirectToAction("UserLogin");
         }
 
-        [Authorize]
         public IActionResult RemoveSearch(int id)
         {
             _searchRepository.Delete(id);
@@ -115,8 +108,7 @@ namespace Net14Web.Controllers
             {
                 Name = userLoginViewModel.Name,
                 Email = userLoginViewModel.Email,
-                Password = userLoginViewModel.Password,
-                Owner = _authService.GetCurrentUser()
+                Password = userLoginViewModel.Password
             };
             _loginRepository.Add(login);
             return RedirectToAction("UserLogin");
@@ -137,7 +129,7 @@ namespace Net14Web.Controllers
             {
                 Country = searchResultViewModel.Country,
                 City = searchResultViewModel.City,
-                Checkin = searchResultViewModel.CheckinDate,
+                Checkin = searchResultViewModel.CheckinDate, 
                 Checkout = searchResultViewModel.CheckoutDate,
                 LoginBooking = login
             };
@@ -150,11 +142,8 @@ namespace Net14Web.Controllers
         [HttpGet]
         public IActionResult UserCountrySearch()
         {
-            var userName = HttpContext.User.Claims.FirstOrDefault(x=> x.Type =="name")?.Value ?? "Guest";
-
             var viewModel = new UserSearchViewModel();
 
-            viewModel.UserName = userName;
             viewModel.Logins = _loginRepository.GetAll().Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList();
             viewModel.Searches = _searchRepository.GetAll().Select(x => new SelectListItem(x.Country, x.Id.ToString())).ToList();
             return View(viewModel);

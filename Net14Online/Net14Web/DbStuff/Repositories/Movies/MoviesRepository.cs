@@ -16,10 +16,7 @@ namespace Net14Web.DbStuff.Repositories.Movies
 
         public List<Movie> GetMovies(int count)
         {
-            return _entyties
-                .Take(count)
-                .AsNoTracking()
-                .ToList();
+            return _entyties.Where(x => x.Id > 0).Take(count).ToList();
         }
 
         public Movie? GetMovieWithComments(int movieId)
@@ -32,10 +29,7 @@ namespace Net14Web.DbStuff.Repositories.Movies
 
         public async Task<List<Movie>> GetMoviesAsync(int count)
         {
-            return await _entyties
-                .Take(count)
-                .AsNoTracking()
-                .ToListAsync();
+            return await _entyties.Where(x => x.Id > 0).Take(count).ToListAsync();
         }
 
         public async Task<Movie?> GetMovieWithCommentsAsync(int movieId)
@@ -51,13 +45,6 @@ namespace Net14Web.DbStuff.Repositories.Movies
         {
             _movieEditHelper.EditMovie(oldMovie, updateMovie);
             _context.SaveChanges();
-        }
-
-        public async Task<bool> UpdateMovieAsync(Movie oldMovie, MovieViewModel updateMovie)
-        {
-            _movieEditHelper.EditMovie(oldMovie, updateMovie);
-            await _context.SaveChangesAsync();
-            return true;
         }
     }
 }

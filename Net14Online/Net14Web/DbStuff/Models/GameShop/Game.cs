@@ -6,7 +6,7 @@
 
         public string? LogoUrl { get; set; }
 
-        public double? Raiting { get; set; } = 5;
+        public double? Raiting { get; set; }
 
         public string? Genre { get; set; }
 

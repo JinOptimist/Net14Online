@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.PcShop;
-using Net14Web.DbStuff.Repositories.PcShop;
 using Net14Web.Models.PcShop;
 
 namespace Net14Web.Controllers
 {
     public class PcShopController : Controller
     {
-        private UserRepositoryPcShop _userRepositoryPcShop;
-        private PcsRepositoryPcShop _pcsRepositoryPcShop;
+        public static List<AddUserViewModel> UsersViewModels = new List<AddUserViewModel>();
+        private WebDbContext _webDbContext;
 
-        public PcShopController(UserRepositoryPcShop userRepositoryPcShop, PcsRepositoryPcShop pcsRepositoryPcShop)
+        public PcShopController(WebDbContext webDbContext)
         {
-            _userRepositoryPcShop = userRepositoryPcShop;
-            _pcsRepositoryPcShop = pcsRepositoryPcShop;
+            _webDbContext = webDbContext;
         }
 
         public ActionResult Index()
@@ -24,7 +23,7 @@ namespace Net14Web.Controllers
 
         public ActionResult Users()
         {
-            var dbUserPcShop = _userRepositoryPcShop.GetUsers(10);
+            var dbUserPcShop = _webDbContext.UserPcShop.Take(10).ToList();
 
             var viewModels = dbUserPcShop
                 .Select(dbUserPcShop => new UserViewModel
@@ -39,7 +38,7 @@ namespace Net14Web.Controllers
         }
         public ActionResult PCs()
         {
-            var dbPCModel = _pcsRepositoryPcShop.GetPCs(10);
+            var dbPCModel = _webDbContext.PCModel.Include(x=>x.CPU).Take(10).ToList();
             return View(dbPCModel);
         }
 
@@ -62,7 +61,8 @@ namespace Net14Web.Controllers
                 Email = UserViewModel.Email,
                 Password = UserViewModel.Password,
             };
-            _userRepositoryPcShop.Registration(user);
+            _webDbContext.UserPcShop.Add(user);
+            _webDbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
 
         }
@@ -72,9 +72,11 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditUserPassword(int id, string password)
+        public ActionResult EditUserPassword(int Id, string password)
         {
-            _userRepositoryPcShop.EditUserPassword(id, password);
+            var user = _webDbContext.UserPcShop.First(x => x.Id == Id);
+            user.Password = password;
+            _webDbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
@@ -89,8 +91,11 @@ namespace Net14Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteUsers(int id)
         {
-            _userRepositoryPcShop.DeleteUsers(id);
+            var user = _webDbContext.UserPcShop.First(x => x.Id == id);
+            _webDbContext.UserPcShop.Remove(user);
+            _webDbContext.SaveChanges();
             return RedirectToAction(nameof(Users));
+            
         }
     }
 }
