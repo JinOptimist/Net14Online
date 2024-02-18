@@ -25,6 +25,8 @@ namespace Net14Web.DbStuff
         public DbSet<User> Users { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<Dividend> Dividend { get; set; }
         public DbSet<TaskInfo> TaskInfos { get; set; }
@@ -65,6 +67,10 @@ namespace Net14Web.DbStuff
             builder.Entity<Movie>()
                 .HasMany(movie => movie.Comments)
                 .WithOne(comment => comment.Movie);
+
+            builder.Entity<Role>()
+                .HasMany(role => role.Permissions)
+                .WithMany(permission => permission.Roles);
 
             builder
                 .Entity<Game>()

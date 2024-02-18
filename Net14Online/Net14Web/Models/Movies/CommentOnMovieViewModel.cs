@@ -6,6 +6,8 @@
         public string? Description { get; set; }
         public DateTime TimeOfWriting { get; set; }
         public CommentUserOnMovie User { get; set; }
+
+        public bool CanRemoveCommentFromMovie { get; set; }
     }
 
     public class CommentUserOnMovie

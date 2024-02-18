@@ -4,19 +4,21 @@ using Net14Web.Services;
 
 namespace Net14Web.Controllers.CustomAuthAttributes
 {
-    public class MyRoleAttribute : Attribute, IAuthorizationFilter
+    public class RoleAttribute : Attribute, IAuthorizationFilter
     {
-        private string _roleName;
+        private string[] _roleNames;
 
-        public MyRoleAttribute(string role)
+        public RoleAttribute(params string[] roleNames)
         {
-            _roleName = role;
+            _roleNames = roleNames;
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var authService = context.HttpContext.RequestServices.GetService<AuthService>();
-            if (authService.GetCurrentUser().Role != _roleName)
+            var role = authService.GetCurrentUserRole();
+            var isValidRole = _roleNames.FirstOrDefault(r => r == role?.Name);
+            if (isValidRole is null)
             {
                 context.Result = new ForbidResult(AuthController.AUTH_KEY);
             }

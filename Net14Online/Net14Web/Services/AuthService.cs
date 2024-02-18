@@ -21,6 +21,18 @@ namespace Net14Web.Services
             return _userRepository.GetById(id);
         }
 
+        public DbStuff.Models.Role GetCurrentUserRole()
+        {
+            var id = GetCurrentUserId();
+            return _userRepository.GetUserRole(id);
+        }
+
+        public List<DbStuff.Models.Permission> GetCurrentUserPermissions()
+        {
+            var id = GetCurrentUserId();
+            return _userRepository.GetUserPermissions(id);
+        }
+
         public int GetCurrentUserId()
         {
             // HttpContext != null

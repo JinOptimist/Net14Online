@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Models.Movies;
 using Net14Web.Models.Movies;
 using Net14Web.Services.Movies;
@@ -23,6 +24,22 @@ namespace Net14Web.DbStuff.Repositories.Movies
         {
             return _entyties
                 .FirstOrDefault(user => user.Login!.ToLower() == login.ToLower() && user.Password == password);
+        }
+
+        public Role GetUserRole(int userId)
+        {
+            return _entyties
+                .Include(x => x.Role)
+                .ThenInclude(r => r.Permissions)
+                .FirstOrDefault(u => u.Id == userId).Role;
+        }
+
+        public List<Permission> GetUserPermissions(int userId)
+        {
+            return _entyties
+                .Include(x => x.Role)
+                .ThenInclude(r => r.Permissions)
+                .FirstOrDefault(u => u.Id == userId).Role.Permissions;
         }
 
         public User? GetUserWithComments(int userId)
