@@ -20,42 +20,22 @@ namespace Net14Web.Models.ValidationAttributes
 
         public override bool IsValid(object? value)
         {
-            if (value is not null
-                && value is not string)
+            if (value is not string)
             {
                 throw new ArgumentException("IsLetterUppercaseAttribute can be only on string");
             }
-
-            if (value is null)
-            {
-                return false;
-            }
-
             var someStringValue = (string)value;
-
             if (someStringValue == "")
             {
                 return false;
             }
-
             return IsStringHaveWordUpper(someStringValue);
         }
 
         private bool IsStringHaveWordUpper(string someStringValue)
         {
-            int countValidLetters = 0;
-            foreach (char c in someStringValue)
-            {
-                if (char.IsUpper(c))
-                {
-                    countValidLetters++;
-                }
-            }
-            if (countValidLetters >= _countValidLetters)
-            {
-                return true;
-            }
-            return false;
+            int countValidLetters = someStringValue.Where(c => char.IsUpper(c)).Count();
+            return (countValidLetters >= _countValidLetters);
         }
     }
 }

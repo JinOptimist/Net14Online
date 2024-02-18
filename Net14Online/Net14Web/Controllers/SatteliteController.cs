@@ -1,8 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Net14Web.Models.Sattelite;
 using Net14Web.Services;
 using Net14Web.Services.Sattelite;
 using System.Xml.Linq;
+using Net14Web.DbStuff.Models.Sattelite;
+using Net14Web.DbStuff;
+using Net14Web.DbStuff.Models.RetroConsoles;
+using Net14Web.Models.RetroConsoles;
+using Net14Web.Models.InvestPortfolio;
 
 namespace Net14Web.Controllers
 {
@@ -10,18 +16,25 @@ namespace Net14Web.Controllers
     {
         private readonly ObjectBuilder _objectBuilder;
 
-        /// <summary>
-        /// TEMP SOLUTION. DONT DO THIS IN PRODUCT
-        /// </summary>
-        public static List<Objects> ObjectModel = new List<Objects>();
-
-        public SatteliteController(ObjectBuilder builder)
+        private WebDbContext _webDbContext;
+        public SatteliteController(ObjectBuilder builder, WebDbContext webDbContext)
         {
+
             _objectBuilder = builder;
+            _webDbContext = webDbContext;
         }
         public IActionResult Index()
         {
-            return View(ObjectModel);
+            var dbObjects = _webDbContext.Sattelite.Take(10).ToList();
+            var ObjectDict = dbObjects.Select(dbObject => new Objects
+            {
+                Name = dbObject.Name,
+                Type = dbObject.Type,
+                IconURL = dbObject.IconURL,
+                Id = dbObject.Id
+            }).ToList();
+
+            return View(ObjectDict);
         }
 
         [HttpGet]
@@ -33,36 +46,39 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult AddObject(AddObjectModel objectModel) 
         {
-            var newObject = new Objects
+            var objects = new ObjectDict
             {
-                Type = objectModel.Type,
                 Name = objectModel.Name,
-                IconURL = objectModel.IconURL
+                Type = objectModel.Type,
+                IconURL = objectModel.IconURL,
             };
-            ObjectModel.Add(newObject);
+            _webDbContext.Sattelite.Add(objects);
+            _webDbContext.SaveChanges();
 
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult AddRandomObject ()
-        {
-            var objects = _objectBuilder.BuildRandomObject();
-            ObjectModel.Add(objects);
-            return RedirectToAction("Index");
+            return RedirectToAction("index");
         }
            
-        public IActionResult RemoveObject(string name)
+        public IActionResult RemoveObject(int id)
         {
-            var objects = ObjectModel.First(x => x.Name == name);
-            ObjectModel.Remove(objects);
+            var objects = _webDbContext.Sattelite.FirstOrDefault(x => x.Id == id);
 
-            return RedirectToAction("Index");
+            if (objects != null)
+            {
+                _webDbContext.Sattelite.Remove(objects);
+                _webDbContext.SaveChanges();
+            }
+            return RedirectToAction("index");
         }
 
         [HttpPost]
-        public IActionResult UpdateType(string name, string type)
+        public IActionResult UpdateType(int id, string type)
         {
-            ObjectModel.First(x => x.Name == name).Type = type;
+            var objects = _webDbContext.Sattelite.FirstOrDefault(x =>x.Id == id);
+            if (objects != null)
+            {
+                objects.Type = type;    
+                _webDbContext.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
     }
