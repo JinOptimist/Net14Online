@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.PcShop;
 using Net14Web.Models.PcShop;
+using Net14Web.Services;
 
 namespace Net14Web.Controllers
 {
@@ -10,22 +12,25 @@ namespace Net14Web.Controllers
     {
         public static List<AddUserViewModel> UsersViewModels = new List<AddUserViewModel>();
         private WebDbContext _webDbContext;
+        private AuthService _authService;
 
-        public PcShopController(WebDbContext webDbContext)
+        public PcShopController(WebDbContext webDbContext, AuthService authService)
         {
             _webDbContext = webDbContext;
+            _authService = authService;
         }
 
         public ActionResult Index()
         {
-            return View();
+            var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Гость";
+            return View((object)userName);
         }
 
         public ActionResult Users()
         {
             var dbUserPcShop = _webDbContext.UserPcShop.Take(10).ToList();
-
             var viewModels = dbUserPcShop
+
                 .Select(dbUserPcShop => new UserViewModel
                 {
                     Id = dbUserPcShop.Id,
@@ -38,7 +43,7 @@ namespace Net14Web.Controllers
         }
         public ActionResult PCs()
         {
-            var dbPCModel = _webDbContext.PCModel.Include(x=>x.CPU).Take(10).ToList();
+            var dbPCModel = _webDbContext.PCModel.Include(x => x.CPU).Take(10).ToList();
             return View(dbPCModel);
         }
 
@@ -72,6 +77,7 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult EditUserPassword(int Id, string password)
         {
             var user = _webDbContext.UserPcShop.First(x => x.Id == Id);
@@ -88,6 +94,7 @@ namespace Net14Web.Controllers
 
         // POST: PCSHOPController/Delete/5
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteUsers(int id)
         {
@@ -95,7 +102,7 @@ namespace Net14Web.Controllers
             _webDbContext.UserPcShop.Remove(user);
             _webDbContext.SaveChanges();
             return RedirectToAction(nameof(Users));
-            
+
         }
     }
 }
