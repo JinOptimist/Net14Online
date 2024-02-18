@@ -7,6 +7,7 @@ using Net14Web.Services;
 using System.Xml.Linq;
 using Net14Web.DbStuff.Models.TaskTracker;
 using Net14Web.DbStuff.Repositories.TaskTracker;
+using Net14Web.Services.TaskTrackerServices;
 
 namespace Net14Web.Controllers
 {
@@ -15,11 +16,13 @@ namespace Net14Web.Controllers
         public static List<TaskViewModel> taskViewModels = new List<TaskViewModel>();
         private TaskRepository _taskRepository;
         private AuthService _authService;
+        private TaskPermissions _taskPermissions;
 
-        public TaskTrackerController(WebDbContext webDbContext, TaskRepository taskRepository, AuthService authService)
+        public TaskTrackerController(WebDbContext webDbContext, TaskRepository taskRepository, AuthService authService, TaskPermissions taskPermissions)
         {
             _taskRepository = taskRepository;
             _authService = authService;
+            _taskPermissions = taskPermissions;
         }
 
         public IActionResult Index()
@@ -27,7 +30,7 @@ namespace Net14Web.Controllers
             var a  = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Привет";
 
             var dbTasks = _taskRepository.GetTasks();
-            var viewModels = dbTasks.Select(dbTask => 
+            var viewModels = dbTasks.Select(dbTask =>
             {
                 return new TaskViewModel
                 {
@@ -35,7 +38,8 @@ namespace Net14Web.Controllers
                     Name = dbTask.Name,
                     Description = dbTask.Description,
                     Priority = dbTask.Priority,
-                    Owner = dbTask.Owner?.Login ?? ""
+                    Owner = dbTask.Owner?.Login ?? "",
+                    CanDelete = _taskPermissions.CanDeleteTask(dbTask)
                 };
                 }).ToList();
             return View(viewModels);
@@ -104,6 +108,11 @@ namespace Net14Web.Controllers
 
         public IActionResult DeleteTask(int id)
         {
+            var dbTask = _taskRepository.GetTaskById(id);
+            if (!_taskPermissions.CanDeleteTask(dbTask))
+            {
+                throw new Exception("you don't have access");
+            }
             _taskRepository.DeleteTask(id);
             return RedirectToAction("Index");
         }

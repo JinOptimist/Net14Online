@@ -32,7 +32,7 @@ namespace Net14Web.DbStuff.Repositories.TaskTracker
 
         public TaskInfo GetTaskById(int id)
         {
-            return _context.TaskInfos.First(x => x.Id == id);
+            return _entyties.Include(x => x.Owner).First(x => x.Id == id);
         }
 
         public void UpdateTask(AddTaskViewModel taskViewModel)

@@ -17,10 +17,16 @@ namespace Net14Web.Services
 
         public User GetCurrentUser()
         {
+            var id = GetCurrentUserId();
+            return _userRepository.GetById(id);
+        }
+
+        public int GetCurrentUserId()
+        {
             // HttpContext != null
             var idStr = _httpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "id").Value;
             var id = int.Parse(idStr);
-            return _userRepository.GetById(id);
+            return id;
         }
     }
 }

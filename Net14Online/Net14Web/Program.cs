@@ -12,6 +12,7 @@ using Net14Web.Services.DndServices;
 using Net14Web.Services.Movies;
 using Net14Web.Services.RealEstate;
 using Net14Web.Services.Sattelite;
+using Net14Web.Services.TaskTrackerServices;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -82,6 +83,7 @@ builder.Services.AddScoped<RegistrationHelper>();
 builder.Services.AddScoped<CreateFilePathHelper>();
 builder.Services.AddScoped<UploadFileHelper>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<TaskPermissions>();
 
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();

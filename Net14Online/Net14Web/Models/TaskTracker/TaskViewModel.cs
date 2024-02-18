@@ -9,8 +9,8 @@ namespace Net14Web.Models.TaskTracker
         public string? Name { get; set; }
         public string? Description { get; set; }
         public int Priority { get; set; }
-
         public string? Owner { get; set; }
+        public bool CanDelete { get; set; }
         public string GetImageSource()
         {
             switch (Priority)
