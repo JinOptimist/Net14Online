@@ -18,15 +18,11 @@ namespace Net14Web.Controllers.CustomAuthAttributes
         {
             var authUserPermissions = context.HttpContext.RequestServices.GetService<PermissionRepository>();
             var userPermissions = authUserPermissions!.GetCurrentUserPermissions();
-            foreach (var permission in userPermissions )
+            var isValid = userPermissions.Any(permission => _permissionTypes.Any(p => p == permission.Type));
+            if (!isValid)
             {
-                if (_permissionTypes.Any(p => p == permission.Type))
-                {
-                    return;
-                }
+                context.Result = new ForbidResult(AuthController.AUTH_KEY);
             }
-
-            context.Result = new ForbidResult(AuthController.AUTH_KEY);
         }
     }
 }
