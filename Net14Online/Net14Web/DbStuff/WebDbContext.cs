@@ -8,6 +8,7 @@ using Net14Web.DbStuff.Models.GameShop;
 using Net14Web.DbStuff.Models.TaskTracker;
 using Net14Web.DbStuff.Models.InvestPort;
 using Net14Web.DbStuff.Models.PcShop;
+using Net14Web.DbStuff.Models.Sattelite;
 
 namespace Net14Web.DbStuff
 {
@@ -24,6 +25,8 @@ namespace Net14Web.DbStuff
         public DbSet<User> Users { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<Dividend> Dividend { get; set; }
         public DbSet<TaskInfo> TaskInfos { get; set; }
@@ -33,6 +36,8 @@ namespace Net14Web.DbStuff
         public DbSet<SportGame> SportGames { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Player> Players { get; set; }
+
+        public DbSet<ObjectDict> Sattelite { get; set; }
 
         public WebDbContext(DbContextOptions<WebDbContext> options) : base(options) { }
 
@@ -63,11 +68,15 @@ namespace Net14Web.DbStuff
                 .HasMany(movie => movie.Comments)
                 .WithOne(comment => comment.Movie);
 
+            builder.Entity<Role>()
+                .HasMany(role => role.Permissions)
+                .WithMany(permission => permission.Roles);
+
             builder
                 .Entity<Game>()
                 .HasMany(game => game.Comments)
                 .WithOne(comment => comment.CommentedGame)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<LoginBooking>()
                 .HasMany(loginBooking => loginBooking.Searches)
@@ -81,6 +90,11 @@ namespace Net14Web.DbStuff
             builder.Entity<Player>()
                 .HasOne(player => player.Team)
                 .WithMany(team => team.Players);
+
+            builder.Entity<User>()
+                .HasMany(user => user.LoginsBooking)
+                .WithOne(comment => comment.Owner)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

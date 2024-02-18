@@ -1,0 +1,91 @@
+﻿@using Net14Web.Models.Movies
+@using Net14Web.Controllers.MoviesControllers
+@model AdminPanelViewModel
+
+@section Style
+{
+    <link rel="stylesheet" href="~/css/movies.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
+}
+
+<div>
+    <section class="vh-100">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-11">
+                    <div class="card text-black" style="border-radius: 25px;">
+                        <div class="card-body p-md-5">
+                            <br>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="h2">Пользователи: </p>
+                                    @if (Model.CanUpdateUser || Model.CanDeleteUser)
+                                    {
+                                        @foreach (var user in @Model.Users)
+                                        {
+                                            <div>
+                                                @if (Model.CanUpdateUser)
+                                                {
+                                                    @using (Html.BeginForm(nameof(AdminPanelController.EditUser), "AdminPanel", FormMethod.Post))
+                                                    {
+                                                        <input type="hidden" name="id" value="@user.Id" />
+                                                        <p>Login: <input type="text" name="login" value="@user.Login" /></p>
+                                                        <p>Password: <input type="text" name="password" value="@user.Password" /></p>
+                                                        <p>Email: <input type="text" name="email" value="@user.Email" /></p>
+                                                        <p>AvatarUrl: <input type="text" name="avatarUrl" value="@user.AvatarUrl" /></p>
+                                                        <p><input type="submit" value="Обновить" /></p>
+                                                    }
+                                                }
+                                                @if (Model.CanDeleteUser)
+                                                {
+                                                    @using (Html.BeginForm(nameof(AdminPanelController.DeleteUser), "AdminPanel", FormMethod.Post))
+                                                    {
+                                                        <input type="hidden" name="userId" value="@user.Id" />
+                                                        <p> <input type="submit" value="Удалить"></p>
+                                                    }
+                                                }
+                                            </div>
+                                            <hr />
+                                        }
+                                    }
+                                </div>
+                                <div class="col-6">
+                                    <a href="/movies/addmovie">Добавить фильм</a>
+                                    <p class="h2">Фильмы: </p>
+                                    @if (Model.CanUpdateMovie || Model.CanDeleteMovie)
+                                    {
+                                        @foreach (var movie in @Model.Movies)
+                                        {
+                                            <div>
+                                                @if (Model.CanUpdateMovie)
+                                                {
+                                                    @using (Html.BeginForm(nameof(AdminPanelController.EditMovie), "AdminPanel", FormMethod.Post))
+                                                    {
+                                                        <input type="hidden" name="id" value="@movie.Id" />
+                                                        <p>Title: <input type="text" name="title" value="@movie.Title" /></p>
+                                                        <p>Description: <input type="text" name="description" value="@movie.Description" /></p>
+                                                        <p>PosterUrl: <input type="text" name="posterUrl" value="@movie.PosterUrl" /></p>
+                                                        <input type="submit" value="Обновить" />
+                                                    }
+                                                }
+                                                @if (Model.CanDeleteMovie)
+                                                {
+                                                    @using (Html.BeginForm(nameof(AdminPanelController.DeleteMovie), "AdminPanel", FormMethod.Post))
+                                                    {
+                                                        <input type="hidden" name="movieId" value="@movie.Id" />
+                                                        <input type="submit" value="Удалить" />
+                                                    }
+                                                }
+                                            </div>
+                                            <hr />
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

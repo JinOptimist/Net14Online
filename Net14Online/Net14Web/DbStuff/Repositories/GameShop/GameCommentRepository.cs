@@ -10,12 +10,6 @@ namespace Net14Web.DbStuff.Repositories.GameShop
         public GameCommentRepository(WebDbContext context) : base(context)
         {}
 
-        public async Task AddAsync(GameComment entity)
-        {
-            await _context.AddAsync(entity);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task DeleteById(int id)
         {
             var entity = _entyties.First(x => x.Id == id);
@@ -23,19 +17,12 @@ namespace Net14Web.DbStuff.Repositories.GameShop
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<GameComment>> GetAllAsync()
+        public async Task UpdateAsync(int id, GameComment entity)
         {
-            return await _entyties.Where(x => x.Id > 0).ToListAsync();
-        }
+            var comment = _entyties.First(x => x.Id == id);
+            comment.Content = entity.Content;
+            comment.CommentedGame = entity.CommentedGame;
 
-        public async Task<GameComment?>? GetById(int id)
-        {
-            return await _entyties.FirstOrDefaultAsync(x => x.Id == id);
-        }
-
-        public async Task UpdateAsync(GameComment entity)
-        {
-            _context.Update(entity);
             await _context.SaveChangesAsync();
         }
     }
