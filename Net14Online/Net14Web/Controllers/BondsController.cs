@@ -3,28 +3,33 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.Bonds;
+using Net14Web.DbStuff.Repositories;
 using Net14Web.Models.Bonds;
 
 namespace Net14Web.Controllers
 {
     public class BondsController : Controller
     {
-        private WebDbContext _webDbContext;
+        //private WebDbContext _webDbContext;
+        private BondsRepository _bondsRepository;
+        private CouponsRepository _couponsRepository;
 
-        public BondsController(WebDbContext webDbContext)
+        public BondsController(BondsRepository bondsRepository, CouponsRepository couponsRepository)
         {
-            _webDbContext = webDbContext;
+            _bondsRepository = bondsRepository;
+            _couponsRepository = couponsRepository;
         }
         public IActionResult Index()
         {
-            var bdBonds = _webDbContext.Bonds.Take(10).ToList();
+            var bdBonds = _bondsRepository.GetBonds(10);
             var viewModel = bdBonds
                 .Select(x => new BondsViewModel
                 {
                     Id = x.Id,
                     Name = x.Name,
                     Price = x.Price
-                }).ToList();
+                })
+                .ToList();
             return View(viewModel);
         }
 
@@ -47,17 +52,13 @@ namespace Net14Web.Controllers
                 Price = addBondsViewModel.Price,
                 Id = addBondsViewModel.Id
             };
-            _webDbContext.Bonds.Add(bond);
-            _webDbContext.SaveChanges();
-
+            _bondsRepository.Add(bond);
             return RedirectToAction("Index");
         }
 
         public IActionResult Remove(int id)
         {
-            var bond = _webDbContext.Bonds.First(x => x.Id == id);
-            _webDbContext.Bonds.Remove(bond);
-            _webDbContext.SaveChanges();
+            _bondsRepository.Delete(id);
 
             return RedirectToAction("Index");
         }
@@ -65,16 +66,16 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult UpdatePrice(int id, int price)
         {
-            var bond = _webDbContext.Bonds.First(x => x.Id == id);
-            bond.Price = price;
-            _webDbContext.SaveChanges();
+
+            _bondsRepository.UpdatePrice(id, price);
 
             return RedirectToAction("Index");
         }
 
         public IActionResult Coupons()
         {
-            var bdCoupons = _webDbContext.Coupons.Include(x => x.Bond).Take(10).ToList();
+
+            var bdCoupons = _couponsRepository.GetCoupons(10);
             var viewModel = bdCoupons
                 .Select(x => new CouponsViewModel
                 {
@@ -84,12 +85,11 @@ namespace Net14Web.Controllers
                     Bond = x.Bond.Name
                 }).ToList();
             return View(viewModel);
+
         }
         public IActionResult RemoveCoupon(int id)
         {
-            var coupon = _webDbContext.Coupons.First(x => x.Id == id);
-            _webDbContext.Coupons.Remove(coupon);
-            _webDbContext.SaveChanges();
+            _couponsRepository.Delete(id);
 
             return RedirectToAction("Coupons");
         }
@@ -98,8 +98,7 @@ namespace Net14Web.Controllers
         {
             var viewModel = new AddCouponViewModel();
 
-            viewModel.Bonds = _webDbContext
-                 .Bonds
+            viewModel.Bonds = _bondsRepository.GetAll()
                  .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
                  .ToList();
             return View(viewModel);
@@ -107,8 +106,9 @@ namespace Net14Web.Controllers
 
         [HttpPost]
         public IActionResult AddCoupon(AddCouponViewModel addCouponViewModel, int bondsId)
-        {
-            var bond = _webDbContext.Bonds.First(x => x.Id == bondsId);
+        {         
+            
+            var bond =  _bondsRepository.GetAll().First(x => x.Id == bondsId);
             var coupon = new Coupon
             {
                 CouponSize = addCouponViewModel.CouponSize,
@@ -116,10 +116,9 @@ namespace Net14Web.Controllers
 
                 Bond = bond
             };
-            _webDbContext.Coupons.Add(coupon);
-            _webDbContext.SaveChanges();
-
+            _couponsRepository.Add(coupon);
             return RedirectToAction("Coupons");
+
         }
     }
 }

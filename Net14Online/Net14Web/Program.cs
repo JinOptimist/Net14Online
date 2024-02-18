@@ -69,6 +69,8 @@ builder.Services.AddScoped<SearchRepository>();
 builder.Services.AddScoped<LoginRepository>();
 builder.Services.AddScoped<UserRepositoryPcShop>();
 builder.Services.AddScoped<PcsRepositoryPcShop>();
+builder.Services.AddScoped<BondsRepository>();
+builder.Services.AddScoped<CouponsRepository>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
