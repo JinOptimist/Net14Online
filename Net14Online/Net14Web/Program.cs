@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.Controllers;
 using Net14Web.DbStuff;
-using Net14Web.DbStuff.RealEstate;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.DbStuff.Repositories.Booking;
 using Net14Web.DbStuff.Repositories.GameShop;
@@ -14,6 +14,7 @@ using Net14Web.Services.Movies;
 using Net14Web.Services.Movies.Permissions;
 using Net14Web.Services.RealEstate;
 using Net14Web.Services.Sattelite;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,8 +37,6 @@ builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString
 
 builder.Services.AddDbContext<ManagmentCompanyDbContext>(x => x.UseSqlServer(connStringManagmentCompany));
 
-var connectionStringRealEsate = builder.Configuration.GetConnectionString("Net14WebRE");
-builder.Services.AddDbContext<WebRealEstateDbContext>(x => x.UseSqlServer(connectionStringRealEsate));
 //builder.Services.AddScoped<WebDbContext>();
 
 builder.Services.AddScoped<HeroBuilder>(diContainer =>
@@ -75,6 +74,7 @@ builder.Services.AddScoped<SearchRepository>();
 builder.Services.AddScoped<LoginRepository>();
 builder.Services.AddScoped<UserRepositoryPcShop>();
 builder.Services.AddScoped<PcsRepositoryPcShop>();
+builder.Services.AddScoped<SatteliteController>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
@@ -93,9 +93,7 @@ builder.Services.AddScoped<UserPermissions>();
 builder.Services.AddScoped<MoviePermissions>();
 builder.Services.AddScoped<AdminPanelPermissions>();
 
-builder.Services.AddScoped<DeleteUser>();
-builder.Services.AddScoped<UpdateUser>();
-builder.Services.AddScoped<Net14Web.Services.RealEstate.UserBuilder>();
+
 builder.Services.AddScoped<GamesService>();
 builder.Services.AddScoped<GameCommentService>();
 

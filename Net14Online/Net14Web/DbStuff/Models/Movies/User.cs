@@ -1,4 +1,6 @@
-﻿namespace Net14Web.DbStuff.Models.Movies
+﻿using Net14Web.DbStuff.Models.BookingWeb;
+
+namespace Net14Web.DbStuff.Models.Movies
 {
     public class User : BaseModel
     {
@@ -9,5 +11,6 @@
         public virtual List<Role> Roles { get; set; }
         public virtual List<Comment>? Comments { get; set; }
         public virtual List<Hero> MyHeroes { get; set; }
+        public virtual List<LoginBooking> LoginsBooking { get; set; }
     }
 }
