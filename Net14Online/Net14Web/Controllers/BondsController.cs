@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.Bonds;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.Models.Bonds;
@@ -106,9 +104,9 @@ namespace Net14Web.Controllers
 
         [HttpPost]
         public IActionResult AddCoupon(AddCouponViewModel addCouponViewModel, int bondsId)
-        {         
-            
-            var bond =  _bondsRepository.GetAll().First(x => x.Id == bondsId);
+        {
+
+            var bond = _bondsRepository.GetAll().First(x => x.Id == bondsId);
             var coupon = new Coupon
             {
                 CouponSize = addCouponViewModel.CouponSize,

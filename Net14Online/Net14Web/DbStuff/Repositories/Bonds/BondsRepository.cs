@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Net14Web.DbStuff.Models.Bonds;
-using Net14Web.DbStuff.Models.InvestPort;
+﻿using Net14Web.DbStuff.Models.Bonds;
 
 namespace Net14Web.DbStuff.Repositories
 {
@@ -20,6 +18,6 @@ namespace Net14Web.DbStuff.Repositories
             var bond = _context.Bonds.First(x => x.Id == id);
             bond.Price = price;
             _context.SaveChanges();
-        }          
+        }
     }
 }

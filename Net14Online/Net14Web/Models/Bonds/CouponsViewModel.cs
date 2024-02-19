@@ -1,6 +1,4 @@
-﻿using Net14Web.DbStuff.Models.Bonds;
-
-namespace Net14Web.Models.Bonds
+﻿namespace Net14Web.Models.Bonds
 {
     public class CouponsViewModel
     {
