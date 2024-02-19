@@ -5,7 +5,6 @@ namespace Net14Web.DbStuff.Repositories
     public class BondsRepository : BaseRepository<Bond>
     {
         public BondsRepository(WebDbContext context) : base(context) { }
-
         public IEnumerable<Bond> GetBonds(int maxCount = 10)
         {
             return _context

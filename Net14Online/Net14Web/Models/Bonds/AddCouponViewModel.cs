@@ -7,6 +7,5 @@ namespace Net14Web.Models.Bonds
         public List<SelectListItem> Bonds { get; set; }
         public int CouponSize { get; set; }
         public DateTime Date { get; set; }
-
     }
 }

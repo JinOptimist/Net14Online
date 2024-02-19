@@ -72,7 +72,6 @@ namespace Net14Web.Controllers
 
         public IActionResult Coupons()
         {
-
             var bdCoupons = _couponsRepository.GetCoupons(10);
             var viewModel = bdCoupons
                 .Select(x => new CouponsViewModel
@@ -83,7 +82,6 @@ namespace Net14Web.Controllers
                     Bond = x.Bond.Name
                 }).ToList();
             return View(viewModel);
-
         }
         public IActionResult RemoveCoupon(int id)
         {
@@ -105,7 +103,6 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult AddCoupon(AddCouponViewModel addCouponViewModel, int bondsId)
         {
-
             var bond = _bondsRepository.GetAll().First(x => x.Id == bondsId);
             var coupon = new Coupon
             {
@@ -116,7 +113,6 @@ namespace Net14Web.Controllers
             };
             _couponsRepository.Add(coupon);
             return RedirectToAction("Coupons");
-
         }
     }
 }

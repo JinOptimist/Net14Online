@@ -7,6 +7,5 @@
         public int CouponSize { get; set; }
 
         public virtual Bond Bond { get; set; }
-
     }
 }
