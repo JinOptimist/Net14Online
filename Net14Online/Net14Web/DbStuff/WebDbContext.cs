@@ -60,6 +60,11 @@ namespace Net14Web.DbStuff
                 .WithOne(comment => comment.User);
 
             builder.Entity<User>()
+                .HasMany(user => user.TaskInfos)
+                .WithOne(taskInfo => taskInfo.Owner)
+                .OnDelete(DeleteBehavior.NoAction); ;
+
+            builder.Entity<User>()
                 .HasMany(user => user.MyHeroes)
                 .WithOne(comment => comment.Owner)
                 .OnDelete(DeleteBehavior.NoAction);
