@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Net14Web.DbStuff;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Net14Web.DbStuff.Models.PcShop;
 using Net14Web.DbStuff.Repositories.PcShop;
 using Net14Web.Models.PcShop;
+using Net14Web.Services;
 
 namespace Net14Web.Controllers
 {
@@ -10,6 +11,7 @@ namespace Net14Web.Controllers
     {
         private UserRepositoryPcShop _userRepositoryPcShop;
         private PcsRepositoryPcShop _pcsRepositoryPcShop;
+        private AuthService _authService;
 
         public PcShopController(UserRepositoryPcShop userRepositoryPcShop, PcsRepositoryPcShop pcsRepositoryPcShop)
         {
@@ -19,7 +21,8 @@ namespace Net14Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Гость";
+            return View((object)userName);
         }
 
         public ActionResult Users()
@@ -72,6 +75,7 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult EditUserPassword(int id, string password)
         {
             _userRepositoryPcShop.EditUserPassword(id, password);
@@ -86,6 +90,7 @@ namespace Net14Web.Controllers
 
         // POST: PCSHOPController/Delete/5
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteUsers(int id)
         {
