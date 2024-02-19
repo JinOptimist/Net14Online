@@ -1,0 +1,23 @@
+@model RealEstateNet14Web.Models.Auth.AuthViewModel
+
+<div>
+    <form method="post">
+        <div>
+            @Html.TextBoxFor(x => x.UserName)
+            @Html.ValidationMessageFor(x => x.UserName)
+        </div>
+        <div>
+            @Html.TextBoxFor(x => x.Password, new { @type = "password" })
+            @Html.ValidationMessageFor(x => x.Password)
+        </div>
+        <div>
+            <input type="submit" value="Login" />
+        </div>
+    </form>
+    <div>
+         Если вы не зарегистрированны,зарегистрируйтесь!
+            <div>
+                <a href="/RealEstate/AddUser">Регистрация</a>
+            </div>
+    </div>
+</div>
