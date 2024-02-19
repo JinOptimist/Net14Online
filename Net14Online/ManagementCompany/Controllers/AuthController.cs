@@ -11,8 +11,6 @@ namespace ManagementCompany.Controllers
     {
         private UserRepository _userRepository;
 
-        public const string AUTH_KEY = "Smile";
-
         public const string AUTH_KEY_MC = "McCompany";
 
         public AuthController(UserRepository mcUserRepository)
