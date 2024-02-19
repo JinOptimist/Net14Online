@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddAuthentication(AuthController.AUTH_KEY)
-    .AddCookie(AuthController.AUTH_KEY, option =>
+    .AddAuthentication(AuthController.AUTH_KEY_MC)
+    .AddCookie(AuthController.AUTH_KEY_MC, option =>
     {
         option.AccessDeniedPath = "/auth/deny";
         option.LoginPath = "/Auth/Login";
