@@ -1,6 +1,4 @@
-﻿using Net14Web.DbStuff.ManagmentCompany.Models;
-using Net14Web.DbStuff.Models;
-using Net14Web.DbStuff.Models.Movies;
+﻿ sing Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.DbStuff.Repositories.Movies;
 
@@ -22,11 +20,6 @@ namespace Net14Web.DbStuff
                 SeedRole(serviceScope.ServiceProvider);
                 SeedRolePermissions(serviceScope.ServiceProvider);
                 SeedAddPermissionToRoles(serviceScope.ServiceProvider);
-
-                // Seed ManagmentCompany database
-                SeedMcUser(serviceScope.ServiceProvider);
-                SeedStatus(serviceScope.ServiceProvider);
-                SeedPermission(serviceScope.ServiceProvider);
             }
         }
 
@@ -121,38 +114,6 @@ namespace Net14Web.DbStuff
                 };
                 weaponRepository.Add(sword);
             }
-        }
-
-        private static MemberStatus SeedStatus(IServiceProvider di)
-        {
-            var statusRepository = di.GetService<MemberStatusRepository>();
-
-            var status = new MemberStatus();
-
-            if (statusRepository.Any() == false)
-            {
-                status.Status = "Active";
-
-                statusRepository.Add(status);
-            }
-
-            return status;
-        }
-
-        private static MemberPermission SeedPermission(IServiceProvider di)
-        {
-            var permissionRepository = di.GetService<MemberPermissionRepository>();
-
-            var permission = new MemberPermission();
-
-            if (permissionRepository.Any() == false)
-            {
-                permission.Permission = "SuperAdmin";
-
-                permissionRepository.Add(permission);
-            }
-
-            return permission;
         }
 
         private static void SeedRole(IServiceProvider di)
@@ -252,23 +213,6 @@ namespace Net14Web.DbStuff
             {
                 var permission = permissionRepository.GetPermissionByType(aPerm);
                 roleRepository.AddPermissionToRole(permission, role);
-            }
-        }
-
-        private static void SeedMcUser(IServiceProvider di)
-        {
-            var userRepository = di.GetService<McUserRepository>();
-            if (userRepository.Any() == false)
-            {
-                var admin = new ManagmentCompany.Models.User
-                {
-                    NickName = "Admin",
-                    Email = "Admin",
-                    Password = "Admin",
-                    Status = SeedStatus(di),
-                    MemberPermission = SeedPermission(di)
-                };
-                userRepository.Add(admin);
             }
         }
     }
