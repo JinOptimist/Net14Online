@@ -73,3 +73,32 @@
     max-width: 100px;
     max-height: 100px;
 }
+
+.hero-content .heroes .hero.short {
+    height: 20px;
+    justify-content: center;
+    min-height: auto;
+}
+
+.hero.short .details {
+    display: none;
+}
+
+.hero.full .just-name {
+    display: none;
+}
+
+.hero .details {
+    display: flex;
+    justify-content: end;
+}
+
+.hero .just-name,
+.hero .hero-name{
+    cursor: pointer;
+}
+
+    .hero .just-name:hover,
+    .hero .hero-name:hover {
+        background-color: #ededed;
+    }

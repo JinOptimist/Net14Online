@@ -5,7 +5,7 @@
     @RenderSection("Script", false)
 </head>
 <body>
-    <div>
+    <div class="header">
         @if ((!User?.Identity?.IsAuthenticated) ?? true)
         {
             <a href="/auth/login">Login</a>
@@ -32,7 +32,7 @@
     <div class="content">
         @RenderBody()
     </div>
-    <div>
+    <div class="footer">
         Здесь у нас потом будет фууутер
     </div>
 </body>
