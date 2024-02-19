@@ -16,10 +16,15 @@ namespace Net14Web.DbStuff
             {
                 SeedHeroes(serviceScope.ServiceProvider);
                 SeedWeapon(serviceScope.ServiceProvider);
-                SeedUser(serviceScope.ServiceProvider);
                 SeedRole(serviceScope.ServiceProvider);
                 SeedRolePermissions(serviceScope.ServiceProvider);
                 SeedAddPermissionToRoles(serviceScope.ServiceProvider);
+                SeedUser(serviceScope.ServiceProvider);
+
+                // Seed ManagmentCompany database
+                SeedMcUser(serviceScope.ServiceProvider);
+                SeedStatus(serviceScope.ServiceProvider);
+                SeedPermission(serviceScope.ServiceProvider);
             }
         }
 

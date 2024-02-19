@@ -437,7 +437,6 @@ namespace Net14Web.Migrations
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.PcShop.PCModel", b =>
-            modelBuilder.Entity("Net14Web.DbStuff.Models.Sattelite.ObjectDict", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -451,23 +450,16 @@ namespace Net14Web.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IconURL")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CPUId");
 
                     b.ToTable("PCModel");
-                    b.ToTable("Sattelite");
-                }));
+                });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.PcShop.UsersPcShop", b =>
                 {
@@ -553,6 +545,31 @@ namespace Net14Web.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Sattelite.ObjectDict", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("IconURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sattelite");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -569,10 +586,15 @@ namespace Net14Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OwnerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("TaskInfos");
                 });
@@ -756,6 +778,16 @@ namespace Net14Web.Migrations
                     b.Navigation("CPU");
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
+                        .WithMany("TaskInfos")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("PermissionRole", b =>
                 {
                     b.HasOne("Net14Web.DbStuff.Models.Permission", null)
@@ -828,6 +860,8 @@ namespace Net14Web.Migrations
                     b.Navigation("LoginsBooking");
 
                     b.Navigation("MyHeroes");
+
+                    b.Navigation("TaskInfos");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Weapon", b =>

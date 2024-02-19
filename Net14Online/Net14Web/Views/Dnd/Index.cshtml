@@ -7,9 +7,15 @@
 
 @section Style
 {
-    <link href="~/css/dnd.css" rel="stylesheet" />
+    <link href="~/css/dnd.css?v=5" rel="stylesheet" />
     <link href="~/css/dnd2.css" rel="stylesheet" />
 }
+
+@section Script{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/dnd/index.js"></script>
+}
+
 <div class="hero-content">
     <div>Привет @Model.UserName</div>
     <div>
@@ -28,46 +34,54 @@
     <div class="heroes">
         @foreach (var hero in Model.Heroes)
         {
-            <div class="hero">
-                @if (hero.CanDelete)
-                {
-                    <div class="remove-block">
-                        <a href="/dnd/remove?id=@hero.Id" class="remove-link">X</a>
-                    </div>
-                }
-                <div class="name-and-coin-block">
-                    <div class="name-block">
-                        <div class="hero-title">
-                            <a href="/dnd/profile?heroId=@hero.Id">ГЕРОЙ</a>
-                        </div>
-                        <div class="avatar-block">
-                            <img src="@hero.AvatarUrl" />
-                        </div>
-                        <div class="hero-name">
-                            @hero.Name созданный @hero.OwnerName (@hero.Race)
-                        </div>
-                        <div class="weapon">
-                            Любимое оружие: @hero.FavWeaponName
-                        </div>
-                    </div>
-                    <div class="coin-block">
-                        <div>
-                            @hero.Coins <img src="/images/dnd/coin.png" class="icon" />
-                        </div>
-                        <div class="new-coint-block">
-                            <form action="/dnd/updateCoin" method="post">
-                                <input type="hidden" name="heroId" value="@hero.Id" />
-                                <div>
-                                    <input type="number" name="coin" />
-                                </div>
-                                <div>
-                                    <input type="submit" value="Upd" />
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+            <div class="hero short">
+                <div class="just-name">
+                    @hero.Name
                 </div>
-                <div class="inventory-block">
+                <div class="details">
+                    @if (hero.CanDelete)
+                    {
+                        <div class="remove-block">
+                            <a href="/dnd/remove?id=@hero.Id" class="remove-link">X</a>
+                        </div>
+                    }
+                    <div class="name-and-coin-block">
+                        <div class="name-block">
+                            <div class="hero-title">
+                                <a href="/dnd/profile?heroId=@hero.Id">ГЕРОЙ</a>
+                            </div>
+                            <div class="avatar-block">
+                                <img src="@hero.AvatarUrl" />
+                            </div>
+                            <div class="hero-name">
+                                @hero.Name
+                            </div>
+                            <div>
+                                созданный @hero.OwnerName (<span class="race">@hero.Race</span>)
+                            </div>
+                            <div class="weapon">
+                                Любимое оружие: @hero.FavWeaponName
+                            </div>
+                        </div>
+                        <div class="coin-block">
+                            <div>
+                                @hero.Coins <img src="/images/dnd/coin.png" class="icon" />
+                            </div>
+                            <div class="new-coint-block">
+                                <form action="/dnd/updateCoin" method="post">
+                                    <input type="hidden" name="heroId" value="@hero.Id" />
+                                    <div>
+                                        <input type="number" name="coin" />
+                                    </div>
+                                    <div>
+                                        <input type="submit" value="Upd" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inventory-block">
+                    </div>
                 </div>
             </div>
         }
