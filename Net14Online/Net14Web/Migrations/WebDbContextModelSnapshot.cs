@@ -437,7 +437,6 @@ namespace Net14Web.Migrations
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.PcShop.PCModel", b =>
-            modelBuilder.Entity("Net14Web.DbStuff.Models.Sattelite.ObjectDict", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -451,23 +450,16 @@ namespace Net14Web.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IconURL")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CPUId");
 
                     b.ToTable("PCModel");
-                    b.ToTable("Sattelite");
-                }));
+                });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.PcShop.UsersPcShop", b =>
                 {
@@ -551,6 +543,31 @@ namespace Net14Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Sattelite.ObjectDict", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("IconURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sattelite");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>

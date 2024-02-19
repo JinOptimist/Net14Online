@@ -63,7 +63,7 @@ namespace Net14Web.Controllers.MoviesControllers
             };
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                var userId = _authService.GetCurrentUserId();
+                var userId = _authService.GetCurrentUserId().Value;
                 indexViewModel.UserId = userId;
                 indexViewModel.CanAccessToAdminPanel = _adminPanelPermissions.CanAccessToAdminPanel();
             }
