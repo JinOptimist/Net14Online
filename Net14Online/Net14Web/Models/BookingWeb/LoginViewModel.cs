@@ -16,5 +16,7 @@ namespace Net14Web.Models.BookingWeb
         [Required]
         [MinLength(8, ErrorMessage = "The password is too short!")]
         public string Password { get; set; }
+
+        public string? Owner { get; set; }
     }
 }

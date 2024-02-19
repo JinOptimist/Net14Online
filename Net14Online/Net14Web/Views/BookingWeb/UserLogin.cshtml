@@ -11,14 +11,20 @@
 <button><a href="Login">Login</a></button>
 @foreach(var user in Model)
 {
+    @if (user.CanDelete)
+    {
     <a href="Remove?id=@user.Id">Remove</a>
+    }
+    <div>
+        Owner: @user.Owner
+    </div>
 <div>
     Your Name: @user.Name
 </div>
 <div>
     Your E-mail: @user.Email
     <form action="UpdateEmail" method="post">
-        <input type="hidden" name="id" value="@user.Id" />
+        <input type="hidden" name="loginId" value="@user.Id" />
         <input type="email" name="email" />
         <input type="submit" value="update" />
     </form>
