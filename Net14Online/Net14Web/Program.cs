@@ -7,12 +7,14 @@ using Net14Web.DbStuff.Repositories.Booking;
 using Net14Web.DbStuff.Repositories.GameShop;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.DbStuff.Repositories.PcShop;
+using Net14Web.DbStuff.Repositories.TaskTracker;
 using Net14Web.Services;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
 using Net14Web.Services.Movies;
 using Net14Web.Services.Movies.Permissions;
 using Net14Web.Services.Sattelite;
+using Net14Web.Services.TaskTrackerServices;
 
 
 
@@ -68,6 +70,7 @@ builder.Services.AddScoped<PermissionRepository>();
 builder.Services.AddScoped<GameCommentRepository>();
 builder.Services.AddScoped<GameShopRepository>();
 builder.Services.AddScoped<StockRepository>();
+builder.Services.AddScoped<TaskRepository>();
 builder.Services.AddScoped<DividendRepository>();
 builder.Services.AddScoped<SearchRepository>();
 builder.Services.AddScoped<LoginRepository>();
@@ -81,6 +84,7 @@ builder.Services.AddScoped<MovieBuilder>();
 builder.Services.AddScoped<Net14Web.Services.Movies.UserBuilder>();
 builder.Services.AddScoped<UserEditHelper>();
 builder.Services.AddScoped<MovieEditHelper>();
+builder.Services.AddScoped<TaskPermissions>();
 builder.Services.AddScoped<ObjectBuilder>();
 builder.Services.AddScoped<RegistrationHelper>();
 builder.Services.AddScoped<CreateFilePathHelper>();
