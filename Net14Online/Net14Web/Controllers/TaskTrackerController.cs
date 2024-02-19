@@ -6,6 +6,9 @@ using Net14Web.Models.TaskTracker;
 using Net14Web.Services;
 using System.Xml.Linq;
 using Net14Web.DbStuff.Models.TaskTracker;
+using Net14Web.DbStuff.Repositories;
+using Net14Web.DbStuff.Repositories.TaskTracker;
+using Net14Web.Services.TaskTrackerServices;
 
 namespace Net14Web.Controllers
 {
@@ -13,22 +16,33 @@ namespace Net14Web.Controllers
     {
         public static List<TaskViewModel> taskViewModels = new List<TaskViewModel>();
         private WebDbContext _webDbContext;
+        private TaskRepository _taskRepository;
+        private AuthService _authService;
+        private TaskPermissions _taskPermissions;
 
-        public TaskTrackerController(WebDbContext webDbContext)
+        public TaskTrackerController(WebDbContext webDbContext, TaskRepository taskRepository, AuthService authService, TaskPermissions taskPermissions)
         {
             _webDbContext = webDbContext;
+            _taskRepository = taskRepository;
+            _authService = authService;
+            _taskPermissions = taskPermissions;
         }
 
         public IActionResult Index()
         {
-            var dbTasks = _webDbContext.TaskInfos.Take(30).ToList();
-            var viewModels = dbTasks.Select(dbTask => new TaskViewModel
+            var a = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Привет";
+            var dbTasks = _taskRepository.GetTasks();
+            var viewModels = dbTasks.Select(dbTask =>
             {
-                Id = dbTask.Id,
-                Name = dbTask.Name,
-                Description = dbTask.Description,
-                Priority = dbTask.Priority,
-
+                return new TaskViewModel
+                {
+                    Id = dbTask.Id,
+                    Name = dbTask.Name,
+                    Description = dbTask.Description,
+                    Priority = dbTask.Priority,
+                    Owner = dbTask.Owner?.Login ?? "",
+                    CanDelete = _taskPermissions.CanDeleteTask(dbTask)
+                };
             }).ToList();
             return View(viewModels);
         }
@@ -56,11 +70,11 @@ namespace Net14Web.Controllers
             {
                 Name = taskViewModel.Name,
                 Description = taskViewModel.Description,
-                Priority = taskViewModel.Priority
+                Priority = taskViewModel.Priority,
+                Owner = _authService.GetCurrentUser()
             };
 
-            _webDbContext.TaskInfos.Add(task);
-            _webDbContext.SaveChanges();
+            _taskRepository.AddTask(task);
 
             return RedirectToAction("Index");
         }
@@ -68,7 +82,7 @@ namespace Net14Web.Controllers
         [HttpGet]
         public IActionResult UpdateTask(int id)
         {
-            var dbTask = _webDbContext.TaskInfos.First(x => x.Id == id);
+            var dbTask = _taskRepository.GetTaskById(id);
             var viewModel = new AddTaskViewModel
             {
                 Id = dbTask.Id,
@@ -90,20 +104,19 @@ namespace Net14Web.Controllers
                 return View(taskViewModel);
             }
 
-            var task = _webDbContext.TaskInfos.First(x => x.Id == taskViewModel.Id);
-            task.Name = taskViewModel.Name;
-            task.Description = taskViewModel.Description;
-            task.Priority = taskViewModel.Priority;
-            _webDbContext.SaveChanges();
+            _taskRepository.UpdateTask(taskViewModel);
 
             return RedirectToAction("Index");
         }
 
         public IActionResult DeleteTask(int id)
         {
-            var task = _webDbContext.TaskInfos.First(x => x.Id == id);
-            _webDbContext.TaskInfos.Remove(task);
-            _webDbContext.SaveChanges();
+            var dbTask = _taskRepository.GetTaskById(id);
+            if (!_taskPermissions.CanDeleteTask(dbTask))
+            {
+                throw new Exception("you don't have access");
+            }
+            _taskRepository.DeleteTask(id);
 
             return RedirectToAction("Index");
         }
