@@ -1,0 +1,52 @@
+﻿@using ManagementCompany.DbStuff.ManagmentCompany.Models.Enums
+@using ManagementCompany.Models.ManagmentCompany
+@model BaseViewModel
+
+@{
+    Layout = "_LayoutManagmentCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagmentCompany/ManagmentCompany.css" rel="stylesheet" />
+    <link href="~/css/ManagmentCompany/Styles.css" rel="stylesheet" />
+}
+
+<main>
+    <div>
+        <div class="dropdown">
+            <button class="dropbtn">
+                <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+            </button>
+            <div class="dropdown-content">
+                @if ((!User?.Identity?.IsAuthenticated) ?? true)
+                {
+                    foreach (var myPage in @Model.GuestPages)
+                    {
+                        <a href="/ManagmentCompany/@myPage.Key">@myPage.Value</a>
+                    }
+                    <a class="login" href="/auth/McLogin">Войти</a>
+                    <a class="reg" href="/ManagmentCompany/Registration">Зарегистрироваться</a>
+                }
+                else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
+                .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
+                {
+                    foreach (var myPage in @Model.UserPages)
+                    {
+                        <a href="/ManagmentCompany/@myPage.Key">@myPage.Value</a>
+                    }
+                    <a class="login" href="/auth/McLogout">Выйти</a>
+                }
+                else
+                {
+                    foreach (var myPage in @Model.AdminPages)
+                    {
+                        <a href="/ManagmentCompany/@myPage.Key">@myPage.Value</a>
+                    }
+                    <a class="login" href="/auth/McLogout">Выйти</a>
+                }
+            </div>
+        </div>
+        Здесь будут контакты
+    </div>
+</main>

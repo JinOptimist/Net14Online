@@ -4,7 +4,6 @@ using Net14Web.DbStuff;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.DbStuff.Repositories.Booking;
 using Net14Web.DbStuff.Repositories.GameShop;
-using Net14Web.DbStuff.Repositories.ManagmentCompany;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.DbStuff.Repositories.PcShop;
 using Net14Web.Services;
@@ -12,9 +11,6 @@ using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
 using Net14Web.Services.Movies;
 using Net14Web.Services.Sattelite;
-
-var builder = WebApplication.CreateBuilder(args);
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,11 +26,8 @@ builder.Services
 builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("Net14WebDb");
-var connStringManagmentCompany = builder.Configuration.GetConnectionString("ManagmentCompany");
 
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
-
-builder.Services.AddDbContext<ManagmentCompanyDbContext>(x => x.UseSqlServer(connStringManagmentCompany));
 
 //builder.Services.AddScoped<WebDbContext>();
 
@@ -49,13 +42,6 @@ builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
 // Repositories
-builder.Services.AddScoped<TaskStatusRepository>();
-builder.Services.AddScoped<CompanyRepository>();
-builder.Services.AddScoped<ProjectRepository>();
-builder.Services.AddScoped<McUserRepository>();
-builder.Services.AddScoped<UserTaskRepository>();
-builder.Services.AddScoped<MemberPermissionRepository>();
-builder.Services.AddScoped<MemberStatusRepository>(); 
 builder.Services.AddScoped<GameShopRepository>();
 builder.Services.AddScoped<HeroRepository>();
 builder.Services.AddScoped<MoviesRepository>();

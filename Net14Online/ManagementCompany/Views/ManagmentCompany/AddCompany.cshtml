@@ -1,0 +1,74 @@
+﻿@using ManagementCompany.DbStuff.ManagmentCompany.Models
+@using ManagementCompany.DbStuff.ManagmentCompany.Models.Enums
+@using ManagementCompany.Models.ManagmentCompany
+@model CompanyViewModel
+
+@{
+    Layout = "_LayoutManagmentCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagmentCompany/ManagmentCompany.css" rel="stylesheet" />
+    <link href="~/css/ManagmentCompany/Styles.css" rel="stylesheet" />
+}
+
+<div class="regContainer">
+    @if ((!User?.Identity?.IsAuthenticated) ?? true)
+    {
+        foreach (var myPage in @Model.GuestPages)
+        {
+            <a href="/ManagmentCompany/@myPage.Key">@myPage.Value</a>
+        }
+        <a class="login" href="/auth/McLogin">Войти</a>
+        <a class="reg" href="/ManagmentCompany/Registration">Зарегистрироваться</a>
+    }
+    else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
+    .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
+    {
+        foreach (var myPage in @Model.UserPages)
+        {
+            <a href="/ManagmentCompany/@myPage.Key">@myPage.Value</a>
+        }
+        <a class="login" href="/auth/McLogout">Выйти</a>
+    }
+    else
+    {
+        foreach (var myPage in @Model.AdminPages)
+        {
+            <a href="/ManagmentCompany/@myPage.Key">@myPage.Value</a>
+        }
+        <a class="login" href="/auth/McLogout">Выйти</a>
+    }
+    <h2>Панель администратора</h2>
+    <div>
+        <div class="add-company">
+            <h2>Добавить компанию</h2>
+            <form method="post" action="/ManagmentCompany/AddCompany">
+                <label for="name"> Название компании:</label>
+                @Html.TextBoxFor(x => x.CompanyName)
+                @Html.ValidationMessageFor(x => x.CompanyName)
+
+                <label for="shortName">Сокращенное название:</label>
+                @Html.TextBoxFor(x => x.CompanyShortName)
+                @Html.ValidationMessageFor(x => x.CompanyShortName)
+
+                <label for="email">Электронная почта:</label>
+                @Html.TextBoxFor(x => x.CompanyEmail)
+                @Html.ValidationMessageFor(x => x.CompanyEmail)
+
+                <label for="adress">Адрес:</label>
+                @Html.TextBoxFor(x => x.CompanyAdress)
+                @Html.ValidationMessageFor(x => x.CompanyAdress)
+
+                <label for="phoneNumber">Номер телефона:</label>
+                @Html.TextBoxFor(x => x.CompanyPhoneNumber)
+                @Html.ValidationMessageFor(x => x.CompanyPhoneNumber)
+
+                <input class="submit" type="submit" value="Добавить компанию" />
+            </form>
+        </div>
+    </div>
+</div>
+
+
