@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.Controllers;
 using Net14Web.DbStuff;
@@ -10,6 +11,7 @@ using Net14Web.Services;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
 using Net14Web.Services.Movies;
+using Net14Web.Services.Movies.Permissions;
 using Net14Web.Services.Sattelite;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,6 +51,8 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<CommentRepository>();
 builder.Services.AddScoped<WeaponRepository>();
 builder.Services.AddScoped<HeroRepository>();
+builder.Services.AddScoped<RoleRepository>();
+builder.Services.AddScoped<PermissionRepository>();
 
 builder.Services.AddScoped<GameCommentRepository>();
 builder.Services.AddScoped<GameShopRepository>();
@@ -58,10 +62,10 @@ builder.Services.AddScoped<SearchRepository>();
 builder.Services.AddScoped<LoginRepository>();
 builder.Services.AddScoped<UserRepositoryPcShop>();
 builder.Services.AddScoped<PcsRepositoryPcShop>();
+builder.Services.AddScoped<SatteliteController>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
-builder.Services.AddScoped<ErrorBuilder>();
 builder.Services.AddScoped<MovieBuilder>();
 builder.Services.AddScoped<UserBuilder>();
 builder.Services.AddScoped<UserEditHelper>();
@@ -72,6 +76,10 @@ builder.Services.AddScoped<CreateFilePathHelper>();
 builder.Services.AddScoped<UploadFileHelper>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<HeroPermissions>();
+builder.Services.AddScoped<CommentPermissions>();
+builder.Services.AddScoped<UserPermissions>();
+builder.Services.AddScoped<MoviePermissions>();
+builder.Services.AddScoped<AdminPanelPermissions>();
 
 
 builder.Services.AddScoped<GamesService>();

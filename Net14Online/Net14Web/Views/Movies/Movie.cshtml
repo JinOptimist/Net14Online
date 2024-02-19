@@ -27,9 +27,10 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        @if ((User?.Identity?.IsAuthenticated) ?? false)
+                                        @if ((User?.Identity?.IsAuthenticated ?? false) && Model.CanAddCommentToMovie)
                                         {
-                                            <form class="col-12" action="/Movies/AddCommentOnMovie" method="post">
+                                            @using (Html.BeginForm(nameof(Net14Web.Controllers.MoviesControllers.MoviesController.AddCommentOnMovie), "Movies", FormMethod.Post, new { @class = "col-12" }))
+                                            {
                                                 <div class="input-group">
                                                     <input type="hidden" name="movieId" value="@Model.Id" />
                                                     <input type="text" class="form-control" name="description" placeholder="Комментарий" aria-describedby="input-group-button-right">
@@ -39,12 +40,12 @@
                                                     </button>
                                                 </div>
                                                 <br>
-                                            </form>
+                                            }
                                         }
                                         @foreach (var comment in @Model.Comments)
                                         {
                                             <div>
-                                                <a class="comment-a rounded" href="/movies/user?userId=@comment.User.UserId">
+                                                <a class="comment-a rounded" href="/movies/user/@comment.User.UserId">
                                                     <div class="row">
                                                         <div class="col-md-2">
                                                             <img src="@comment.User.AvatarUrl" class="rounded comment-image">
@@ -55,9 +56,9 @@
                                                                 <p class="card-text">
                                                                     @comment.Description
                                                                 </p>
-                                                                @if ((User?.Identity?.IsAuthenticated) ?? false)
+                                                                @if ((User?.Identity?.IsAuthenticated ?? false) && comment.CanRemoveCommentFromMovie)
                                                                 {
-                                                                    <a class="btn btn-link" href="/movies/RemoveCommentOnMovie?commentId=@comment.Id">Удалить</a>
+                                                                    <a class="btn btn-link" href="/movies/deleteCommentOnMovie?commentId=@comment.Id">Удалить</a>
                                                                 }
                                                             </div>
                                                         </div>

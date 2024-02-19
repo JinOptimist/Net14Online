@@ -391,9 +391,6 @@ namespace Net14Web.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -440,6 +437,7 @@ namespace Net14Web.Migrations
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.PcShop.PCModel", b =>
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Sattelite.ObjectDict", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -453,16 +451,23 @@ namespace Net14Web.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("IconURL")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CPUId");
 
                     b.ToTable("PCModel");
-                });
+                    b.ToTable("Sattelite");
+                }));
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.PcShop.UsersPcShop", b =>
                 {
@@ -493,6 +498,22 @@ namespace Net14Web.Migrations
                     b.ToTable("UserPcShop");
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Permission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permissions");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.RetroUser", b =>
                 {
                     b.Property<int>("Id")
@@ -513,6 +534,23 @@ namespace Net14Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RetroUsers");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>
@@ -557,6 +595,36 @@ namespace Net14Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Weapons");
+                });
+
+            modelBuilder.Entity("PermissionRole", b =>
+                {
+                    b.Property<int>("PermissionsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RolesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PermissionsId", "RolesId");
+
+                    b.HasIndex("RolesId");
+
+                    b.ToTable("PermissionRole");
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.Property<int>("RolesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RolesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("RoleUser");
                 });
 
             modelBuilder.Entity("SportGameTeam", b =>
@@ -626,7 +694,7 @@ namespace Net14Web.Migrations
                     b.HasOne("Net14Web.DbStuff.Models.GameShop.Game", "CommentedGame")
                         .WithMany("Comments")
                         .HasForeignKey("CommentedGameId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CommentedGame");
@@ -686,6 +754,36 @@ namespace Net14Web.Migrations
                         .HasForeignKey("CPUId");
 
                     b.Navigation("CPU");
+                });
+
+            modelBuilder.Entity("PermissionRole", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Permission", null)
+                        .WithMany()
+                        .HasForeignKey("PermissionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Net14Web.DbStuff.Models.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SportGameTeam", b =>
