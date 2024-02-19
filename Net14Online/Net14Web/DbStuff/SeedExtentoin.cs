@@ -20,11 +20,6 @@ namespace Net14Web.DbStuff
                 SeedRolePermissions(serviceScope.ServiceProvider);
                 SeedAddPermissionToRoles(serviceScope.ServiceProvider);
                 SeedUser(serviceScope.ServiceProvider);
-
-                // Seed ManagmentCompany database
-                SeedMcUser(serviceScope.ServiceProvider);
-                SeedStatus(serviceScope.ServiceProvider);
-                SeedPermission(serviceScope.ServiceProvider);
             }
         }
 
