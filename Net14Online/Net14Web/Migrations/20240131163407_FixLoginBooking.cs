@@ -26,7 +26,7 @@ namespace Net14Web.Migrations
                 defaultValue: "");
 
             migrationBuilder.CreateTable(
-                name: "LoginsBooking",
+                name: "ClientsBooking",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -51,7 +51,7 @@ namespace Net14Web.Migrations
                 name: "FK_Searches_LoginsBooking_LoginBookingId",
                 table: "Searches",
                 column: "LoginBookingId",
-                principalTable: "LoginsBooking",
+                principalTable: "ClientsBooking",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -64,7 +64,7 @@ namespace Net14Web.Migrations
                 table: "Searches");
 
             migrationBuilder.DropTable(
-                name: "LoginsBooking");
+                name: "ClientsBooking");
 
             migrationBuilder.DropTable(
                 name: "Players");

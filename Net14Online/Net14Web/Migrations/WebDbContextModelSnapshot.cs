@@ -37,7 +37,7 @@ namespace Net14Web.Migrations
                     b.ToTable("HeroWeapon");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,7 +64,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("LoginsBooking");
+                    b.ToTable("ClientsBooking");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
@@ -85,16 +85,21 @@ namespace Net14Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ClientBookingId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LoginBookingId")
+                    b.Property<int?>("OwnerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LoginBookingId");
+                    b.HasIndex("ClientBookingId");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Searches");
                 });
@@ -589,25 +594,31 @@ namespace Net14Web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", b =>
                 {
                     b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
-                        .WithMany("LoginsBooking")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .WithMany("ClientsBooking")
+                        .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
                 {
-                    b.HasOne("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", "LoginBooking")
+                    b.HasOne("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", "ClientBooking")
                         .WithMany("Searches")
-                        .HasForeignKey("LoginBookingId")
+                        .HasForeignKey("ClientBookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("LoginBooking");
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
+                        .WithMany("Searches")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("ClientBooking");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Dividend", b =>
@@ -703,7 +714,7 @@ namespace Net14Web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", b =>
                 {
                     b.Navigation("Searches");
                 });
@@ -725,11 +736,13 @@ namespace Net14Web.Migrations
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.User", b =>
                 {
+                    b.Navigation("ClientsBooking");
+
                     b.Navigation("Comments");
 
-                    b.Navigation("LoginsBooking");
-
                     b.Navigation("MyHeroes");
+
+                    b.Navigation("Searches");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Weapon", b =>

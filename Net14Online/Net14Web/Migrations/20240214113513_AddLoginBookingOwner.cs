@@ -13,19 +13,19 @@ namespace Net14Web.Migrations
 
             migrationBuilder.AddColumn<int>(
                 name: "OwnerId",
-                table: "LoginsBooking",
+                table: "ClientsBooking",
                 type: "int",
                 nullable: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_LoginsBooking_OwnerId",
-                table: "LoginsBooking",
+                table: "ClientsBooking",
                 column: "OwnerId");
 
 
             migrationBuilder.AddForeignKey(
                 name: "FK_LoginsBooking_Users_OwnerId",
-                table: "LoginsBooking",
+                table: "ClientsBooking",
                 column: "OwnerId",
                 principalTable: "Users",
                 principalColumn: "Id");
@@ -37,15 +37,15 @@ namespace Net14Web.Migrations
 
             migrationBuilder.DropForeignKey(
                 name: "FK_LoginsBooking_Users_OwnerId",
-                table: "LoginsBooking");
+                table: "ClientsBooking");
 
             migrationBuilder.DropIndex(
                 name: "IX_LoginsBooking_OwnerId",
-                table: "LoginsBooking");
+                table: "ClientsBooking");
 
             migrationBuilder.DropColumn(
                 name: "OwnerId",
-                table: "LoginsBooking");
+                table: "ClientsBooking");
         }
     }
 }

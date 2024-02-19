@@ -28,7 +28,7 @@ namespace Net14Web.DbStuff
         public DbSet<Dividend> Dividend { get; set; }
         public DbSet<TaskInfo> TaskInfos { get; set; }
         public DbSet<RetroUser> RetroUsers { get; set; }
-        public DbSet<LoginBooking> LoginsBooking { get; set; }
+        public DbSet<ClientBooking> ClientsBooking { get; set; }
         // LifeScore
         public DbSet<SportGame> SportGames { get; set; }
         public DbSet<Team> Teams { get; set; }
@@ -67,11 +67,11 @@ namespace Net14Web.DbStuff
                 .Entity<Game>()
                 .HasMany(game => game.Comments)
                 .WithOne(comment => comment.CommentedGame)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<LoginBooking>()
+            builder.Entity<ClientBooking>()
                 .HasMany(loginBooking => loginBooking.Searches)
-                .WithOne(search => search.LoginBooking);
+                .WithOne(search => search.ClientBooking);
 
 
             builder.Entity<Team>()
@@ -83,9 +83,9 @@ namespace Net14Web.DbStuff
                 .WithMany(team => team.Players);
 
             builder.Entity<User>()
-                .HasMany(user => user.LoginsBooking)
-                .WithOne(comment => comment.Owner)
-                .OnDelete(DeleteBehavior.NoAction);
+              .HasMany(user => user.Searches)
+              .WithOne(comment => comment.Owner)
+              .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Net14Web.DbStuff.Models.BookingWeb
 {
-    public class LoginBooking : BaseModel
+    public class ClientBooking : BaseModel
     {
         public string Name { get; set; }
         public string Email { get; set; }

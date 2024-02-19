@@ -40,7 +40,7 @@ namespace Net14Web.Migrations
                     b.ToTable("HeroWeapon");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,7 +62,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoginsBooking");
+                    b.ToTable("ClientsBooking");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
@@ -589,13 +589,13 @@ namespace Net14Web.Migrations
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
                 {
-                    b.HasOne("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", "LoginBooking")
+                    b.HasOne("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", "ClientBooking")
                         .WithMany("Searches")
                         .HasForeignKey("LoginBookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("LoginBooking");
+                    b.Navigation("ClientBooking");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Dividend", b =>
@@ -691,7 +691,7 @@ namespace Net14Web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", b =>
                 {
                     b.Navigation("Searches");
                 });

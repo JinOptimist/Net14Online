@@ -11,7 +11,13 @@
 
 @foreach (var search in Model)
 {
-    <a href="RemoveSearch?id=@search.Id">Remove</a>
+    <div>
+        User: @search.UserName
+    </div>
+    @if (search.CanDelete)
+    {
+        <a href="RemoveSearch?id=@search.Id">Remove</a>
+    }
     <div>
         Country: @search.Country
     </div>
@@ -31,5 +37,8 @@
     </div>
     <div>
         Email: @search.LoginEmail
+    </div>
+    <div>
+        Owner: @search.Owner
     </div>
 }
