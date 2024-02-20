@@ -12,8 +12,8 @@ using Net14Web.DbStuff;
 namespace Net14Web.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    [Migration("20240219153503_AddTaskInfoOwner")]
-    partial class AddTaskInfoOwner
+    [Migration("20240220043256_AddTaskInfos")]
+    partial class AddTaskInfos
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
