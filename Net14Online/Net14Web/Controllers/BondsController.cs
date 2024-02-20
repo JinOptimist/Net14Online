@@ -95,7 +95,8 @@ namespace Net14Web.Controllers
                     Id = x.Id,
                     Date = x.Date,
                     CouponSize = x.CouponSize,
-                    Bond = x.Bond.Name
+                    Bond = x.Bond.Name,
+                    OwnerName = x.Bond.Owner?.Login ?? "Кто-то"
                 }).ToList();
             return View(viewModel);
         }

@@ -2,6 +2,7 @@
 {
     public class CouponsViewModel
     {
+        public string OwnerName { get; set; }
         public DateTime Date { get; set; }
         public int CouponSize { get; set; }
         public string Bond { get; set; }

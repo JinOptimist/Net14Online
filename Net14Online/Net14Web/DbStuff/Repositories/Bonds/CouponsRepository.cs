@@ -11,6 +11,7 @@ namespace Net14Web.DbStuff.Repositories
             return _context
                 .Coupons
                 .Include(x => x.Bond)
+                .Include(x => x.Bond.Owner)
                 .Take(maxCount)
                 .ToList();
         }
