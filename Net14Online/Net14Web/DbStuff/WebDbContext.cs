@@ -93,6 +93,11 @@ namespace Net14Web.DbStuff
             builder.Entity<Bond>()
                 .HasMany(bond => bond.Coupons)
                 .WithOne(coupon => coupon.Bond);
+
+            builder.Entity<User>()
+                .HasMany(user => user.Bonds)
+                .WithOne(comment => comment.Owner)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
