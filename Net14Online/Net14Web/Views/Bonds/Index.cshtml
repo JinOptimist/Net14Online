@@ -14,6 +14,7 @@
     <table>
         <thead>
             <tr>
+                <th>Владелец</th>
                 <th>Название облигации</th>
                 <th>Цена</th>
             </tr>
@@ -25,6 +26,9 @@
                 @foreach (var bond in Model.Bonds)
                 {
                     <tr>
+                        <td>
+                            @bond.OwnerName                           
+                        </td>
                         <td>
                             @bond.Name 
                             <a href="/Bonds/Remove?id=@bond.Id">

@@ -32,7 +32,8 @@ namespace Net14Web.Controllers
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    Price = x.Price
+                    Price = x.Price,
+                    OwnerName = x.Owner?.Login ?? "Кто-то"
                 })
                 .ToList();
             var viewModel = new BondsIndexViewMode()
@@ -62,7 +63,8 @@ namespace Net14Web.Controllers
             {
                 Name = addBondsViewModel.Name,
                 Price = addBondsViewModel.Price,
-                Id = addBondsViewModel.Id
+                Id = addBondsViewModel.Id,
+                Owner = _authService.GetCurrentUser()
             };
             _bondsRepository.Add(bond);
             return RedirectToAction("Index");

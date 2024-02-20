@@ -1,4 +1,5 @@
-﻿using Net14Web.DbStuff.Models.Bonds;
+﻿using Microsoft.EntityFrameworkCore;
+using Net14Web.DbStuff.Models.Bonds;
 
 namespace Net14Web.DbStuff.Repositories
 {
@@ -9,6 +10,7 @@ namespace Net14Web.DbStuff.Repositories
         {
             return _context
                 .Bonds
+                .Include(x=>x.Owner)
                 .Take(maxCount)
                 .ToList();
         }

@@ -96,7 +96,7 @@ namespace Net14Web.DbStuff
 
             builder.Entity<User>()
                 .HasMany(user => user.Bonds)
-                .WithOne(comment => comment.Owner)
+                .WithOne(bond => bond.Owner)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
