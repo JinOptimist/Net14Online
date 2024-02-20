@@ -9,6 +9,7 @@ using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.DbStuff.Repositories.PcShop;
 using Net14Web.DbStuff.Repositories.TaskTracker;
 using Net14Web.Services;
+using Net14Web.Services.BookingPermissons;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
 using Net14Web.Services.Movies;
@@ -95,6 +96,7 @@ builder.Services.AddScoped<CommentPermissions>();
 builder.Services.AddScoped<UserPermissions>();
 builder.Services.AddScoped<MoviePermissions>();
 builder.Services.AddScoped<AdminPanelPermissions>();
+builder.Services.AddScoped<BookingPermission>();
 
 
 builder.Services.AddScoped<GamesService>();

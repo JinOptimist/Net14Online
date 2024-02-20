@@ -12,8 +12,8 @@ using Net14Web.DbStuff;
 namespace Net14Web.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    [Migration("20240219160634_FirstMigrationV2")]
-    partial class FirstMigrationV2
+    [Migration("20240220125422_AddSearchBooking")]
+    partial class AddSearchBooking
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,16 +88,21 @@ namespace Net14Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ClientBookingId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LoginBookingId")
+                    b.Property<int?>("OwnerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LoginBookingId");
+                    b.HasIndex("ClientBookingId");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Searches");
                 });
@@ -589,10 +594,15 @@ namespace Net14Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OwnerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("TaskInfos");
                 });
@@ -681,8 +691,7 @@ namespace Net14Web.Migrations
                 {
                     b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
                         .WithMany("ClientsBooking")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
                 });
@@ -691,11 +700,18 @@ namespace Net14Web.Migrations
                 {
                     b.HasOne("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", "ClientBooking")
                         .WithMany("Searches")
-                        .HasForeignKey("LoginBookingId")
+                        .HasForeignKey("ClientBookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
+                        .WithMany("Searches")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("ClientBooking");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Dividend", b =>
@@ -714,7 +730,7 @@ namespace Net14Web.Migrations
                     b.HasOne("Net14Web.DbStuff.Models.GameShop.Game", "CommentedGame")
                         .WithMany("Comments")
                         .HasForeignKey("CommentedGameId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("CommentedGame");
@@ -774,6 +790,16 @@ namespace Net14Web.Migrations
                         .HasForeignKey("CPUId");
 
                     b.Navigation("CPU");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
+                        .WithMany("TaskInfos")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("PermissionRole", b =>
@@ -843,11 +869,15 @@ namespace Net14Web.Migrations
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.User", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("ClientsBooking");
 
+                    b.Navigation("Comments");
+
                     b.Navigation("MyHeroes");
+
+                    b.Navigation("Searches");
+
+                    b.Navigation("TaskInfos");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Weapon", b =>
