@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.Bonds;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.Models.Bonds;
+using Net14Web.Services;
 
 namespace Net14Web.Controllers
 {
@@ -13,33 +13,46 @@ namespace Net14Web.Controllers
 
         private BondsRepository _bondsRepository;
         private CouponsRepository _couponsRepository;
+        private AuthService _authService;
 
-        public BondsController(BondsRepository bondsRepository, CouponsRepository couponsRepository)
+        public BondsController(BondsRepository bondsRepository,
+            CouponsRepository couponsRepository,
+            AuthService authService)
         {
             _bondsRepository = bondsRepository;
             _couponsRepository = couponsRepository;
+            _authService = authService;
         }
         public IActionResult Index()
         {
+            var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Гость";
             var bdBonds = _bondsRepository.GetBonds(10);
-            var viewModel = bdBonds
+            var bondsViewModel = bdBonds
                 .Select(x => new BondsViewModel
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    Price = x.Price
+                    Price = x.Price,
+                    OwnerName = x.Owner?.Login ?? "Кто-то"
                 })
                 .ToList();
+            var viewModel = new BondsIndexViewMode()
+            {
+                Bonds = bondsViewModel,
+                UserName = userName
+            };
             return View(viewModel);
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult AddBonds()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult AddBonds(AddBondsViewModel addBondsViewModel)
         {
             if (!ModelState.IsValid)
@@ -50,7 +63,8 @@ namespace Net14Web.Controllers
             {
                 Name = addBondsViewModel.Name,
                 Price = addBondsViewModel.Price,
-                Id = addBondsViewModel.Id
+                Id = addBondsViewModel.Id,
+                Owner = _authService.GetCurrentUser()
             };
             _bondsRepository.Add(bond);
             return RedirectToAction("Index");
@@ -74,7 +88,6 @@ namespace Net14Web.Controllers
 
         public IActionResult Coupons()
         {
-
             var bdCoupons = _couponsRepository.GetCoupons(10);
             var viewModel = bdCoupons
                 .Select(x => new CouponsViewModel
@@ -82,10 +95,10 @@ namespace Net14Web.Controllers
                     Id = x.Id,
                     Date = x.Date,
                     CouponSize = x.CouponSize,
-                    Bond = x.Bond.Name
+                    Bond = x.Bond.Name,
+                    OwnerName = x.Bond.Owner?.Login ?? "Кто-то"
                 }).ToList();
             return View(viewModel);
-
         }
         public IActionResult RemoveCoupon(int id)
         {
@@ -106,9 +119,8 @@ namespace Net14Web.Controllers
 
         [HttpPost]
         public IActionResult AddCoupon(AddCouponViewModel addCouponViewModel, int bondsId)
-        {         
-            
-            var bond =  _bondsRepository.GetAll().First(x => x.Id == bondsId);
+        {
+            var bond = _bondsRepository.GetAll().First(x => x.Id == bondsId);
             var coupon = new Coupon
             {
                 CouponSize = addCouponViewModel.CouponSize,
@@ -118,7 +130,6 @@ namespace Net14Web.Controllers
             };
             _couponsRepository.Add(coupon);
             return RedirectToAction("Coupons");
-
         }
     }
 }

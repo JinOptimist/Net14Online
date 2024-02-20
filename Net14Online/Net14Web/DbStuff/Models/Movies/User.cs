@@ -1,4 +1,5 @@
-﻿using Net14Web.DbStuff.Models.BookingWeb;
+﻿using Net14Web.DbStuff.Models.Bonds;
+using Net14Web.DbStuff.Models.BookingWeb;
 
 namespace Net14Web.DbStuff.Models.Movies
 {
@@ -11,6 +12,7 @@ namespace Net14Web.DbStuff.Models.Movies
         public string? Role { get; set; }
         public virtual List<Comment>? Comments { get; set; }
         public virtual List<Hero> MyHeroes { get; set; }
+        public virtual List<Bond> Bonds { get; set; }
         public virtual List<LoginBooking> LoginsBooking { get; set; }
     }
 }

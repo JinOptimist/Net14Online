@@ -1,17 +1,20 @@
 ﻿@using Net14Web.Models.Bonds
-@model List<BondsViewModel>
+@model BondsIndexViewMode
 @{
     Layout = "_LayoutBonds";
 }
 @section Style
 {
     <link href="~/css/Bonds/Bonds.css" rel="stylesheet" />
-
 }
+<div>
+    User: @Model.UserName
+</div>
 <div class="scroll-table">
     <table>
         <thead>
             <tr>
+                <th>Владелец</th>
                 <th>Название облигации</th>
                 <th>Цена</th>
             </tr>
@@ -20,9 +23,12 @@
     <div class="scroll-table-body">
         <table>
             <tbody>               
-                @foreach (var bond in Model)
+                @foreach (var bond in Model.Bonds)
                 {
                     <tr>
+                        <td>
+                            @bond.OwnerName                           
+                        </td>
                         <td>
                             @bond.Name 
                             <a href="/Bonds/Remove?id=@bond.Id">

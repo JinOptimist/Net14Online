@@ -12,6 +12,7 @@
     <table>
         <thead>
             <tr>
+                <th>Владелец</th>
                 <th>Название облигации</th>
                 <th>Размер купона</th>
                 <th>Дата выплаты</th>
@@ -24,6 +25,9 @@
                 @foreach (var coupon in Model)
                 {
                     <tr>
+                        <td>
+                            @coupon.OwnerName
+                        </td>
                         <td>
                             @coupon.Bond
                             <a href="/Bonds/RemoveCoupon?id=@coupon.Id">
