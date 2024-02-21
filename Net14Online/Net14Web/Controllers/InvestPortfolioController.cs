@@ -90,9 +90,7 @@ namespace Net14Web.Controllers
 
                 TheAmountOfTheDividend = AddDividendViewModel.TheAmountOfTheDividend,
 
-                Stock = stock,
-                StockId = stockId
-
+                Stock = stock
             };
 
             _dividendRepository.Add(dividend);

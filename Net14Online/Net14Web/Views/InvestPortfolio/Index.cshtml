@@ -38,7 +38,7 @@
                             @stock.Price рублей
                             <form action="/InvestPortfolio/UpdatePrice" method="post">
                                 <input type="hidden" name="id" value="@stock.Id">
-                                <input type="number" name="price" value="@stock.Price">
+                                <input type="number" name="price">
                                 <input type="submit" value="обновить">
                             </form>
                         </td>
