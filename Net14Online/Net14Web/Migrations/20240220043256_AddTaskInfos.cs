@@ -5,7 +5,7 @@
 namespace Net14Web.Migrations
 {
     /// <inheritdoc />
-    public partial class AddTaskInfoOwner : Migration
+    public partial class AddTaskInfos : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,7 +43,6 @@ namespace Net14Web.Migrations
             migrationBuilder.DropColumn(
                 name: "OwnerId",
                 table: "TaskInfos");
-
         }
     }
 }

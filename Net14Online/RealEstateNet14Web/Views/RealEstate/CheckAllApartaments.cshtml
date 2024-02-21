@@ -1,0 +1,22 @@
+@model List<ApartamentViewModel>
+
+<div>
+    @foreach (var aprtament in Model)
+    {
+        <div>
+            Город:@aprtament.City
+        </div>
+        <div>
+            Улица:@aprtament.Street
+        </div>
+        <div>
+            Номер квартиры:@aprtament.NumberApartament
+        </div>
+        <div>
+            Количество комнат:@aprtament.Size
+        </div>
+        <div>
+            Владелец:@aprtament.OwnerName
+        </div>
+    }
+</div>

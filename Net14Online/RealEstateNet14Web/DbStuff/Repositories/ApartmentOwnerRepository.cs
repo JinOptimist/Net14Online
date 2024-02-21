@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RealEstateNet14Web.DbStuff.Models;
 
 namespace RealEstateNet14Web.DbStuff.Repositories;
@@ -17,5 +18,16 @@ public class ApartmentOwnerRepository : RealEstateBaseRepository<ApartmentOwner>
         apartmentOwner.Age = age;
         apartmentOwner.KindOfActivity = kindOfActivity;
         _webRealEstateDbContext.SaveChanges();
+    }
+
+    public ApartmentOwner? GetUserByLoginAndPassword(string login, string password)
+    {
+        return _entyties
+            .FirstOrDefault(user => user.Login!.ToLower() == login.ToLower() && user.Password == password);
+    }
+
+    public bool AnyUserWithName(string name)
+    {
+        return _entyties.Any(x => x.Login == name);
     }
 }

@@ -1,0 +1,24 @@
+@model RealEstateNet14Web.DbStuff.Models.Apartament
+
+<div>
+    <form method="post">
+        <div>
+            Введите город:
+            @Html.TextBoxFor(x => x.City, new { placeholder = "Город" })
+        </div>
+        <div>
+            Введите улицу
+            @Html.TextBoxFor(x => x.Street, new { placeholder = "Улица" })
+        </div>
+        <div>
+            Номер квартиры 
+            @Html.TextBoxFor(x => x.NumberApartament, new { placeholder = "Номер квартиры" })
+        </div>
+        <div>
+            Количество комнат
+            @Html.TextBoxFor(x => x.Size, new { placeholder = "Количество комнат" })
+        </div>
+        <input type="submit" value="Добавить"/>
+    </form>
+</div>
+

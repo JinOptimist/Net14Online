@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.VisualBasic;
+using Net14Web.Controllers.CustomAuthAttributes;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.BookingWeb;
 using Net14Web.DbStuff.Repositories.Booking;
 using Net14Web.Models.BookingWeb;
 using Net14Web.Models.Dnd;
 using Net14Web.Services;
+using Net14Web.Services.BookingPermissons;
 using System.ComponentModel.Design;
 using System.Linq;
 
@@ -24,12 +26,17 @@ namespace Net14Web.Controllers
         private SearchRepository _searchRepository;
         private LoginRepository _loginRepository;
         private AuthService _authService;
+        private BookingPermission _bookingPermission;
         
-        public BookingWebController (SearchRepository searchRepository, LoginRepository loginRepository, AuthService authService)
+        public BookingWebController (SearchRepository searchRepository, 
+            LoginRepository loginRepository, 
+            AuthService authService,
+            BookingPermission bookingPermission)
         {
             _searchRepository = searchRepository;
             _loginRepository = loginRepository;
             _authService = authService;
+            _bookingPermission = bookingPermission;
         }
 
         public IActionResult Help()
@@ -41,17 +48,22 @@ namespace Net14Web.Controllers
             var logins = _loginRepository.GetLogin(10);
 
             var viweModel = logins.Select(login => new UserLoginViewModel
-                {
-                    Name = login.Name,
-                    Email = login.Email,
-                    Password = login.Password,
-            }).ToList();
+            {
+                Id = login.Id,
+                Name = login.Name,
+                Email = login.Email,
+                Password = login.Password,
+                Owner = _authService.GetCurrentUser().Login,
+                CanDelete = login.Owner is null || login.Owner.Id == _authService.GetCurrentUserId()
+            })
+                .ToList();
 
             return View(viweModel);
         }
 
         public IActionResult SearchResult()
         {
+            var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Guest";
             var searches = _searchRepository.GetSearchLoginConnection(10);
 
             var viewModels = searches.Select(search => new SearchResultViewModel
@@ -61,13 +73,17 @@ namespace Net14Web.Controllers
                 City = search.City,
                 CheckinDate = search.Checkin,
                 CheckoutDate = search.Checkout,
-                LoginEmail = search.LoginBooking.Email
+                LoginEmail = search.ClientBooking.Email,
+                UserName = userName,
+                Owner = search.Owner?.Login ?? "Unknown",
+                CanDelete = _bookingPermission.CanDelete(search)
             }).ToList();
 
             return View(viewModels);
         }
 
         [Authorize]
+        [AdminOnly]
         public IActionResult Remove(int id)
         {
             _loginRepository.Delete(id);
@@ -78,6 +94,11 @@ namespace Net14Web.Controllers
         [Authorize]
         public IActionResult RemoveSearch(int id)
         {
+            var search = _searchRepository.GetByIdWithOwner(id);
+            if (!_bookingPermission.CanDelete(search))
+            {
+                throw new Exception("You have no access");
+            }
             _searchRepository.Delete(id);
             return RedirectToAction("SearchResult");
         }
@@ -111,7 +132,7 @@ namespace Net14Web.Controllers
                 return View();
             }
 
-            var login = new LoginBooking
+            var login = new ClientBooking
             {
                 Name = userLoginViewModel.Name,
                 Email = userLoginViewModel.Email,
@@ -139,7 +160,8 @@ namespace Net14Web.Controllers
                 City = searchResultViewModel.City,
                 Checkin = searchResultViewModel.CheckinDate,
                 Checkout = searchResultViewModel.CheckoutDate,
-                LoginBooking = login
+                ClientBooking = login,
+                Owner = _authService.GetCurrentUser()
             };
 
             _searchRepository.Add(search);
