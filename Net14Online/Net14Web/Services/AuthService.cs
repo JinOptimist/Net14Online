@@ -8,7 +8,7 @@ namespace Net14Web.Services
         private UserRepository _userRepository;
         private IHttpContextAccessor _httpContextAccessor;
 
-        public AuthService(UserRepository userRepository, 
+        public AuthService(UserRepository userRepository,
             IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;
@@ -18,20 +18,30 @@ namespace Net14Web.Services
         public User GetCurrentUser()
         {
             var id = GetCurrentUserId();
-            return _userRepository.GetById(id);
+            if (id == null)
+            {
+                return null;
+            }
+
+            return _userRepository.GetById(id.Value);
         }
 
-        public int GetCurrentUserId()
+        public int? GetCurrentUserId()
         {
             // HttpContext != null
-            var idStr = _httpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "id").Value;
+            var idStr = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "id")?.Value;
+            if (idStr == null)
+            {
+                return null;
+            }
+
             var id = int.Parse(idStr);
             return id;
         }
 
         public string GetCurrentUserName()
         {
-            return _httpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "name").Value;
+            return _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Гость";
         }
 
         public bool IsAdmin()

@@ -11,7 +11,8 @@ namespace Net14Web.DbStuff.Repositories.Booking
         public IEnumerable<Search> GetSearchLoginConnection(int maxCount  = 10)
         {
             return _context.Searches
-                .Include(x => x.LoginBooking)
+                .Include(x => x.ClientBooking)
+                .Include(x => x.Owner)
                 .Take(maxCount)
                 .ToList();    
         }
@@ -28,5 +29,11 @@ namespace Net14Web.DbStuff.Repositories.Booking
             return _context.Searches.FirstOrDefault();
         }
 
+        public Search GetByIdWithOwner(int searchId)
+        {
+            return _entyties.
+                Include(x => x.Owner)
+                .First(x => x.Id == searchId);
         }
+    }
 }

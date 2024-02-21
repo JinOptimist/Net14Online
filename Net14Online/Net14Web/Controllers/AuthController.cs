@@ -48,7 +48,7 @@ namespace Net14Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-    
+
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync().Wait();

@@ -1,0 +1,58 @@
+﻿@using ManagementCompany.DbStuff.Models.Enums
+@model BaseViewModel
+
+@{
+    Layout = "_LayoutManagementCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagmentCompany/ManagmentCompany.css" rel="stylesheet" />
+    <link href="~/css/ManagmentCompany/Styles.css" rel="stylesheet" />
+}
+
+<main>
+    <div class="error-page">
+        <div class="dropdown">
+            <button class="dropbtn">
+                <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+            </button>
+            <div class="dropdown-content">
+                @if ((!User?.Identity?.IsAuthenticated) ?? true)
+                {
+                    foreach (var myPage in @Model.GuestPages)
+                    {
+                        <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                    }
+                    <a class="login" href="/Auth/Login">Войти</a>
+                    <a class="reg" href="/ManagementCompany/Registration">Зарегистрироваться</a>
+                }
+                else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
+                .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
+                {
+                    foreach (var myPage in @Model.UserPages)
+                    {
+                        <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                    }
+                    <a class="login" href="/Auth/Logout">Выйти</a>
+                }
+                else
+                {
+                    foreach (var myPage in @Model.AdminPages)
+                    {
+                        <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                    }
+                    <a class="login" href="/Auth/Logout">Выйти</a>
+                }
+            </div>
+        </div>
+        <p>Упс, что-то пошло не так...</p>
+        <img src="https://media1.tenor.com/m/Wv6zVQPZFtcAAAAC/error.gif" width="300" height="300" alt="Sorry" />
+        <p>Кажется, мы не нашли вас в системе.</p>
+        <p>Проверьте правильность ввода Логина или Пароля.</p>
+        <p>
+            Вернуться 
+            <a class="reg" href="/ManagementCompany/Index">на главную?</a>
+        </p>
+    </div>
+</main>

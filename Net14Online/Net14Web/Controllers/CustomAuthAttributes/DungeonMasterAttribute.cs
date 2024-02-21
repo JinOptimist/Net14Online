@@ -9,9 +9,12 @@ namespace Net14Web.Controllers.CustomAuthAttributes
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var service = context.HttpContext.RequestServices.GetService<AuthService>();
-            if (service.GetCurrentUser().Role != "dm")
+            foreach (var role in service.GetCurrentUser().Roles)
             {
-                context.Result = new ForbidResult(AuthController.AUTH_KEY);
+                if (role.Name != "dm")
+                {
+                    context.Result = new ForbidResult(AuthController.AUTH_KEY);
+                }
             }
         }
     }

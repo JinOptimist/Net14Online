@@ -20,8 +20,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\dndAvatars\" />
-    <Folder Include="wwwroot\images\movies\userAvatars\" />
     <Folder Include="wwwroot\images\movies\moviePosters\" />
+    <Folder Include="wwwroot\images\movies\userAvatars\" />
   </ItemGroup>
 
 </Project>

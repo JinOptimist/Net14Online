@@ -1,10 +1,18 @@
 using Microsoft.EntityFrameworkCore;
+using RealEstateNet14Web.Controllers.Auth;
 using RealEstateNet14Web.DbStuff;
 using RealEstateNet14Web.DbStuff.Repositories;
 using RealEstateNet14Web.Services;
+using RealEstateNet14Web.Services.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services
+    .AddAuthentication(AuthRealEstateController.AUTH_KEY_REAL_ESTATE)
+    .AddCookie(AuthRealEstateController.AUTH_KEY_REAL_ESTATE, option =>
+    {
+        option.LoginPath = "/AuthRealEstate/RealEstateLogin";
+    });
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -13,10 +21,13 @@ builder.Services.AddDbContext<WebRealEstateDbContext>(x => x.UseSqlServer(connec
 
 // Repositories
 builder.Services.AddScoped<ApartmentOwnerRepository>();
+builder.Services.AddScoped<ApartamentRepository>();
+
 
 // Services
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();
+builder.Services.AddScoped<RealEstateAuthService>();
 
 builder.Services.AddHttpContextAccessor();
 

@@ -14,7 +14,17 @@
 
         </select>
         <button class="button-right">Добавть обьявление</button>
-        <a class="button-right" href="/RealEstate/Login">Вход</a>
+   
+     @if ((!User?.Identity?.IsAuthenticated) ?? true)
+            {
+                <a class="button-right" href="/AuthRealEstate/RealEstateLogin">Вход</a>
+            }
+            else
+            {
+                <a href="/AuthRealEstate/RealEstateLogout">Logout</a>
+                <a href="/RealEstate/AddApartament">Добавить обьявление</a>
+                <a href="/RealEstate/CheckAllApartaments">Все обьявления</a>
+            }
 </div>
 
     <div class="block-center">

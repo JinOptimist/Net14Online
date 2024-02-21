@@ -1,5 +1,5 @@
 ﻿@using Net14Web.Models.Movies
-@model List<MovieViewModel>
+@model MovieIndexViewModel
 
 @section Style
 {
@@ -17,7 +17,10 @@
                 </a>
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="/movies/adminPanel" class="nav-link px-2 text-white">Админ панель</a></li>
+                    @if (Model.CanAccessToAdminPanel)
+                    {
+                        <li><a href="/movies/adminpanel" class="nav-link px-2 text-white">Админ панель</a></li>
+                    }
                 </ul>
 
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post">
@@ -27,15 +30,18 @@
                 @if ((!User?.Identity?.IsAuthenticated) ?? true)
                 {
                     <div class="text-end">
-                        <button type="button" class="btn btn-outline-light me-2"><a class="navbar-a" href="/movies/login">Войти</a></button>
-                        <button type="button" class="btn btn-warning"><a class="navbar-a" href="/movies/registration">Зарегистрироваться</a></button>
+                        <button type="button" class="btn btn-outline-light me-2"><a class="navbar-a" href="/auth/login">Войти</a></button>
+                        <button type="button" class="btn btn-warning"><a class="navbar-a" href="/registration">Зарегистрироваться</a></button>
                     </div>
                 }
                 else
                 {
-                    <form action="/movies/logout" method="post">
-                        <button type="submit" class="btn btn-warning"><a class="navbar-a" >Выйти</a></button>
-                    </form>
+                    <div class="text-end">
+                        <button type="button" class="btn btn-outline-light me-2"><a class="navbar-a" href="/movies/user/@Model.UserId">Профиль</a></button>
+                        <form action="/auth/logout" method="post">
+                            <button type="submit" class="btn btn-warning"><a class="navbar-a" >Выйти</a></button>
+                        </form>
+                    </div>
                 }
             </div>
         </div>
@@ -75,7 +81,7 @@
                                             <div class="carousel-item active">
                                                 <div class="container">
                                                     <div class="row">
-                                                        @foreach (var movie in @Model)
+                                                        @foreach (var movie in Model.MovieViewModels)
                                                         {
                                                             <div class="col-lg-4">
                                                                 <div class="card">
@@ -87,7 +93,7 @@
                                                                         <p class="card-text">
                                                                             @movie.Description
                                                                         </p>
-                                                                        <a href="/movies/movie?movieId=@movie.Id" class="btn btn-primary">Посмотреть</a>
+                                                                        <a href="/movies/movie/@movie.Id" class="btn btn-primary">Посмотреть</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
