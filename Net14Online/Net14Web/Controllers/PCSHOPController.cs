@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Net14Web.Controllers.CustomAuthAttributes;
 using Net14Web.DbStuff.Models.PcShop;
 using Net14Web.DbStuff.Repositories.PcShop;
 using Net14Web.Models.PcShop;
@@ -25,6 +26,8 @@ namespace Net14Web.Controllers
             return View((object)userName);
         }
 
+        [Authorize]
+        [AdminOnly]
         public ActionResult Users()
         {
             var dbUserPcShop = _userRepositoryPcShop.GetUsers(10);
@@ -35,11 +38,13 @@ namespace Net14Web.Controllers
                     Id = dbUserPcShop.Id,
                     Name = dbUserPcShop.Name,
                     Login = dbUserPcShop.Login,
+                    Password = dbUserPcShop.Password,
                 })
                 .ToList();
 
             return View(viewModels);
         }
+
         public ActionResult PCs()
         {
             var dbPCModel = _pcsRepositoryPcShop.GetPCs(10);
@@ -76,9 +81,10 @@ namespace Net14Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult EditUserPassword(int id, string password)
+        public ActionResult EditUserPassword(string password)
         {
-            _userRepositoryPcShop.EditUserPassword(id, password);
+            var userId = int.Parse(HttpContext.User.Claims.First(x => x.Type == "Id").Value); 
+            _userRepositoryPcShop.EditUserPassword(userId, password);
             return RedirectToAction(nameof(Index));
         }
 
@@ -91,6 +97,7 @@ namespace Net14Web.Controllers
         // POST: PCSHOPController/Delete/5
         [HttpPost]
         [Authorize]
+        [AdminOnly]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteUsers(int id)
         {

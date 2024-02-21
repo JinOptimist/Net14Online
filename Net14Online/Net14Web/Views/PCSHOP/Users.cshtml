@@ -7,10 +7,10 @@
 
 <div>
     <table>
-        <tr><th>Логин</th><th>Имя</th></tr>
+        <tr><th>ID</th><th>Имя</th><th>Логин</th><th>Пароль</th></tr>
         @foreach (var User in Model)
         {
-            <tr><td>@User.Login</td><td>@User.Name</td></tr>
+            <tr><td>@User.Id</td><td>@User.Name</td><td>@User.Login</td><td>@User.Password</td></tr>
         }
     </table>
 </div>
