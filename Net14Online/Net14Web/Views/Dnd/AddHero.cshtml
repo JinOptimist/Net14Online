@@ -5,42 +5,90 @@
     Layout = "_LayoutDnd";
 }
 
-<div>
-    <form method="post">
-        <div>
-            Имя
-            @Html.TextBoxFor(x => x.Name, new { placeholder = "Имя" })
-            @Html.ValidationMessageFor(x => x.Name)
-        </div>
+@section Style
+{
+    <link href="~/css/dnd.css?v=5" rel="stylesheet" />
+    <link href="~/css/dnd2.css" rel="stylesheet" />
+}
 
-        <div>
-            Монетки
-            @Html.TextBoxFor(x => x.Coin, new { placeholder = "Монетки", @type = "number" })
-            @Html.ValidationMessageFor(x => x.Coin)
-        </div>
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/dnd/addHero.js"></script>
+}
 
-        <div>
-            AvatarUrl
-            @Html.TextBoxFor(x => x.AvatarUrl)
-            @Html.ValidationMessageFor(x => x.AvatarUrl)
-        </div>
+<div class="hero-create-container">
+    <div class="hero-data">
+        <form method="post">
+            <div>
+                Имя
+                @Html.TextBoxFor(x => x.Name, new { placeholder = "Имя" })
+                @Html.ValidationMessageFor(x => x.Name)
+            </div>
 
-        <div>
-            Хп
-            @Html.TextBoxFor(x => x.Hp)
-            @Html.ValidationMessageFor(x => x.Hp)
-        </div>
+            <div>
+                Монетки
+                @Html.TextBoxFor(x => x.Coin, new { placeholder = "Монетки", @type = "number" })
+                @Html.ValidationMessageFor(x => x.Coin)
+            </div>
 
-        <div>
-            <select name="Race">
-                <option value="1">Elf</option>
-                <option value="2">Orc</option>
-                <option value="3">Human</option>
-            </select>
-        </div>
+            <div>
+                AvatarUrl
+                @Html.TextBoxFor(x => x.AvatarUrl)
+                @Html.ValidationMessageFor(x => x.AvatarUrl)
+            </div>
 
-        <div>
-            <input type="submit" value="Создать героя" />
+            <div>
+                Хп
+                @Html.TextBoxFor(x => x.Hp)
+                @Html.ValidationMessageFor(x => x.Hp)
+            </div>
+
+            <div>
+                <select name="Race">
+                    <option value="1">Elf</option>
+                    <option value="2">Orc</option>
+                    <option value="3">Human</option>
+                </select>
+            </div>
+
+            <div>
+                <input type="submit" value="Создать героя" />
+            </div>
+        </form>
+    </div>
+    <div class="preview">
+        <div class="hero-content">
+            <div class="heroes">
+                <div class="hero full">
+                    <div class="details">
+                        <div class="name-and-coin-block">
+                            <div class="name-block">
+                                <div class="hero-title">
+                                    <a href="#">ГЕРОЙ</a>
+                                </div>
+                                <div class="avatar-block">
+                                    <img src="" />
+                                </div>
+                                <div class="hero-name">
+                                    ГОСТЬ
+                                </div>
+                                <div>
+                                    созданный @Model.UserName (<span class="race">???</span>)
+                                </div>
+                                <div class="weapon">
+                                    Любимое оружие: ???
+                                </div>
+                            </div>
+                            <div class="coin-block">
+                                <div>
+                                    <span class="coins-count">???</span>
+                                    <img src="/images/dnd/coin.png" class="icon" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </form>
+    </div>
 </div>

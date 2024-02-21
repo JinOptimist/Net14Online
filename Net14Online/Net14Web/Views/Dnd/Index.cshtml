@@ -11,7 +11,7 @@
     <link href="~/css/dnd2.css" rel="stylesheet" />
 }
 
-@section Script{
+@section Script {
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/dnd/index.js"></script>
 }
@@ -31,10 +31,23 @@
         </div>
     }
 
+    <div>
+        <form action="/dnd/updateCoin" method="post" class="update-hero-coins-form">
+            <input type="hidden" name="heroId" value="0" />
+            <div>
+                <input type="number" name="coin" />
+                set coins for hero <span class="hero-id"></span>
+            </div>
+            <div>
+                <input type="submit" value="Upd" />
+            </div>
+        </form>
+    </div>
+
     <div class="heroes">
         @foreach (var hero in Model.Heroes)
         {
-            <div class="hero short">
+            <div class="hero short" data-hero-id="@hero.Id">
                 <div class="just-name">
                     @hero.Name
                 </div>
@@ -65,18 +78,8 @@
                         </div>
                         <div class="coin-block">
                             <div>
-                                @hero.Coins <img src="/images/dnd/coin.png" class="icon" />
-                            </div>
-                            <div class="new-coint-block">
-                                <form action="/dnd/updateCoin" method="post">
-                                    <input type="hidden" name="heroId" value="@hero.Id" />
-                                    <div>
-                                        <input type="number" name="coin" />
-                                    </div>
-                                    <div>
-                                        <input type="submit" value="Upd" />
-                                    </div>
-                                </form>
+                                <span class="coins-count">@hero.Coins</span>
+                                <img src="/images/dnd/coin.png" class="icon" />
                             </div>
                         </div>
                     </div>

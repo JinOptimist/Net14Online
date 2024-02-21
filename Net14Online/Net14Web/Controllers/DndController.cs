@@ -138,7 +138,9 @@ namespace Net14Web.Controllers
         [Authorize]
         public IActionResult AddHero()
         {
-            return View();
+            var viewModel = new AddHeroViewModel();
+            viewModel.UserName = _authService.GetCurrentUserName();
+            return View(viewModel);
         }
 
         [HttpPost]

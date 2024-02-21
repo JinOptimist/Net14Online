@@ -102,3 +102,11 @@
     .hero .hero-name:hover {
         background-color: #ededed;
     }
+
+.coin-block .icon{
+    cursor: pointer;
+}
+
+.hero-create-container{
+    display: flex;
+}
