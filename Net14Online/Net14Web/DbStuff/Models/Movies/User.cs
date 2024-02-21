@@ -1,4 +1,5 @@
-﻿using Net14Web.DbStuff.Models.BookingWeb;
+﻿using Net14Web.DbStuff.Models.Bonds;
+using Net14Web.DbStuff.Models.BookingWeb;
 using Net14Web.DbStuff.Models.TaskTracker;
 
 namespace Net14Web.DbStuff.Models.Movies
@@ -16,5 +17,6 @@ namespace Net14Web.DbStuff.Models.Movies
         public virtual List<ClientBooking> ClientsBooking { get; set; }
         public virtual List<Search> Searches { get; set; }
 
+        public virtual List<Bond> Bonds { get; set; }
     }
 }

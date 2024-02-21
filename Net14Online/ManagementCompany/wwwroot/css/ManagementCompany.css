@@ -139,3 +139,21 @@ footer {
         .userstat a:hover {
             background-color: #555;
         }
+.task-table {
+    cursor: pointer;
+}
+
+    .task-table.short-table {
+        color: red;
+    }
+
+.task-table.short-table .full-table {
+    display: none;
+}
+    .table-name {
+        color: green;
+    }
+
+.task-table.full-table .short-table {
+    display: none;
+}

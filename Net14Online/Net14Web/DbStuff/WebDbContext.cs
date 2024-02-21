@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Models.Bonds;
 using Net14Web.DbStuff.Models.BookingWeb;
+using Net14Web.DbStuff.Models.GameShop;
+using Net14Web.DbStuff.Models.InvestPort;
 using Net14Web.DbStuff.Models.LifeScore;
 using Net14Web.DbStuff.Models.Movies;
-using Net14Web.DbStuff.Models.RetroConsoles;
-using Net14Web.DbStuff.Models.GameShop;
-using Net14Web.DbStuff.Models.TaskTracker;
-using Net14Web.DbStuff.Models.InvestPort;
 using Net14Web.DbStuff.Models.PcShop;
+using Net14Web.DbStuff.Models.RetroConsoles;
 using Net14Web.DbStuff.Models.Sattelite;
+using Net14Web.DbStuff.Models.TaskTracker;
 
 namespace Net14Web.DbStuff
 {
@@ -17,7 +18,7 @@ namespace Net14Web.DbStuff
         public DbSet<Hero> Heroes { get; set; }
         public DbSet<Weapon> Weapons { get; set; }
         public DbSet<UsersPcShop> UserPcShop { get; set; }
-        public DbSet<PCModel> PCModel { get; set;}
+        public DbSet<PCModel> PCModel { get; set; }
         public DbSet<CpuModel> CpuModel { get; set; }
         public DbSet<Search> Searches { get; set; }
         public DbSet<Game> Games { get; set; }
@@ -31,6 +32,9 @@ namespace Net14Web.DbStuff
         public DbSet<Dividend> Dividend { get; set; }
         public DbSet<TaskInfo> TaskInfos { get; set; }
         public DbSet<RetroUser> RetroUsers { get; set; }
+        public DbSet<Bond> Bonds { get; set; }
+        public DbSet<Coupon> Coupons { get; set; }
+
         public DbSet<ClientBooking> ClientsBooking { get; set; }
         // LifeScore
         public DbSet<SportGame> SportGames { get; set; }
@@ -100,6 +104,15 @@ namespace Net14Web.DbStuff
               .HasMany(user => user.Searches)
               .WithOne(comment => comment.Owner)
               .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Bond>()
+                .HasMany(bond => bond.Coupons)
+                .WithOne(coupon => coupon.Bond);
+
+            builder.Entity<User>()
+                .HasMany(user => user.Bonds)
+                .WithOne(bond => bond.Owner)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

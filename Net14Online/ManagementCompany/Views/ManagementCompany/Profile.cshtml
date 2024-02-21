@@ -11,6 +11,12 @@
     <link href="~/css/Styles.css" rel="stylesheet" />
 }
 
+@section Script
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/index.js"></script>
+}
+
 <main>
     <div>
         <div class="dropdown">
@@ -71,49 +77,52 @@
 
             <input type="submit" value="Внести изменения" />
         </form>
-
-        <details>
-            <summary>Показать статусы</summary>
-            <table border="1">
-                <thead>
-                    <tr>
-                        @if (Model.CurrentUserTasks.Count > 0)
-                        {
-                            @foreach (var statusField in Model.CurrentUserTasks.FirstOrDefault().GetType().GetProperties())
-                            {
-                                <th>@statusField.Name</th>
-                            }
-                        }
-                        <th>Изменить</th>
-                        <th>Удалить</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var status in Model.CurrentUserTasks)
-                    {
+        <div class="task-table short-table">
+            <div class="short-table"> Мои заявки</div>
+            <div class="full-table">
+                <div class="table-name">Мои заявки</div>
+                <table border="1">
+                    <thead>
                         <tr>
-                            @foreach (var statusField in Model.CurrentUserTasks.FirstOrDefault().GetType().GetProperties())
+                            @if (Model.CurrentUserTasks.Count > 0)
                             {
-                                <td> @statusField.GetValue(status)</td>
+                                @foreach (var statusField in Model.CurrentUserTasks.FirstOrDefault().GetType().GetProperties())
+                                {
+                                    <th>@statusField.Name</th>
+                                }
                             }
+                            <th>Изменить</th>
+                            <th>Удалить</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var status in Model.CurrentUserTasks)
+                        {
+                            <tr>
+                                @foreach (var statusField in Model.CurrentUserTasks.FirstOrDefault().GetType().GetProperties())
+                                {
+                                    <td> @statusField.GetValue(status)</td>
+                                }
+                                <td>
+                                    <a href="/ManagementCompany/UpdateStatus?statusId=@status.Id">Изменить</a>
+                                </td>
+                                <td>
+                                    <form action="/ManagementCompany/RemoveStatus" class="remove-form" method="post">
+                                        <input type="hidden" name="id" value="@status.Id" />
+                                        <button class="admin-panel-button" type="submit">Удалить</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
                             <td>
-                                <a href="/ManagementCompany/UpdateStatus?statusId=@status.Id">Изменить</a>
-                            </td>
-                            <td>
-                                <form action="/ManagementCompany/RemoveStatus" class="remove-form" method="post">
-                                    <input type="hidden" name="id" value="@status.Id" />
-                                    <button class="admin-panel-button" type="submit">Удалить</button>
-                                </form>
+                                <a href="/ManagementCompany/AddStatus">Добавить</a>
                             </td>
                         </tr>
-                    }
-                    <tr>
-                        <td>
-                            <a href="/ManagementCompany/AddStatus">Добавить</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </details>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
     </div>
 </main>

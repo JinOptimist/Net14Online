@@ -8,8 +8,6 @@ namespace Net14Web.DbStuff.Models
         public DateTime DateOfReplenishment { get; set; }
         public int TheAmountOfTheDividend { get; set; }
 
-        public int StockId { get; set; }
-        [ForeignKey("StockId")]
         public virtual Stock Stock { get; set; }
 
 
