@@ -11,7 +11,7 @@ using ManagementCompany.DbStuff;
 
 namespace ManagementCompany.Migrations.ManagmentCompanyDb
 {
-    [DbContext(typeof(ManagmentCompanyDbContext))]
+    [DbContext(typeof(ManagementCompanyDbContext))]
     [Migration("20240124093904_FixBaseAttributes")]
     partial class FixBaseAttributes
     {

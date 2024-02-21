@@ -11,7 +11,7 @@ using ManagementCompany.DbStuff;
 
 namespace ManagementCompany.Migrations.ManagmentCompanyDb
 {
-    [DbContext(typeof(ManagmentCompanyDbContext))]
+    [DbContext(typeof(ManagementCompanyDbContext))]
     [Migration("20240206190917_UpdateBaseModel")]
     partial class UpdateBaseModel
     {

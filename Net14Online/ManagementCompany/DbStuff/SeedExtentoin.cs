@@ -1,4 +1,4 @@
-﻿using ManagementCompany.DbStuff.ManagmentCompany.Models;
+﻿using ManagementCompany.DbStuff.Models;
 using ManagementCompany.DbStuff.Repositories;
 
 namespace ManagementCompany.DbStuff

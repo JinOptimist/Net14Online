@@ -17,9 +17,9 @@ builder.Services
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var connStringManagmentCompany = builder.Configuration.GetConnectionString("ManagmentCompany");
+var connStringManagementCompany = builder.Configuration.GetConnectionString("ManagementCompany");
 
-builder.Services.AddDbContext<ManagmentCompanyDbContext>(x => x.UseSqlServer(connStringManagmentCompany));
+builder.Services.AddDbContext<ManagementCompanyDbContext>(x => x.UseSqlServer(connStringManagementCompany));
 
 // Repositories
 builder.Services.AddScoped<TaskStatusRepository>();
@@ -59,6 +59,6 @@ app.UseAuthorization(); // May I?
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=ManagmentCompany}/{action=Index}/{id?}");
+    pattern: "{controller=ManagementCompany}/{action=Index}/{id?}");
 
 app.Run();

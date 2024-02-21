@@ -1,12 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ManagementCompany.DbStuff.ManagmentCompany.Models;
-using ManagementCompany.DbStuff.ManagmentCompany.Models.Enums;
+﻿using ManagementCompany.DbStuff.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ManagementCompany.DbStuff.Repositories
 {
-    public class ProjectRepository : ManagmentCompanyBaseRepository<Project>
+    public class ProjectRepository : BaseRepository<Project>
     {
-        public ProjectRepository(ManagmentCompanyDbContext context) : base(context) { }
+        public ProjectRepository(ManagementCompanyDbContext context) : base(context) { }
 
         public IEnumerable<Project> GetProjectsWithStatus()
         {

@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ManagementCompany.DbStuff.ManagmentCompany.Models;
-using ManagementCompany.DbStuff.ManagmentCompany.Models.Enums;
-using ManagementCompany.Models.ManagmentCompany;
+using ManagementCompany.Models;
+using ManagementCompany.DbStuff.Models;
+using ManagementCompany.DbStuff.Models.Enums;
 
 namespace ManagementCompany.DbStuff.Repositories
 {
-    public class UserRepository : ManagmentCompanyBaseRepository<User>
+    public class UserRepository : BaseRepository<User>
     {
-        public UserRepository(ManagmentCompanyDbContext context) : base(context) { }
+        public UserRepository(ManagementCompanyDbContext context) : base(context) { }
 
         public override IEnumerable<User> GetAll()
         {

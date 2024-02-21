@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ManagementCompany.DbStuff.ManagmentCompany.Models;
-using ManagementCompany.Models.ManagmentCompany;
+using ManagementCompany.Models;
+using ManagementCompany.DbStuff.Models;
 
 namespace ManagementCompany.DbStuff.Repositories
 {
-    public class CompanyRepository : ManagmentCompanyBaseRepository<Company>
+    public class CompanyRepository : BaseRepository<Company>
     {
-        public CompanyRepository(ManagmentCompanyDbContext context) : base(context) { }
+        public CompanyRepository(ManagementCompanyDbContext context) : base(context) { }
 
         public IEnumerable<Company> GetCompaniesWithStatus()
         {

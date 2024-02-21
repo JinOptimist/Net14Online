@@ -1,0 +1,100 @@
+﻿@using ManagementCompany.DbStuff.Models.Enums
+@model IndexViewModel
+
+@{
+    Layout = "_LayoutManagementCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagementCompany.css" rel="stylesheet" />
+}
+
+<body>
+    <header>
+        <nav class="top-panel-content" id="navbar">
+            <div>
+                Всего проектов: @Model.Projects?.Count
+            </div>
+            <div>
+                Всего задач: @Model.AllTasks.Count
+            </div>
+            <div>
+                Задач выполнено: @Model.WorkInProgressTasks?.Count()
+            </div>
+            <div>
+                Задач в процессе: @Model.CompletedTasks?.Count()
+            </div>
+        </nav>
+        <div class="dropdown">
+            <button class="dropbtn">
+                <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+            </button>
+            <div class="dropdown-content">
+                @if ((!User?.Identity?.IsAuthenticated) ?? true)
+                {
+                    foreach (var myPage in @Model.GuestPages)
+                    {
+                        <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                    }
+                    <a class="login" href="/Auth/Login">Войти</a>
+                    <a class="reg" href="/ManagementCompany/Registration">Зарегистрироваться</a>
+                }
+                else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
+                .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
+                {
+                    foreach (var myPage in @Model.UserPages)
+                    {
+                        <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                    }
+                    <a class="login" href="/Auth/Logout">Выйти</a>
+                }
+                else
+                {
+                    foreach (var myPage in @Model.AdminPages)
+                    {
+                        <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                    }
+                    <a class="login" href="/Auth/Logout">Выйти</a>
+                }
+            </div>
+        </div>
+    </header>
+    <div class="content-container">
+        <h2 class="h2">Добро пожаловать на стартовую страницу!</h2>
+        <p class="p">Здесь вы можете разместить важную информацию или предложения для пользователей.</p>
+        <div class="userstat">
+            <ul>
+                <li><a href="/ManagementCompany/Index">Всего участников</a></li>
+                <li><a href="/ManagementCompany/IndexUsers">Пользователей</a></li>
+                <li><a href="/ManagementCompany/IndexAdmins">Админов</a></li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                @foreach (var user in Model.Users)
+                {
+                    <li>
+                        <div>
+                            <span>@user.NickName | @user.MemberPermission</span>
+
+                            <form action="/ManagementCompany/UpdateUser" class="update-form" method="post">
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <input type="text" name="nickName" value="@user.NickName" @* placeholder="Новый никнейм" *@ required />
+                                <button type="submit">Изменить</button>
+                            </form>
+
+                            <form action="/ManagementCompany/RemoveUser" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <button type="submit">Удалить</button>
+                            </form>
+                        </div>
+                    </li>
+                }
+            </ul>
+            <div>
+                Количество участников @Model.Users.Count
+            </div>
+        </div>
+    </div>
+</body>

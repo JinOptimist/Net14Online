@@ -1,6 +1,6 @@
-﻿using ManagementCompany.DbStuff.ManagmentCompany.Models.Enums;
+﻿using ManagementCompany.DbStuff.Models.Enums;
 using ManagementCompany.DbStuff.Repositories;
-using ManagementCompany.Models.ManagmentCompany;
+using ManagementCompany.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -49,18 +49,18 @@ namespace ManagementCompany.Controllers
 
             if (user.MemberPermission?.Id == (int)MemberPermissionEnum.User)
             {
-                return RedirectToAction("Profile", "ManagmentCompany");
+                return RedirectToAction("Profile", "ManagementCompany");
             }
             else
             {
-                return RedirectToAction("AdminPanel", "ManagmentCompany");
+                return RedirectToAction("AdminPanel", "ManagementCompany");
             }
         }
 
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync().Wait();
-            return RedirectToAction("Index", "ManagmentCompany");
+            return RedirectToAction("Index", "ManagementCompany");
         }
     }
 }

@@ -1,13 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ManagementCompany.DbStuff.ManagmentCompany.Models;
-using ManagementCompany.DbStuff.ManagmentCompany.Models.Enums;
-using ManagementCompany.Models.ManagmentCompany;
+﻿using ManagementCompany.DbStuff.Models;
+using ManagementCompany.DbStuff.Models.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace ManagementCompany.DbStuff.Repositories
 {
-    public class UserTaskRepository : ManagmentCompanyBaseRepository<UserTask>
+    public class UserTaskRepository : BaseRepository<UserTask>
     {
-        public UserTaskRepository(ManagmentCompanyDbContext context) : base(context) { }
+        public UserTaskRepository(ManagementCompanyDbContext context) : base(context) { }
 
         public IEnumerable<UserTask> GetInPgogressTasks()
         {

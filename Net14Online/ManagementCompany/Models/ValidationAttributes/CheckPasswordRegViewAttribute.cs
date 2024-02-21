@@ -1,5 +1,4 @@
-﻿using ManagementCompany.Models.ManagmentCompany;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ManagementCompany.Models.ValidationAttributes
 {
@@ -7,7 +6,7 @@ namespace ManagementCompany.Models.ValidationAttributes
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (validationContext.ObjectInstance is not ManagmentCompany.RegistrationViewModel)
+            if (validationContext.ObjectInstance is not Models.RegistrationViewModel)
             {
                 throw new ArgumentException("Работает только с RegistrationViewModel");
             }

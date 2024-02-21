@@ -1,0 +1,66 @@
+﻿@using ManagementCompany.DbStuff.Models.Enums
+@model RegistrationViewModel
+
+@{
+    Layout = "_LayoutManagementCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagementCompany.css" rel="stylesheet" />
+    <link href="~/css/Styles.css" rel="stylesheet" />
+}
+
+<div class="regContainer">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+        </button>
+        <div class="dropdown-content">
+            @if ((!User?.Identity?.IsAuthenticated) ?? true)
+            {
+                foreach (var myPage in @Model.GuestPages)
+                {
+                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                }
+                <a class="login" href="/Auth/Login">Войти</a>
+                <a class="reg" href="/ManagementCompany/Registration">Зарегистрироваться</a>
+            }
+            else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
+            .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
+            {
+                foreach (var myPage in @Model.UserPages)
+                {
+                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                }
+                <a class="login" href="/Auth/Logout">Выйти</a>
+            }
+            else
+            {
+                foreach (var myPage in @Model.AdminPages)
+                {
+                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                }
+                <a class="login" href="/Auth/Logout">Выйти</a>
+            }
+        </div>
+    </div>
+    <h2>Регистрация</h2>
+    <form method="post">
+        <label for="name">Ваша почта:</label>
+        @Html.TextBoxFor(x => x.Email)
+        @Html.ValidationMessageFor(x =>x.Email)
+
+        <label for="nickName">Ваш ник на сайте (виден другим пользователям):</label>
+        @Html.TextBoxFor(x => x.NickName)
+        @Html.ValidationMessageFor(x => x.NickName)
+
+        <label for="password">Ваш пароль:</label>
+        @Html.PasswordFor(x => x.Password)
+        @Html.ValidationMessageFor(x => x.Password)
+
+        <button class="button" type="submit">Зарегистрироваться</button>
+    </form>
+</div>
+
+

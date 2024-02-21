@@ -1,13 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ManagementCompany.DbStuff.ManagmentCompany.Models;
-using ManagementCompany.DbStuff.ManagmentCompany.Models.Enums;
-using ManagementCompany.Models.ManagmentCompany;
+﻿using ManagementCompany.DbStuff.Models;
+using ManagementCompany.Models;
 
 namespace ManagementCompany.DbStuff.Repositories
 {
-    public class MemberPermissionRepository : ManagmentCompanyBaseRepository<MemberPermission>
+    public class MemberPermissionRepository : BaseRepository<MemberPermission>
     {
-        public MemberPermissionRepository(ManagmentCompanyDbContext context) : base(context) { }
+        public MemberPermissionRepository(ManagementCompanyDbContext context) : base(context) { }
 
         public void UpdatePermission(PermissionViewModel viewModel, int id)
         {

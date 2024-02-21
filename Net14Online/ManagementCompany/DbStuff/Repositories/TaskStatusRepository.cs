@@ -1,13 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ManagementCompany.DbStuff.ManagmentCompany.Models;
-using ManagementCompany.DbStuff.ManagmentCompany.Models.Enums;
-using ManagementCompany.Models.ManagmentCompany;
+﻿using ManagementCompany.DbStuff.Models;
+using ManagementCompany.Models;
 
 namespace ManagementCompany.DbStuff.Repositories
 {
-    public class TaskStatusRepository : ManagmentCompanyBaseRepository<UserTaskStatus>
+    public class TaskStatusRepository : BaseRepository<UserTaskStatus>
     {
-        public TaskStatusRepository(ManagmentCompanyDbContext context) : base(context) { }
+        public TaskStatusRepository(ManagementCompanyDbContext context) : base(context) { }
 
         public void UpdateStatus(StatusViewModel viewModel, int id)
         {
