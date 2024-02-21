@@ -8,7 +8,7 @@ namespace Net14Web.Services
         private UserRepository _userRepository;
         private IHttpContextAccessor _httpContextAccessor;
 
-        public AuthService(UserRepository userRepository, 
+        public AuthService(UserRepository userRepository,
             IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;

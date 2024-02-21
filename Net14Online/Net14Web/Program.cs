@@ -17,8 +17,6 @@ using Net14Web.Services.Movies.Permissions;
 using Net14Web.Services.Sattelite;
 using Net14Web.Services.TaskTrackerServices;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
@@ -33,11 +31,8 @@ builder.Services
 builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("Net14WebDb");
-var connStringManagmentCompany = builder.Configuration.GetConnectionString("ManagmentCompany");
 
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
-
-builder.Services.AddDbContext<ManagmentCompanyDbContext>(x => x.UseSqlServer(connStringManagmentCompany));
 
 //builder.Services.AddScoped<WebDbContext>();
 
@@ -52,16 +47,10 @@ builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
 // Repositories
-builder.Services.AddScoped<CompanyRepository>();
-builder.Services.AddScoped<ProjectRepository>();
-builder.Services.AddScoped<McUserRepository>();
-builder.Services.AddScoped<UserTaskRepository>();
-builder.Services.AddScoped<MemberPermissionRepository>();
-builder.Services.AddScoped<MemberStatusRepository>(); 
 builder.Services.AddScoped<GameShopRepository>();
 builder.Services.AddScoped<HeroRepository>();
 builder.Services.AddScoped<MoviesRepository>();
-builder.Services.AddScoped<Net14Web.DbStuff.Repositories.Movies.UserRepository>();
+builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<CommentRepository>();
 builder.Services.AddScoped<WeaponRepository>();
 builder.Services.AddScoped<HeroRepository>();
@@ -82,7 +71,7 @@ builder.Services.AddScoped<SatteliteController>();
 // Services
 builder.Services.AddScoped<CommentBuilder>();
 builder.Services.AddScoped<MovieBuilder>();
-builder.Services.AddScoped<Net14Web.Services.Movies.UserBuilder>();
+builder.Services.AddScoped<UserBuilder>();
 builder.Services.AddScoped<UserEditHelper>();
 builder.Services.AddScoped<MovieEditHelper>();
 builder.Services.AddScoped<TaskPermissions>();
