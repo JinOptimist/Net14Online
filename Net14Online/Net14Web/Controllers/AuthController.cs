@@ -14,6 +14,7 @@ namespace Net14Web.Controllers
         private UserRepository _userRepository;
 
         public const string AUTH_KEY = "Smile";
+        public const string EMAIL_TYPE_FROM_GOOGLE = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress";
 
         public AuthController(UserRepository userRepository)
         {
@@ -33,15 +34,9 @@ namespace Net14Web.Controllers
         {
             var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(claim => new
-            {
-                claim.Issuer,
-                claim.OriginalIssuer,
-                claim.Type,
-                claim.Value
-            });
+            var claims = result.Principal.Identities.First().Claims.Select(claim => new Claim(claim.Type, claim.Value));
 
-        
+            var userEmailClaim = claims.FirstOrDefault(x => x.Type == EMAIL_TYPE_FROM_GOOGLE);
 
             return RedirectToAction("Index", "Home");
         }
