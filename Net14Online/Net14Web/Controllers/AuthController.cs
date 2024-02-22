@@ -41,13 +41,6 @@ namespace Net14Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> LogOutWithGoogle()
-        {
-            await HttpContext.SignOutAsync();
-
-            return RedirectToAction("Index", "Home");
-        }
-
         [HttpGet]
         public IActionResult Login()
         {
