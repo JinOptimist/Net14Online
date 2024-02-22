@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Net14Web.Models.ValidationAttributes;
+using RealEstateNet14Web.Models.ValidationAttributes;
 
 namespace RealEstateNet14Web.Models;
 
