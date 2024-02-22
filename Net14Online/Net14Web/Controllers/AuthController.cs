@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
+using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Models.Auth;
 using System.Security.Claims;
@@ -21,6 +22,7 @@ namespace Net14Web.Controllers
 
         public async Task LoginWithGoogle()
         {
+
             await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties()
             {
                 RedirectUri = Url.Action("GoogleResponse")
@@ -39,7 +41,9 @@ namespace Net14Web.Controllers
                 claim.Value
             });
 
-            return Json(claims);
+        
+
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> LogOutWithGoogle()
@@ -86,5 +90,7 @@ namespace Net14Web.Controllers
             HttpContext.SignOutAsync().Wait();
             return RedirectToAction("Index", "Home");
         }
+
+       
     }
 }

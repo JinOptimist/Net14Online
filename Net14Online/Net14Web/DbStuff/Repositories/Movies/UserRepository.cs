@@ -25,6 +25,12 @@ namespace Net14Web.DbStuff.Repositories.Movies
                 .FirstOrDefault(user => user.Login!.ToLower() == login.ToLower() && user.Password == password);
         }
 
+        public User GetUserByEmail(string email)
+        {
+            var user = _entyties.FirstOrDefault(x => x.Email == email);
+            return user;
+        }
+
         public User? GetUserWithComments(int userId)
         {
             return _entyties

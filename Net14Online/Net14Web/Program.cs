@@ -17,12 +17,12 @@ using Net14Web.Services.Sattelite;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services
-//    .AddAuthentication(AuthController.AUTH_KEY)
-//    .AddCookie(AuthController.AUTH_KEY, option =>
-//    {
-//        option.LoginPath = "/Auth/Login";
-//    });
+builder.Services
+    .AddAuthentication(AuthController.AUTH_KEY)
+    .AddCookie(AuthController.AUTH_KEY, option =>
+    {
+        option.LoginPath = "/Auth/Login";
+    });
 
 
 
@@ -31,10 +31,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 })
-    .AddCookie(option =>
-    {
-        option.LoginPath = "/Auth/Login";
-    })
+    .AddCookie()
     .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
     {
         options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
