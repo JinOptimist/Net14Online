@@ -29,12 +29,15 @@
                             @coupon.OwnerName
                         </td>
                         <td>
-                            @coupon.Bond
-                            <a href="/Bonds/RemoveCoupon?id=@coupon.Id">
-                                <img src="/images/Bonds/logo_delete.webp"
-                                     width="17"
-                                     height="17">
-                            </a>
+                            @coupon.Bond                          
+                            @if (@coupon.CanDelete)
+                            {
+                                <a href="/Bonds/RemoveCoupon?id=@coupon.Id">
+                                    <img src="/images/Bonds/logo_delete.webp"
+                                         width="17"
+                                         height="17">
+                                </a>
+                            }
                         </td>
 
                         <td>

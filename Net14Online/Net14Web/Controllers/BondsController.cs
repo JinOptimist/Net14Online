@@ -16,17 +16,20 @@ namespace Net14Web.Controllers
         private CouponsRepository _couponsRepository;
         private AuthService _authService;
         private BondPermissions _bondPermissions;
+        private CouponPermissions _couponPermissions;
 
         public BondsController(BondsRepository bondsRepository,
             CouponsRepository couponsRepository,
             AuthService authService,
-            BondPermissions bondPermissions
+            BondPermissions bondPermissions,
+            CouponPermissions couponPermissions
             )
         {
             _bondsRepository = bondsRepository;
             _couponsRepository = couponsRepository;
             _authService = authService;
             _bondPermissions = bondPermissions;
+            _couponPermissions = couponPermissions;
         }
         public IActionResult Index()
         {
@@ -102,13 +105,14 @@ namespace Net14Web.Controllers
         {
             var bdCoupons = _couponsRepository.GetCoupons(10);
             var viewModel = bdCoupons
-                .Select(x => new CouponsViewModel
+                .Select(bdCoupon => new CouponsViewModel
                 {
-                    Id = x.Id,
-                    Date = x.Date,
-                    CouponSize = x.CouponSize,
-                    Bond = x.Bond.Name,
-                    OwnerName = x.Bond.Owner?.Login ?? "Кто-то"
+                    Id = bdCoupon.Id,
+                    Date = bdCoupon.Date,
+                    CouponSize = bdCoupon.CouponSize,
+                    Bond = bdCoupon.Bond.Name,
+                    OwnerName = bdCoupon.Bond.Owner?.Login ?? "Кто-то",
+                    CanDelete = _couponPermissions.CanDelete(bdCoupon)
                 }).ToList();
             return View(viewModel);
         }
