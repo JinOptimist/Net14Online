@@ -5,6 +5,7 @@ using Net14Web.DbStuff.Models.Bonds;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.Models.Bonds;
 using Net14Web.Services;
+using Net14Web.Services.BondServices;
 
 namespace Net14Web.Controllers
 {
@@ -14,26 +15,31 @@ namespace Net14Web.Controllers
         private BondsRepository _bondsRepository;
         private CouponsRepository _couponsRepository;
         private AuthService _authService;
+        private BondPermissions _bondPermissions;
 
         public BondsController(BondsRepository bondsRepository,
             CouponsRepository couponsRepository,
-            AuthService authService)
+            AuthService authService,
+            BondPermissions bondPermissions
+            )
         {
             _bondsRepository = bondsRepository;
             _couponsRepository = couponsRepository;
             _authService = authService;
+            _bondPermissions = bondPermissions;
         }
         public IActionResult Index()
         {
             var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Гость";
             var bdBonds = _bondsRepository.GetBonds(10);
             var bondsViewModel = bdBonds
-                .Select(x => new BondsViewModel
+                .Select(dbBond => new BondsViewModel
                 {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Price = x.Price,
-                    OwnerName = x.Owner?.Login ?? "Кто-то"
+                    Id = dbBond.Id,
+                    Name = dbBond.Name,
+                    Price = dbBond.Price,
+                    OwnerName = dbBond.Owner?.Login ?? "Кто-то",
+                    CanDelete = _bondPermissions.CanDelete(dbBond)
                 })
                 .ToList();
             var viewModel = new BondsIndexViewMode()
@@ -72,8 +78,14 @@ namespace Net14Web.Controllers
 
         public IActionResult Remove(int id)
         {
-            _bondsRepository.Delete(id);
+            var dbBond = _bondsRepository.GetByIdWithOwner(id);
 
+            if (!_bondPermissions.CanDelete(dbBond))
+            {
+                throw new Exception("Ты кто такой?");
+            }
+
+            _bondsRepository.Delete(id);
             return RedirectToAction("Index");
         }
 
