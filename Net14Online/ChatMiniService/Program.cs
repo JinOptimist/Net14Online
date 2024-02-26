@@ -1,6 +1,9 @@
+using ChatMiniService.DbStuff;
 using ChatMiniService.SignalRHubs;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<FakeDb>();
 
 builder.Services.AddCors(option =>
 {

@@ -12,20 +12,37 @@
     });
 
     hub.on('OneMoreUserEnterToChat', function (user) {
-        addMessage('', user + ' enter to chat')
+        addMessage('', user + ' enter to chat');
+    });
+
+    hub.on('LastMessages', function (messages) {
+        messages.forEach(function (message) {
+            addMessage(message.userName, message.messageText);
+        })
     });
 
     $('.send-message-button').click(function () {
-        const message = $('.new-message-text').val();
-        // Something happedn on client side
-        // Call server
-        hub.invoke('SendMessage', userName, message);
+        sendMessage();
+    });
+    $('.new-message-text').keyup(function (e) {
+        if (e.which == 13) {// On Enter
+            sendMessage();
+        }
     });
 
     hub.start()
         .then(function () {
             hub.invoke('NewUserEnterToChat', userName);
+            hub.invoke('GetLastMessages');
         });
+
+    function sendMessage() {
+        const message = $('.new-message-text').val();
+        // Something happedn on client side
+        // Call server
+        hub.invoke('SendMessage', userName, message);
+        $('.new-message-text').val('');
+    }
 
 
     function addMessage(user, message) {
@@ -35,5 +52,9 @@
         newMessageBlock.find('.message-text').text(message);
 
         $('.messages').append(newMessageBlock);
+
+        $('.messages').animate({
+            scrollTop: 1000 //newMessageBlock.offset().top + newMessageBlock.height()
+        }, 2000);
     }
 });
