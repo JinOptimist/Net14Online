@@ -8,8 +8,8 @@ html {
 body {
 	width: 100vw;
 	height: 100vh;
-	background: linear-gradient(#4c376a, #000000, #1c285c);
-	background-size: 200% 200%;
+	background: linear-gradient(200deg, #4c376a, #000000, #1c285c);
+	background-size: 400% 400%;
 	animation: Gradient 15s ease infinite;
 }
 
@@ -80,6 +80,12 @@ main {
 	box-sizing: border-box;
 	position: relative;
 	min-height: 282px;
+}
+
+.photo-grid__card_highlight {
+	background: linear-gradient(#eecddd, #a6c8ee, #a6e8ee);
+	background-size: 200% 200%;
+	animation: Gradient 5s ease infinite;
 }
 
 .photo-grid__priority {
