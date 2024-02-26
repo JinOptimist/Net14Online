@@ -150,3 +150,19 @@
     justify-content: space-between;
     padding-left:50px;
 }
+
+
+.user.short .full-info {
+    display: flex;
+    justify-content: end;
+}
+
+.user.name-only{
+    height: 20px;
+    min-height: auto;
+}
+
+.user .full-info {
+    display: none;
+}
+

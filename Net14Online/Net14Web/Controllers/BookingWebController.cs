@@ -47,7 +47,7 @@ namespace Net14Web.Controllers
         {
             var logins = _loginRepository.GetLogin(10);
 
-            var viweModel = logins.Select(login => new UserLoginViewModel
+            var viewModel = logins.Select(login => new UserLoginViewModel
             {
                 Id = login.Id,
                 Name = login.Name,
@@ -58,7 +58,7 @@ namespace Net14Web.Controllers
             })
                 .ToList();
 
-            return View(viweModel);
+            return View(viewModel);
         }
 
         public IActionResult SearchResult()
