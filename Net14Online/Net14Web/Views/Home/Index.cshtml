@@ -1,4 +1,31 @@
-﻿
+﻿@using Net14Web.Models.Home
+@model HomeIndexViewModel
+
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="~/js/home/chat.js"></script>
+}
+
+
+@section Style
+{
+    <link href="~/css/home/index.css" rel="stylesheet" />
+}
+
 <div>
     Smile!
+</div>
+<div class="chat">
+    <input type="hidden" class="user-name" value="@Model.UserName" />
+    <div class="messages">
+        <div class="message template">
+            <span class="user-name">Ivan</span>
+            <span class="message-text">Hi</span>
+        </div>
+    </div>
+    <div>
+        <input class="new-message-text" />
+        <button class="send-message-button">Send</button>
+    </div>
 </div>

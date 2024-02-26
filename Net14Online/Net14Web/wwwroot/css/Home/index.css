@@ -1,0 +1,18 @@
+.template
+{
+    display: none;
+}
+
+.messages {
+    height: 100px;
+    overflow-y: scroll;
+    width: 300px;
+    background: #ccc;
+}
+.message {
+    border-bottom: 1px solid green;
+}
+    .message .user-name {
+        color: green;
+        padding-right: 5px;
+    }
