@@ -22,27 +22,36 @@
     </table>
     <div class="scroll-table-body">
         <table>
-            <tbody>               
+            <tbody>
                 @foreach (var bond in Model.Bonds)
                 {
                     <tr>
                         <td>
-                            @bond.OwnerName                           
+                            @bond.OwnerName
                         </td>
                         <td>
-                            @bond.Name 
-                            <a href="/Bonds/Remove?id=@bond.Id">
-                                <img src="/images/Bonds/logo_delete.webp"
-                                     width="17"
-                                     height="17">
-                            </a>
+                            @bond.Name
+                            @if (@bond.CanDelete)
+                            {
+                                <a href="/Bonds/Remove?id=@bond.Id">
+                                    <img src="/images/Bonds/logo_delete.webp"
+                                         width="17"
+                                         height="17">
+                                </a>
+                            }
+
                         </td>
-                        <td>@bond.Price рублей
-                            <form action="/Bonds/UpdatePrice" method="post">
-                                <input type="hidden" name="id" value="@bond.Id" />
-                                <input type="number" name="price"/>
-                                <input type="submit" value="Обновить" />
-                            </form>
+                        <td>
+                            @bond.Price рублей
+                            @if (@bond.CanDelete)
+                            {
+                                <form action="/Bonds/UpdatePrice" method="post">
+                                    <input type="hidden" name="id" value="@bond.Id" />
+                                    <input type="number" name="price" />
+                                    <input type="submit" value="Обновить" />
+                                </form>
+                            }
+
                         </td>
                     </tr>
                 }
