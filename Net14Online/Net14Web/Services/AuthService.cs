@@ -15,7 +15,7 @@ namespace Net14Web.Services
             _httpContextAccessor = httpContextAccessor;// HttpContext == null
         }
 
-        public User GetCurrentUser()
+        public User? GetCurrentUser()
         {
             var id = GetCurrentUserId();
             if (id == null)
