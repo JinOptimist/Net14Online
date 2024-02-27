@@ -1,21 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Net14Web.Models;
+using Net14Web.Models.Home;
+using Net14Web.Services;
 using System.Diagnostics;
 
 namespace Net14Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private AuthService _authService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(AuthService authService)
         {
-            _logger = logger;
+            _authService = authService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var viewModel = new HomeIndexViewModel();
+            viewModel.UserName = _authService.GetCurrentUserName();
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

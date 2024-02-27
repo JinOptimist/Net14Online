@@ -79,8 +79,21 @@ if (false) {
     helper.qweqweqwe();
 }
 
-DoVerstion2();
+DoVerstion2(); // document.name
 
 function DoVerstion2() {
+    this.name;
 
+    function innerFunction() {
+        this.name;// DoVerstion2.name
+    }
+
+    innerFunction();
 }
+
+const userCanDo = {
+    name: 'Ivan',
+    Do: DoVerstion2
+}
+
+userCanDo.Do(); // userCanDo.name

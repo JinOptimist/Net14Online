@@ -9,6 +9,7 @@ using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.DbStuff.Repositories.PcShop;
 using Net14Web.DbStuff.Repositories.TaskTracker;
 using Net14Web.Services;
+using Net14Web.Services.BondServices;
 using Net14Web.Services.BookingPermissons;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
@@ -67,6 +68,8 @@ builder.Services.AddScoped<LoginRepository>();
 builder.Services.AddScoped<UserRepositoryPcShop>();
 builder.Services.AddScoped<PcsRepositoryPcShop>();
 builder.Services.AddScoped<SatteliteController>();
+builder.Services.AddScoped<BondsRepository>();
+builder.Services.AddScoped<CouponsRepository>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
@@ -86,6 +89,8 @@ builder.Services.AddScoped<UserPermissions>();
 builder.Services.AddScoped<MoviePermissions>();
 builder.Services.AddScoped<AdminPanelPermissions>();
 builder.Services.AddScoped<BookingPermission>();
+builder.Services.AddScoped<BondPermissions>();
+builder.Services.AddScoped<CouponPermissions>();
 
 
 builder.Services.AddScoped<GamesService>();

@@ -1,0 +1,18 @@
+.apartament-block {
+    display:inline-block;
+    text-align: center;
+    border: 2px #000 solid;
+    font-size: 25px;
+    border-radius: 10px
+}
+
+.apartament-block:hover{
+    cursor:pointer;
+    background: #ccc
+}
+
+.apartament-block.apartament-block-click{
+    border: 5px solid;
+    margin: 10px;
+    background: #ede9e5;
+}

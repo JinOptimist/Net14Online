@@ -1,0 +1,29 @@
+﻿@using Net14Web.Models.Bonds
+@model AddBondsViewModel
+@{
+    Layout = "_LayoutBonds";
+}
+
+<div>
+    <form method="post">
+
+        <div>
+            Название облигации 
+            @Html.TextBoxFor(x=>x.Name)
+            @Html.ValidationMessageFor(x => x.Name)
+        </div>
+
+        <div>
+            Цена 
+            @Html.TextBoxFor(x => x.Price)
+            @Html.ValidationMessageFor(x => x.Price)
+        </div>
+
+        <div>
+            <input type="submit" value="Добавить облигацию" />
+        </div>
+
+    </form>
+</div>
+
+

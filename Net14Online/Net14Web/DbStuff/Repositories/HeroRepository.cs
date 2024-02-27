@@ -43,5 +43,14 @@ namespace Net14Web.DbStuff.Repositories
             GetById(heroId).AvatarUrl = avatarUrl;
             _context.SaveChanges();
         }
+
+        public int AddOneCoin(int heroId)
+        {
+            var hero = GetById(heroId);
+            hero.Coins++;
+            _context.SaveChanges();
+         
+            return hero.Coins;
+        }
     }
 }

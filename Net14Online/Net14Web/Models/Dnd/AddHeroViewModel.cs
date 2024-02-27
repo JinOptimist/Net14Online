@@ -22,5 +22,7 @@ namespace Net14Web.Models.Dnd
         public Race Race { get; set; }
 
         public int? Hp { get; set; }
+
+        public string? UserName { get; set; }
     }
 }
