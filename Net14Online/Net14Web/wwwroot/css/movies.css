@@ -25,11 +25,15 @@ body {
   background-repeat: no-repeat;
 }
 
-.avatar-subscriber{
-  max-height: 150px;
-  max-width: 100px;
-  background-size: 100%;
-  background-repeat: no-repeat;
+.comment-template {
+    display: none;
+}
+
+.avatar-subscriber {
+    max-height: 150px;
+    max-width: 100px;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .comment-in-profile {
