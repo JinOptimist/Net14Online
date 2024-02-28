@@ -3,6 +3,8 @@ $(document).ready(() => {
         .withUrl("https://localhost:7036/commentsMovie")
         .build();
 
+    const addCommentButton = $('.btn-add-comment');
+
 
     hub.on('MovieGotNewComment', (userId, userName, userAvatarUrl, commentDescription, commentTimeOfWriting) => {
         addCommentOnPage(userId, userName, userAvatarUrl, commentDescription, commentTimeOfWriting);
@@ -15,13 +17,18 @@ $(document).ready(() => {
         });
     });
 
-    $('.btn-add-comment').click(() => {
-        addCommentOnServer();
+    addCommentButton.click(() => {
+        const descriptionComment = $('.description-comment');
+        if (descriptionComment.val().length) {
+            addCommentOnServer();
+            descriptionComment.val("");
+        }
     });
 
     hub.start().then(() => {
         let movieId = $('.movie-id').val();
         hub.invoke('GetLastMovieComments', movieId);
+        hub.invoke('OpenMovie', movieId);
     });
 
     const addCommentOnServer = () => {
@@ -39,7 +46,7 @@ $(document).ready(() => {
         newCommentBlock.find('.user-src-avatarUrl').attr('src', userAvatarUrl);
         newCommentBlock.find('.comment-description').text(commentDescription);
         newCommentBlock.find('comment-time-of-writing').text(commentTimeOfWriting);
-        
-        $('.comments').append(newCommentBlock);
+
+        $('.comments').prepend(newCommentBlock);
     }
 });

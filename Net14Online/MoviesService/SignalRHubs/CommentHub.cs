@@ -13,6 +13,7 @@ namespace MoviesMicroService.SignalRHubs
         private readonly CommentBuilder _commentBuilder;
 
         public const int COUNT_LAST_COMMENTS = 10;
+        private string _lastMovieConnectId;
 
         public CommentHub(UserRepository userRepository, CommentRepository commentRepository, CommentBuilder commentBuilder, MoviesRepository moviesRepository)
         {
@@ -39,7 +40,7 @@ namespace MoviesMicroService.SignalRHubs
             var movie = _moviesRepository.GetById(movieIdInt);
             var comment = _commentBuilder.BuildComment(timeOfWriting, description, user, movie);
             _commentRepository.Add(comment);
-            Clients.All.SendAsync("MovieGotNewComment", userId, user.Login, user.AvatarUrl, description, timeOfWriting).Wait();
+            Clients.Group(movieId).SendAsync("MovieGotNewComment", userId, user.Login, user.AvatarUrl, description, timeOfWriting).Wait();
         }
         
         public void GetLastMovieComments(string movieId)
@@ -52,8 +53,7 @@ namespace MoviesMicroService.SignalRHubs
             var movies = _moviesRepository
                 .GetMovieWithComments(movieIdInt);
             var movieComments = movies.Comments
-                .Take(COUNT_LAST_COMMENTS)
-                .Reverse()
+                .TakeLast(COUNT_LAST_COMMENTS)
                 .ToList();
             List<Comment> commentsWithUser = new List<Comment>();
             foreach (var movieComment in movieComments)
@@ -70,6 +70,16 @@ namespace MoviesMicroService.SignalRHubs
                 commentsWithUser.Add(commentHub);
             }
             Clients.Caller.SendAsync("LastComments", commentsWithUser);
+        }
+
+        public void OpenMovie(string movieId)
+        {
+            if (_lastMovieConnectId is not null)
+            {
+                Groups.RemoveFromGroupAsync(Context.ConnectionId, _lastMovieConnectId);
+            }
+            _lastMovieConnectId = movieId;
+            Groups.AddToGroupAsync(Context.ConnectionId, _lastMovieConnectId);
         }
     }
     
