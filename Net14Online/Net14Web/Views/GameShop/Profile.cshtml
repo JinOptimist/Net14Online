@@ -4,6 +4,12 @@
     Layout = "_LayoutGameShop";
 }
 
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="~/js/gameShop/comments.js"></script>
+}
+
 @section Style
 {
     <link href="~/css/games.css" rel="stylesheet" />
@@ -41,27 +47,15 @@
 </div>
 
 <div class="comments-block">
-    <form action="/gameShop/addComment" method="post">
-        <input type="hidden" name="gameId" value="@Model.Id" />
-        <div>
-            <input type="text" name="comment" />
+    <input type="hidden" class="user-name" value=Guest />
+    <div class="comments">
+        <div class="comment template">
+            <span class="user-name">Guest</span>
+            <span class="comment-text">Be the first commentator</span>
         </div>
-
-        <div>
-            <input type="submit" value="Add Comment" />
-        </div>
-    </form>
-
-    <div class="existed-comments">
-        @if (Model.Comments != null)
-        {
-            @foreach (var comment in Model.Comments)
-            {
-                <div class="comment">
-                    @comment.Content;
-                </div>
-            }
-        }
     </div>
-
+    <div>
+        <input class="new-comment-text" />
+        <button class="send-comment-button">Send</button>
+    </div>
 </div>
