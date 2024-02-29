@@ -9,6 +9,11 @@ namespace ManagementCompany.DbStuff.Repositories
     {
         public UserRepository(ManagementCompanyDbContext context) : base(context) { }
 
+        public override User GetById(int id)
+        {
+            return _entities.Include(x => x.MemberPermission).SingleOrDefault(ent => ent.Id == id);
+        }
+
         public override IEnumerable<User> GetAll()
         {
             return _entities

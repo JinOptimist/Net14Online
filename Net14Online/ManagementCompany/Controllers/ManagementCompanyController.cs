@@ -45,6 +45,8 @@ namespace ManagementCompany.Controllers
 
         public IActionResult Index()
         {
+            var user = _authService.GetCurrentUser();
+
             var dbUsers = _userRepository.GetUsers();
 
             var dbManagers = _userRepository.GetManagers();
@@ -62,6 +64,8 @@ namespace ManagementCompany.Controllers
                 .GetAll();
 
             var viewModel = new IndexViewModel();
+
+            CheckUser(viewModel, user);
 
             viewModel.AllTasks = dbAllTasks
                 .Select(dbAllTask => new TaskViewModel
@@ -334,6 +338,7 @@ namespace ManagementCompany.Controllers
                 CompletionDate = userTask.CompletionDate
             })
                 .ToList();
+
             return View(model);
         }
 
@@ -813,6 +818,25 @@ namespace ManagementCompany.Controllers
             _userTaskRepository.Add(task);
 
             return RedirectToAction("Profile", new {Id = task.Author.Id});
+        }
+
+        private void CheckUser(BaseViewModel model, User user)
+        {
+            if (user is not null)
+            {
+                if (user.MemberPermission.Id == 5)
+                {
+                    model.IsUser = true;
+                }
+                else
+                {
+                    model.IsAdmin = true;
+                }
+            }
+            else
+            {
+                model.IsGuest = true;
+            }
         }
     }
 }

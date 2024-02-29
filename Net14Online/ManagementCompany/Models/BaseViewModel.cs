@@ -2,6 +2,12 @@
 {
     public class BaseViewModel
     {
+        public bool IsAdmin { get; set; } = false;
+
+        public bool IsUser { get; set; } = false;
+
+        public bool IsGuest { get; set; } = false;
+
         public DateTime? CreationDate { get; set; }
 
         internal List<ProjectViewModel> Projects { get; set; }
