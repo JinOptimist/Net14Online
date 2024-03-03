@@ -218,6 +218,11 @@ namespace ManagementCompany.Controllers
             return View(viewModel);
         }
 
+        public IActionResult Blog()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             var model = new BaseViewModel();

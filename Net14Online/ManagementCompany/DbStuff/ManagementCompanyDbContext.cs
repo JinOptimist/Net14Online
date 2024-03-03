@@ -19,6 +19,8 @@ namespace ManagementCompany.DbStuff
 
         public DbSet<UserTaskStatus> TaskStatuses { get; set; }
 
+        public DbSet<Article> Articles { get; set; }
+
         public ManagementCompanyDbContext(DbContextOptions<ManagementCompanyDbContext> options) : base(options) 
         {
             Database.EnsureCreated();

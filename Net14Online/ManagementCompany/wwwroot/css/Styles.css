@@ -15,9 +15,22 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-    .regContainer h2, .loginContainer h2 {
-        text-align: center;
-    }
+.like-container {
+    display: flex;
+    max-height: 300px;
+}
+
+.comment-container {
+    display: flex;
+}
+
+.thumbUp, .thumbDown, send-comment {
+    cursor: pointer;
+}
+
+.regContainer h2, .loginContainer h2 {
+    text-align: center;
+}
 
 h1 {
     color: #333;
