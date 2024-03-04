@@ -34,7 +34,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("KnowedWeaponsId");
 
-                    b.ToTable("HeroWeapon");
+                    b.ToTable("HeroWeapon", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Bonds.Bond", b =>
@@ -59,7 +59,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Bonds");
+                    b.ToTable("Bonds", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Bonds.Coupon", b =>
@@ -83,7 +83,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("BondId");
 
-                    b.ToTable("Coupons");
+                    b.ToTable("Coupons", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", b =>
@@ -113,7 +113,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("ClientsBooking");
+                    b.ToTable("ClientsBooking", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
@@ -150,7 +150,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Searches");
+                    b.ToTable("Searches", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Dividend", b =>
@@ -174,7 +174,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("StockId");
 
-                    b.ToTable("Dividend");
+                    b.ToTable("Dividend", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.Game", b =>
@@ -200,7 +200,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Games");
+                    b.ToTable("Games", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.GameShop.GameComment", b =>
@@ -222,7 +222,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("CommentedGameId");
 
-                    b.ToTable("GameComments");
+                    b.ToTable("GameComments", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Hero", b =>
@@ -265,7 +265,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Heroes");
+                    b.ToTable("Heroes", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.InvestPort.Stock", b =>
@@ -285,7 +285,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Stocks");
+                    b.ToTable("Stocks", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.Player", b =>
@@ -317,7 +317,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Players", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.SportGame", b =>
@@ -342,7 +342,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SportGames");
+                    b.ToTable("SportGames", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.LifeScore.Team", b =>
@@ -371,7 +371,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teams");
+                    b.ToTable("Teams", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Comment", b =>
@@ -400,7 +400,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.Movie", b =>
@@ -422,7 +422,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.User", b =>
@@ -447,7 +447,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.PcShop.CpuModel", b =>
@@ -487,7 +487,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CpuModel");
+                    b.ToTable("CpuModel", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.PcShop.PCModel", b =>
@@ -512,7 +512,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("CPUId");
 
-                    b.ToTable("PCModel");
+                    b.ToTable("PCModel", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.PcShop.UsersPcShop", b =>
@@ -541,7 +541,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserPcShop");
+                    b.ToTable("UserPcShop", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Permission", b =>
@@ -557,7 +557,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permissions");
+                    b.ToTable("Permissions", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.RetroUser", b =>
@@ -579,7 +579,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RetroUsers");
+                    b.ToTable("RetroUsers", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Role", b =>
@@ -596,7 +596,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Sattelite.ObjectDict", b =>
@@ -621,7 +621,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sattelite");
+                    b.ToTable("Sattelite", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>
@@ -650,7 +650,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("TaskInfos");
+                    b.ToTable("TaskInfos", (string)null);
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Weapon", b =>
@@ -670,7 +670,7 @@ namespace Net14Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Weapons");
+                    b.ToTable("Weapons", (string)null);
                 });
 
             modelBuilder.Entity("PermissionRole", b =>
@@ -685,7 +685,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("RolesId");
 
-                    b.ToTable("PermissionRole");
+                    b.ToTable("PermissionRole", (string)null);
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -700,7 +700,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("RoleUser");
+                    b.ToTable("RoleUser", (string)null);
                 });
 
             modelBuilder.Entity("SportGameTeam", b =>
@@ -715,7 +715,7 @@ namespace Net14Web.Migrations
 
                     b.HasIndex("TeamsId");
 
-                    b.ToTable("SportGameTeam");
+                    b.ToTable("SportGameTeam", (string)null);
                 });
 
             modelBuilder.Entity("HeroWeapon", b =>

@@ -6,16 +6,16 @@ namespace Net14Web.Controllers;
 
 public class LifeScoreController : Controller
 {
-    public static LifeScoreViewModel lifeScoreViewModel = new LifeScoreViewModel
-    {
-        Games = new List<GameViewModel>(),
-        Teams = new List<TeamViewModel>(),
-    };
+    public static LifeScoreViewModel lifeScoreViewModel = new LifeScoreViewModel();
+
 
     public IActionResult Index()
     {
-        var updatedLifeScoreViewModel = InitializeLifeScoreViewModel(lifeScoreViewModel);
-        return View(updatedLifeScoreViewModel);
+        if (lifeScoreViewModel == null)
+        {
+            lifeScoreViewModel = InitializeLifeScoreViewModel(lifeScoreViewModel);
+        }
+        return View(lifeScoreViewModel);
     }
 
     public IActionResult TeamsTable()
@@ -38,6 +38,18 @@ public class LifeScoreController : Controller
         return View();
     }
 
+    [HttpGet]
+    public IActionResult CreateTeam()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult CreateTeam(CreateTeamViewModel newTeam)
+    {
+        var team = newTeam;
+        return View();
+    }
     private LifeScoreViewModel InitializeLifeScoreViewModel(LifeScoreViewModel lifeScoreViewModel)
     {
         var player = new PlayerViewModel

@@ -1,0 +1,35 @@
+﻿@using Net14Web.Models.LifeScore
+@model CreateTeamViewModel
+
+
+<div class="hero-create-container">
+    <div class="hero-data">
+        <form method="post">
+            <div>
+                Название команды
+                @Html.TextBoxFor(x => x.Name, new { placeholder = "Имя" })
+                @Html.ValidationMessageFor(x => x.Name)
+            </div>
+
+            <div>
+                Страна
+                @Html.TextBoxFor(x => x.Country, new { placeholder = "Страна" })
+            </div>
+
+            <div>
+                Лига
+                @Html.TextBoxFor(x => x.Liga, new { placeholder = "Лига" })
+            </div>
+
+            <div>
+                Сокращение
+                @Html.TextBoxFor(x => x.ShortName, new { placeholder = "" })
+            </div>
+
+            <div>
+                <input type="submit" value="Добавить команду" />
+            </div>
+        </form>
+    </div>
+   
+</div>
