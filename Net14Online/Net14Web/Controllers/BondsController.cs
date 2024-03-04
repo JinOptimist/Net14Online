@@ -137,7 +137,7 @@ namespace Net14Web.Controllers
         public IActionResult AddCoupon(AddCouponViewModel addCouponViewModel, int bondsId)
         {
             var bond = _bondsRepository.GetAll().First(x => x.Id == bondsId);
-            var coupon = new couponv2
+            var coupon = new Coupon
             {
                 CouponSize = addCouponViewModel.CouponSize,
                 Date = addCouponViewModel.Date,

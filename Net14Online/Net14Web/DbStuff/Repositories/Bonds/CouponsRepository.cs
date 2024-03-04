@@ -3,10 +3,10 @@ using Net14Web.DbStuff.Models.Bonds;
 
 namespace Net14Web.DbStuff.Repositories
 {
-    public class CouponsRepository : BaseRepository<couponv2>
+    public class CouponsRepository : BaseRepository<Coupon>
     {
         public CouponsRepository(WebDbContext context) : base(context) { }
-        public IEnumerable<couponv2> GetCoupons(int maxCount = 10)
+        public IEnumerable<Coupon> GetCoupons(int maxCount = 10)
         {
             return _context
                 .Coupons
@@ -15,7 +15,7 @@ namespace Net14Web.DbStuff.Repositories
                 .Take(maxCount)
                 .ToList();
         }
-        public couponv2 GetByIdWithOwner(int couponId)
+        public Coupon GetByIdWithOwner(int couponId)
         {
             return _entyties
                 .Include(x => x.Bond)

@@ -33,7 +33,7 @@ namespace Net14Web.DbStuff
         public DbSet<TaskInfo> TaskInfos { get; set; }
         public DbSet<RetroUser> RetroUsers { get; set; }
         public DbSet<Bond> Bonds { get; set; }
-        public DbSet<couponv2> Coupons { get; set; }
+        public DbSet<Coupon> Coupons { get; set; }
 
         public DbSet<ClientBooking> ClientsBooking { get; set; }
         // LifeScore

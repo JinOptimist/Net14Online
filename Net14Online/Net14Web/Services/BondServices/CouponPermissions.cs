@@ -12,7 +12,7 @@ namespace Net14Web.Services.BondServices
             _authService = authService;
         }
         public bool IsCurrentUserAdmin => _authService.IsAdmin();
-        public bool CanDelete(couponv2 coupon)
+        public bool CanDelete(Coupon coupon)
             => coupon.Bond.Owner is null
                 || coupon.Bond.Owner?.Id == _authService.GetCurrentUserId() || IsCurrentUserAdmin;
 
