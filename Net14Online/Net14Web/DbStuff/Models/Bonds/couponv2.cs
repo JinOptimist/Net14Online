@@ -1,6 +1,6 @@
 ﻿namespace Net14Web.DbStuff.Models.Bonds
 {
-    public class Coupon : BaseModel
+    public class couponv2 : BaseModel
     {
         public DateTime Date { get; set; }
 
