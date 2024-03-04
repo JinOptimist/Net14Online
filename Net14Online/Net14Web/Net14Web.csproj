@@ -24,11 +24,4 @@
 		<Folder Include="wwwroot\images\movies\userAvatars\" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Content Update="wwwroot\js\Bond\index.js">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-	</ItemGroup>
-
 </Project>
