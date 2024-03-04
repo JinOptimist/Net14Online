@@ -7,6 +7,10 @@
 {
     <link href="~/css/Bonds/Bonds.css" rel="stylesheet" />
 }
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/Bond/index.js"></script>
+}
 <div>
     User: @Model.UserName
 </div>
@@ -25,21 +29,25 @@
             <tbody>
                 @foreach (var bond in Model.Bonds)
                 {
-                    <tr>
+                    <tr class="chapter-bond">
+
                         <td>
                             @bond.OwnerName
                         </td>
+
                         <td>
-                            @bond.Name
+                            <div class="bond-name">
+                                @bond.Name
+                            </div>
+
                             @if (@bond.CanDelete)
                             {
-                                <a href="/Bonds/Remove?id=@bond.Id">
+                                <a class="delete-bond short" href="/Bonds/Remove?id=@bond.Id">
                                     <img src="/images/Bonds/logo_delete.webp"
                                          width="17"
                                          height="17">
                                 </a>
                             }
-
                         </td>
                         <td>
                             @bond.Price рублей
