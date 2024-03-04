@@ -17,7 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstateNet14Web", "RealE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatMiniService", "ChatMiniService\ChatMiniService.csproj", "{CEF9E7E1-07D2-4021-A782-E6B68D07C4DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameCommentsService", "GameCommentsService\GameCommentsService.csproj", "{EB86C9C7-2067-424B-A70E-4D2BEB972C84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameCommentsService", "GameCommentsService\GameCommentsService.csproj", "{EB86C9C7-2067-424B-A70E-4D2BEB972C84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net14Web.E2ETests", "Net14Web.E2ETests\Net14Web.E2ETests.csproj", "{B3FD356A-8048-4564-AA9A-338592605F58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{EB86C9C7-2067-424B-A70E-4D2BEB972C84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB86C9C7-2067-424B-A70E-4D2BEB972C84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB86C9C7-2067-424B-A70E-4D2BEB972C84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3FD356A-8048-4564-AA9A-338592605F58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3FD356A-8048-4564-AA9A-338592605F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3FD356A-8048-4564-AA9A-338592605F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3FD356A-8048-4564-AA9A-338592605F58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
