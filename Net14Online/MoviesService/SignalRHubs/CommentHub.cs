@@ -40,7 +40,7 @@ namespace MoviesMicroService.SignalRHubs
             var movie = _moviesRepository.GetById(movieIdInt);
             var comment = _commentBuilder.BuildComment(timeOfWriting, description, user, movie);
             _commentRepository.Add(comment);
-            Clients.Group(movieId).SendAsync("MovieGotNewComment", userId, user.Login, user.AvatarUrl, description, timeOfWriting).Wait();
+            Clients.All.SendAsync("MovieGotNewComment", userId, user.Login, user.AvatarUrl, description, timeOfWriting).Wait();
         }
         
         public void GetLastMovieComments(string movieId)

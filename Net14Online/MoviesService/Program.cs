@@ -42,7 +42,7 @@ var app = builder.Build();
 
 app.UseCors();
 
-app.MapHub<CommentHub>("/commentsMovie");
+app.MapHub<CommentHub>("/commentsMovie/{id?}");
 
 app.MapGet("/", () => "Hello World!");
 
