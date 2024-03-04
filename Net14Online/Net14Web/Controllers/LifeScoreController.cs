@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Net14Web.Models.LifeScore;
+using Net14Web.Services.LifeScore;
 using GameViewModel = Net14Web.Models.LifeScore.GameViewModel;
 
 namespace Net14Web.Controllers;
@@ -7,7 +8,12 @@ namespace Net14Web.Controllers;
 public class LifeScoreController : Controller
 {
     public static LifeScoreViewModel lifeScoreViewModel = new LifeScoreViewModel();
+    private readonly TeamService _teamService;
 
+    public LifeScoreController(TeamService teamService)
+    {
+        _teamService = teamService;
+    }
 
     public IActionResult Index()
     {
@@ -47,7 +53,7 @@ public class LifeScoreController : Controller
     [HttpPost]
     public IActionResult CreateTeam(CreateTeamViewModel newTeam)
     {
-        var team = newTeam;
+        var newTeamId = _teamService.CreateTeam(newTeam);
         return View();
     }
     private LifeScoreViewModel InitializeLifeScoreViewModel(LifeScoreViewModel lifeScoreViewModel)
@@ -82,7 +88,7 @@ public class LifeScoreController : Controller
             Liga = "BHL",
             ShortName = "LN",
             Players = new List<PlayerViewModel> { player },
-            CalendarOfGames = new List<GameViewModel>
+            Games = new List<GameViewModel>
             {
                 new GameViewModel
                 {
@@ -93,10 +99,7 @@ public class LifeScoreController : Controller
                     SecondTeamGoals = 3,
                     GameDate = new DateTime(2023, 12, 28),
                     Result = "Wolves"
-                }
-            },
-            ResultsOfGames = new List<GameViewModel>
-            {
+                },
                 new GameViewModel
                 {
                     Id = 1,
@@ -116,7 +119,7 @@ public class LifeScoreController : Controller
             Liga = "BHL",
             ShortName = "WLV",
             Players = new List<PlayerViewModel> { player2 },
-            CalendarOfGames = new List<GameViewModel>
+            Games = new List<GameViewModel>
             {
                 new GameViewModel
                 {
@@ -127,10 +130,7 @@ public class LifeScoreController : Controller
                     SecondTeamGoals = 3,
                     GameDate = new DateTime(2023, 12, 28),
                     Result = "Wolves"
-                }
-            },
-            ResultsOfGames = new List<GameViewModel>
-            {
+                },
                 new GameViewModel
                 {
                     Id = 1,
@@ -147,7 +147,7 @@ public class LifeScoreController : Controller
 
         lifeScoreViewModel.Teams.Add(team1);
         lifeScoreViewModel.Teams.Add(team2);
-        lifeScoreViewModel.Games.Add(team1.CalendarOfGames.First());
+        lifeScoreViewModel.Games.Add(team1.Games.First());
         return lifeScoreViewModel;
     }
 }
