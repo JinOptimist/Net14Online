@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,20 @@ namespace Net14Web.Controllers
             _bookingPermission = bookingPermission;
         }
 
+        public IActionResult CarRental()
+        {
+            return View();
+        }
+        public IActionResult Flights()
+        {
+            return View();
+        }
+        public IActionResult UserChat()
+        {
+            var viewModel = new UserChatViewModel();
+            viewModel.UserName = _authService.GetCurrentUserName();
+            return View(viewModel);
+        }
         public IActionResult Help()
         {
             return View();
