@@ -1,4 +1,6 @@
 ﻿using ChatMiniService.DbStuff;
+using ChatMiniService.ViewModels;
+using FluentValidation;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ChatMiniService.SignalRHubs
@@ -6,16 +8,25 @@ namespace ChatMiniService.SignalRHubs
     public class ChatHub : Hub
     {
         private FakeDb _fakeDb;
+        private IValidator<MessageViewModel> _validatorMessageViewModel;
 
-        public ChatHub(FakeDb fakeDb)
+        public ChatHub(FakeDb fakeDb, IValidator<MessageViewModel> validatorMessageViewModel)
         {
             _fakeDb = fakeDb;
+            _validatorMessageViewModel = validatorMessageViewModel;
         }
 
-        public void SendMessage(string userName, string message)
+        public void SendMessage(MessageViewModel message)
         {
-            _fakeDb.AddMessage(userName, message);
-            Clients.All.SendAsync("ServerGotOneNewMessage", userName, message).Wait();
+            var validationResult = _validatorMessageViewModel.Validate(message);
+            if (!validationResult.IsValid)
+            {
+                Console.WriteLine(validationResult.ToDictionary());
+                return;
+            }
+
+            _fakeDb.AddMessage(message.UserName, message.Message);
+            Clients.All.SendAsync("ServerGotOneNewMessage", message.UserName, message.Message).Wait();
         }
 
         public void NewUserEnterToChat(string userName)

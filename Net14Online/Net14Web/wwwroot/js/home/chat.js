@@ -2,7 +2,9 @@
     const userName = $('.user-name').val();
 
     const hub = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:7280/chat")
+        .withUrl("https://localhost:7280/chat", {
+            headers: { "authsmile": "123" }
+        })
         .build();
 
     // Something happend on server side
@@ -40,7 +42,8 @@
         const message = $('.new-message-text').val();
         // Something happedn on client side
         // Call server
-        hub.invoke('SendMessage', userName, message);
+        const viewModel = { userName, message };
+        hub.invoke('SendMessage', viewModel);
         $('.new-message-text').val('');
     }
 

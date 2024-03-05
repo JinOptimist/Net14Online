@@ -44,6 +44,13 @@ namespace Net14Web.Services
             return _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Гость";
         }
 
+        public string GetCurrentGooglew()
+        {
+            return _httpContextAccessor.HttpContext.User.Claims
+                .FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims")
+                ?.Value ?? "Гость";
+        }
+
         public bool IsAdmin()
         {
             return GetCurrentUserName() == "admin";
