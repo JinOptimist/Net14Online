@@ -1,0 +1,16 @@
+Index: RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/Chat.js
+===================================================================
+diff --git a/RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/Chat.js b/RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/chat.js
+rename from RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/Chat.js
+rename to RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/chat.js
+--- a/RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/Chat.js	
++++ b/RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/chat.js	
+@@ -5,7 +5,7 @@
+         .withUrl("https://localhost:7260/chat")
+         .build();
+ 
+-    hub.on('newMassage',function (user,message){
++    hub.on('ServerGotOneNewMessage',function (user,message){
+         const newMessageBlock = $('.message.template').clone();
+         newMessageBlock.find('.user-name').text(user);
+         newMessageBlock.find('.message-text').text(message);

@@ -1,0 +1,512 @@
+Index: RealEstateNet14Web/RealEstateNet14Web/Views/Shared/_Layout.cshtml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    @RenderSection(\"Style\", false)\n    @RenderSection(\"Script\", false)\n</head>\n<body>\n<div>\n    <a href=\"/realEstate/Main\">RealEstate</a>\n</div>\n @RenderBody()\n    <div>\n       Футер\n    </div>\n</body>\n</html>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RealEstateNet14Web/RealEstateNet14Web/Views/Shared/_Layout.cshtml b/RealEstateNet14Web/RealEstateNet14Web/Views/Shared/_Layout.cshtml
+--- a/RealEstateNet14Web/RealEstateNet14Web/Views/Shared/_Layout.cshtml	
++++ b/RealEstateNet14Web/RealEstateNet14Web/Views/Shared/_Layout.cshtml	
+@@ -1,6 +1,9 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
++    @section Script{
++        <script src="~/js/signalr/"></script>
++    }
+     @RenderSection("Style", false)
+     @RenderSection("Script", false)
+ </head>
+Index: RealEstateNet14Web/RealEstateNet14Web/Views/RealEstate/Main.cshtml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@model RealEstateNet14Web.Models.ChatModels.ChatViewModel\n@section Style\n{\n    <link href=\"~/css/RealEstate/RealEstate.css\" rel=\"stylesheet\"/>\n}\n\n@section Script\n{\n     <script src=\"~/lib/jquery/dist/jquery.min.js\"></script>\n     <script src=\"https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js\"></script>\n     <script src=\"~/js/Chat.js\"></script>\n}           \n\n<div class=\"chat\">\n    <input type=\"hidden\" class=\"user-name\" value=\"@Model.UserName\"/>\n    <div class=\"messages\">\n        <div class=\"message\">\n            <span class=\"user-name\">Assistent</span>\n            <span class=\"message-text\">I can help you?</span>\n        </div>\n    </div>\n    <div>\n        <input class=\"new-message-text\"/>\n        <button class=\"send-message-button\">Send</button>\n    </div>\n</div>\n\n<div class=\"block-right\">\n    <select class=\"button-right\" name=\"Money\">\n        <option value=\"Money\">BYN</option>\n        <option selected value=\"Money\">USD</option>\n        <option value=\"Money\">EUR</option>\n        <option value=\"Money\">RUB</option>\n\n    </select>\n    <button class=\"button-right\">Добавть обьявление</button>\n\n    @if ((!User?.Identity?.IsAuthenticated) ?? true)\n    {\n        <a class=\"button-right\" href=\"/AuthRealEstate/RealEstateLogin\">Вход</a>\n    }\n    else\n    {\n        <a href=\"/AuthRealEstate/RealEstateLogout\">Logout</a>\n        <a href=\"/RealEstate/AddApartament\">Добавить обьявление</a>\n        <a href=\"/RealEstate/CheckAllApartaments\">Все обьявления</a>\n    }\n</div>\n\n<div class=\"block-center\">\n    <div class=\"dropdown-block-center\">\n        <button class=\"dropbtn-center\">Продажа</button>\n        <div class=\"dropdown-content\">\n            <a href=\"#\">Квартиры</a>\n            <a href=\"#\">Дома</a>\n            <a href=\"#\">Гаражи</a>\n        </div>\n    </div>\n    <div class=\"dropdown-block-center\">\n        <button class=\"dropbtn-center\">Аренда</button>\n        <div class=\"dropdown-content\">\n            <a href=\"#\">На длительный срок</a>\n            <a href=\"#\">На сутки</a>\n        </div>\n    </div>\n    <div class=\"dropdown-block-center\">\n        <button class=\"dropbtn-center\">Новостройки</button>\n        <div class=\"dropdown-content\">\n            <a href=\"#\">Квартиры</a>\n            <a href=\"#\">Новостройки</a>\n            <a href=\"#\">Жилые комплексы</a>\n        </div>\n    </div>\n\n</div>\n<div class=\"images-container\">\n    <div class=\"center size\">Поиск недвижимости в Минске</div>\n    <div class=\"quick-choice\">\n        <div class=\"block button\">\n            Купить\n        </div>\n        <div class=\"block button\">\n            Снять\n        </div>\n        <div class=\"block button\">\n            Посуточно\n        </div>\n        <div class=\"block button\">\n            Новостройки\n        </div>\n    </div>\n\n    <div class=\"choice\">\n        <div class=\"dropdown-block\">\n            <button class=\"dropbtn\">Тип недвижимости</button>\n            <div class=\"dropdown-content\">\n                <a href=\"#\">Квартира</a>\n                <a href=\"#\">Дом</a>\n                <a href=\"#\">Гараж</a>\n            </div>\n        </div>\n        <div class=\"dropdown-block\">\n            <button class=\"dropbtn\">Сколько комнат?</button>\n            <div class=\"dropdown-content\">\n                <a href=\"#\">1</a>\n                <a href=\"#\">2</a>\n                <a href=\"#\">3</a>\n            </div>\n        </div>\n        <div class=\"dropdown-block\">\n            <button class=\"dropbtn\">За какую стоимость?</button>\n            <div class=\"dropdown-content\">\n                <a href=\"#\">1</a>\n                <a href=\"#\">2</a>\n                <a href=\"#\">3</a>\n            </div>\n        </div>\n        <div class=\"dropdown-block\">\n            <input class=\"style\" placeholder=\"В каком городе?\" type=\"text\">\n        </div>\n    </div>\n</div>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RealEstateNet14Web/RealEstateNet14Web/Views/RealEstate/Main.cshtml b/RealEstateNet14Web/RealEstateNet14Web/Views/RealEstate/Main.cshtml
+--- a/RealEstateNet14Web/RealEstateNet14Web/Views/RealEstate/Main.cshtml	
++++ b/RealEstateNet14Web/RealEstateNet14Web/Views/RealEstate/Main.cshtml	
+@@ -6,9 +6,9 @@
+ 
+ @section Script
+ {
+-     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+-     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+-     <script src="~/js/Chat.js"></script>
++    <script src="~/lib/jquery/dist/jquery.min.js"></script>
++    <script src="~/js/signalr/signalr/" type="text/javascript"></script>   
++    <script src="~/js/Chat.js"></script>
+ }           
+ 
+ <div class="chat">
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_44__Changes_1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_44__Changes_1.xml b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_44__Changes_1.xml
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_44__Changes_1.xml	
++++ /dev/null	
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Checkout_at_7_12_23,_09_44_[Changes]1" date="1701963986129" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_44_[Changes]1/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 7.12.23, 09:44 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_15_01_24__12_32__Changes_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_15_01_24__12_32__Changes_.xml b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_15_01_24__12_32__Changes_.xml
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_15_01_24__12_32__Changes_.xml	
++++ /dev/null	
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Merge_at_15_01_24,_12_32_[Changes]" date="1705343554318" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_15_01_24,_12_32_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Merge at 15.01.24, 12:32 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Update_at_31_01_24__12_47__Changes_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Update_at_31_01_24__12_47__Changes_.xml b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Update_at_31_01_24__12_47__Changes_.xml
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Update_at_31_01_24__12_47__Changes_.xml	
++++ /dev/null	
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_31_01_24,_12_47_[Changes]" date="1706726836438" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Update_at_31_01_24,_12_47_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 31.01.24, 12:47 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_.xml b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_.xml
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_.xml	
++++ /dev/null	
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]" date="1701964042259" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 7.12.23, 09:47 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_1.xml b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_1.xml
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_1.xml	
++++ /dev/null	
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]1" date="1701964054247" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23,_09_47_[Changes]1/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 7.12.23, 09:47 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_31_01_24__12_48__Changes_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_31_01_24__12_48__Changes_.xml b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_31_01_24__12_48__Changes_.xml
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_31_01_24__12_48__Changes_.xml	
++++ /dev/null	
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Merge_at_31_01_24,_12_48_[Changes]" date="1706727052323" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_31_01_24,_12_48_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Merge at 31.01.24, 12:48 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_31_01_24__12_48__Changes_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_31_01_24__12_48__Changes_.xml b/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_31_01_24__12_48__Changes_.xml
+deleted file mode 100644
+--- a/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_31_01_24__12_48__Changes_.xml	
++++ /dev/null	
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Checkout_at_31_01_24,_12_48_[Changes]" date="1706726912208" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_31_01_24,_12_48_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 31.01.24, 12:48 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: RealEstateNet14Web/RealEstateNet14Web/Services/Auth/RealEstateAuthService.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using RealEstateNet14Web.DbStuff.Models;\nusing RealEstateNet14Web.DbStuff.Repositories;\n\nnamespace RealEstateNet14Web.Services.Auth;\n\npublic class RealEstateAuthService\n{\n    private ApartmentOwnerRepository _apartmentOwnerRepository;\n    private IHttpContextAccessor _httpContextAccessor;\n\n    public RealEstateAuthService(ApartmentOwnerRepository apartmentOwnerRepository, \n        IHttpContextAccessor httpContextAccessor)\n    {\n        _apartmentOwnerRepository = apartmentOwnerRepository;\n        _httpContextAccessor = httpContextAccessor;// HttpContext == null\n    }\n    public ApartmentOwner GetCurrentUser()\n    {\n        var id = GetCurrentUserId();\n        return _apartmentOwnerRepository.GetById(id);\n    }\n\n    public int GetCurrentUserId()\n    {\n        // HttpContext != null\n        var idStr = _httpContextAccessor.HttpContext.User.Claims.First(x => x.Type == \"id\").Value;\n        var id = int.Parse(idStr);\n        return id;\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RealEstateNet14Web/RealEstateNet14Web/Services/Auth/RealEstateAuthService.cs b/RealEstateNet14Web/RealEstateNet14Web/Services/Auth/RealEstateAuthService.cs
+--- a/RealEstateNet14Web/RealEstateNet14Web/Services/Auth/RealEstateAuthService.cs	
++++ b/RealEstateNet14Web/RealEstateNet14Web/Services/Auth/RealEstateAuthService.cs	
+@@ -27,4 +27,9 @@
+         var id = int.Parse(idStr);
+         return id;
+     }
++    
++    public string GetCurrentUserName()
++    {
++        return _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Гость";
++    }
+ }
+\ No newline at end of file
+Index: .idea/.idea.Net14Online/.idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoGeneratedRunConfigurationManager\">\n    <projectFile>Maze/Maze.csproj</projectFile>\n    <projectFile>Net14OnlineConsole/Net14OnlineConsole.csproj</projectFile>\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"b6857001-0b5a-4cf8-851c-5714cbb9ccee\" name=\"Changes\" comment=\"\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Maze/Cells/Heart.cs\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Maze/Cells/Moon.cs\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Maze/Cells/Ring.cs\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/Maze/Cells/Secret.cs\" beforeDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$/..\" value=\"main\" />\n      </map>\n    </option>\n  </component>\n  <component name=\"HighlightingSettingsPerFile\">\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n    <setting file=\"mock://diff.cs\" root0=\"SKIP_HIGHLIGHTING\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2Z4U79BQbAFhEOED6yCYl7WSkCw\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">{\n  &quot;keyToString&quot;: {\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\n  },\n  &quot;keyToStringList&quot;: {\n    &quot;rider.external.source.directories&quot;: [\n      &quot;/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,\n      &quot;/Users/antonkupalov/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,\n      &quot;/Users/antonkupalov/.local/share/Symbols/src&quot;\n    ]\n  }\n}</component>\n  <component name=\"RunManager\" selected=\".NET Project.Maze\">\n    <configuration name=\"Maze\" type=\"DotNetProject\" factoryName=\".NET Project\">\n      <option name=\"EXE_PATH\" value=\"\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <option name=\"USE_MONO\" value=\"0\" />\n      <option name=\"RUNTIME_ARGUMENTS\" value=\"\" />\n      <option name=\"PROJECT_PATH\" value=\"$PROJECT_DIR$/Maze/Maze.csproj\" />\n      <option name=\"PROJECT_EXE_PATH_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_ARGUMENTS_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_WORKING_DIRECTORY_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_KIND\" value=\"DotNetCore\" />\n      <option name=\"PROJECT_TFM\" value=\"\" />\n      <method v=\"2\">\n        <option name=\"Build\" />\n      </method>\n    </configuration>\n    <configuration name=\"Net14OnlineConsole\" type=\"DotNetProject\" factoryName=\".NET Project\">\n      <option name=\"EXE_PATH\" value=\"\" />\n      <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"\" />\n      <option name=\"PASS_PARENT_ENVS\" value=\"1\" />\n      <option name=\"USE_EXTERNAL_CONSOLE\" value=\"0\" />\n      <option name=\"USE_MONO\" value=\"0\" />\n      <option name=\"RUNTIME_ARGUMENTS\" value=\"\" />\n      <option name=\"PROJECT_PATH\" value=\"$PROJECT_DIR$/Net14OnlineConsole/Net14OnlineConsole.csproj\" />\n      <option name=\"PROJECT_EXE_PATH_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_ARGUMENTS_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_WORKING_DIRECTORY_TRACKING\" value=\"1\" />\n      <option name=\"PROJECT_KIND\" value=\"DotNetCore\" />\n      <option name=\"PROJECT_TFM\" value=\"\" />\n      <method v=\"2\">\n        <option name=\"Build\" />\n      </method>\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"b6857001-0b5a-4cf8-851c-5714cbb9ccee\" name=\"Changes\" comment=\"\" />\n      <created>1701680675708</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1701680675708</updated>\n      <workItem from=\"1701680676963\" duration=\"352000\" />\n      <workItem from=\"1701791730850\" duration=\"5192000\" />\n      <workItem from=\"1701849794699\" duration=\"5818000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"UnityUnitTestConfiguration\" currentTestLauncher=\"NUnit\" />\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"CLEAR_INITIAL_COMMIT_MESSAGE\" value=\"true\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.Net14Online/.idea/workspace.xml b/.idea/.idea.Net14Online/.idea/workspace.xml
+--- a/.idea/.idea.Net14Online/.idea/workspace.xml	
++++ b/.idea/.idea.Net14Online/.idea/workspace.xml	
+@@ -1,42 +1,77 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="AutoGeneratedRunConfigurationManager">
++    <projectFile profileName="http">ChatMiniService/ChatMiniService.csproj</projectFile>
++    <projectFile profileName="https">ChatMiniService/ChatMiniService.csproj</projectFile>
++    <projectFile profileName="ChatMiniServiceForRealEstate">ChatMiniServiceForRealEstate/ChatMiniServiceForRealEstate.csproj</projectFile>
++    <projectFile profileName="GameCommentsService">GameCommentsService/GameCommentsService.csproj</projectFile>
++    <projectFile profileName="ManagementCompany">ManagementCompany/ManagementCompany.csproj</projectFile>
+     <projectFile>Maze/Maze.csproj</projectFile>
+-    <projectFile>Net14OnlineConsole/Net14OnlineConsole.csproj</projectFile>
++    <projectFile profileName="Net14OnlineConsole">Net14OnlineConsole/Net14OnlineConsole.csproj</projectFile>
++    <projectFile profileName="Net14Web">Net14Web/Net14Web.csproj</projectFile>
++    <projectFile profileName="RealEstateNet14Web">RealEstateNet14Web/RealEstateNet14Web/RealEstateNet14Web.csproj</projectFile>
++    <projectFile profileName="WebApplication2">WebApplication2/WebApplication2.csproj</projectFile>
++    <projectFile profileName="WebApplication3">WebApplication3/WebApplication3.csproj</projectFile>
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="b6857001-0b5a-4cf8-851c-5714cbb9ccee" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_31_01_24__12_48__Changes_.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_44__Changes_1.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_12_23__09_47__Changes_1.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_15_01_24__12_32__Changes_.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Merge_at_31_01_24__12_48__Changes_.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/shelf/Uncommitted_changes_before_Update_at_31_01_24__12_47__Changes_.xml" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Net14Online/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Maze/Cells/Heart.cs" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Maze/Cells/Moon.cs" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Maze/Cells/Ring.cs" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Maze/Cells/Secret.cs" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Controllers/RealEstateController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Controllers/RealEstateController.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Services/Auth/RealEstateAuthService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Services/Auth/RealEstateAuthService.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Views/RealEstate/Main.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Views/RealEstate/Main.cshtml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Views/Shared/_Layout.cshtml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/Chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/chat.js" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="CSS File" />
++        <option value="JavaScript File" />
++      </list>
++    </option>
++  </component>
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$/.." value="main" />
++        <entry key="$PROJECT_DIR$/.." value="Task_362" />
+       </map>
+     </option>
+   </component>
+   <component name="HighlightingSettingsPerFile">
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
+-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/ChatMiniServiceForRealEstate/DbStuff/Models/Message.cs" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/ChatMiniServiceForRealEstate/Program.cs" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/Net14Web/wwwroot/lib/bootstrap-5.3.2-dist/css/bootstrap-utilities.rtl.css.map" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/Net14Web/wwwroot/lib/bootstrap-5.3.2-dist/css/bootstrap.min.css.map" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/RealEstateNet14Web/Program.cs" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Controllers/AuthRealEstate/AuthRealEstateController.cs" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Controllers/HomeController.cs" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Controllers/RealEstateController.cs" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Services/Auth/RealEstateAuthService.cs" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Services/DeleteUser.cs" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Services/UpdateUser.cs" root0="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Views/RealEstate/DataBase.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Views/RealEstate/Login.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Views/RealEstate/Main.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
++    <setting file="file://$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/Views/RealEstate/Update.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+   </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+   </component>
++  <component name="ProblemsViewState">
++    <option name="selectedTabId" value="Toolset" />
++  </component>
+   <component name="ProjectId" id="2Z4U79BQbAFhEOED6yCYl7WSkCw" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+@@ -44,9 +79,12 @@
+   </component>
+   <component name="PropertiesComponent">{
+   &quot;keyToString&quot;: {
++    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
+     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   },
+@@ -58,7 +96,7 @@
+     ]
+   }
+ }</component>
+-  <component name="RunManager" selected=".NET Project.Maze">
++  <component name="RunManager" selected=".NET Launch Settings Profile.ChatMiniServiceForRealEstate">
+     <configuration name="Maze" type="DotNetProject" factoryName=".NET Project">
+       <option name="EXE_PATH" value="" />
+       <option name="PROGRAM_PARAMETERS" value="" />
+@@ -95,6 +133,135 @@
+         <option name="Build" />
+       </method>
+     </configuration>
++    <configuration name="ChatMiniServiceForRealEstate" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
++      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ChatMiniServiceForRealEstate/ChatMiniServiceForRealEstate.csproj" />
++      <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
++      <option name="LAUNCH_PROFILE_NAME" value="ChatMiniServiceForRealEstate" />
++      <option name="USE_EXTERNAL_CONSOLE" value="0" />
++      <option name="USE_MONO" value="0" />
++      <option name="RUNTIME_ARGUMENTS" value="" />
++      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
++      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
++      <option name="SEND_DEBUG_REQUEST" value="1" />
++      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
++      <method v="2">
++        <option name="Build" />
++      </method>
++    </configuration>
++    <configuration name="ChatMiniService: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
++      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ChatMiniService/ChatMiniService.csproj" />
++      <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
++      <option name="LAUNCH_PROFILE_NAME" value="http" />
++      <option name="USE_EXTERNAL_CONSOLE" value="0" />
++      <option name="USE_MONO" value="0" />
++      <option name="RUNTIME_ARGUMENTS" value="" />
++      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
++      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
++      <option name="SEND_DEBUG_REQUEST" value="1" />
++      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
++      <method v="2">
++        <option name="Build" />
++      </method>
++    </configuration>
++    <configuration name="ChatMiniService: https" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
++      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ChatMiniService/ChatMiniService.csproj" />
++      <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
++      <option name="LAUNCH_PROFILE_NAME" value="https" />
++      <option name="USE_EXTERNAL_CONSOLE" value="0" />
++      <option name="USE_MONO" value="0" />
++      <option name="RUNTIME_ARGUMENTS" value="" />
++      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
++      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
++      <option name="SEND_DEBUG_REQUEST" value="1" />
++      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
++      <method v="2">
++        <option name="Build" />
++      </method>
++    </configuration>
++    <configuration name="GameCommentsService" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
++      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/GameCommentsService/GameCommentsService.csproj" />
++      <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
++      <option name="LAUNCH_PROFILE_NAME" value="GameCommentsService" />
++      <option name="USE_EXTERNAL_CONSOLE" value="0" />
++      <option name="USE_MONO" value="0" />
++      <option name="RUNTIME_ARGUMENTS" value="" />
++      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
++      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
++      <option name="SEND_DEBUG_REQUEST" value="1" />
++      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
++      <method v="2">
++        <option name="Build" />
++      </method>
++    </configuration>
++    <configuration name="Net14Web" type="LaunchSettings" factoryName=".NET Launch Settings Profile" temporary="true">
++      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Net14Web/Net14Web.csproj" />
++      <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
++      <option name="LAUNCH_PROFILE_NAME" value="Net14Web" />
++      <option name="USE_EXTERNAL_CONSOLE" value="0" />
++      <option name="USE_MONO" value="0" />
++      <option name="RUNTIME_ARGUMENTS" value="" />
++      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
++      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
++      <option name="SEND_DEBUG_REQUEST" value="1" />
++      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
++      <method v="2">
++        <option name="Build" />
++      </method>
++    </configuration>
++    <configuration name="RealEstateNet14Web" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
++      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/RealEstateNet14Web/RealEstateNet14Web/RealEstateNet14Web.csproj" />
++      <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
++      <option name="LAUNCH_PROFILE_NAME" value="RealEstateNet14Web" />
++      <option name="USE_EXTERNAL_CONSOLE" value="0" />
++      <option name="USE_MONO" value="0" />
++      <option name="RUNTIME_ARGUMENTS" value="" />
++      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
++      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
++      <option name="SEND_DEBUG_REQUEST" value="1" />
++      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
++      <method v="2">
++        <option name="Build" />
++      </method>
++    </configuration>
++    <configuration name="WebApplication2" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
++      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/WebApplication2/WebApplication2.csproj" />
++      <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
++      <option name="LAUNCH_PROFILE_NAME" value="WebApplication2" />
++      <option name="USE_EXTERNAL_CONSOLE" value="0" />
++      <option name="USE_MONO" value="0" />
++      <option name="RUNTIME_ARGUMENTS" value="" />
++      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
++      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
++      <option name="SEND_DEBUG_REQUEST" value="1" />
++      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
++      <method v="2">
++        <option name="Build" />
++      </method>
++    </configuration>
++    <configuration name="WebApplication3" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
++      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/WebApplication3/WebApplication3.csproj" />
++      <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
++      <option name="LAUNCH_PROFILE_NAME" value="WebApplication3" />
++      <option name="USE_EXTERNAL_CONSOLE" value="0" />
++      <option name="USE_MONO" value="0" />
++      <option name="RUNTIME_ARGUMENTS" value="" />
++      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
++      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
++      <option name="SEND_DEBUG_REQUEST" value="1" />
++      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
++      <method v="2">
++        <option name="Build" />
++      </method>
++    </configuration>
++    <recent_temporary>
++      <list>
++        <item itemvalue=".NET Launch Settings Profile.Net14Web" />
++        <item itemvalue=".NET Launch Settings Profile.Net14Web" />
++        <item itemvalue=".NET Launch Settings Profile.Net14Web" />
++        <item itemvalue=".NET Launch Settings Profile.Net14Web" />
++        <item itemvalue=".NET Launch Settings Profile.Net14Web" />
++      </list>
++    </recent_temporary>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+@@ -107,6 +274,35 @@
+       <workItem from="1701680676963" duration="352000" />
+       <workItem from="1701791730850" duration="5192000" />
+       <workItem from="1701849794699" duration="5818000" />
++      <workItem from="1708617647208" duration="2000" />
++      <workItem from="1708617678264" duration="479000" />
++      <workItem from="1708618162687" duration="97000" />
++      <workItem from="1708618274176" duration="1000" />
++      <workItem from="1708618368700" duration="92000" />
++      <workItem from="1708618463557" duration="5000" />
++      <workItem from="1708618547699" duration="12852000" />
++      <workItem from="1709048387188" duration="75000" />
++      <workItem from="1709048464986" duration="404000" />
++      <workItem from="1709048872515" duration="3000" />
++      <workItem from="1709048896198" duration="7787000" />
++      <workItem from="1709059183543" duration="1585000" />
++      <workItem from="1709134495126" duration="151000" />
++      <workItem from="1709134688103" duration="350000" />
++      <workItem from="1709135041599" duration="4000" />
++      <workItem from="1709135069774" duration="10764000" />
++      <workItem from="1709222717368" duration="20000" />
++      <workItem from="1709222762571" duration="495000" />
++      <workItem from="1709223262029" duration="163000" />
++      <workItem from="1709223675051" duration="1689000" />
++      <workItem from="1709225413008" duration="1596000" />
++      <workItem from="1709227189915" duration="1695000" />
++      <workItem from="1709394212650" duration="1493000" />
++      <workItem from="1709395786201" duration="434000" />
++      <workItem from="1709396223877" duration="86000" />
++      <workItem from="1709396313037" duration="885000" />
++      <workItem from="1709397276400" duration="266000" />
++      <workItem from="1709397657889" duration="1270000" />
++      <workItem from="1709399083395" duration="6714000" />
+     </task>
+     <servers />
+   </component>
+@@ -114,6 +310,17 @@
+     <option name="version" value="3" />
+   </component>
+   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
+   <component name="VcsManagerConfiguration">
+     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+   </component>
+Index: RealEstateNet14Web/RealEstateNet14Web/Controllers/RealEstateController.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using Microsoft.AspNetCore.Authorization;\nusing Microsoft.AspNetCore.Mvc;\nusing RealEstateNet14Web.DbStuff.Models;\nusing RealEstateNet14Web.DbStuff.Repositories;\nusing RealEstateNet14Web.Models;\nusing RealEstateNet14Web.Services;\nusing RealEstateNet14Web.Services.Auth;\n\nnamespace RealEstateNet14Web.Controllers;\n\npublic class RealEstateController : Controller\n{\n   //  public readonly UserBuilder _userBuilder;\n    public readonly DeleteUser _deleteUser;\n    public readonly UpdateUser _updateUser;\n    private ApartmentOwnerRepository _apartmentOwnerRepository;\n    private RealEstateAuthService _realEstateAuthService;\n    private ApartamentRepository _apartamentRepository;\n        \n    public static List<UserViewModel> userViewModels = new();\n\n    public RealEstateController(DeleteUser deleteUser,\n        UpdateUser updateUser,\n        ApartmentOwnerRepository apartmentOwnerRepository,\n        RealEstateAuthService realEstateAuthService,\n        ApartamentRepository apartamentRepository)\n    {\n       // _userBuilder = userBuilder;\n        _deleteUser = deleteUser;\n        _updateUser = updateUser;\n        _apartmentOwnerRepository = apartmentOwnerRepository;\n        _realEstateAuthService = realEstateAuthService;\n        _apartamentRepository = apartamentRepository;\n    }\n   \n    public IActionResult Main()\n    {\n        return View(userViewModels);\n    }\n   \n    [HttpGet]\n    [Authorize]\n    public IActionResult DataBase()\n    {\n        var dbApartmentOwners = _apartmentOwnerRepository.GetApartamentOwners(10);\n\n        var viewModels = dbApartmentOwners\n            .Select(dbUser => new UserViewModel()\n            {\n                Age = dbUser.Age,\n                Name = dbUser.Name,\n                KindOfActivity = dbUser.KindOfActivity,\n            })\n            .ToList();\n\n        return View(dbApartmentOwners);\n    }\n    \n    [ HttpGet]\n    public IActionResult AddUser()\n    {\n        return View();\n    }\n    \n    [HttpGet]\n    public IActionResult Login()\n    {\n        return View();\n    }\n\n    [HttpGet]\n    [Authorize]\n    public IActionResult Update(int id)\n    {\n        var user = _apartmentOwnerRepository.GetById(id);\n        return View(user);\n    }\n    \n    [HttpPost]\n    [Authorize]\n    public IActionResult Update(int id,string name,int age,string kindOfActivity)\n    {\n        var user = _apartmentOwnerRepository.GetById(id);\n        _apartmentOwnerRepository.Update(user,name, age, kindOfActivity);\n        return RedirectToAction(\"DataBase\");\n    }\n\n    [HttpGet]\n    [Authorize]\n    public IActionResult Delete(int id)\n    {\n        _apartmentOwnerRepository.Delete(id);\n        return RedirectToAction(\"DataBase\");\n    }\n    \n    [HttpPost]\n    public IActionResult AddUser(AddUserViewModel addUser)\n    {\n       // var newUser = _userBuilder.BuilderUser(user);\n       var newUser = new ApartmentOwner()\n       {\n           Name = addUser.Name,\n           Age = addUser.Age,\n           KindOfActivity = addUser.KindOfActivity,\n       };\n      // _apartmentOwnerRepository.Add(newUser);\n        _apartmentOwnerRepository.Add(newUser);\n        \n        return RedirectToAction(\"DataBase\");\n    }\n\n    [HttpGet]\n    public IActionResult AddApartament()\n    {\n        return View();\n    }\n\n    [HttpPost]\n    public IActionResult AddApartament(ApartamentViewModel apartamentViewModel)\n    {\n        var newApartament = new Apartament\n        {\n            City = apartamentViewModel.City,\n            Street = apartamentViewModel.Street,\n            NumberApartament = apartamentViewModel.NumberApartament,\n            Size = apartamentViewModel.Size,\n            ApartmentOwner = _realEstateAuthService.GetCurrentUser()\n        };\n        _apartamentRepository.Add(newApartament);\n\n        return RedirectToAction(\"Main\");\n    }\n\n    [HttpGet]\n    public IActionResult CheckAllApartaments()\n    {\n        var dbApartaments = _apartamentRepository.GetApartamentsAndApartmentOwner(10);\n\n        var viewModel = dbApartaments.\n            Select(dbApartament => new ApartamentViewModel\n        {\n            City = dbApartament.City,\n            Street = dbApartament.Street,\n            NumberApartament = dbApartament.NumberApartament,\n            Size = dbApartament.Size,\n            OwnerName = dbApartament.ApartmentOwner?.Login ?? \"---\"\n        }).ToList();\n\n        return View(viewModel);\n    }\n    \n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RealEstateNet14Web/RealEstateNet14Web/Controllers/RealEstateController.cs b/RealEstateNet14Web/RealEstateNet14Web/Controllers/RealEstateController.cs
+--- a/RealEstateNet14Web/RealEstateNet14Web/Controllers/RealEstateController.cs	
++++ b/RealEstateNet14Web/RealEstateNet14Web/Controllers/RealEstateController.cs	
+@@ -3,6 +3,7 @@
+ using RealEstateNet14Web.DbStuff.Models;
+ using RealEstateNet14Web.DbStuff.Repositories;
+ using RealEstateNet14Web.Models;
++using RealEstateNet14Web.Models.ChatModels;
+ using RealEstateNet14Web.Services;
+ using RealEstateNet14Web.Services.Auth;
+ 
+@@ -35,7 +36,9 @@
+    
+     public IActionResult Main()
+     {
+-        return View(userViewModels);
++        var viewModel = new ChatViewModel();
++        viewModel.UserName = _realEstateAuthService.GetCurrentUserName();
++        return View(viewModel);
+     }
+    
+     [HttpGet]
