@@ -45,7 +45,7 @@ $(document).ready(() => {
         newCommentBlock.find('.user-href-id').attr('href', '/movies/user/' + userId);
         newCommentBlock.find('.user-src-avatarUrl').attr('src', userAvatarUrl);
         newCommentBlock.find('.comment-description').text(commentDescription);
-        newCommentBlock.find('comment-time-of-writing').text(commentTimeOfWriting);
+        newCommentBlock.find('.comment-time-of-writing').text(commentTimeOfWriting);
 
         $('.comments').prepend(newCommentBlock);
     }
