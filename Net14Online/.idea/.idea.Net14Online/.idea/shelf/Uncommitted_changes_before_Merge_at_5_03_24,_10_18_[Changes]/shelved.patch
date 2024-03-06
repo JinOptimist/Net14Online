@@ -1,0 +1,38 @@
+Index: RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/Chat.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/Chat.js b/RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/chat.js
+rename from RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/Chat.js
+rename to RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/chat.js
+--- a/RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/Chat.js	
++++ b/RealEstateNet14Web/RealEstateNet14Web/wwwroot/js/chat.js	
+@@ -5,20 +5,20 @@
+         .withUrl("https://localhost:7260/chat")
+         .build();
+ 
+-    hub.on('newMassage',function (user,message){
+-        const newMessageBlock = $('.message.template').clone();
+-        newMessageBlock.find('.user-name').text(user);
+-        newMessageBlock.find('.message-text').text(message);
++    hub.on('ServerGotOneNewMessage',function (user,message){
++      //  const newMessageBlock = $('.message.template').clone();
++       // newMessageBlock.find('.user-name').text(user);
++       // newMessageBlock.find('.message-text').text(message);
+ 
+-        $('.messages').append(newMessageBlock);
+-       // console.log("user  " + userName + "message" + masagge)
++       // $('.messages').append(newMessageBlock);
++        console.log("user  " + user + "message" + message)
+     });
+     
+     $('.send-message-button').click(function ()
+     {
+         const massage = $('.new-message-text').val();
+         
+-        hub.invoke('SendMassage',userName,massage);
++        hub.invoke('SendMassage',"Ivan",massage);
+     });
+     
+     hub.start();

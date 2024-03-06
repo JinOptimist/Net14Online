@@ -17,6 +17,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstateNet14Web", "RealE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatMiniService", "ChatMiniService\ChatMiniService.csproj", "{CEF9E7E1-07D2-4021-A782-E6B68D07C4DD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoviesMicroService", "MoviesService\MoviesMicroService.csproj", "{EE74A390-FBF5-4501-9B55-EADC2C21A9D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameCommentsService", "GameCommentsService\GameCommentsService.csproj", "{EB86C9C7-2067-424B-A70E-4D2BEB972C84}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Net14Web.E2ETests", "Net14Web.E2ETests\Net14Web.E2ETests.csproj", "{B3FD356A-8048-4564-AA9A-338592605F58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatMiniServiceForRealEstate", "ChatMiniServiceForRealEstate\ChatMiniServiceForRealEstate.csproj", "{EAA6A0E0-072A-489C-A682-2D2B5E91E698}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatMiniService", "ChatMiniService\ChatMiniService.csproj", "{CEF9E7E1-07D2-4021-A782-E6B68D07C4DD}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingChatHub", "BookingChatHub\BookingChatHub.csproj", "{1CB8CECC-57B1-4B08-B187-B5FE7BEB3DF7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameCommentsService", "GameCommentsService\GameCommentsService.csproj", "{EB86C9C7-2067-424B-A70E-4D2BEB972C84}"

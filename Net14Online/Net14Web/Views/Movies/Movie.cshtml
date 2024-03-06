@@ -1,5 +1,12 @@
 ﻿@using Net14Web.Models.Movies
+@using System.Security.Claims
 @model MovieViewModel
+
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="~/js/Movies/comment.js"></script>
+}
 
 @section Style
 {
@@ -29,7 +36,7 @@
                                     <div class="row">
                                         @if ((User?.Identity?.IsAuthenticated ?? false) && Model.CanAddCommentToMovie)
                                         {
-                                            @using (Html.BeginForm(nameof(Net14Web.Controllers.MoviesControllers.MoviesController.AddCommentOnMovie), "Movies", FormMethod.Post, new { @class = "col-12" }))
+                                          @*   @using (Html.BeginForm(nameof(Net14Web.Controllers.MoviesControllers.MoviesController.AddCommentOnMovie), "Movies", FormMethod.Post, new { @class = "col-12" }))
                                             {
                                                 <div class="input-group">
                                                     <input type="hidden" name="movieId" value="@Model.Id" />
@@ -40,40 +47,76 @@
                                                     </button>
                                                 </div>
                                                 <br>
-                                            }
+                                            } *@
+
+                                            <div class="input-group">
+                                                <input type="hidden" name="movieId" class="movie-id" value="@Model.Id" />
+                                                <input type="hidden" name="userId" class="user-id" value="@User.FindFirst("id").Value" />
+                                                <input type="text" class="form-control description-comment" name="description" placeholder="Комментарий" aria-describedby="input-group-button-right">
+                                                <button type="submit" class="btn btn-outline-secondary btn-add-comment"
+                                                        id="input-group-button-right">
+                                                    Оставить комментарий
+                                                </button>
+                                            </div>
+                                            <br>
                                         }
-                                        @foreach (var comment in @Model.Comments)
-                                        {
-                                            <div>
-                                                <a class="comment-a rounded" href="/movies/user/@comment.User.UserId">
+                                        <div class="comments">
+                                            <div class="comment comment-template">
+                                                <a class="comment-a rounded user-href-id" href="/movies/user/userId">
                                                     <div class="row">
                                                         <div class="col-md-2">
-                                                            <img src="@comment.User.AvatarUrl" class="rounded comment-image">
+                                                            <img src="commentUserAvatarUrl" class="user-src-avatarUrl rounded comment-image">
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body">
-                                                                <p class="h5">@comment.User.Username</p>
-                                                                <p class="card-text">
-                                                                    @comment.Description
+                                                                <p class="h5 comment-user-name"></p>
+                                                                <p class="card-text comment-description">
                                                                 </p>
-                                                                @if ((User?.Identity?.IsAuthenticated ?? false) && comment.CanRemoveCommentFromMovie)
-                                                                {
-                                                                    <a class="btn btn-link" href="/movies/deleteCommentOnMovie?commentId=@comment.Id">Удалить</a>
-                                                                }
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <p class="card-text">
-                                                                <small class="text-muted">
-                                                                    @comment.TimeOfWriting
+                                                                <small class="text-muted comment-time-of-writing">
                                                                 </small>
                                                             </p>
                                                         </div>
                                                     </div>
                                                 </a>
                                             </div>
-                                            <br/>
-                                        }
+                                            <br />
+                                            @* @foreach (var comment in @Model.Comments)
+                                            {
+                                                <div class="comment">
+                                                    <a class="comment-a rounded" href="/movies/user/@comment.User.UserId">
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <img src="@comment.User.AvatarUrl" class="rounded comment-image">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="card-body">
+                                                                    <p class="h5">@comment.User.Username</p>
+                                                                    <p class="card-text">
+                                                                        @comment.Description
+                                                                    </p>
+                                                                    @if ((User?.Identity?.IsAuthenticated ?? false) && comment.CanRemoveCommentFromMovie)
+                                                                    {
+                                                                        <a class="btn btn-link" href="/movies/deleteCommentOnMovie?commentId=@comment.Id">Удалить</a>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <p class="card-text">
+                                                                    <small class="text-muted">
+                                                                        @comment.TimeOfWriting
+                                                                    </small>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <br />
+                                            } *@
+                                        </div>
                                     </div>
                                 </div>
                             </div>
