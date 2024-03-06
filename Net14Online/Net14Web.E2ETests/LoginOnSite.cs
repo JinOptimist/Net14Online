@@ -9,10 +9,10 @@ namespace Net14Web.E2ETests
         private IWebDriver driver;
         public const string BASE_URL = "https://localhost:7163";
 
-        public const string ADMIN_NAME = "user";
+        public const string ADMIN_NAME = "admin";
         public const string ADMIN_PASSWORD = "123";
 
-        public const string USER_NAME = "admin";
+        public const string USER_NAME = "user";
         public const string USER_PASSWORD = "123";
 
         public IWebDriver Driver => driver;

@@ -11,14 +11,13 @@ $(document).ready(() => {
     });
 
     hub.on('LastComments', (lastComments) => {
-        console.log(lastComments);
         lastComments.forEach((comment) => {
             addCommentOnPage(comment.userId, comment.userName, comment.userAvatarUrl, comment.description, comment.timeOfWriting);
         });
     });
 
     addCommentButton.click(() => {
-        const descriptionComment = $('.description-comment');
+        const descriptionComment = $('.btn-description-comment');
         if (descriptionComment.val().length) {
             addCommentOnServer();
             descriptionComment.val("");
@@ -34,7 +33,7 @@ $(document).ready(() => {
     const addCommentOnServer = () => {
         let movieId = $('.movie-id').val();
         let userId = $('.user-id').val();
-        let description = $('.description-comment').val();
+        let description = $('.btn-description-comment').val();
         hub.invoke('AddNewComment', userId, movieId, description);
     };
 

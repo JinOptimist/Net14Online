@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Net14Web.E2ETests.PagesSelector;
+using NUnit.Framework;
 using OpenQA.Selenium;
 
 namespace Net14Web.E2ETests
@@ -8,9 +9,11 @@ namespace Net14Web.E2ETests
         private IWebDriver _driver;
         private LoginOnSite _loginOnSite;
         private Random _random;
+        private string _commentText;
 
         private const string DESCRIPTION_COMMENT = "Hello world!";
         private const string MOVIES_SITE = "/movies/index/";
+        private const string RANDOM_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
         [OneTimeSetUp]
         public void Setup()
@@ -25,14 +28,14 @@ namespace Net14Web.E2ETests
         public void OpenMoviePage()
         {
             _driver.Url = LoginOnSite.BASE_URL + MOVIES_SITE;
-            var movieInput = _driver.FindElements(By.CssSelector("a.movie-page"));
+            var movieInput = _driver.FindElements(MoviePage.BUTTON_MOVIE_PAGE);
             if (movieInput.Count == 0)
             {
                 Assert.That(false);
             }
             movieInput[0].SendKeys(Keys.Enter);
 
-            var movieTitle = _driver.FindElements(By.CssSelector(".movie-title"));
+            var movieTitle = _driver.FindElements(MoviePage.MOVIE_TITLE);
             if (movieTitle.Count == 0)
             {
                 Assert.That(false);
@@ -45,29 +48,36 @@ namespace Net14Web.E2ETests
         public void AddUserComment()
         {
             OpenMoviePage();
-            var inputAddComment = _driver.FindElement(By.CssSelector(".description-comment"));
-            var commentText = DESCRIPTION_COMMENT + " " + RandomString(10);
-            inputAddComment.SendKeys(commentText);
+            var inputAddComment = _driver.FindElement(CommentOnFilmSelectors.BUTTON_DESCRIPTION_COMMENT);
+            _commentText = DESCRIPTION_COMMENT + " " + RandomString(10);
+            inputAddComment.SendKeys(_commentText);
 
-            var submitAddComment = _driver.FindElement(By.CssSelector(".btn-add-comment"));
+            Thread.Sleep(3000);
+            var submitAddComment = _driver.FindElement(CommentOnFilmSelectors.BUTTON_ADD_COMMENT);
             submitAddComment.Click();
 
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
+            var commentInfo = GetComment();
+            Assert.That(LoginOnSite.USER_NAME == commentInfo[0]);
+            Assert.That(_commentText == commentInfo[1]);
+        }
 
-            var userNameOnComment = _driver.FindElements(By.CssSelector(".comment-user-name"));
+        private string[] GetComment()
+        {
+            string[] commentInformation = new string[2];
+            var userNameOnComment = _driver.FindElements(CommentOnFilmSelectors.USERNAME_ON_COMMENT);
             if (userNameOnComment.Count() == 0)
             {
                 Assert.That(false);
             }
-
-            var commentDesriptions = _driver.FindElements(By.CssSelector(".comment-description"));
+            commentInformation[0] = userNameOnComment[0].Text;
+            var commentDesriptions = _driver.FindElements(CommentOnFilmSelectors.DESCRIPTION_COMMENT_TEXT);
             if (commentDesriptions.Count() == 0)
             {
                 Assert.That(false);
             }
-
-            Assert.That(LoginOnSite.USER_NAME == userNameOnComment[0].Text);
-            Assert.That(commentText == commentDesriptions[0].Text);
+            commentInformation[1] = commentDesriptions[0].Text;
+            return commentInformation;
         }
 
 
@@ -79,8 +89,7 @@ namespace Net14Web.E2ETests
 
         public string RandomString(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
+            return new string(Enumerable.Repeat(RANDOM_CHARS, length)
                 .Select(s => s[_random.Next(s.Length)]).ToArray());
         }
     }
