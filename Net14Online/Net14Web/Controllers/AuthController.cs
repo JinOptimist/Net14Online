@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Models.Auth;
+using Net14Web.Services;
 using System.Security.Claims;
 
 namespace Net14Web.Controllers
@@ -38,8 +39,8 @@ namespace Net14Web.Controllers
                 new Claim("id", user.Id.ToString()),
                 new Claim("name", user.Login.ToString()),
                 new Claim("email", user.Email ?? ""),
+                new Claim(AuthService.LOCALE_TYPE, user.PreferLocale),
                 new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims", user.Email ?? ""),
-
             };
 
             var identity = new ClaimsIdentity(claims, AUTH_KEY);

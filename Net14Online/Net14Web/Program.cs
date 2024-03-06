@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.Controllers;
+using Net14Web.CustomMiddlewares;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.DbStuff.Repositories.Booking;
@@ -117,6 +118,8 @@ app.UseRouting();
 
 app.UseAuthentication(); // Who I am?
 app.UseAuthorization(); // May I?
+
+app.UseMiddleware<CustomLocalizationMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
