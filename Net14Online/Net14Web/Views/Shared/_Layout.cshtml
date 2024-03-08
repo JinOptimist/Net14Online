@@ -3,6 +3,9 @@
 <head>
     @RenderSection("Style", false)
     @RenderSection("Script", false)
+    <link href="~/css/site.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/switchLang.js"></script>
 </head>
 <body>
     <div class="header">
@@ -15,8 +18,8 @@
             <a class='logout-link' href="/auth/logout">Logout</a>
         }
         <a href="/Home/Index">Home</a>
-        <a class='dnd-link' href="/Dnd/Index">Dnd</a>
-        <a href="/Movies/Index">Movies</a>
+        <a class='dnd-link' href="/Dnd/Index">@Net14Web.LocalizationFiles.Dnd.LayoutDndLink</a>
+        <a class="movies-link" href="/Movies/Index">Movies</a>
         <a href="/WebScada/Index">WebScada</a>
         <a href="/Retro/Index">Retro Consoles</a>
         <a href="/LifeScore/Index">LifeScore</a>
@@ -34,6 +37,13 @@
     </div>
     <div class="footer">
         Здесь у нас потом будет фууутер
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <text>
+                Языки: <span class="lang">ru-RU</span> <span class="lang">en-EN</span>
+            </text>
+        }
+
     </div>
 </body>
 </html>

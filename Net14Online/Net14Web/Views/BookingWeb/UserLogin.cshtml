@@ -15,9 +15,18 @@
 }
 
 <button><a href="Login">Login</a></button>
+
+<div>
+    <form action="UpdateEmail" method="post" class="update-user-email"> 
+        <input type="hidden" name="loginId" value=0 />
+        <input type="email" name="email" />
+        set new email for user <span class="login-id"></span>
+        <input type="submit" value="update" />
+    </form>
+</div>
 @foreach(var user in Model)
 {
-    <div class="user">
+    <div class="user" data-id="@user.Id">
         <div class="name-only">
             @user.Name
         </div>
@@ -34,11 +43,6 @@
             </div>
             <div>
                 Your E-mail: @user.Email
-                <form action="UpdateEmail" method="post">
-                    <input type="hidden" name="loginId" value="@user.Id" />
-                    <input type="email" name="email" />
-                    <input type="submit" value="update" />
-                </form>
             </div>
          <div>
      </div>

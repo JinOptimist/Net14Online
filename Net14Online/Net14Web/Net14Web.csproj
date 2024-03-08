@@ -24,4 +24,22 @@
 		<Folder Include="wwwroot\images\movies\userAvatars\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="LocalizationFiles\Dnd.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Dnd.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="LocalizationFiles\Dnd.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Dnd.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="LocalizationFiles\Dnd.ru.resx">
+	    <Generator></Generator>
+	  </EmbeddedResource>
+	</ItemGroup>
+
 </Project>

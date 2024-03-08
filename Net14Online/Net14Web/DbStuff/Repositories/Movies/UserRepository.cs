@@ -73,5 +73,12 @@ namespace Net14Web.DbStuff.Repositories.Movies
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public void SwitchLocal(int userId, string locale)
+        {
+            var user = GetById(userId);
+            user.PreferLocale = locale;
+            _context.SaveChanges();
+        }
     }
 }

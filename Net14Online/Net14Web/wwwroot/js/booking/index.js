@@ -1,10 +1,18 @@
 ﻿$(document).ready(function () {
 
-    $('.user .name-only, .user .user-name').click(function (event) {
-        const userInfo = $(this).closest('.user');
+    $('.user').addClass('name-only');
+    $('.user .name-only').click(function () {
+        $('.user').not($(this).closest('.user'))
+            .removeClass('full-info')
+            .addClass('name-only');
 
-        userInfo.toggleClass('name-only');
-        userInfo.toggleClass('full-info');
+        $(this).closest('.user')
+            .toggleClass('full-info name-only');
+
+        const loginId = userInfo.attr('data-id');
+        $('.update-user-email').find('name=loginId')
+            .val(loginId);
+        $('.login-id').text(loginId);
     })
 });
 
