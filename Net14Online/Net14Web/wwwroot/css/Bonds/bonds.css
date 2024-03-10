@@ -36,7 +36,15 @@
     background: #f3f3f3;
 }
 
-/* Стили для скролла */
+.delete-bond.short {
+    display: none;
+}
+
+.bond-name {
+    cursor: pointer;
+}
+    
+/* пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 ::-webkit-scrollbar {
     width: 6px;
 }

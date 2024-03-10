@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Models.Movies;
 using Net14Web.Models.Movies;
 using Net14Web.Services.Movies;
@@ -73,6 +72,13 @@ namespace Net14Web.DbStuff.Repositories.Movies
             user!.AvatarUrl = avatarUrl;
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public void SwitchLocal(int userId, string locale)
+        {
+            var user = GetById(userId);
+            user.PreferLocale = locale;
+            _context.SaveChanges();
         }
     }
 }

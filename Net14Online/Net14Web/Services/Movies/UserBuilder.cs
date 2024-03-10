@@ -53,6 +53,7 @@ namespace Net14Web.Services.Movies
                 Password = addUser.Password,
                 AvatarUrl = DEFAULT_USER_AVATAR_IMAGE_PATH,
                 Comments = new List<Comment>(),
+                PreferLocale = "en-US",
                 Roles = new List<Role> { _roleRepository.GetRoleByName("User") }
             };
             return user;

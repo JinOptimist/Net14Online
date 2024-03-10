@@ -1,58 +1,78 @@
-
-
+@model RealEstateNet14Web.Models.ChatModels.ChatViewModel
 @section Style
 {
-    <link href="~/css/RealEstate/RealEstate.css" rel="stylesheet" />
+    <link href="~/css/RealEstate/RealEstate.css" rel="stylesheet"/>
 }
 
-<div class="block-right">
-        <select class="button-right" name="Money">
-            <option value="Money">BYN</option>
-            <option selected value="Money">USD</option>
-            <option value="Money">EUR</option>
-            <option value="Money">RUB</option>
+@section Script
+{
+     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+     <script src="~/js/Chat.js"></script>
+}           
 
-        </select>
-        <button class="button-right">Добавть обьявление</button>
-   
-     @if ((!User?.Identity?.IsAuthenticated) ?? true)
-            {
-                <a class="button-right" href="/AuthRealEstate/RealEstateLogin">Вход</a>
-            }
-            else
-            {
-                <a href="/AuthRealEstate/RealEstateLogout">Logout</a>
-                <a href="/RealEstate/AddApartament">Добавить обьявление</a>
-                <a href="/RealEstate/CheckAllApartaments">Все обьявления</a>
-            }
+<div class="chat">
+    <input type="hidden" class="user-name" value="@Model.UserName"/>
+    <div class="messages">
+        <div class="message">
+            <span class="user-name">Assistent</span>
+            <span class="message-text">I can help you?</span>
+        </div>
+    </div>
+    <div>
+        <input class="new-message-text"/>
+        <button class="send-message-button">Send</button>
+    </div>
 </div>
 
-    <div class="block-center">
-        <div class="dropdown-block-center">
-            <button class="dropbtn-center">Продажа</button>
-            <div class="dropdown-content">
-                <a href="#">Квартиры</a>
-                <a href="#">Дома</a>
-                <a href="#">Гаражи</a>
-            </div>
-        </div>
-        <div class="dropdown-block-center">
-            <button class="dropbtn-center">Аренда</button>
-            <div class="dropdown-content">
-                <a href="#">На длительный срок</a>
-                <a href="#">На сутки</a>
-            </div>
-        </div>
-        <div class="dropdown-block-center">
-            <button class="dropbtn-center">Новостройки</button>
-            <div class="dropdown-content">
-                <a href="#">Квартиры</a>
-                <a href="#">Новостройки</a>
-                <a href="#">Жилые комплексы</a>
-            </div>
-        </div>
+<div class="block-right">
+    <select class="button-right" name="Money">
+        <option value="Money">BYN</option>
+        <option selected value="Money">USD</option>
+        <option value="Money">EUR</option>
+        <option value="Money">RUB</option>
 
+    </select>
+    <button class="button-right">Добавть обьявление</button>
+
+    @if ((!User?.Identity?.IsAuthenticated) ?? true)
+    {
+        <a class="button-right" href="/AuthRealEstate/RealEstateLogin">Вход</a>
+    }
+    else
+    {
+        <a href="/AuthRealEstate/RealEstateLogout">Logout</a>
+        <a href="/RealEstate/AddApartament">Добавить обьявление</a>
+        <a href="/RealEstate/CheckAllApartaments">Все обьявления</a>
+    }
+</div>
+
+<div class="block-center">
+    <div class="dropdown-block-center">
+        <button class="dropbtn-center">Продажа</button>
+        <div class="dropdown-content">
+            <a href="#">Квартиры</a>
+            <a href="#">Дома</a>
+            <a href="#">Гаражи</a>
+        </div>
     </div>
+    <div class="dropdown-block-center">
+        <button class="dropbtn-center">Аренда</button>
+        <div class="dropdown-content">
+            <a href="#">На длительный срок</a>
+            <a href="#">На сутки</a>
+        </div>
+    </div>
+    <div class="dropdown-block-center">
+        <button class="dropbtn-center">Новостройки</button>
+        <div class="dropdown-content">
+            <a href="#">Квартиры</a>
+            <a href="#">Новостройки</a>
+            <a href="#">Жилые комплексы</a>
+        </div>
+    </div>
+
+</div>
 <div class="images-container">
     <div class="center size">Поиск недвижимости в Минске</div>
     <div class="quick-choice">

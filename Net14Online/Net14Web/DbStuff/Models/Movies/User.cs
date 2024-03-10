@@ -10,6 +10,7 @@ namespace Net14Web.DbStuff.Models.Movies
         public string? Email { get; set; }
         public string? Password { get; set; }
         public string? AvatarUrl { get; set; }
+        public string PreferLocale { get; set; }
         public virtual List<Role> Roles { get; set; }
         public virtual List<Comment>? Comments { get; set; }
         public virtual List<Hero> MyHeroes { get; set; }
