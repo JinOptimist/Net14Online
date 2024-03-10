@@ -3,15 +3,15 @@ using ManagementCompany.DbStuff.Repositories;
 
 namespace ManagementCompany.DbStuff
 {
-    public static class SeedExtentoin
+    public static class SeedExtention
     {
         public static void Seed(WebApplication app)
         {
             using (var serviceScope = app.Services.CreateScope())
             {
-                SeedMcUser(serviceScope.ServiceProvider);
                 SeedStatus(serviceScope.ServiceProvider);
                 SeedPermission(serviceScope.ServiceProvider);
+                SeedMcUser(serviceScope.ServiceProvider);
             }
         }
 

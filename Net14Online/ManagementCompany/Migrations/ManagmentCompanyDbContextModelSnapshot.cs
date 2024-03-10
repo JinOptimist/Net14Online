@@ -147,13 +147,13 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Permission")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Permission")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Permission] IS NOT NULL");
 
                     b.ToTable("MemberPermissions");
                 });
@@ -173,13 +173,13 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Status")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Status] IS NOT NULL");
 
                     b.ToTable("MemberStatuses");
                 });
@@ -384,9 +384,9 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.Article", b =>
                 {
                     b.HasOne("ManagementCompany.DbStuff.Models.User", "Author")
-                        .WithMany()
+                        .WithMany("Articles")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -519,6 +519,8 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.User", b =>
                 {
+                    b.Navigation("Articles");
+
                     b.Navigation("UserCreatedTasks");
 
                     b.Navigation("UserExecutedTasks");

@@ -129,6 +129,13 @@ namespace ManagementCompany.DbStuff
                 .HasIndex(uts => uts.Status)
                 .IsUnique();
             #endregion
+
+            builder
+                .Entity<Article>()
+                .HasOne(a => a.Author)
+                .WithMany(u => u.Articles)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

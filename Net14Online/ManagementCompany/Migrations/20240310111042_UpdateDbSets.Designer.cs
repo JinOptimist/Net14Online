@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ManagementCompany.Migrations.ManagmentCompanyDb
 {
     [DbContext(typeof(ManagementCompanyDbContext))]
-    [Migration("20240303141956_AddArticles")]
-    partial class AddArticles
+    [Migration("20240310111042_UpdateDbSets")]
+    partial class UpdateDbSets
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -387,9 +387,9 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.Article", b =>
                 {
                     b.HasOne("ManagementCompany.DbStuff.Models.User", "Author")
-                        .WithMany()
+                        .WithMany("Articles")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -522,6 +522,8 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.User", b =>
                 {
+                    b.Navigation("Articles");
+
                     b.Navigation("UserCreatedTasks");
 
                     b.Navigation("UserExecutedTasks");
