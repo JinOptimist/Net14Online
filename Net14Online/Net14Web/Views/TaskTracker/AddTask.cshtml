@@ -14,7 +14,7 @@
 
         <form method="post" class="add-form__form">
 
-            @Html.TextBoxFor(x => x.Name, new { placeholder = "Название", @class = "add-form__input" })
+            @Html.TextBoxFor(x => x.Name, new { placeholder = "Название", @class = "add-form__input add-form__input_name" })
             @Html.ValidationMessageFor(x => x.Name)
             
 
