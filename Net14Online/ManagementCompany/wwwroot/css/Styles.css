@@ -129,3 +129,32 @@ button {
     margin-bottom: 10px;
     box-sizing: border-box;
 }
+
+.template {
+    display: none;
+}
+
+.chat {
+    height: 150px;
+    max-width: 200px;
+    overflow-y: scroll;
+    background: #f2f2f2;
+    margin: 10px;
+}
+
+.comment-container {
+    max-width: 350px;
+}
+
+.new-comment {
+    max-width: 350px;
+    margin-left: 10px;
+}
+
+.send-comment {
+    margin-bottom: 10px;
+}
+
+.user-name {
+    color: forestgreen;
+}

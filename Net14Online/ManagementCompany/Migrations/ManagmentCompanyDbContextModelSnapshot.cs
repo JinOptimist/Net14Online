@@ -57,7 +57,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Articles", (string)null);
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.Comment", b =>
@@ -81,7 +81,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("ArticleId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comment", (string)null);
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.Company", b =>
@@ -129,7 +129,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.MemberPermission", b =>
@@ -155,7 +155,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                         .IsUnique()
                         .HasFilter("[Permission] IS NOT NULL");
 
-                    b.ToTable("MemberPermissions");
+                    b.ToTable("MemberPermissions", (string)null);
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.MemberStatus", b =>
@@ -181,7 +181,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                         .IsUnique()
                         .HasFilter("[Status] IS NOT NULL");
 
-                    b.ToTable("MemberStatuses");
+                    b.ToTable("MemberStatuses", (string)null);
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.Project", b =>
@@ -224,7 +224,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.User", b =>
@@ -290,7 +290,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.UserTask", b =>
@@ -337,7 +337,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("UserTasks");
+                    b.ToTable("UserTasks", (string)null);
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.UserTaskStatus", b =>
@@ -363,7 +363,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                     b.HasIndex("Status")
                         .IsUnique();
 
-                    b.ToTable("TaskStatuses");
+                    b.ToTable("TaskStatuses", (string)null);
                 });
 
             modelBuilder.Entity("ProjectUser", b =>
@@ -378,7 +378,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("ProjectsId");
 
-                    b.ToTable("ProjectUser");
+                    b.ToTable("ProjectUser", (string)null);
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.Article", b =>

@@ -45,7 +45,12 @@ namespace ManagementCompany.Services
 
         public string GetCurrentUserName()
         {
-            return _httpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "name").Value;
+            return _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "permissionName")?.Value ?? "Гость";
+        }
+
+        public string GetCurrentUserNickName()
+        {
+            return _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "nickName")?.Value ?? "Гость";
         }
 
         public bool IsAdmin()
@@ -55,7 +60,7 @@ namespace ManagementCompany.Services
 
         public User GetCurrentMcUser()
         {
-            var idStr = _httpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "id").Value;
+            var idStr = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "id").Value;
             var id = int.Parse(idStr);
             return _userRepository.GetById(id);
         }

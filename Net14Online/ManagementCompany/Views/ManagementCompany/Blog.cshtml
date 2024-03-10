@@ -1,5 +1,5 @@
 ﻿@using ManagementCompany.DbStuff.Models.Enums
-@model BaseViewModel
+@model BlogViewModel
 
 @{
     Layout = "_LayoutManagementCompany";
@@ -9,6 +9,13 @@
 {
     <link href="~/css/ManagementCompany.css" rel="stylesheet" />
     <link href="~/css/Styles.css" rel="stylesheet" />
+}
+
+@section Script
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="~/js/blog.js"></script>
 }
 
 <div class="regContainer">
@@ -57,8 +64,17 @@
             <div class="likeDown-count">3</div>
             <img class="thumbDown" src="https://simlock24.pl/foto/10_31_48_youtube_thumbs_down.png" width="30" height="30" />
         </div>
+        <div class="chat">
+            <input class="user-name" type="hidden" value="@Model.UserNickName" />
+            <div class="comments">
+                <div class="comment template">
+                    <span class="user-name">Ivan</span>
+                    <span class="comment-text">Hi</span>
+                </div>
+            </div>
+        </div>
         <div class="comment-container">
-            <input type="text" name="comment" va/>
+            <input class="new-comment" type="text" name="comment"/>
             <img class="send-comment" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Иконка_чата_%28ei%29.svg/45px-Иконка_чата_%28ei%29.svg.png" width="45" height="45" />
         </div>
     </div>

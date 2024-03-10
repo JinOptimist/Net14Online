@@ -1,4 +1,5 @@
 ﻿using ManagementCompany.DbStuff.Models;
+using ManagementCompany.DbStuff.Models.Enums;
 using ManagementCompany.DbStuff.Repositories;
 
 namespace ManagementCompany.DbStuff
@@ -11,56 +12,79 @@ namespace ManagementCompany.DbStuff
             {
                 SeedStatus(serviceScope.ServiceProvider);
                 SeedPermission(serviceScope.ServiceProvider);
-                SeedMcUser(serviceScope.ServiceProvider);
+                SeedUser(serviceScope.ServiceProvider);
             }
         }
 
-        private static MemberStatus SeedStatus(IServiceProvider di)
+        private static void SeedStatus(IServiceProvider di)
         {
             var statusRepository = di.GetService<MemberStatusRepository>();
 
-            var status = new MemberStatus();
-
             if (statusRepository.Any() == false)
             {
-                status.Status = "Active";
+                foreach (string memberStatus in Enum.GetNames(typeof(MemberStatusEnum)))
+                {
+                    var status = new MemberStatus();
+                    status.Status = memberStatus;
 
-                statusRepository.Add(status);
+                    statusRepository.Add(status);
+                }
             }
-
-            return status;
         }
 
-        private static MemberPermission SeedPermission(IServiceProvider di)
+        private static void SeedPermission(IServiceProvider di)
         {
             var permissionRepository = di.GetService<MemberPermissionRepository>();
 
-            var permission = new MemberPermission();
-
             if (permissionRepository.Any() == false)
             {
-                permission.Permission = "SuperAdmin";
+                foreach (string memberPermission in Enum.GetNames(typeof(MemberPermissionEnum)))
+                {
+                    var permission = new MemberPermission();
+                    permission.Permission = memberPermission;
 
-                permissionRepository.Add(permission);
+                    permissionRepository.Add(permission);
+                }
             }
-
-            return permission;
         }
 
-        private static void SeedMcUser(IServiceProvider di)
+        private static void SeedUser(IServiceProvider di)
         {
+            var statusRepository = di.GetService<MemberStatusRepository>();
+            var permissionRepository = di.GetService<MemberPermissionRepository>();
             var userRepository = di.GetService<UserRepository>();
+
             if (userRepository.Any() == false)
             {
+                var superAdmin = new User
+                {
+                    NickName = "SuperAdmin",
+                    Email = "SuperAdmin",
+                    Password = "SuperAdmin",
+                    Status = statusRepository?.GetById((int)MemberStatusEnum.Active),
+                    MemberPermission = permissionRepository?.GetById((int)MemberPermissionEnum.SuperAdmin)
+                };
+                userRepository.Add(superAdmin);
+
                 var admin = new User
                 {
                     NickName = "Admin",
                     Email = "Admin",
                     Password = "Admin",
-                    Status = SeedStatus(di),
-                    MemberPermission = SeedPermission(di)
+                    Status = statusRepository?.GetById((int)MemberStatusEnum.Active),
+                    MemberPermission = permissionRepository?.GetById((int)MemberPermissionEnum.Admin)
                 };
                 userRepository.Add(admin);
+
+                var user = new User
+                {
+                    NickName = "User",
+                    Email = "User",
+                    Password = "User",
+                    Status = statusRepository?.GetById((int)MemberStatusEnum.Active),
+                    MemberPermission = permissionRepository?.GetById((int)MemberPermissionEnum.User)
+                };
+                userRepository.Add(user);
             }
         }
     }

@@ -220,7 +220,10 @@ namespace ManagementCompany.Controllers
 
         public IActionResult Blog()
         {
-            return View();
+            var blogViewModel = new BlogViewModel();
+            blogViewModel.UserNickName = _authService.GetCurrentUserNickName();
+
+            return View(blogViewModel);
         }
 
         public IActionResult About()

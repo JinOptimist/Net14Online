@@ -38,6 +38,8 @@ namespace ManagementCompany.Controllers
             {
                 new Claim("id", user.Id.ToString()),
                 new Claim("permissionId", user.MemberPermission?.Id.ToString() ?? ""),
+                new Claim("permissionName", user.MemberPermission?.Permission ?? ""),
+                new Claim("nickName", user.NickName ?? ""),
                 new Claim("email", user.Email ?? ""),
             };
 
