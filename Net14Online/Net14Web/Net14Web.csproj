@@ -60,7 +60,7 @@
 	    <LastGenOutput>TaskTracker.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="LocalizationFiles\TaskTracker.ru.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <Generator></Generator>
 	  </EmbeddedResource>
 	</ItemGroup>
 

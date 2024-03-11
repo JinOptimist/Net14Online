@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
-using Net14Web.DbStuff.ManagmentCompany.Models;
-using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Models.Auth;
 using Net14Web.Services;
@@ -113,13 +111,7 @@ namespace Net14Web.Controllers
                 .SignInAsync(AUTH_KEY, principal)
                 .Wait();
 
-            return RedirectToAction("Index", "Home");
-        }
-
-        public IActionResult Logout()
-        {
-            HttpContext.SignOutAsync().Wait();
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
         }
     }
 }
