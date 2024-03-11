@@ -36,6 +36,7 @@
                         </td>
 
                         <td>
+
                             <div class="bond-name">
                                 @bond.Name
                             </div>
@@ -49,15 +50,23 @@
                                 </a>
                             }
                         </td>
+
                         <td>
-                            @bond.Price рублей
+
+                            <div class="bond-price">
+                                @bond.Price рублей
+                            </div>
+
                             @if (@bond.CanDelete)
                             {
-                                <form action="/Bonds/UpdatePrice" method="post">
-                                    <input type="hidden" name="id" value="@bond.Id" />
-                                    <input type="number" name="price" />
-                                    <input type="submit" value="Обновить" />
-                                </form>
+                                <div class="price-change-field short">
+                                    <form action="/Bonds/UpdatePrice" method="post">
+                                        <input type="hidden" name="id" value="@bond.Id" />
+                                        <input type="number" name="price" />
+                                        <input type="submit" value="Обновить" />
+                                    </form>
+                                </div>
+
                             }
 
                         </td>
