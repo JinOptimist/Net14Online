@@ -25,6 +25,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="LocalizationFiles\Booking.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Booking.resx</DependentUpon>
+	  </Compile>
 	  <Compile Update="LocalizationFiles\Dnd.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -38,6 +43,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Update="LocalizationFiles\Booking.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Booking.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="LocalizationFiles\Dnd.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Dnd.Designer.cs</LastGenOutput>
