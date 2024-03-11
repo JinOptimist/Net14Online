@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Net14Online/Net14Web/Views/CorporateKnowledgeBase/ArticlesPreview.cs
