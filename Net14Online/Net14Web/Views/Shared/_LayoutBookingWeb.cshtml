@@ -3,6 +3,8 @@
 <head>
     @RenderSection("Style", false)
     @RenderSection("Script", false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/switchLang.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -13,7 +15,8 @@
             <div class="navinfo">
                 <ul class="navinfo">
                     <button> <a href="#">EUR</a> </button>
-                    <button> <a href="#">EN</a> </button>
+                    <button><span class="lang">EN</span></button>
+                    <button><span class="lang">RU</span></button>
                     <button> <a href="/BookingWeb/Help">Help</a> </button>
                     <button> <a href="/BookingWeb/Login">Log In</a> </button>
                 </ul>

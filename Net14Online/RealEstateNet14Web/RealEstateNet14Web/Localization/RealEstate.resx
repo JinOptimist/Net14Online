@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="SearchForRealEstateInMinsk" xml:space="preserve">
+        <value>Поиск недвижимости в Минске 2</value>
+    </data>
+    <data name="Assistent" xml:space="preserve">
+        <value>Помошник</value>
+    </data>
+    <data name="ICanHelpYou?" xml:space="preserve">
+        <value>Могу я вам помочь?</value>
+    </data>
+    <data name="Send" xml:space="preserve">
+        <value>Отправить</value>
+    </data>
+    <data name="AddAnnouncement" xml:space="preserve">
+        <value>Добавить обьявление</value>
+    </data>
+    <data name="Login" xml:space="preserve">
+        <value>Вход</value>
+    </data>
+    <data name="Logout" xml:space="preserve">
+        <value>Выход</value>
+    </data>
+    <data name="AllAnnouncement" xml:space="preserve">
+        <value>Все обьявления</value>
+    </data>
+    <data name="Sale" xml:space="preserve">
+        <value>Продажа</value>
+    </data>
+    <data name="House" xml:space="preserve">
+        <value>Дома</value>
+    </data>
+    <data name="Apartament" xml:space="preserve">
+        <value>Квартиры</value>
+    </data>
+    <data name="Garages" xml:space="preserve">
+        <value>Гаражи</value>
+    </data>
+    <data name="Rent" xml:space="preserve">
+        <value>Аренда</value>
+    </data>
+    <data name="ForALongTime" xml:space="preserve">
+        <value>На длительный срок</value>
+    </data>
+    <data name="ForADay" xml:space="preserve">
+        <value>На сутки</value>
+    </data>
+    <data name="NewBuildings" xml:space="preserve">
+        <value>Новостройки</value>
+    </data>
+    <data name="ResidentialComplexes" xml:space="preserve">
+        <value>Жилые комплексы</value>
+    </data>
+    <data name="Buy" xml:space="preserve">
+        <value>Купить</value>
+    </data>
+    <data name="PropertyType" xml:space="preserve">
+        <value>Тип недвижимости</value>
+    </data>
+    <data name="HowManyRooms?" xml:space="preserve">
+        <value>Сколько комнат?</value>
+    </data>
+    <data name="AtWhatCost?" xml:space="preserve">
+        <value>За какую стоимость?</value>
+    </data>
+    <data name="InWhatCity?" xml:space="preserve">
+        <value>В каком городе?</value>
+    </data>
+</root>
