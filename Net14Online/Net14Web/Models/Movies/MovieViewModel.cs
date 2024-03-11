@@ -7,5 +7,7 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public List<CommentOnMovieViewModel> Comments { get; set; }
+
+        public bool CanAddCommentToMovie { get; set; }
     }
 }

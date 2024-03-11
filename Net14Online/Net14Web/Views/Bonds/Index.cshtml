@@ -1,0 +1,79 @@
+﻿@using Net14Web.Models.Bonds
+@model BondsIndexViewMode
+@{
+    Layout = "_LayoutBonds";
+}
+@section Style
+{
+    <link href="~/css/Bonds/Bonds.css" rel="stylesheet" />
+}
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/Bond/index.js"></script>
+}
+<div>
+    User: @Model.UserName
+</div>
+<div class="scroll-table">
+    <table>
+        <thead>
+            <tr>
+                <th>Владелец</th>
+                <th>Название облигации</th>
+                <th>Цена</th>
+            </tr>
+        </thead>
+    </table>
+    <div class="scroll-table-body">
+        <table>
+            <tbody>
+                @foreach (var bond in Model.Bonds)
+                {
+                    <tr class="chapter-bond">
+
+                        <td>
+                            @bond.OwnerName
+                        </td>
+
+                        <td>
+
+                            <div class="bond-name">
+                                @bond.Name
+                            </div>
+
+                            @if (@bond.CanDelete)
+                            {
+                                <a class="delete-bond short" href="/Bonds/Remove?id=@bond.Id">
+                                    <img src="/images/Bonds/logo_delete.webp"
+                                         width="17"
+                                         height="17">
+                                </a>
+                            }
+                        </td>
+
+                        <td>
+
+                            <div class="bond-price">
+                                @bond.Price рублей
+                            </div>
+
+                            @if (@bond.CanDelete)
+                            {
+                                <div class="price-change-field short">
+                                    <form action="/Bonds/UpdatePrice" method="post">
+                                        <input type="hidden" name="id" value="@bond.Id" />
+                                        <input type="number" name="price" />
+                                        <input type="submit" value="Обновить" />
+                                    </form>
+                                </div>
+
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

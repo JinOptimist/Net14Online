@@ -19,10 +19,21 @@ namespace Net14Web.DbStuff.Repositories.Movies
             return _entyties.Any(x => x.Login == name);
         }
 
+        public bool AnyUserWithEmail(string email)
+        {
+            return _entyties.Any(x => x.Email == email);
+        }
+
         public User? GetUserByLoginAndPassword(string login, string password)
         {
             return _entyties
-                .FirstOrDefault(user => user.Login!.ToLower() == login.ToLower() && user.Password == password);
+                .FirstOrDefault(user => user.Login == login && user.Password!.Equals(password));
+        }
+
+        public async Task<User?> GetUserByLoginAndPasswordAsync(string login, string password)
+        {
+            return await _entyties
+                .FirstOrDefaultAsync(user => user.Login == login && user.Password!.Equals(password));
         }
 
         public User GetUserByEmail(string email)
@@ -35,14 +46,8 @@ namespace Net14Web.DbStuff.Repositories.Movies
         {
             return _entyties
                 .Include(u => u.Comments)
-                .FirstOrDefault(u => u.Id == userId);
-        }
-
-        public async Task<User?> GetUserByLoginAndPasswordAsync(string login, string password)
-        {
-            return await _entyties
                 .AsNoTracking()
-                .FirstOrDefaultAsync(user => user.Login!.ToLower() == login.ToLower() && user.Password == password);
+                .FirstOrDefault(u => u.Id == userId);
         }
 
         public async Task<User?> GetUserWithCommentsAsync(int userId)
@@ -60,12 +65,26 @@ namespace Net14Web.DbStuff.Repositories.Movies
             _context.SaveChanges();
         }
 
-        public async Task<bool> UpdateAvatar(int userId, string avatarUrl)
+        public async Task<bool> UpdateUserAsync(User oldUser, UserViewModel updateUser)
+        {
+            _userEditHelper.EditUser(oldUser, updateUser);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateAvatarAsync(int userId, string avatarUrl)
         {
             var user = await GetByIdAsync(userId)!;
             user!.AvatarUrl = avatarUrl;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
+        }
+
+        public void SwitchLocal(int userId, string locale)
+        {
+            var user = GetById(userId);
+            user.PreferLocale = locale;
+            _context.SaveChanges();
         }
     }
 }

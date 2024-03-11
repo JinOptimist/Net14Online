@@ -37,7 +37,56 @@ namespace Net14Web.Migrations
                     b.ToTable("HeroWeapon");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Bonds.Bond", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Bonds");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Bonds.Coupon", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BondId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CouponSize")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BondId");
+
+                    b.ToTable("Coupons");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,13 +102,18 @@ namespace Net14Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OwnerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoginsBooking");
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("ClientsBooking");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
@@ -80,16 +134,21 @@ namespace Net14Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ClientBookingId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LoginBookingId")
+                    b.Property<int?>("OwnerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LoginBookingId");
+                    b.HasIndex("ClientBookingId");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Searches");
                 });
@@ -392,6 +451,10 @@ namespace Net14Web.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PreferLocale")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -491,6 +554,22 @@ namespace Net14Web.Migrations
                     b.ToTable("UserPcShop");
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Permission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permissions");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.RetroConsoles.RetroUser", b =>
                 {
                     b.Property<int>("Id")
@@ -513,6 +592,48 @@ namespace Net14Web.Migrations
                     b.ToTable("RetroUsers");
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Sattelite.ObjectDict", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("IconURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sattelite");
+                });
+
             modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -529,10 +650,15 @@ namespace Net14Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OwnerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("TaskInfos");
                 });
@@ -555,6 +681,36 @@ namespace Net14Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Weapons");
+                });
+
+            modelBuilder.Entity("PermissionRole", b =>
+                {
+                    b.Property<int>("PermissionsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RolesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PermissionsId", "RolesId");
+
+                    b.HasIndex("RolesId");
+
+                    b.ToTable("PermissionRole");
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.Property<int>("RolesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RolesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("RoleUser");
                 });
 
             modelBuilder.Entity("SportGameTeam", b =>
@@ -587,15 +743,53 @@ namespace Net14Web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Bonds.Bond", b =>
                 {
-                    b.HasOne("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", "LoginBooking")
-                        .WithMany("Searches")
-                        .HasForeignKey("LoginBookingId")
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
+                        .WithMany("Bonds")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Bonds.Coupon", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Bonds.Bond", "Bond")
+                        .WithMany("Coupons")
+                        .HasForeignKey("BondId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("LoginBooking");
+                    b.Navigation("Bond");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
+                        .WithMany("ClientsBooking")
+                        .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", "ClientBooking")
+                        .WithMany("Searches")
+                        .HasForeignKey("ClientBookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
+                        .WithMany("Searches")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("ClientBooking");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Dividend", b =>
@@ -676,6 +870,46 @@ namespace Net14Web.Migrations
                     b.Navigation("CPU");
                 });
 
+            modelBuilder.Entity("Net14Web.DbStuff.Models.TaskTracker.TaskInfo", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", "Owner")
+                        .WithMany("TaskInfos")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("PermissionRole", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Permission", null)
+                        .WithMany()
+                        .HasForeignKey("PermissionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Net14Web.DbStuff.Models.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.HasOne("Net14Web.DbStuff.Models.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Net14Web.DbStuff.Models.Movies.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SportGameTeam", b =>
                 {
                     b.HasOne("Net14Web.DbStuff.Models.LifeScore.SportGame", null)
@@ -691,7 +925,12 @@ namespace Net14Web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.LoginBooking", b =>
+            modelBuilder.Entity("Net14Web.DbStuff.Models.Bonds.Bond", b =>
+                {
+                    b.Navigation("Coupons");
+                });
+
+            modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.ClientBooking", b =>
                 {
                     b.Navigation("Searches");
                 });
@@ -713,9 +952,17 @@ namespace Net14Web.Migrations
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Movies.User", b =>
                 {
+                    b.Navigation("Bonds");
+
+                    b.Navigation("ClientsBooking");
+
                     b.Navigation("Comments");
 
                     b.Navigation("MyHeroes");
+
+                    b.Navigation("Searches");
+
+                    b.Navigation("TaskInfos");
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.Weapon", b =>

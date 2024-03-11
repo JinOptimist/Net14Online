@@ -10,21 +10,21 @@
 <section class="add-form">
     <div class="add-form__container">
         <button class="delete-icon delete-icon_white"><a href="/TaskTracker/Index">&#10006</a></button>
-        <h3 class="add-form__title">НОВАЯ ЗАДАЧА</h3>
+        <h3 class="add-form__title">@Net14Web.LocalizationFiles.TaskTracker.AddTaskFormTitle</h3>
 
         <form method="post" class="add-form__form">
 
-            @Html.TextBoxFor(x => x.Name, new { placeholder = "Название", @class = "add-form__input" })
+            @Html.TextBoxFor(x => x.Name, new { placeholder = @Net14Web.LocalizationFiles.TaskTracker.AddTaskName, @class = "add-form__input add-form__input_name" })
             @Html.ValidationMessageFor(x => x.Name)
             
 
-            @Html.TextAreaFor(x => x.Description, new { placeholder = "Описание", @class = "add-form__input add-form__input_description" })
+            @Html.TextAreaFor(x => x.Description, new { placeholder = @Net14Web.LocalizationFiles.TaskTracker.AddTaskDescription, @class = "add-form__input add-form__input_description" })
             @Html.ValidationMessageFor(x => x.Description)
 
-            <label class="add-form__dropdown-label">Приоритет</label>
+            <label class="add-form__dropdown-label">@Net14Web.LocalizationFiles.TaskTracker.AddTaskPriority</label>
             @Html.DropDownListFor(x => x.Priority, new SelectList(Model.PriorityOptions.Select(p => new SelectListItem { Value = p.ToString(), Text = p.ToString() }), "Value", "Text"), new { placeholder = "Приоритет", @class = "add-form__dropdown" })
 
-            <input type="submit" value="Создать заметку" class="add-form__button" />
+            <input type="submit" value=@Net14Web.LocalizationFiles.TaskTracker.AddTaskButtonText class="add-form__button" />
 
         </form>
 

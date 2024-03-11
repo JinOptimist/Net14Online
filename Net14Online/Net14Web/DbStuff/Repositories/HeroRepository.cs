@@ -16,6 +16,13 @@ namespace Net14Web.DbStuff.Repositories
                 .ToList();
         }
 
+        public Hero GetByIdWithOwner(int heroId)
+        {
+            return _entyties
+                .Include(x => x.Owner)
+                .First(x => x.Id == heroId);
+        }
+
         public void UpdateCoin(int heroId, int coin)
         {
             var hero = _entyties.First(x => x.Id == heroId);
@@ -35,6 +42,15 @@ namespace Net14Web.DbStuff.Repositories
         {
             GetById(heroId).AvatarUrl = avatarUrl;
             _context.SaveChanges();
+        }
+
+        public int AddOneCoin(int heroId)
+        {
+            var hero = GetById(heroId);
+            hero.Coins++;
+            _context.SaveChanges();
+         
+            return hero.Coins;
         }
     }
 }

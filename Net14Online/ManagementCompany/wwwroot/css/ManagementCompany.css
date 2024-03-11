@@ -1,0 +1,159 @@
+html, body {
+    font-family: Ver, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.top-panel-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+main {
+    flex: 1;
+    overflow: auto;
+}
+
+nav {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    display: inline-block;
+}
+
+    nav div {
+        margin: 10px;
+    }
+
+.dropdown {
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    font-size: 16px;
+    border: thin;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+    .dropdown-content a {
+        color: #fff;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+        .dropdown-content a:hover {
+            background-color: #555;
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+footer {
+    text-align: center;
+    color: #fff;
+    padding: 10px;
+}
+
+
+#blueFooter {
+    background-color: green;
+}
+
+.login {
+    background-color: forestgreen;
+}
+
+.reg {
+    background-color: darkred;
+}
+
+.h2 {
+    text-align: center;
+}
+
+.p {
+    text-align: center;
+}
+
+#headerContainer, #footerContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.content-container h2 {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+#logo {
+    max-width: 100px;
+    height: auto;
+}
+
+.userstat {
+}
+
+    .userstat ul {
+        display: flex;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .userstat li {
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    .userstat a {
+        text-decoration: none;
+        color: #fff;
+        display: block;
+        padding: 10px;
+        background-color: #333;
+        border-radius: 5px;
+    }
+
+        .userstat a:hover {
+            background-color: #555;
+        }
+.task-table {
+    cursor: pointer;
+}
+
+    .task-table.short-table {
+        color: red;
+    }
+
+.task-table.short-table .full-table {
+    display: none;
+}
+    .table-name {
+        color: green;
+    }
+
+.task-table.full-table .short-table {
+    display: none;
+}

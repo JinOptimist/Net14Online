@@ -1,0 +1,36 @@
+@model List<ApartamentViewModel>
+
+@section Style
+{
+    <link href="~/css/RealEstate/CheckAllApartaments.css" rel="stylesheet" />
+}
+@section Script {
+     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+     <script src="~/js/RealEstate.js"></script>
+ }
+<div>
+    @foreach (var aprtament in Model)
+    {
+        <div class="apartament-block">
+            <div class="apartament-block-click">
+                 <div>
+                                Город:@aprtament.City
+                            </div>
+                            <div>
+                                Улица:@aprtament.Street
+                            </div>
+                            <div>
+                                Номер квартиры:@aprtament.NumberApartament
+                            </div>
+                            <div>
+                                Количество комнат:@aprtament.Size
+                            </div>
+                            <div>
+                                Владелец:@aprtament.OwnerName
+                            </div>
+            </div>
+           
+        </div>
+        
+    }
+</div>

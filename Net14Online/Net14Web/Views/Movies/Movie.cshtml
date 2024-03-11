@@ -1,5 +1,12 @@
 ﻿@using Net14Web.Models.Movies
+@using System.Security.Claims
 @model MovieViewModel
+
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script defer src="~/js/Movies/comment.js"></script>
+}
 
 @section Style
 {
@@ -16,7 +23,7 @@
                         <div class="card-body p-md-5">
                             <div class="row justify-content-center">
                                 <div class="col-12">
-                                    <p class="text-center h1 fw-bold">@Model.Title</p>
+                                    <p class="text-center h1 fw-bold movie-title">@Model.Title</p>
                                     <div class="row">
                                         <div class="col-md-2 text-center mx-auto d-block">
                                             <img src="@Model.PosterUrl" class="rounded movie-poster">
@@ -27,47 +34,43 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <form class="col-12" action="/Movies/AddCommentOnMovie" method="post">
+                                        @if ((User?.Identity?.IsAuthenticated ?? false) && Model.CanAddCommentToMovie)
+                                        {
                                             <div class="input-group">
-                                                <input type="hidden" name="movieId" value="@Model.Id" />
-                                                <input type="text" class="form-control" name="description" placeholder="Комментарий" aria-describedby="input-group-button-right">
-                                                <button type="submit" class="btn btn-outline-secondary"
+                                                <input type="hidden" name="movieId" class="movie-id" value="@Model.Id" />
+                                                <input type="hidden" name="userId" class="user-id" value="@User.FindFirst("id").Value" />
+                                                <input type="text" class="form-control btn-description-comment" name="description" placeholder="Комментарий" aria-describedby="input-group-button-right">
+                                                <button type="submit" class="btn btn-outline-secondary btn-add-comment"
                                                         id="input-group-button-right">
                                                     Оставить комментарий
                                                 </button>
                                             </div>
                                             <br>
-                                        </form>
-                                        <div>
-                                            @foreach (var comment in @Model.Comments)
-                                            {
-                                                <div>
-                                                    <a class="comment-a rounded" href="/movies/user?userId=@comment.User.UserId">
-                                                        <div class="row">
-                                                            <div class="col-md-2">
-                                                                <img src="@comment.User.AvatarUrl" class="rounded comment-image">
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <div class="card-body">
-                                                                    <p class="h5">@comment.User.Username</p>
-                                                                    <p class="card-text">
-                                                                        @comment.Description
-                                                                    </p>
-                                                                    <a class="btn btn-link" href="/movies/RemoveCommentOnMovie?commentId=@comment.Id">Удалить</a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <p class="card-text">
-                                                                    <small class="text-muted">
-                                                                        @comment.TimeOfWriting
-                                                                    </small>
+                                        }
+                                        <div class="comments">
+                                            <div class="comment comment-template">
+                                                <a class="comment-a rounded user-href-id" href="/movies/user/userId">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <img src="commentUserAvatarUrl" class="user-src-avatarUrl rounded comment-image">
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="card-body">
+                                                                <p class="h5 comment-user-name"></p>
+                                                                <p class="card-text comment-description">
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                    </a>
-                                                </div>
-                                                <br/>
-                                            }
+                                                        <div class="col-md-2">
+                                                            <p class="card-text">
+                                                                <small class="text-muted comment-time-of-writing">
+                                                                </small>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <br />
                                         </div>
                                     </div>
                                 </div>

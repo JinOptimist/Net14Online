@@ -1,0 +1,289 @@
+﻿@using ManagementCompany.DbStuff.Models.Enums
+@model AdminPanelViewModel
+
+@{
+    Layout = "_LayoutManagementCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagementCompany.css" rel="stylesheet" />
+    <link href="~/css/Styles.css" rel="stylesheet" />
+}
+
+<div class="regContainer">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+        </button>
+        <div class="dropdown-content">
+            @if ((!User?.Identity?.IsAuthenticated) ?? true)
+            {
+                foreach (var myPage in @Model.GuestPages)
+                {
+                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                }
+                <a class="login" href="/Auth/Login">Войти</a>
+                <a class="reg" href="/ManagementCompany/Registration">Зарегистрироваться</a>
+            }
+            else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
+            .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
+            {
+                foreach (var myPage in @Model.UserPages)
+                {
+                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                }
+                <a class="login" href="/Auth/Logout">Выйти</a>
+            }
+            else
+            {
+                foreach (var myPage in @Model.AdminPages)
+                {
+                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                }
+                <a class="login" href="/Auth/Logout">Выйти</a>
+            }
+        </div>
+    </div>
+    <h2>Панель администратора</h2>
+    <h1>Список статусов</h1>
+    <details>
+        <summary>Показать статусы</summary>
+        <table border="1">
+            <thead>
+                <tr>
+                    @if (Model.Statuses.Count > 0)
+                    {
+                        @foreach (var statusField in Model.Statuses.FirstOrDefault().GetType().GetProperties())
+                        {
+                            <th>@statusField.Name</th>
+                        }
+                    }
+                    <th>Изменить</th>
+                    <th>Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var status in Model.Statuses)
+                {
+                    <tr>
+                        @foreach (var statusField in Model.Statuses.FirstOrDefault().GetType().GetProperties())
+                        {
+                            <td> @statusField.GetValue(status)</td>
+                        }
+                        <td>
+                            <a href="/ManagementCompany/UpdateStatus?statusId=@status.Id">Изменить</a>
+                        </td>
+                        <td>
+                            <form action="/ManagementCompany/RemoveStatus" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@status.Id" />
+                                <button class="admin-panel-button" type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <a href="/ManagementCompany/AddStatus">Добавить</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </details>
+    <h1>Список уровней доступа</h1>
+    <details>
+        <summary>Показать уровни доступа</summary>
+        <table border="1">
+            <thead>
+                <tr>
+                    @if (Model.Permissions.Count > 0)
+                    {
+                        @foreach (var permissionField in Model.Permissions.FirstOrDefault().GetType().GetProperties())
+                        {
+                            <th>@permissionField.Name</th>
+                        }
+                    }
+                    <th>Изменить</th>
+                    <th>Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var permission in Model.Permissions)
+                {
+                    <tr>
+                        @foreach (var permissionField in Model.Permissions.FirstOrDefault().GetType().GetProperties())
+                        {
+                            <td> @permissionField.GetValue(permission)</td>
+                        }
+                        <td>
+                            <a href="/ManagementCompany/UpdatePermission?permissionId=@permission.Id">Изменить</a>
+                        </td>
+                        <td>
+                            <form action="/ManagementCompany/RemovePermission" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@permission.Id" />
+                                <button class="admin-panel-button" type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <a href="/ManagementCompany/AddPermission">Добавить</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </details>
+    <h1>Список компаний</h1>
+    <details open>
+        <summary>Показать компании</summary>
+        <table border="1">
+            <thead>
+                <tr>
+                    @if (Model.Companies.Count > 0)
+                    {
+                        @foreach (var companyField in Model.Companies.FirstOrDefault().GetType().GetProperties()
+                       .Where(x => x.Name != "CompanyShortName")
+                       .Where(x => x.Name != "CompanyPhoneNumber"))
+                        {
+                            <th>@companyField.Name</th>
+                        }
+                    }
+                    <th>Изменить</th>
+                    <th>Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var company in Model.Companies)
+                {
+                    <tr>
+                        @foreach (var companyField in Model.Companies.FirstOrDefault().GetType().GetProperties()
+                       .Where(x => x.Name != "CompanyShortName")
+                       .Where(x => x.Name != "CompanyPhoneNumber"))
+                        {
+                            <td> @companyField.GetValue(company)</td>
+                        }
+                        <td>
+                            <a href="/ManagementCompany/UpdateCompany?companyId=@company.Id">Изменить</a>
+                        </td>
+                        <td>
+                            <form action="/ManagementCompany/RemoveCompany" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@company.Id" />
+                                <button class="admin-panel-button" type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <a href="/ManagementCompany/AddCompany">Добавить</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </details>
+    <h1>Список проектов</h1>
+    <details>
+        <summary>Показать проекты</summary>
+        <table border="1">
+            <thead>
+                <tr>
+                    @if (Model.Projects.Count > 0)
+                    {
+                        @foreach (var projectField in Model.Projects.FirstOrDefault().GetType().GetProperties()
+                       .Where(x => x.Name != "ProjectShortName"))
+                        {
+                            <th>@projectField.Name</th>
+                        }
+                    }
+                    <th>Изменить</th>
+                    <th>Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var project in Model.Projects)
+                {
+                    <tr>
+                        @foreach (var projectField in Model.Projects.FirstOrDefault().GetType().GetProperties()
+                       .Where(x => x.Name != "ProjectShortName"))
+                        {
+                            <td> @projectField.GetValue(project)</td>
+                        }
+                        <td>
+                            <a href="/ManagementCompany/UpdateProject?projectId=@project.Id">Изменить</a>
+                        </td>
+                        <td>
+                            <form action="/ManagementCompany/RemoveProject" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@project.Id" />
+                                <button class="admin-panel-button" type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <a href="/ManagementCompany/AddProject">Добавить</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </details>
+    <h1>Список исполнителей</h1>
+    <details>
+        <summary>Показать исполнителей</summary>
+        <table border="1">
+            <thead>
+                <tr>
+                    @if (Model.Executors.Count > 0)
+                    {
+                        @foreach (var ExecutorField in Model.Executors
+                       .FirstOrDefault()
+                       .GetType()
+                       .GetProperties()
+                       .Where(x => x.Name != "ExecutorPassword")
+                       .Where(x => x.Name != "ExecutorExpireDate")
+                       .Where(x => x.Name != "ExecutorNickName"))
+                        {
+                            <th>@ExecutorField.Name</th>
+                        }
+                    }
+                    <th>Изменить</th>
+                    <th>Удалить</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var executor in Model.Executors)
+                {
+                    <tr>
+                        @foreach (var ExecutorField in Model.Executors
+                       .FirstOrDefault()
+                       .GetType()
+                       .GetProperties()
+                       .Where(x => x.Name != "ExecutorPassword")
+                       .Where(x => x.Name != "ExecutorExpireDate")
+                       .Where(x => x.Name != "ExecutorNickName"))
+                        {
+                            <td> @ExecutorField.GetValue(executor)</td>
+                        }
+                        <td>
+                            <a href="/ManagementCompany/RemoveExecutor?executorId=@executor.Id">Изменить</a>
+                        </td>
+                        <td>
+                            <form action="/ManagementCompany/RemoveExecutor" class="remove-form" method="post">
+                                <input type="hidden" name="id" value="@executor.Id" />
+                                <button class="admin-panel-button" type="submit">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        <a href="/ManagementCompany/AddExecutor">Добавить</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </details>
+</div>
+
+

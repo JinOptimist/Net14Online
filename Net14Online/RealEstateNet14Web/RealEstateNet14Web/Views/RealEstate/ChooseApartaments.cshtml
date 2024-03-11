@@ -1,0 +1,17 @@
+@model ApartamentsViewModel
+
+@{
+    Layout = null;
+}
+<div>
+    <form method="post">
+        <div>
+            @Html.DropDownList("apartmentOwnerId",Model.ApartamentOwners)
+        </div>
+        <div>
+            @Html.DropDownList("apartamanetId",Model.Apartaments)
+        </div>
+        <input type="submit" value="Связать"/>
+    </form>
+</div>
+html>

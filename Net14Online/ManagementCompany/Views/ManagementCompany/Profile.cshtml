@@ -1,0 +1,128 @@
+﻿@using ManagementCompany.DbStuff.Models.Enums
+@model ProfileViewModel
+
+@{
+    Layout = "_LayoutManagementCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagementCompany.css" rel="stylesheet" />
+    <link href="~/css/Styles.css" rel="stylesheet" />
+}
+
+@section Script
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/index.js"></script>
+}
+
+<main>
+    <div>
+        <div class="dropdown">
+            <button class="dropbtn">
+                <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+            </button>
+            <div class="dropdown-content">
+                @if ((!User?.Identity?.IsAuthenticated) ?? true)
+                {
+                    foreach (var myPage in @Model.GuestPages)
+                    {
+                        <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                    }
+                    <a class="login" href="/Auth/Login">Войти</a>
+                    <a class="reg" href="/ManagementCompany/Registration">Зарегистрироваться</a>
+                }
+                else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
+                .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
+                {
+                    foreach (var myPage in @Model.UserPages)
+                    {
+                        <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                    }
+                    <a class="login" href="/Auth/Logout">Выйти</a>
+                }
+                else
+                {
+                    foreach (var myPage in @Model.AdminPages)
+                    {
+                        <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                    }
+                    <a class="login" href="/Auth/Logout">Выйти</a>
+                }
+            </div>
+        </div>
+        <h2>Личный кабинет</h2>
+        <form method="post">
+            <img class="avatar" src="img.svg" width="80" height="80" alt="Аватар">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <label for="name"> Имя</label>
+            @Html.TextBoxFor(x => x.FirstName)
+            @Html.ValidationMessageFor(x => x.FirstName)
+            <label for="name"> Фамилия</label>
+            @Html.TextBoxFor(x => x.LastName)
+            @Html.ValidationMessageFor(x => x.LastName)
+            <label for="name"> Телефон</label>
+            @Html.TextBoxFor(x => x.PhoneNumber)
+            @Html.ValidationMessageFor(x => x.PhoneNumber)
+            <label for="name"> Ваш ник</label>
+            @Html.TextBoxFor(x => x.NickName)
+            @Html.ValidationMessageFor(x => x.NickName)
+            <label for="name"> Электронная почта</label>
+            @Html.TextBoxFor(x => x.Email)
+            @Html.ValidationMessageFor(x => x.Email)
+            <label for="name"> Пароль</label>
+            @Html.TextBoxFor(x => x.Password)
+            @Html.ValidationMessageFor(x => x.Password)
+
+            <input type="submit" value="Внести изменения" />
+        </form>
+        <div class="task-table short-table">
+            <div class="short-table"> Мои заявки</div>
+            <div class="full-table">
+                <div class="table-name">Мои заявки</div>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            @if (Model.CurrentUserTasks.Count > 0)
+                            {
+                                @foreach (var statusField in Model.CurrentUserTasks.FirstOrDefault().GetType().GetProperties())
+                                {
+                                    <th>@statusField.Name</th>
+                                }
+                            }
+                            <th>Изменить</th>
+                            <th>Удалить</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var status in Model.CurrentUserTasks)
+                        {
+                            <tr>
+                                @foreach (var statusField in Model.CurrentUserTasks.FirstOrDefault().GetType().GetProperties())
+                                {
+                                    <td> @statusField.GetValue(status)</td>
+                                }
+                                <td>
+                                    <a href="/ManagementCompany/UpdateStatus?statusId=@status.Id">Изменить</a>
+                                </td>
+                                <td>
+                                    <form action="/ManagementCompany/RemoveStatus" class="remove-form" method="post">
+                                        <input type="hidden" name="id" value="@status.Id" />
+                                        <button class="admin-panel-button" type="submit">Удалить</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>
+                                <a href="/ManagementCompany/AddStatus">Добавить</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</main>

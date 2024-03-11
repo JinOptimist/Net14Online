@@ -7,61 +7,85 @@
 
 @section Style
 {
-    <link href="~/css/dnd.css" rel="stylesheet" />
+    <link href="~/css/dnd.css?v=5" rel="stylesheet" />
     <link href="~/css/dnd2.css" rel="stylesheet" />
 }
+
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/dnd/index.js"></script>
+}
+
 <div class="hero-content">
     <div>Привет @Model.UserName</div>
     <div>
-        <a href="/Dnd/AddHero">AddHero</a>
+        <a href="/Dnd/AddHero">@Net14Web.LocalizationFiles.Dnd.AddHeroLink</a>
     </div>
     <div>
-        <a href="/Dnd/AddRandomHero">AddRandomHero</a>
+        <a href="/Dnd/AddRandomHero">@Net14Web.LocalizationFiles.Dnd.AddRandomHeroLink</a>
     </div>
+    @if (Model.CanChooseFavoriteWeapon)
+    {
+        <div>
+            <a href="/Dnd/ChooseFavoriteWeapon">ChooseFavoriteWeapon</a>
+        </div>
+    }
+
     <div>
-        <a href="/Dnd/ChooseFavoriteWeapon">ChooseFavoriteWeapon</a>
+        <form action="/dnd/updateCoin" method="post" class="update-hero-coins-form">
+            <input type="hidden" name="heroId" value="0" />
+            <div>
+                <input type="number" name="coin" />
+                @Net14Web.LocalizationFiles.Dnd.SetCoins
+                <span class="hero-id"></span>
+            </div>
+            <div>
+                <input type="submit" value="@Net14Web.LocalizationFiles.Dnd.UpdateCoinButton" />
+            </div>
+        </form>
     </div>
 
     <div class="heroes">
         @foreach (var hero in Model.Heroes)
         {
-            <div class="hero">
-                <div class="remove-block">
-                    <a href="/dnd/remove?id=@hero.Id" class="remove-link">X</a>
+            <div class="hero short" data-hero-id="@hero.Id">
+                <div class="just-name">
+                    @hero.Name
                 </div>
-                <div class="name-and-coin-block">
-                    <div class="name-block">
-                        <div class="hero-title">
-                            <a href="/dnd/profile?heroId=@hero.Id">ГЕРОЙ</a>
+                <div class="details">
+                    @if (hero.CanDelete)
+                    {
+                        <div class="remove-block">
+                            <a href="/dnd/remove?id=@hero.Id" class="remove-link">X</a>
                         </div>
-                        <div class="avatar-block">
-                            <img src="@hero.AvatarUrl" />
+                    }
+                    <div class="name-and-coin-block">
+                        <div class="name-block">
+                            <div class="hero-title">
+                                <a href="/dnd/profile?heroId=@hero.Id">ГЕРОЙ</a>
+                            </div>
+                            <div class="avatar-block">
+                                <img src="@hero.AvatarUrl" />
+                            </div>
+                            <div class="hero-name">
+                                @hero.Name
+                            </div>
+                            <div>
+                                созданный @hero.OwnerName (<span class="race">@hero.Race</span>)
+                            </div>
+                            <div class="weapon">
+                                Любимое оружие: @hero.FavWeaponName
+                            </div>
                         </div>
-                        <div class="hero-name">
-                            @hero.Name созданный @hero.OwnerName (@hero.Race)
-                        </div>
-                        <div class="weapon">
-                            Любимое оружие: @hero.FavWeaponName
+                        <div class="coin-block">
+                            <div>
+                                <span class="coins-count">@hero.Coins</span>
+                                <img src="/images/dnd/coin.png" class="icon" />
+                            </div>
                         </div>
                     </div>
-                    <div class="coin-block">
-                        <div>
-                            @hero.Coins <img src="/images/dnd/coin.png" class="icon" />
-                        </div>
-                        <div class="new-coint-block">
-                            <form action="/dnd/updateCoin" method="post">
-                                <input type="hidden" name="heroId" value="@hero.Id" />
-                                <div>
-                                    <input type="number" name="coin" />
-                                </div>
-                                <div>
-                                    <input type="submit" value="Upd" />
-                                </div>
-                            </form>
-                        </div>
+                    <div class="inventory-block">
                     </div>
-                </div>
-                <div class="inventory-block">
                 </div>
             </div>
         }

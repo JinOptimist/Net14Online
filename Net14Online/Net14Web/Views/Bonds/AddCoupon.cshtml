@@ -1,0 +1,28 @@
+﻿@using Net14Web.Models.Bonds
+@model AddCouponViewModel
+@{
+    Layout = "_LayoutBonds";
+}
+
+<div>
+    <form method="post">
+
+        <div>
+            Выберите облигацию
+            @Html.DropDownList("bondsId", Model.Bonds)
+        </div>
+        <div>
+            Размер купона
+            @Html.TextBoxFor(x => x.CouponSize)
+        </div>
+        <div>
+            Дата 
+            @Html.TextBoxFor(x => x.Date)
+        </div>
+        <div>
+            <input type="submit" value="Добавить купон" />
+        </div>
+    </form>
+</div>
+
+

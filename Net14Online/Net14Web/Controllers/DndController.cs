@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Net14Web.Controllers.CustomAuthAttributes;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Repositories;
+using Net14Web.LocalizationFiles;
 using Net14Web.Models.Dnd;
 using Net14Web.Services;
+using Net14Web.Services.DndServices;
 
 namespace Net14Web.Controllers
 {
@@ -13,18 +16,21 @@ namespace Net14Web.Controllers
         private HeroRepository _heroRepository;
         private WeaponRepository _weaponRepository;
         private AuthService _authService;
-        
+        private HeroPermissions _heroPermissions;
+
         private IWebHostEnvironment _webHostEnvironment;
 
         public DndController(HeroRepository heroRepository,
             WeaponRepository weaponRepository,
             IWebHostEnvironment webHostEnvironment,
-            AuthService authService)
+            AuthService authService,
+            HeroPermissions heroPermissions)
         {
             _heroRepository = heroRepository;
             _weaponRepository = weaponRepository;
             _webHostEnvironment = webHostEnvironment;
             _authService = authService;
+            _heroPermissions = heroPermissions;
         }
 
         public IActionResult Index()
@@ -44,7 +50,8 @@ namespace Net14Web.Controllers
                         Race = dbHero.Race,
                         AvatarUrl = dbHero.AvatarUrl,
                         FavWeaponName = dbHero.FavoriteWeapon?.Name ?? "---",
-                        OwnerName = dbHero.Owner?.Login ?? "Неизвестен"
+                        OwnerName = dbHero.Owner?.Login ?? "Неизвестен",
+                        CanDelete = _heroPermissions.CanDelete(dbHero),
                     };
                 })
                 .ToList();
@@ -53,7 +60,8 @@ namespace Net14Web.Controllers
             {
                 Heroes = viewModels,
                 Weapons = new List<WeaponViewModel> { new WeaponViewModel { Name = "Кинжал", Damadge = 3 } },
-                UserName = userName
+                UserName = userName,
+                CanChooseFavoriteWeapon = _heroPermissions.CanChooseFavoriteWeapon(),
             };
 
             return View(dndIndexViewModel);
@@ -92,14 +100,31 @@ namespace Net14Web.Controllers
 
         public IActionResult Remove(int id)
         {
+            var dbHero = _heroRepository.GetByIdWithOwner(id);
+            if (!_heroPermissions.CanDelete(dbHero))
+            {
+                throw new Exception("You haven't access");
+            }
+            
             _heroRepository.Delete(id);
             return RedirectToAction("Index");
         }
 
+        [AdminOnly]
         public IActionResult AddRandomHero()
         {
-            //var hero = _heroBuilder.BuildRandomHero();
-            //heroViewModels.Add(hero);
+            var hero = new Hero
+            {
+                Name = "Random",
+                Birthday = DateTime.Now,
+                Coins = 5,
+                Race = DbStuff.Models.Enums.Race.Human,
+                AvatarUrl = "default.jpg",
+                Owner = _authService.GetCurrentUser()
+            };
+
+            _heroRepository.Add(hero);
+
             return RedirectToAction("Index");
         }
 
@@ -114,7 +139,9 @@ namespace Net14Web.Controllers
         [Authorize]
         public IActionResult AddHero()
         {
-            return View();
+            var viewModel = new AddHeroViewModel();
+            viewModel.UserName = _authService.GetCurrentUserName();
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -142,6 +169,7 @@ namespace Net14Web.Controllers
         }
 
         [HttpGet]
+        [DungeonMaster]
         public IActionResult ChooseFavoriteWeapon()
         {
             var viewModel = new FavoriteWeaponViewModel();
@@ -160,6 +188,7 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
+        [DungeonMaster]
         public IActionResult ChooseFavoriteWeapon(int heroId, int weaponId)
         {
             _heroRepository.SetFavoriteWeapone(heroId, weaponId);

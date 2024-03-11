@@ -8,13 +8,17 @@
 {
     <link href="~/css/tasktracker.css" rel="stylesheet" />
 }
-<button class="navigation-button"><a href="/TaskTracker/AddTask">Add Task</a></button>
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/TaskTracker/index.js"></script>
+}
+<button class="navigation-button"><a href="/TaskTracker/AddTask">@Net14Web.LocalizationFiles.TaskTracker.AddTaskButtonText</a></button>
 <section class="photo-grid">
     <div class="photo-grid__container">
         <article class="photo-grid__card">
             <div class="photo-grid__text">
-                <h3 class="photo-grid__title">Ты, как всегда, вовремя!</h3>
-                <h4 class="photo-grid__description">Даже путь в тысячу ли начинается с первого шага.</h4>
+                <h3 class="photo-grid__title">@Net14Web.LocalizationFiles.TaskTracker.GreetingCardTitle</h3>
+                <h4 class="photo-grid__description">@Net14Web.LocalizationFiles.TaskTracker.GreetingCardDescription</h4>
             </div>
         </article>
         @foreach (var card in Model)
@@ -23,10 +27,14 @@
                 <h4 class="photo-grid__priority">@card.Priority</h4>
                 <img class="photo-grid__image" src="@card.GetImageSource()"  />
                 <button class="photo-grid__update-icon"><a href="/TaskTracker/UpdateTask?id=@card.Id">&#9998</a></button>
-                <button class="delete-icon delete-icon_black"><a href="/TaskTracker/DeleteTask?id=@card.Id">&#10006</a></button>
+                @if (card.CanDelete)
+                {
+                    <button class="delete-icon delete-icon_black"><a href="/TaskTracker/DeleteTask?id=@card.Id">&#10006</a></button>
+                }
                 <div class="photo-grid__text">
                     <h3 class="photo-grid__title">@card.Name</h3>
                     <h4 class="photo-grid__description">@card.Description</h4>
+                    <h4 class="photo-grid__description">@card.Owner</h4>
                 </div>
             </article>
         }

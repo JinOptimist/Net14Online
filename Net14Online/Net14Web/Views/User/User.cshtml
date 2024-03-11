@@ -1,0 +1,96 @@
+﻿@using Net14Web.Models.Movies
+@model UserViewModel
+
+@section Style
+{
+    <link rel="stylesheet" href="~/css/movies.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
+}
+
+@section Script
+{
+    <script src="/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+    <script src="~/lib/bootstrap-5.3.2-dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/js/Movies/User.js"></script>
+}
+
+<div class="row vh-100">
+    <div class="col-12 row container d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-3">
+            <div class="align-middle text-center">
+                <a>
+                    <img type="image" src="@Model.AvatarUrl" class="rounded mx-auto d-block avatar-img" alt="avatar">\
+                    @if (Model.CanUpdateAvatarUser)
+                    {
+                        <form action="/movies/UpdateUserAvatar" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="userId" value="@Model.Id" />
+                            <input type="file" name="avatar" />
+                            <input type="submit" value="Обновить аватар" />
+                        </form>
+                    }
+                </a>
+                <h4 class="card-title">@Model.Login</h4>
+                <span class="badge bg-success">@Model.RoleName</span>
+                <span class="user-online-status status-online">
+                    Online
+                </span>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-8 profile-menu align-items-end">
+            <div class="card">
+                <div class="text-center card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="userTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link nav-button active" href="#comment" id="comment-tab" data-toggle="tab" role="tab" aria-controls="comment" aria-selected="true">Комментарии</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-button" href="#viewed" id="viewed-tab" data-toggle="tab" role="tab" aria-controls="viewed" aria-selected="false">Просмотренное</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-button" href="#subscriptions" id="subscriptions-tab" data-toggle="tab" role="tab" aria-controls="subscriptions" aria-selected="false">Подписки</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-button" href="#subscribers" id="subscribers-tab" data-toggle="tab" role="tab" aria-controls="subscribers" aria-selected="false">Подписчики</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body tab-content" id="userTabContent">
+                    <div class="tab-pane active" id="comment">
+                        @foreach (var comment in @Model.Comments)
+                        {
+                            <div class="card comment-card-in-profile">
+                                <a class="comment-a rounded" href="/movies/movie?movieId=@comment.Movie.MovieId">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="@comment.Movie.PosterUrl" class="rounded movie-image">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <p class="h5">@comment.Movie.Title</p>
+                                                <p class="card-text comment-in-profile">
+                                                    @comment.Description
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p class="card-text"><small class="text-muted">@comment.TimeOfWritng</small></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#userTab a').on('click', function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+</script>

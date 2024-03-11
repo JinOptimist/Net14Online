@@ -6,6 +6,7 @@ using Net14Web.DbStuff.ManagmentCompany.Models;
 using Net14Web.DbStuff.Models.Movies;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Models.Auth;
+using Net14Web.Services;
 using System.Security.Claims;
 using User = Net14Web.DbStuff.Models.Movies.User;
 
@@ -102,6 +103,8 @@ namespace Net14Web.Controllers
                 new Claim("id", user.Id.ToString()),
                 new Claim("name", user.Login ?? "user"),
                 new Claim("email", user.Email ?? ""),
+                new Claim(AuthService.LOCALE_TYPE, user.PreferLocale),
+                new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims", user.Email ?? ""),
             };
 
             var identity = new ClaimsIdentity(claims, AUTH_KEY);
@@ -109,6 +112,14 @@ namespace Net14Web.Controllers
             HttpContext
                 .SignInAsync(AUTH_KEY, principal)
                 .Wait();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync().Wait();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

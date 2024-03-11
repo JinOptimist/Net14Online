@@ -1,11 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.VisualBasic;
+using Net14Web.Controllers.CustomAuthAttributes;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.BookingWeb;
+using Net14Web.DbStuff.Repositories.Booking;
 using Net14Web.Models.BookingWeb;
+using Net14Web.Models.Dnd;
+using Net14Web.Services;
+using Net14Web.Services.BookingPermissons;
 using System.ComponentModel.Design;
 using System.Linq;
 
@@ -13,38 +20,66 @@ namespace Net14Web.Controllers
 {
     public class BookingWebController : Controller
     {
-        private WebDbContext _webDbContext;
-
         public static List<UserLoginViewModel> userLoginViewModel = new List<UserLoginViewModel>();
 
         public static List<SearchResultViewModel> searchResultViewModel = new List<SearchResultViewModel>();
 
-        public BookingWebController(WebDbContext webDbContext)
+        private SearchRepository _searchRepository;
+        private LoginRepository _loginRepository;
+        private AuthService _authService;
+        private BookingPermission _bookingPermission;
+        
+        public BookingWebController (SearchRepository searchRepository, 
+            LoginRepository loginRepository, 
+            AuthService authService,
+            BookingPermission bookingPermission)
         {
-            _webDbContext = webDbContext;
+            _searchRepository = searchRepository;
+            _loginRepository = loginRepository;
+            _authService = authService;
+            _bookingPermission = bookingPermission;
         }
 
+        public IActionResult CarRental()
+        {
+            return View();
+        }
+        public IActionResult Flights()
+        {
+            return View();
+        }
+        public IActionResult UserChat()
+        {
+            var viewModel = new UserChatViewModel();
+            viewModel.UserName = _authService.GetCurrentUserName();
+            return View(viewModel);
+        }
         public IActionResult Help()
         {
             return View();
         }
         public IActionResult UserLogin()
         {
-            var logins = _webDbContext.LoginsBooking.Take(10).ToList();
+            var logins = _loginRepository.GetLogin(10);
 
-            var viweModel = logins.Select(login => new UserLoginViewModel
+            var viewModel = logins.Select(login => new UserLoginViewModel
             {
+                Id = login.Id,
                 Name = login.Name,
                 Email = login.Email,
                 Password = login.Password,
-            }).ToList();
+                Owner = _authService.GetCurrentUser().Login,
+                CanDelete = login.Owner is null || login.Owner.Id == _authService.GetCurrentUserId()
+            })
+                .ToList();
 
-            return View(viweModel);
+            return View(viewModel);
         }
 
         public IActionResult SearchResult()
         {
-            var searches = _webDbContext.Searches.Include(x => x.LoginBooking).Take(10).ToList();
+            var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Guest";
+            var searches = _searchRepository.GetSearchLoginConnection(10);
 
             var viewModels = searches.Select(search => new SearchResultViewModel
             {
@@ -53,49 +88,50 @@ namespace Net14Web.Controllers
                 City = search.City,
                 CheckinDate = search.Checkin,
                 CheckoutDate = search.Checkout,
-                LoginEmail = search.LoginBooking.Email
+                LoginEmail = search.ClientBooking.Email,
+                UserName = userName,
+                Owner = search.Owner?.Login ?? "Unknown",
+                CanDelete = _bookingPermission.CanDelete(search)
             }).ToList();
 
             return View(viewModels);
         }
+
+        [Authorize]
+        [AdminOnly]
         public IActionResult Remove(int id)
         {
-            var user = _webDbContext.LoginsBooking.First(x => x.Id == id);
-            _webDbContext.LoginsBooking.Remove(user);
-            _webDbContext.SaveChanges();
+            _loginRepository.Delete(id);
 
             return RedirectToAction("UserLogin");
         }
 
+        [Authorize]
         public IActionResult RemoveSearch(int id)
         {
-            var user = _webDbContext.Searches.First(x => x.Id == id);
-            _webDbContext.Searches.Remove(user);
-            _webDbContext.SaveChanges();
-
+            var search = _searchRepository.GetByIdWithOwner(id);
+            if (!_bookingPermission.CanDelete(search))
+            {
+                throw new Exception("You have no access");
+            }
+            _searchRepository.Delete(id);
             return RedirectToAction("SearchResult");
         }
 
         [HttpPost]
-        public IActionResult UpdateEmail(int Id, string Email)
+        public IActionResult UpdateEmail(int loginId, string email)
         {
-            var logins = _webDbContext.LoginsBooking.FirstOrDefault(x => x.Id == Id);
-            logins.Email = Email;
-            _webDbContext.SaveChanges();
+            _loginRepository.UpdateEmail(loginId, email);
 
             return RedirectToAction("UserLogin");
         }
 
         [HttpPost]
-        public IActionResult UpdateCity(int Id, string City)
+        public IActionResult UpdateCity(int id, string city)
         {
-            var searches = _webDbContext.Searches.First(x => x.Id == Id);
-            searches.City = City;
-            _webDbContext.SaveChanges();
-
+            _searchRepository.UpdateCity(id, city);
             return RedirectToAction("SearchResult");
         }
-
 
         [HttpGet]
         public IActionResult Login()
@@ -111,15 +147,14 @@ namespace Net14Web.Controllers
                 return View();
             }
 
-            var search = _webDbContext.Searches.FirstOrDefault();
-            var login = new LoginBooking
+            var login = new ClientBooking
             {
                 Name = userLoginViewModel.Name,
                 Email = userLoginViewModel.Email,
-                Password = userLoginViewModel.Password
+                Password = userLoginViewModel.Password,
+                Owner = _authService.GetCurrentUser()
             };
-            _webDbContext.LoginsBooking.Add(login);
-            _webDbContext.SaveChanges();
+            _loginRepository.Add(login);
             return RedirectToAction("UserLogin");
         }
 
@@ -132,27 +167,33 @@ namespace Net14Web.Controllers
         [HttpPost]
         public IActionResult Index(IndexViewModel searchResultViewModel)
         {
-            var login = _webDbContext.LoginsBooking.First();
+            var login = _loginRepository.GetFirst();
 
             var search = new Search
             {
                 Country = searchResultViewModel.Country,
                 City = searchResultViewModel.City,
-                Checkin = searchResultViewModel.CheckinDate, 
-                Checkout = searchResultViewModel.CheckoutDate
+                Checkin = searchResultViewModel.CheckinDate,
+                Checkout = searchResultViewModel.CheckoutDate,
+                ClientBooking = login,
+                Owner = _authService.GetCurrentUser()
             };
-            _webDbContext.Searches.Add(search);
-            _webDbContext.SaveChanges();
+
+            _searchRepository.Add(search);
+
             return RedirectToAction("SearchResult");
         }
 
         [HttpGet]
         public IActionResult UserCountrySearch()
         {
+            var userName = HttpContext.User.Claims.FirstOrDefault(x=> x.Type =="name")?.Value ?? "Guest";
+
             var viewModel = new UserSearchViewModel();
 
-            viewModel.Logins = _webDbContext.LoginsBooking.Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList();
-            viewModel.Searches = _webDbContext.Searches.Select(x => new SelectListItem(x.Country, x.Id.ToString())).ToList();
+            viewModel.UserName = userName;
+            viewModel.Logins = _loginRepository.GetAll().Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList();
+            viewModel.Searches = _searchRepository.GetAll().Select(x => new SelectListItem(x.Country, x.Id.ToString())).ToList();
             return View(viewModel);
         }
 

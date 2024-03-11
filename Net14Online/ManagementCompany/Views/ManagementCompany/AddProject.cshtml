@@ -1,0 +1,74 @@
+﻿@using ManagementCompany.DbStuff.Models.Enums
+@model ProjectViewModel
+
+@{
+    Layout = "_LayoutManagementCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagementCompany.css" rel="stylesheet" />
+    <link href="~/css/Styles.css" rel="stylesheet" />
+}
+
+<div class="regContainer">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+        </button>
+        <div class="dropdown-content">
+            @if ((!User?.Identity?.IsAuthenticated) ?? true)
+            {
+                foreach (var myPage in @Model.GuestPages)
+                {
+                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                }
+                <a class="login" href="/Auth/Login">Войти</a>
+                <a class="reg" href="/ManagementCompany/Registration">Зарегистрироваться</a>
+            }
+            else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
+            .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
+            {
+                foreach (var myPage in @Model.UserPages)
+                {
+                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                }
+                <a class="login" href="/Auth/Logout">Выйти</a>
+            }
+            else
+            {
+                foreach (var myPage in @Model.AdminPages)
+                {
+                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                }
+                <a class="login" href="/Auth/Logout">Выйти</a>
+            }
+        </div>
+    </div>
+    <h2>Панель администратора</h2>
+    <div>
+        <div class="add-project">
+            <h2>Добавить проект</h2>
+            <form method="post" action="/ManagementCompany/AddProject">
+                <label for="name"> Название проекта:</label>
+                @Html.TextBoxFor(x => x.ProjectName)
+                @Html.ValidationMessageFor(x => x.ProjectName)
+
+                <label for="shortName">Сокращенное название:</label>
+                @Html.TextBoxFor(x => x.ProjectShortName)
+                @Html.ValidationMessageFor(x => x.ProjectShortName)
+
+                <label for="adress">Адрес:</label>
+                @Html.TextBoxFor(x => x.ProjectAdress)
+                @Html.ValidationMessageFor(x => x.ProjectAdress)
+
+                <label for="company">Компания:</label>
+                @Html.DropDownList("companyId", Model.Companies)
+
+                <input class="submit" type="submit" value="Добавить проект" />
+            </form>
+        </div>
+    </div>
+</div>
+
+

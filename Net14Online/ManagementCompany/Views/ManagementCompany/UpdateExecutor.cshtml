@@ -1,0 +1,120 @@
+﻿@using ManagementCompany.DbStuff.Models.Enums
+@model ExecutorViewModel
+
+@{
+    Layout = "_LayoutManagementCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagementCompany.css" rel="stylesheet" />
+    <link href="~/css/Styles.css" rel="stylesheet" />
+}
+
+<div class="regContainer">
+    <div class="dropdown">
+        <button class="dropbtn">
+            <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+        </button>
+        <div class="dropdown-content">
+            @if ((!User?.Identity?.IsAuthenticated) ?? true)
+            {
+                foreach (var myPage in @Model.GuestPages)
+                {
+                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                }
+                <a class="login" href="/Auth/Login">Войти</a>
+                <a class="reg" href="/ManagementCompany/Registration">Зарегистрироваться</a>
+            }
+            else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
+            .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
+            {
+                foreach (var myPage in @Model.UserPages)
+                {
+                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                }
+                <a class="login" href="/Auth/Logout">Выйти</a>
+            }
+            else
+            {
+                foreach (var myPage in @Model.AdminPages)
+                {
+                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                }
+                <a class="login" href="/Auth/Logout">Выйти</a>
+            }
+        </div>
+    </div>
+    <h2>Панель администратора</h2>
+    <div>
+        <div class="add-user">
+            <h2>Добавить исполнителя</h2>
+            <form method="post" action="/ManagementCompany/UpdateExecutor">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <label for="firstName"> Имя:</label>
+                @Html.TextBoxFor(x => x.ExecutorFirstName)
+                @Html.ValidationMessageFor(x => x.ExecutorFirstName)
+
+                <label for="lastName"> Фамилия:</label>
+                @Html.TextBoxFor(x => x.ExecutorLastName)
+                @Html.ValidationMessageFor(x => x.ExecutorLastName)
+
+                <label for="nickName"> Ник на сайте:</label>
+                @Html.TextBoxFor(x => x.ExecutorNickName)
+                @Html.ValidationMessageFor(x => x.ExecutorNickName)
+
+                <label for="email">Электронная почта:</label>
+                @Html.TextBoxFor(x => x.ExecutorEmail)
+                @Html.ValidationMessageFor(x => x.ExecutorEmail)
+
+                <label for="password">Пароль для пользователя:</label>
+                @Html.TextBoxFor(x => x.ExecutorPassword)
+                @Html.ValidationMessageFor(x => x.ExecutorPassword)
+
+                <label for="phoneNumber">Номер телефона:</label>
+                @Html.TextBoxFor(x => x.ExecutorPhoneNumber)
+                @Html.ValidationMessageFor(x => x.ExecutorPhoneNumber)
+
+                <label for="expireDate">Выберите дату:</label>
+                <div class="change">
+                    @Html.TextBoxFor(x => x.ExecutorExpireDate, new { @class = "company-status", @readonly = "readonly" })
+                    @Html.TextBoxFor(x => x.ExecutorExpireDate, new { type = "date" })
+                </div>
+                @Html.ValidationMessageFor(x => x.ExecutorExpireDate)
+
+                <label for="permission">Уровень доступа:</label>
+                <div class="change">
+                    @Html.TextBoxFor(x => x.ExecutorMemberPermission, new { @class = "company-status", @readonly = "readonly" })
+                    @Html.DropDownList("permissionId", Model.Permissions, new { @class = "company-status-list" })
+                </div>
+
+                <label for="status">Статус:</label>
+                <div class="change-status">
+                    @Html.TextBoxFor(x => x.ExecutorMemberStatus, new { @class = "company-status", @readonly = "readonly" })
+                    @Html.DropDownList("statusId", Model.Statuses, new { @class = "company-status-list" })
+                </div>
+
+                <label for="company">Компания:</label>
+                <div class="change">
+                    @Html.TextBoxFor(x => x.Company, new { @class = "company-status", @readonly = "readonly" })
+                    @Html.DropDownList("companyId", Model.Companies, new { @class = "company-status-list" })
+                </div>
+
+                <label for="project">Проект:</label>
+                <div class="change">
+                    @for (int j = 0; j < Model.Projects.Count; j++)
+                    {
+                        <div class="change">
+                            @Html.TextBoxFor(x => x.Projects[j].Text, new { @class = "company-status", @readonly = "readonly" })
+                            <a href="Delete">Delete</a>
+                        </div>
+                    }
+                </div>
+                @Html.DropDownList("projectId", Model.Projects, new { @class = "company-status-list" })
+                <input class="submit" type="submit" value="Обновить информацию" />
+            </form>
+        </div>
+    </div>
+</div>
+
+

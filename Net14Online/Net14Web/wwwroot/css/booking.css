@@ -150,3 +150,25 @@
     justify-content: space-between;
     padding-left:50px;
 }
+
+
+.user.full-info .full-info {
+    display: flex;
+    cursor:pointer;
+}
+
+.user.name-only{
+    height: 20px;
+    min-height: auto;
+    cursor:pointer;
+}
+
+.user .full-info {
+    display: none; /* Hide full-info by default */
+    height: auto;
+    flex-wrap: wrap; /* Allow content to wrap onto multiple lines */
+    flex-direction: column; /* Stack items vertically */
+    cursor: pointer;
+}
+
+
