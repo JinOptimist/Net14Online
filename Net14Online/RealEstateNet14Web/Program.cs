@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RealEstateNet14Web.CustomMiddlewares;
 using RealEstateNet14Web.Controllers.Auth;
 using RealEstateNet14Web.DbStuff;
 using RealEstateNet14Web.DbStuff.Repositories;
@@ -13,6 +14,11 @@ builder.Services
     {
         option.LoginPath = "/AuthRealEstate/RealEstateLogin";
     });
+
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -41,6 +47,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseMiddleware<CustomLocalizationMiddleware>();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -48,7 +56,6 @@ app.UseRouting();
 
 app.UseAuthentication(); // Who I am?
 app.UseAuthorization(); // May I?
-
 
 app.MapControllerRoute(
     name: "default",
