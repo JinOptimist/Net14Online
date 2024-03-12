@@ -158,3 +158,11 @@ button {
 .user-name {
     color: forestgreen;
 }
+
+.like-container {
+    margin: 10px;
+}
+
+.article-text {
+    margin: 10px;
+}

@@ -8,11 +8,16 @@
 
     hub.on('newComment', function (user, comment) {
         addMessage(user, comment);
-        //console.log("user: " + user + " comment: " + comment);
     });
 
     hub.on('newUserEnterToChat', function (user) {
         addMessage('System', user + ' enter to chat');
+    });
+
+    hub.on('LastComments', function (comments) {
+        comments.forEach(function (comment) {
+            addMessage(comment.userName, comment.commentMessage);
+        })
     });
 
     $('.send-comment').click(function () {
@@ -24,6 +29,7 @@
     hub.start()
         .then(function () {
             hub.invoke('UserEnterToChat', userName);
+            hub.invoke('GetLastComments');
         });
 
     function addMessage(user, comment) {
