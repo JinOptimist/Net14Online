@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RealEstateNet14Web.DbStuff.Models;
 using RealEstateNet14Web.DbStuff.Repositories;
 using RealEstateNet14Web.Models;
+using RealEstateNet14Web.Models.ChatModels;
 using RealEstateNet14Web.Services;
 using RealEstateNet14Web.Services.Auth;
 
@@ -35,7 +36,9 @@ public class RealEstateController : Controller
    
     public IActionResult Main()
     {
-        return View(userViewModels);
+        var viewModel = new ChatViewModel();
+        viewModel.UserName = _realEstateAuthService.GetCurrentUserName();
+        return View(viewModel);
     }
    
     [HttpGet]
