@@ -1,26 +1,35 @@
-using ChatMiniServiceForRealEstate.SignalRHubs;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddCors(option =>
+
+namespace ChatMiniServiceForRealEstate
 {
-    option.AddDefaultPolicy(policy =>
+    public class Program
     {
-        //policy.WithHeaders("Smile", "Credential");
-        policy.AllowAnyHeader();
-        policy.AllowAnyMethod();
-        policy.SetIsOriginAllowed(url => true);
-        policy.AllowCredentials();
-    });
-});
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddCors(option =>
+            {
+                option.AddDefaultPolicy(policy =>
+                {
+                    //policy.WithHeaders("Smile", "Credential");
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.SetIsOriginAllowed(url => true);
+                    policy.AllowCredentials();
+                });
+            });
 
-builder.Services.AddSignalR();
+            builder.Services.AddSignalR();
 
-var app = builder.Build();
+            var app = builder.Build();
 
-app.UseCors();
+            app.UseCors();
 
-app.MapHub<ChatHub>("/chat");
+            app.MapHub<ChatHub>("/chat");
 
-app.MapGet("/", () => "Hello World!");
+            app.MapGet("/", () => "Hello World!");
 
-app.Run();
+            app.Run();
+        }
+    }
+}
