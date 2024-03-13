@@ -38,6 +38,7 @@ namespace Net14Web.Controllers
                 new Claim("id", user.Id.ToString()),
                 new Claim("name", user.Login.ToString()),
                 new Claim("email", user.Email ?? ""),
+                new Claim("avatar", user.AvatarUrl ?? ""),
                 new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims", user.Email ?? ""),
 
             };

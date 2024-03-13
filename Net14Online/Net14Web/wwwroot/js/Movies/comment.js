@@ -6,8 +6,8 @@ $(document).ready(() => {
     const addCommentButton = $('.btn-add-comment');
 
 
-    hub.on('MovieGotNewComment', (userId, userName, userAvatarUrl, commentDescription, commentTimeOfWriting) => {
-        addCommentOnPage(userId, userName, userAvatarUrl, commentDescription, commentTimeOfWriting);
+    hub.on('MovieGotNewComment', (comment) => {
+        addCommentOnPage(comment.userId, comment.userName, comment.userAvatarUrl, comment.description, comment.timeOfWriting);
     });
 
     hub.on('LastComments', (lastComments) => {
@@ -19,8 +19,12 @@ $(document).ready(() => {
     addCommentButton.click(() => {
         const descriptionComment = $('.btn-description-comment');
         if (descriptionComment.val().length) {
-            addCommentOnServer();
-            descriptionComment.val("");
+            let movieId = $('.movie-id').val();
+            let userId = $('.user-id').val();
+            let description = $('.btn-description-comment').val();
+            let userName = $('.user-name').val();
+            let userAvatar = $('user-avatar').val();
+            addCommentOnServer(movieId, userId, description, userName, userAvatar);
         }
     });
 
@@ -30,11 +34,8 @@ $(document).ready(() => {
         hub.invoke('OpenMovie', movieId);
     });
 
-    const addCommentOnServer = () => {
-        let movieId = $('.movie-id').val();
-        let userId = $('.user-id').val();
-        let description = $('.btn-description-comment').val();
-        hub.invoke('AddNewComment', userId, movieId, description);
+    const addCommentOnServer = (movieId, userId, description, userName, userAvatar) => {
+        hub.invoke('AddNewComment', movieId, userId, userName, userAvatar, description);
     };
 
     const addCommentOnPage = (userId, userName, userAvatarUrl, commentDescription, commentTimeOfWriting) => {
@@ -44,7 +45,9 @@ $(document).ready(() => {
         newCommentBlock.find('.user-href-id').attr('href', '/movies/user/' + userId);
         newCommentBlock.find('.user-src-avatarUrl').attr('src', userAvatarUrl);
         newCommentBlock.find('.comment-description').text(commentDescription);
-        newCommentBlock.find('.comment-time-of-writing').text(commentTimeOfWriting);
+        var timestamp = new Date(commentTimeOfWriting).getTime();
+        var datetime = new Date(timestamp);
+        newCommentBlock.find('.comment-time-of-writing').text(datetime.toLocaleString());
 
         $('.comments').prepend(newCommentBlock);
     }

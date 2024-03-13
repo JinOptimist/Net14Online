@@ -39,6 +39,8 @@
                                             <div class="input-group">
                                                 <input type="hidden" name="movieId" class="movie-id" value="@Model.Id" />
                                                 <input type="hidden" name="userId" class="user-id" value="@User.FindFirst("id").Value" />
+                                                <input type="hidden" name="movieId" class="user-name" value="@User.FindFirst("name").Value" />
+                                                <input type="hidden" name="movieId" class="user-avatar" value="@User.FindFirst("avatar").Value" />
                                                 <input type="text" class="form-control btn-description-comment" name="description" placeholder="Комментарий" aria-describedby="input-group-button-right">
                                                 <button type="submit" class="btn btn-outline-secondary btn-add-comment"
                                                         id="input-group-button-right">
