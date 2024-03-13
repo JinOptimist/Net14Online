@@ -36,6 +36,11 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Dnd.resx</DependentUpon>
 	  </Compile>
+	  <Compile Update="LocalizationFiles\Movies.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Movies.resx</DependentUpon>
+	  </Compile>
 	  <Compile Update="LocalizationFiles\TaskTracker.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -54,6 +59,10 @@
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="LocalizationFiles\Dnd.ru.resx">
 	    <Generator></Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="LocalizationFiles\Movies.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Movies.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="LocalizationFiles\TaskTracker.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
