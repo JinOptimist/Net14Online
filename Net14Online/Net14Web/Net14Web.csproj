@@ -26,6 +26,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="LocalizationFiles\Booking.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Booking.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="LocalizationFiles\Dnd.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Dnd.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="LocalizationFiles\TaskTracker.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>TaskTracker.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <EmbeddedResource Update="LocalizationFiles\Booking.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Booking.Designer.cs</LastGenOutput>

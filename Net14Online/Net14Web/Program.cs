@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.WebSockets;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Net14Web.Controllers;
+using Net14Web.CustomMiddlewares;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.DbStuff.Repositories.Booking;
@@ -21,12 +25,34 @@ using Net14Web.Services.TaskTrackerServices;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddAuthentication(AuthController.AUTH_KEY)
+    .AddAuthentication(options =>
+    {
+        options.DefaultScheme = AuthController.AUTH_KEY;
+        options.DefaultChallengeScheme = AuthController.AUTH_GOOGLE_KEY;
+    })
     .AddCookie(AuthController.AUTH_KEY, option =>
     {
         option.AccessDeniedPath = "/auth/deny";
         option.LoginPath = "/Auth/Login";
-    });
+    })
+     .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+     {
+         options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+         options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+         options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
+     })
+     .AddCookie(option =>
+     {
+         option.LoginPath = "/Auth/Login-google";
+     }); 
+
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+//})
+//    .AddCookie()
+   
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -117,6 +143,8 @@ app.UseRouting();
 
 app.UseAuthentication(); // Who I am?
 app.UseAuthorization(); // May I?
+
+app.UseMiddleware<CustomLocalizationMiddleware>();
 
 app.MapControllerRoute(
     name: "default",

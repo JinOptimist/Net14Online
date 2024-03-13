@@ -152,17 +152,23 @@
 }
 
 
-.user.short .full-info {
+.user.full-info .full-info {
     display: flex;
-    justify-content: end;
+    cursor:pointer;
 }
 
 .user.name-only{
     height: 20px;
     min-height: auto;
+    cursor:pointer;
 }
 
 .user .full-info {
-    display: none;
+    display: none; /* Hide full-info by default */
+    height: auto;
+    flex-wrap: wrap; /* Allow content to wrap onto multiple lines */
+    flex-direction: column; /* Stack items vertically */
+    cursor: pointer;
 }
+
 

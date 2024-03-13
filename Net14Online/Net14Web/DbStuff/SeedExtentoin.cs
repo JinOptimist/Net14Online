@@ -33,6 +33,7 @@ namespace Net14Web.DbStuff
                     Login = "admin",
                     Password = "123",
                     Email = "test@test.com",
+                    PreferLocale = "en-US",
                     Roles = new List<Role> { GetRole(serviceProvider, "admin") }
                 };
 
@@ -46,6 +47,7 @@ namespace Net14Web.DbStuff
                     Login = "user",
                     Password = "123",
                     Email = "test@test.com",
+                    PreferLocale = "en-US",
                     Roles = new List<Role> { GetRole(serviceProvider, "user") }
                 };
 
@@ -59,6 +61,7 @@ namespace Net14Web.DbStuff
                     Login = "moderator",
                     Password = "123",
                     Email = "test@test.com",
+                    PreferLocale = "en-US",
                     Roles = new List<Role> { GetRole(serviceProvider, "moderator") }
                 };
 

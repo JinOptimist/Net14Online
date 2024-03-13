@@ -15,6 +15,15 @@
 
 <div>
     Smile!
+    @if (User.Identity.IsAuthenticated)
+    {
+        <text>
+            Curernt: @Model.CurrentLocale
+            Switch local to
+            <a href="/Home/SwitchLocale?locale=en">English</a>
+            <a href="/Home/SwitchLocale?locale=ru">Русский</a>
+        </text>
+    }
 </div>
 <div class="chat">
     <input type="hidden" class="user-name" value="@Model.UserName" />
