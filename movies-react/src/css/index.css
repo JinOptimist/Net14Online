@@ -1,0 +1,69 @@
+.popular-content {
+    background-image: url("https://get.wallhere.com/photo/movies-blue-Avatar-emotion-Jake-Sully-poster-head-Sam-Worthington-color-screenshot-computer-wallpaper-close-up-special-effects-230653.jpg");
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+}
+
+.bookmark-icon {
+    color: black;
+    margin-left: auto;
+    background-color: rgb(0, 0, 0, 0) !important;
+}
+
+.form-popular {
+    margin-top: 35vh;
+}
+
+.btn-popular-content {
+    background-color: rgb(255, 177, 32);
+    border: 0 solid #e2e8f0;
+    border-radius: 1.5rem;
+    box-sizing: border-box;
+    color: #fff;
+    margin-top: 15px !important;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1;
+    padding: 1rem 1.6rem;
+    text-align: center;
+    text-decoration: none #fff solid;
+    text-decoration-thickness: auto;
+    transition: all .3s cubic-bezier(.4, 0, .2, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.btn-popular-content:hover {
+    border-radius: 0;
+    background-color: rgb(35, 35, 35);
+}
+
+.btn-about-movie {
+    background-color: black !important;
+    margin-top: 10px;
+}
+
+@media (min-width: 768px) {
+    .btn-popular-content {
+        font-size: 1.125rem;
+        padding: 1rem 2rem;
+    }
+}
+
+footer {
+    margin-top: 5vh;
+}
