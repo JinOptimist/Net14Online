@@ -55,27 +55,31 @@
     <div class="add-article">
         <input type="submit" value="Добавить статью" />
     </div>
-    <div class="article">
-        <h1> Заголовок статьи</h1>
-        <div class="article-text">тело статьи</div>
-        <div class="like-container">
-            <div class="likeUp-count">1</div>
-            <img class="thumbUp" src="https://clipground.com/images/agree-disagree-clipart-3.jpg" width="30" height="30" />
-            <div class="likeDown-count">3</div>
-            <img class="thumbDown" src="https://simlock24.pl/foto/10_31_48_youtube_thumbs_down.png" width="30" height="30" />
-        </div>
-        <div class="chat">
-            <input class="user-name" type="hidden" value="@Model.UserNickName" />
-            <div class="comments">
-                <div class="comment template">
-                    <span class="user-name">Ivan</span>
-                    <span class="comment-text">Hi</span>
+    @foreach (var article in @Model.Articles)
+    {
+        <div class="article" data-artile-id="@article.Id">
+            <h1> @article.Title</h1>
+            <div class="article-text">@article.Description</div>
+            <div class="like-container">
+                <div class="likeUp-count">@article.ThumbsUp</div>
+                <img class="thumbUp" src="https://clipground.com/images/agree-disagree-clipart-3.jpg" width="30" height="30" />
+                <div class="likeDown-count">@article.ThumbsDown</div>
+                <img class="thumbDown" src="https://simlock24.pl/foto/10_31_48_youtube_thumbs_down.png" width="30" height="30" />
+            </div>
+            <div class="chat">
+                <input class="user-name" type="hidden" value="@Model.UserNickName" />
+                <div class="comments">
+                    <div class="comment template">
+                        <span class="user-name">UserName</span>
+                        <span class="comment-text">Comment</span>
+                    </div>
                 </div>
             </div>
+            <div class="comment-container">
+                <input class="new-comment" type="text" name="comment" />
+                <img class="send-comment" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Иконка_чата_%28ei%29.svg/45px-Иконка_чата_%28ei%29.svg.png" width="45" height="45" />
+            </div>
         </div>
-        <div class="comment-container">
-            <input class="new-comment" type="text" name="comment"/>
-            <img class="send-comment" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Иконка_чата_%28ei%29.svg/45px-Иконка_чата_%28ei%29.svg.png" width="45" height="45" />
-        </div>
-    </div>
+    }
+    
 </div>

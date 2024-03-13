@@ -2,6 +2,7 @@ using ManagementCompany.Controllers;
 using ManagementCompany.DbStuff;
 using ManagementCompany.DbStuff.Repositories;
 using ManagementCompany.Services;
+using ManagementCompany.SignalRHubs;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,9 +23,11 @@ var connStringManagementCompany = builder.Configuration.GetConnectionString("Man
 builder.Services.AddDbContext<ManagementCompanyDbContext>(x => x.UseSqlServer(connStringManagementCompany));
 
 // Repositories
+builder.Services.AddSignalR();
 builder.Services.AddScoped<TaskStatusRepository>();
 builder.Services.AddScoped<CompanyRepository>();
 builder.Services.AddScoped<ProjectRepository>();
+builder.Services.AddScoped<ArticleRepository>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserTaskRepository>();
 builder.Services.AddScoped<MemberPermissionRepository>();
@@ -56,6 +59,10 @@ app.UseRouting();
 
 app.UseAuthentication(); // Who I am?
 app.UseAuthorization(); // May I?
+
+app.MapHub<BlogHub>("/Blog");
+
+//app.MapGet("/", () => "Hello World!");
 
 app.MapControllerRoute(
     name: "default",

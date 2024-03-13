@@ -7,23 +7,27 @@
         .build();
 
     hub.on('newComment', function (user, comment) {
-        addMessage(user, comment);
+        addComment(user, comment);
     });
 
     hub.on('newUserEnterToChat', function (user) {
-        addMessage('System', user + ' enter to chat');
+        addComment('System', user + ' enter to chat');
     });
 
     hub.on('LastComments', function (comments) {
         comments.forEach(function (comment) {
-            addMessage(comment.userName, comment.commentMessage);
+            addComment(comment.userName, comment.commentMessage);
         })
     });
 
     $('.send-comment').click(function () {
-        const comment = $('.new-comment').val();
+        sendComment();
+    });
 
-        hub.invoke('SendComment', userName, comment);
+    $('.comment-text').keydown(function (event) {
+        if (event.which == 13) {
+            sendComment();
+        }
     });
 
     hub.start()
@@ -32,12 +36,23 @@
             hub.invoke('GetLastComments');
         });
 
-    function addMessage(user, comment) {
+    function sendComment() {
+        const comment = $('.new-comment').val();
+        hub.invoke('SendComment', userName, comment);
+
+        $('.new-comment').val('');
+    }
+
+    function addComment(user, comment) {
         const newMessageBlock = $('.comment.template').clone();
         newMessageBlock.removeClass('template');
         newMessageBlock.find('.user-name').text(user).css('color', 'red');
         newMessageBlock.find('.comment-text').text(': ' + comment);
 
         $('.comments').append(newMessageBlock);
+
+        $('.comments').animate({
+            scrollTop: 1000
+        }, 2000);
     };
 });

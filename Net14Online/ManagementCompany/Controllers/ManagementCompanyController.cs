@@ -13,6 +13,7 @@ namespace ManagementCompany.Controllers
         private CompanyRepository _companyRepository;
         private ProjectRepository _projectRepository;
         private UserRepository _userRepository;
+        private ArticleRepository _articleRepository;
         private UserTaskRepository _userTaskRepository;
         private MemberPermissionRepository _memberPermissionRepository;
         private MemberStatusRepository _memberStatusRepository;
@@ -30,7 +31,8 @@ namespace ManagementCompany.Controllers
             MemberStatusRepository memberStatusRepository,
             AuthService authService,
             IWebHostEnvironment webHostEnvironment,
-            TaskStatusRepository taskStatusRepository)
+            TaskStatusRepository taskStatusRepository,
+            ArticleRepository articleRepository)
         {
             _companyRepository = companyRepository;
             _projectRepository = projectRepository;
@@ -41,6 +43,7 @@ namespace ManagementCompany.Controllers
             _authService = authService;
             _webHostEnvironment = webHostEnvironment;
             _taskStatusRepository = taskStatusRepository;
+            _articleRepository = articleRepository;
         }
 
         public IActionResult Index()
@@ -220,8 +223,24 @@ namespace ManagementCompany.Controllers
 
         public IActionResult Blog()
         {
+            var dbArticles = _articleRepository.GetAll();
+
             var blogViewModel = new BlogViewModel();
             blogViewModel.UserNickName = _authService.GetCurrentUserNickName();
+
+            blogViewModel.Articles =
+                dbArticles
+                .Select(dbArticle => new ArticleViewModel
+                {
+                    Id = dbArticle.Id,
+                    Title = dbArticle.Title,
+                    Description = dbArticle.Description,
+                    ThumbsUp = dbArticle.ThumbsUp,
+                    ThumbsDown = dbArticle.ThumbsDown,
+                })
+                .ToList();
+
+            blogViewModel.Articles.Count();
 
             return View(blogViewModel);
         }
