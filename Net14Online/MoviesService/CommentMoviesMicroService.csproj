@@ -15,8 +15,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Net14Web\Net14Web.csproj" />
-  </ItemGroup>
-
 </Project>
