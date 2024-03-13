@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Net14Web.BusinessServices;
 using Net14Web.Controllers.CustomAuthAttributes;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Repositories;
@@ -17,6 +18,7 @@ namespace Net14Web.Controllers
         private WeaponRepository _weaponRepository;
         private AuthService _authService;
         private HeroPermissions _heroPermissions;
+        private HeroBusinessService _heroBusinessService;
 
         private IWebHostEnvironment _webHostEnvironment;
 
@@ -24,37 +26,22 @@ namespace Net14Web.Controllers
             WeaponRepository weaponRepository,
             IWebHostEnvironment webHostEnvironment,
             AuthService authService,
-            HeroPermissions heroPermissions)
+            HeroPermissions heroPermissions,
+            HeroBusinessService heroBusinessService)
         {
             _heroRepository = heroRepository;
             _weaponRepository = weaponRepository;
             _webHostEnvironment = webHostEnvironment;
             _authService = authService;
             _heroPermissions = heroPermissions;
+            _heroBusinessService = heroBusinessService;
         }
 
         public IActionResult Index()
         {
             var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Гость";
 
-            var dbHeroes = _heroRepository.GetHeroesWithWeaponAndOwner(10);
-            var viewModels = dbHeroes
-                .Select(dbHero =>
-                {
-                    return new HeroViewModel
-                    {
-                        Id = dbHero.Id,
-                        Age = DateTime.Now.Year - dbHero.Birthday.Year,
-                        Name = dbHero.Name,
-                        Coins = dbHero.Coins,
-                        Race = dbHero.Race,
-                        AvatarUrl = dbHero.AvatarUrl,
-                        FavWeaponName = dbHero.FavoriteWeapon?.Name ?? "---",
-                        OwnerName = dbHero.Owner?.Login ?? "Неизвестен",
-                        CanDelete = _heroPermissions.CanDelete(dbHero),
-                    };
-                })
-                .ToList();
+            var viewModels = _heroBusinessService.GetHeroesForMainPage();
 
             var dndIndexViewModel = new DndIndexViewModel()
             {
@@ -153,17 +140,7 @@ namespace Net14Web.Controllers
                 return View(heroViewModel);
             }
 
-            var hero = new Hero
-            {
-                Name = heroViewModel.Name,
-                Birthday = DateTime.Now,
-                Coins = heroViewModel.Coin ?? default,
-                Race = heroViewModel.Race,
-                AvatarUrl = heroViewModel.AvatarUrl ?? "default.jpg",
-                Owner = _authService.GetCurrentUser()
-            };
-
-            _heroRepository.Add(hero);
+            _heroBusinessService.AddHero(heroViewModel);
 
             return RedirectToAction("Index");
         }

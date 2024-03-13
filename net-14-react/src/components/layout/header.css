@@ -1,0 +1,14 @@
+.header {
+	height: 45px;
+	display: flex;
+}
+.header a {
+	padding: 7px 12px;
+	background: #ccc;
+	margin: 5px;
+	border-radius: 5px;
+}
+
+.header a:hover {
+	background: #aeaeae;
+}

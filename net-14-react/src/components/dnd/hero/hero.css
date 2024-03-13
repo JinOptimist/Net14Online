@@ -1,4 +1,16 @@
 .hero{
-	border: 1px salmon solid;
+	border: 2px salmon solid;
 	border-radius: 5px;
+	margin: 5px;
+	padding: 5px;
+}
+
+.toggle-details{
+	cursor: pointer;
+	background: aquamarine;
+	padding: 3px;
+	margin: 2px;
+	border-radius: 5px;
+	width: 10px;
+	display: inline-block;
 }

@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.WebSockets;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.EntityFrameworkCore;
+using Net14Web.BusinessServices;
 using Net14Web.Controllers;
 using Net14Web.CustomMiddlewares;
 using Net14Web.DbStuff;
@@ -44,7 +43,18 @@ builder.Services
      .AddCookie(option =>
      {
          option.LoginPath = "/Auth/Login-google";
-     }); 
+     });
+
+builder.Services.AddCors(option =>
+{
+    option.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.SetIsOriginAllowed(url => true);
+        policy.AllowCredentials();
+    });
+});
 
 //builder.Services.AddAuthentication(options =>
 //{
@@ -52,7 +62,7 @@ builder.Services
 //    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 //})
 //    .AddCookie()
-   
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -118,6 +128,7 @@ builder.Services.AddScoped<BookingPermission>();
 builder.Services.AddScoped<BondPermissions>();
 builder.Services.AddScoped<CouponPermissions>();
 
+builder.Services.AddScoped<HeroBusinessService>();
 
 builder.Services.AddScoped<GamesService>();
 builder.Services.AddScoped<GameCommentService>();
@@ -125,6 +136,8 @@ builder.Services.AddScoped<GameCommentService>();
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
+
+app.UseCors();
 
 SeedExtentoin.Seed(app);
 

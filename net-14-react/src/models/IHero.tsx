@@ -1,4 +1,8 @@
+import Race from "./Race";
+
 export default interface IHero {
 	id: number,
-	name: string
+	name: string,
+	coins?: number,
+	race?: Race
 }
