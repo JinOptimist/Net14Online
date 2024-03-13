@@ -1,0 +1,87 @@
+.bookmark-icon {
+    color: black;
+    margin-left: auto;
+    background-color: rgb(0, 0, 0, 0) !important;
+}
+
+.btn-about-movie {
+    background-color: black !important;
+    margin-top: 10px;
+}
+
+.navbar {
+    position: absolute;
+    height: calc(var(--window-height) / 15);
+}
+
+ul.navbar-nav li {
+    align-self: center;
+}
+
+ul.navbar-nav li *:hover {
+    color: white !important;
+}
+
+.navbar * {
+    color: gray !important;
+    font-size: calc(var(--window-height) / 50) !important;
+    font-weight: bold;
+}
+
+.navbar-main {
+    place-content: center;
+}
+
+.navbar-brand {
+    color: white !important;
+}
+
+.account-href {
+    display: none;
+}
+
+.account-icon {
+    background-image: url(/images/senko.png);
+    position: absolute;
+    right: 1vw;
+    top: 1vh;
+    display: flex;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    height: 10vh;
+    width: 10vh;
+}
+
+.btn-auth:hover {
+    background-color: white !important;
+    color: black !important;
+}
+
+.auth-dropdown {
+    padding-right: 1vw;
+}
+
+.dropdown-menu.show {
+    right: 0 !important;
+    left: auto !important;
+}
+
+li .btn-outline-secondary {
+    background-color: black;
+}
+
+li .btn-outline-secondary:hover {
+    color: white !important;
+}
+
+ul.dropdown-menu-dark {
+    background-color: black !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
