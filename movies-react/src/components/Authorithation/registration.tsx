@@ -1,5 +1,5 @@
 import { useState } from "react";
-import '../css/autorithation.css';
+import './authorithation.css';
 
 export const Registration = () => {
     const [showRegistration, setShowRegistration] = useState<boolean>();

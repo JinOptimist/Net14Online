@@ -13,12 +13,6 @@
     align-items: center;
 }
 
-.bookmark-icon {
-    color: black;
-    margin-left: auto;
-    background-color: rgb(0, 0, 0, 0) !important;
-}
-
 .form-popular {
     margin-top: 35vh;
 }
@@ -52,18 +46,9 @@
     background-color: rgb(35, 35, 35);
 }
 
-.btn-about-movie {
-    background-color: black !important;
-    margin-top: 10px;
-}
-
 @media (min-width: 768px) {
     .btn-popular-content {
         font-size: 1.125rem;
         padding: 1rem 2rem;
     }
-}
-
-footer {
-    margin-top: 5vh;
 }

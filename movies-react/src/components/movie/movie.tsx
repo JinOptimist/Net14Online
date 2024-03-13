@@ -1,16 +1,17 @@
-import { IMovie } from "../types/movie";
-import '../../css/slider.css';
+import { FC } from "react";
+import { IMovie } from "../../Models/movie";
+import './slider.css';
 
-interface movieProps {
-    information: IMovie
+interface MovieProps {
+    movie: IMovie
 }
 
-export const Movie = (movie: movieProps) => {
+export const Movie: FC<MovieProps> = ({ movie }) => {
     return (
         <div className="slider-content ds-flex">
-            <img src={movie.information.posterUrl} className="image-slider" />
+            <img src={movie.posterUrl} className="image-slider" alt="none"/>
             <div className="slider-movie-name">
-                {movie.information.title}
+                {movie.title}
             </div>
         </div>
     );

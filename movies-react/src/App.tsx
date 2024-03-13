@@ -1,13 +1,11 @@
-import { MovieSlider } from './components/movie/movieSlider';
-import { IMovie } from './components/types/movie';
-import { Genre } from './components/types/genre';
-import { Login } from './components/login';
-import { Registration } from './components/registrationBlock';
+import { MovieSlider } from './components/movie/moviesSlider';
+import { IMovie } from './Models/movie';
+import { Genre } from './Models/genre';
+import { Login } from './components/Authorithation/login';
+import { Registration } from './components/Authorithation/registration';
 import { useState } from 'react';
-import './css/index.css';
-import './css/main.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import senko from './images/senko.png';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 	const [movies, setMovies] = useState<IMovie[]>([

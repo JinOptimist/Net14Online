@@ -4,5 +4,5 @@ export interface IMovie {
     title: string,
     posterUrl: string,
     description: string,
-    genres: Genre[]
+    genres?: Genre[]
 }

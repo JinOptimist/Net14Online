@@ -1,3 +1,14 @@
+.bookmark-icon {
+    color: black;
+    margin-left: auto;
+    background-color: rgb(0, 0, 0, 0) !important;
+}
+
+.btn-about-movie {
+    background-color: black !important;
+    margin-top: 10px;
+}
+
 .navbar {
     position: absolute;
     height: calc(var(--window-height) / 15);
@@ -67,10 +78,10 @@ li .btn-outline-secondary {
 }
 
 li .btn-outline-secondary:hover {
-    color:white !important;
+    color: white !important;
 }
 
-ul.dropdown-menu-dark{
+ul.dropdown-menu-dark {
     background-color: black !important;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
