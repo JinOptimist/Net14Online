@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { ICountry } from "../../models/ICountry";
+import Country from "./country";
 
 const Countries = () => {
     const [Countries, setCountry] = useState<ICountry[]>([
@@ -28,14 +29,13 @@ const Countries = () => {
 	}
     return (
         <div>
-            <button onClick ={onClickAddCountry}>Add country</button>
-            {Countries.map(country => (
-                <div>
-                    {country.city} ({country.id})  
-                    <span onClick={()=> removeCountry(country.id)} className="remove">X</span>          
-      </div>
-            ))}
+            <button onClick ={onClickAddCountry}>Add country</button>  
+            <div className="countries">
+                {Countries.map(country => (
+                <Country country={country} onRemove={removeCountry}></Country>
+        ))}
         </div>
+    </div>
     );   
 }
 
