@@ -33,9 +33,22 @@
                     .find('.likeUp-count')
                     .text(response);
             });
-    })
+    });
 
+    $('.like-container .thumbDown').click(function () {
+        const article = $(this)
+            .closest('.article')
+        var articleId = article
+            .attr('data-artile-id');
 
+        const url = '/ManagementCompany/AddDislike?articleId=' + articleId;
+        $.get(url)
+            .then(function (response) {
+                article
+                    .find('.likeDown-count')
+                    .text(response);
+            });
+    });
 
     $('.send-comment').click(function () {
         sendComment();

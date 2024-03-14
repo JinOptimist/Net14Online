@@ -60,7 +60,7 @@ namespace ManagementCompany.DbStuff.Repositories
             article.ThumbsDown++;
             _context.SaveChanges();
 
-            return article.ThumbsUp;
+            return article.ThumbsDown;
         }
     }
 }

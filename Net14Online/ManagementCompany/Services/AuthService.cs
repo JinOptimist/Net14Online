@@ -33,13 +33,13 @@ namespace ManagementCompany.Services
         {
             // HttpContext != null
             var idStr = _httpContextAccessor?.HttpContext?.User.Claims?.FirstOrDefault(x => x.Type == "id")?.Value;
-            
+                
             if (idStr == null)
             {
                 return null;
             }
-
             var id = int.Parse(idStr);
+
             return id;
         }
 
