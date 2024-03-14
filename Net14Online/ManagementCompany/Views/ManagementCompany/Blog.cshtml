@@ -20,37 +20,37 @@
 
 <div class="regContainer">
     @* <div class="dropdown">
-        <button class="dropbtn">
-            <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
-        </button>
-        <div class="dropdown-content">
-            @if ((!User?.Identity?.IsAuthenticated) ?? true)
-            {
-                foreach (var myPage in @Model.GuestPages)
-                {
-                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
-                }
-                <a class="login" href="/Auth/Login">Войти</a>
-                <a class="reg" href="/ManagementCompany/Registration">Зарегистрироваться</a>
-            }
-            else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
-            .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
-            {
-                foreach (var myPage in @Model.UserPages)
-                {
-                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
-                }
-                <a class="login" href="/Auth/Logout">Выйти</a>
-            }
-            else
-            {
-                foreach (var myPage in @Model.AdminPages)
-                {
-                    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
-                }
-                <a class="login" href="/Auth/Logout">Выйти</a>
-            }
-        </div>
+    <button class="dropbtn">
+    <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
+    </button>
+    <div class="dropdown-content">
+    @if ((!User?.Identity?.IsAuthenticated) ?? true)
+    {
+    foreach (var myPage in @Model.GuestPages)
+    {
+    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+    }
+    <a class="login" href="/Auth/Login">Войти</a>
+    <a class="reg" href="/ManagementCompany/Registration">Зарегистрироваться</a>
+    }
+    else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
+    .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
+    {
+    foreach (var myPage in @Model.UserPages)
+    {
+    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+    }
+    <a class="login" href="/Auth/Logout">Выйти</a>
+    }
+    else
+    {
+    foreach (var myPage in @Model.AdminPages)
+    {
+    <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+    }
+    <a class="login" href="/Auth/Logout">Выйти</a>
+    }
+    </div>
     </div> *@
     <div class="add-article">
         <input type="submit" value="Добавить статью" />
@@ -61,25 +61,29 @@
             <h1> @article.Title</h1>
             <div class="article-text">@article.Description</div>
             <div class="like-container">
-                <div class="likeUp-count">@article.ThumbsUp</div>
-                <img class="thumbUp" src="https://clipground.com/images/agree-disagree-clipart-3.jpg" width="30" height="30" />
-                <div class="likeDown-count">@article.ThumbsDown</div>
-                <img class="thumbDown" src="https://simlock24.pl/foto/10_31_48_youtube_thumbs_down.png" width="30" height="30" />
-            </div>
-            <div class="chat">
-                <input class="user-name" type="hidden" value="@Model.UserNickName" />
-                <div class="comments">
-                    <div class="comment template">
-                        <span class="user-name">UserName</span>
-                        <span class="comment-text">Comment</span>
-                    </div>
+                <div>
+                    <div class="likeUp-count">@article.ThumbsUp</div>
+                    <img class="thumbUp" src="https://clipground.com/images/agree-disagree-clipart-3.jpg" width="30" height="30" />
+                <div />
+                <div>
+                    <div class="likeDown-count">@article.ThumbsDown</div>
+                    <img class="thumbDown" src="https://simlock24.pl/foto/10_31_48_youtube_thumbs_down.png" width="30" height="30" />
                 </div>
             </div>
-            <div class="comment-container">
-                <input class="new-comment" type="text" name="comment" />
-                <img class="send-comment" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Иконка_чата_%28ei%29.svg/45px-Иконка_чата_%28ei%29.svg.png" width="45" height="45" />
+                <div class="chat">
+                    <input class="user-name" type="hidden" value="@Model.UserNickName" />
+                    <div class="comments">
+                        <div class="comment template">
+                            <span class="user-name">UserName</span>
+                            <span class="comment-text">Comment</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-container">
+                    <input class="new-comment" type="text" name="comment" />
+                    <img class="send-comment" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Иконка_чата_%28ei%29.svg/45px-Иконка_чата_%28ei%29.svg.png" width="45" height="45" />
+                </div>
             </div>
         </div>
     }
-    
 </div>

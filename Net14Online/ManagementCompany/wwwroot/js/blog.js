@@ -20,6 +20,23 @@
         })
     });
 
+    $('.like-container .thumbUp').click(function () {
+        const article = $(this)
+            .closest('.article')
+        var articleId = article
+            .attr('data-artile-id');
+
+        const url = '/ManagementCompany/AddLike?articleId=' + articleId;
+        $.get(url)
+            .then(function (response) {
+                article
+                    .find('.likeUp-count')
+                    .text(response);
+            });
+    })
+
+
+
     $('.send-comment').click(function () {
         sendComment();
     });

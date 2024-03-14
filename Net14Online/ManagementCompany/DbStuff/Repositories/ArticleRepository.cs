@@ -43,15 +43,24 @@ namespace ManagementCompany.DbStuff.Repositories
                 .ToList();
         }
 
-        public void AddLike(int id)
+        public int? AddLike(int articleId)
         {
-            var article = _context.Articles.FirstOrDefault(x => x.Id == id);
+            var article = GetById(articleId);
 
-            if (article != null)
-            {
                 article.ThumbsUp++;
                 _context.SaveChanges();
-            }
+
+                return article.ThumbsUp;
+        }
+
+        internal int? AddDislike(int articleId)
+        {
+            var article = GetById(articleId);
+
+            article.ThumbsDown++;
+            _context.SaveChanges();
+
+            return article.ThumbsUp;
         }
     }
 }
