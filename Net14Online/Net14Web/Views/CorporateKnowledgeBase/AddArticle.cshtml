@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "_LayoutCorporateKnowledgeBase";
+}
+@section Style
+{
+    <link href="~/css/CorporateKnowledgeBase/addarticle.css" rel="stylesheet" />
+}
+<form method="post">
+    <div class="add-article-container">
+        <div class="article-settings">
+            <div class="selection-controls">
+                <label>Select discipline</label>
+                <select class="selection-field" name="discipline">
+                    <option value="value1">discipline 1</option>
+                    <option value="value2">discipline 2</option>
+                </select>
+            </div>
+            <div class="selection-controls">
+                <label>Select category</label>
+                <select class="selection-field" name="category">
+                    <option value="value1">category 1</option>
+                    <option value="value2">category 2</option>
+                </select>
+            </div>
+        </div>
+        <div class="article-description-container">
+            <!-- <div>Поле с кнопками</div> -->
+            <div class="article-description">
+                <div class="title">
+                    <!-- атрибут name должен совпадать со входными параметрами экшна в контроллере-->
+                    <label>Title</label>
+                    <input name="articleTitle" />
+                </div>
+                <div class="description">
+                    <!-- атрибут name должен совпадать со входными параметрами экшна в контроллере-->
+                    <label>Description</label>
+                    <textarea name="articleDescription"> </textarea>
+                </div>
+            </div>
+            <div class="button-field">
+                <button class="button-controls" type="submit">Publish article</button>
+                <button class="button-controls">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>

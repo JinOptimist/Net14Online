@@ -10,6 +10,7 @@ using Net14Web.DbStuff.Models.PcShop;
 using Net14Web.DbStuff.Models.RetroConsoles;
 using Net14Web.DbStuff.Models.Sattelite;
 using Net14Web.DbStuff.Models.TaskTracker;
+using Net14Web.DbStuff.Models.CorporateKnowledgeBase;
 
 namespace Net14Web.DbStuff
 {
@@ -42,6 +43,9 @@ namespace Net14Web.DbStuff
         public DbSet<Player> Players { get; set; }
 
         public DbSet<ObjectDict> Sattelite { get; set; }
+
+        //CorporateKnowledgeBase property
+        public DbSet<Article> Articles { get; set; }
 
         public WebDbContext(DbContextOptions<WebDbContext> options) : base(options) { }
 

@@ -59,7 +59,13 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("Net14WebDb");
 
+//connectionString for CorporateKnowledgeBase:
+var connStringKnowledgeBase = "Server=(localdb)\\MSSQLLocalDB; Database=CorporateKnowledgeBase; Integrated Security=True";
+
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
+
+//add CorporateKnowledgeBase Db to a project
+builder.Services.AddDbContext<KnowledgeBaseDbContext>(x => x.UseSqlServer(connStringKnowledgeBase));
 
 //builder.Services.AddScoped<WebDbContext>();
 
