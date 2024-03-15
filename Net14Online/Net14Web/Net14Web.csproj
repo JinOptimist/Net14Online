@@ -41,6 +41,11 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Movies.resx</DependentUpon>
 	  </Compile>
+	  <Compile Update="LocalizationFiles\Bond.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Bond.resx</DependentUpon>
+	  </Compile>
 	  <Compile Update="LocalizationFiles\TaskTracker.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -63,6 +68,10 @@
 	  <EmbeddedResource Update="LocalizationFiles\Movies.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Movies.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="LocalizationFiles\Bond.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Bond.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="LocalizationFiles\TaskTracker.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
