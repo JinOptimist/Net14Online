@@ -2,6 +2,7 @@ import { useState } from "react"
 import IOwner from "../models/IOwner"
 import './Owner.css'
 import Owner from "./Owner/owner"
+import { Link } from "react-router-dom"
 
 
 function Owners() {
@@ -34,6 +35,7 @@ function Owners() {
 
   return (
        <div>
+        <Link to="AddOwner">AddOwner</Link>
          <button onClick={onClickName}>Add Owner</button>
           {OwnerName.map(owner => (
            <Owner owner={owner} onRemove={removeOwner}></Owner>
