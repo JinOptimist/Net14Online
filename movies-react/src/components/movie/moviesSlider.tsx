@@ -1,17 +1,16 @@
-import { Genre } from "../../Models/genre";
-import { IMovie } from "../../Models/movie";
-import { Movie } from './movie'
+import IMovie from '../../models/IMovie';
+import { MovieSliderBlock } from './movieSliderBlock'
 import Slider from 'react-slick';
 import { FC } from "react";
 import 'slick-carousel/slick/slick.css';
 import './slider.css'
 
 interface MovieSliderProps {
-    movies: Array<IMovie>,
-    genre: Genre
+    movies: IMovie[],
+    onRemove?: (id: number) => void
 }
 
-export const MovieSlider : FC<MovieSliderProps> = ({ movies, genre }) => {
+const MovieSlider : FC<MovieSliderProps> = ({ movies, onRemove }) => {
     const settings = {
         dots: false,
         speed: 500,
@@ -20,14 +19,15 @@ export const MovieSlider : FC<MovieSliderProps> = ({ movies, genre }) => {
     };
     return (
         <div>
-            <p className="h4 fw-bold slider-header">
-                {genre.toLocaleString()}
-            </p>
             <div className="slider">
-                <Slider {...settings}>
-                    {movies.map((movie, index) => <Movie movie={movie} key={index}/>)}
-                </Slider>
+                {movies && 
+                    <Slider {...settings}>
+                    {movies.map((movie, index) => <MovieSliderBlock movie={movie} onRemove={onRemove} key={index}/>)}
+                    </Slider>
+                }
             </div>
         </div>
     );
 }
+
+export default MovieSlider;
