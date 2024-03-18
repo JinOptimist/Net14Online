@@ -10,11 +10,11 @@ function Layout() {
             <BrowserRouter>
                 <div>
                     <Link to="">Home page</Link>
-                    <Link to="owner">Owner</Link>
+                    <Link to="owners">Owners</Link>
                     <Link to="apartaments">Apartaments</Link>
                 </div>
                 <Routes>
-                    <Route path="owner">
+                    <Route path="owners">
                         <Route index element={<Owners />} />
                         <Route path="AddOwner" element={<AddOwner />}></Route>
                         <Route path="Profile/:id" element={<OwnerProfile />}></Route>
