@@ -20,18 +20,14 @@ namespace Net14Web.Controllers
         private HeroPermissions _heroPermissions;
         private HeroBusinessService _heroBusinessService;
 
-        private IWebHostEnvironment _webHostEnvironment;
-
         public DndController(HeroRepository heroRepository,
             WeaponRepository weaponRepository,
-            IWebHostEnvironment webHostEnvironment,
             AuthService authService,
             HeroPermissions heroPermissions,
             HeroBusinessService heroBusinessService)
         {
             _heroRepository = heroRepository;
             _weaponRepository = weaponRepository;
-            _webHostEnvironment = webHostEnvironment;
             _authService = authService;
             _heroPermissions = heroPermissions;
             _heroBusinessService = heroBusinessService;
@@ -69,19 +65,7 @@ namespace Net14Web.Controllers
 
         public IActionResult UpdateAvatar(int heroId, IFormFile avatar)
         {
-            // upload image
-            var extension = Path.GetExtension(avatar.FileName);
-
-            var fileName = $"heroAvatar{heroId}{extension}";
-            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "dndAvatars", fileName);
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                avatar.CopyTo(fileStream);
-            }
-
-            var avatarUrl = $"/images/dndAvatars/{fileName}";
-            _heroRepository.UpdateAvatar(heroId, avatarUrl);
-
+            _heroBusinessService.UpdateAvatar(heroId, avatar);
             return RedirectToAction("Profile", new { heroId });
         }
 

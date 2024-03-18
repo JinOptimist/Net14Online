@@ -4,5 +4,6 @@ export default interface IHero {
 	id: number,
 	name: string,
 	coins?: number,
-	race?: Race
+	race?: Race,
+	avatarUrl?: string
 }

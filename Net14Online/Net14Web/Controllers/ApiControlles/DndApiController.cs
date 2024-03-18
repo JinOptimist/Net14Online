@@ -7,7 +7,7 @@ using Net14Web.Models.Dnd;
 namespace Net14Web.Controllers.ApiControlles
 {
     [ApiController]
-    [Route("/api/dnd/{action}")]
+    [Route("/api/dnd/{action}/{id?}")]
     public class DndApiController : Controller
     {
         private HeroRepository _heroRepository;
@@ -32,6 +32,17 @@ namespace Net14Web.Controllers.ApiControlles
         public int AddHero(AddHeroViewModel hero)
         {
             return _heroBusinessService.AddHero(hero);
+        }
+
+        [HttpPost]
+        public string UpdateAvatar([FromRoute]int id, IFormFile avatar)
+        {
+            return _heroBusinessService.UpdateAvatar(id, avatar);
+        }
+
+        public HeroViewModel heroProfile(int id)
+        {
+            return _heroBusinessService.GetHero(id);
         }
     }
 }
