@@ -16,7 +16,7 @@
                         <div class="card-body p-md-5">
                             <br>
                             <div class="row">
-                                @if (Model.CanAddMovie)
+                                @if (Model.CanAddMovie ?? false)
                                 {
                                     <form class="col-12" action="/movies/addmovie" method="post" enctype="multipart/form-data">
                                         <div class="input-group">

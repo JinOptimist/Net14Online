@@ -127,6 +127,7 @@ builder.Services.AddScoped<AdminPanelPermissions>();
 builder.Services.AddScoped<BookingPermission>();
 builder.Services.AddScoped<BondPermissions>();
 builder.Services.AddScoped<CouponPermissions>();
+builder.Services.AddScoped<MoviesBisinessService>();
 
 builder.Services.AddScoped<HeroBusinessService>();
 
