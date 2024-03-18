@@ -6,11 +6,6 @@ using Net14Web.Controllers;
 using Net14Web.CustomMiddlewares;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Repositories;
-using Net14Web.DbStuff.Repositories.Booking;
-using Net14Web.DbStuff.Repositories.GameShop;
-using Net14Web.DbStuff.Repositories.Movies;
-using Net14Web.DbStuff.Repositories.PcShop;
-using Net14Web.DbStuff.Repositories.TaskTracker;
 using Net14Web.Services;
 using Net14Web.Services.BondServices;
 using Net14Web.Services.BookingPermissons;
@@ -20,6 +15,7 @@ using Net14Web.Services.Movies;
 using Net14Web.Services.Movies.Permissions;
 using Net14Web.Services.Sattelite;
 using Net14Web.Services.TaskTrackerServices;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,28 +80,14 @@ builder.Services.AddScoped<RandomHelper>();
 // builder.Services.AddSingleton<RandomHelper>();
 
 // Repositories
-builder.Services.AddScoped<GameShopRepository>();
-builder.Services.AddScoped<HeroRepository>();
-builder.Services.AddScoped<MoviesRepository>();
-builder.Services.AddScoped<UserRepository>();
-builder.Services.AddScoped<CommentRepository>();
-builder.Services.AddScoped<WeaponRepository>();
-builder.Services.AddScoped<HeroRepository>();
-builder.Services.AddScoped<RoleRepository>();
-builder.Services.AddScoped<PermissionRepository>();
-
-builder.Services.AddScoped<GameCommentRepository>();
-builder.Services.AddScoped<GameShopRepository>();
-builder.Services.AddScoped<StockRepository>();
-builder.Services.AddScoped<TaskRepository>();
-builder.Services.AddScoped<DividendRepository>();
-builder.Services.AddScoped<SearchRepository>();
-builder.Services.AddScoped<LoginRepository>();
-builder.Services.AddScoped<UserRepositoryPcShop>();
-builder.Services.AddScoped<PcsRepositoryPcShop>();
-builder.Services.AddScoped<SatteliteController>();
-builder.Services.AddScoped<BondsRepository>();
-builder.Services.AddScoped<CouponsRepository>();
+var typeOfBaseRepository = typeof(BaseRepository<>);
+Assembly
+    .GetAssembly(typeOfBaseRepository)
+    .GetTypes()
+    .Where(x => x.BaseType?.IsGenericType ?? false
+        && x.BaseType.GetGenericTypeDefinition() == typeOfBaseRepository)
+    .ToList()
+    .ForEach(repositoryType => builder.Services.AddScoped(repositoryType));
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
