@@ -25,7 +25,7 @@ const deleteOwner = (id: number) => {
 const realestateApi = {
     getOwners,
     getOwnersProfile,
-    addOwner: addOwner,
+    addOwner,
     deleteOwner
 }
 
