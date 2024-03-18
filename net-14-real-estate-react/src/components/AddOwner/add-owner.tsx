@@ -35,9 +35,8 @@ function AddOwner() {
 
     function onAddOwnerClick(): void {
         addOwner(OwnerData)
-            .then(() => {
-                navigate('/');
-                navigate(0);
+        .then(({ data }) => {
+            navigate(`/owner/profile/${data}`)
             });
     }
 
