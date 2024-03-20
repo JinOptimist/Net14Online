@@ -161,6 +161,9 @@
     height: 20px;
     min-height: auto;
     cursor:pointer;
+    border: solid;
+    border-color:darkslategray;
+    border: 1px;
 }
 
 .user .full-info {
@@ -169,6 +172,9 @@
     flex-wrap: wrap; /* Allow content to wrap onto multiple lines */
     flex-direction: column; /* Stack items vertically */
     cursor: pointer;
+    border:1px;
+    border: solid;
+    border-color: darkslategray;
 }
 
 

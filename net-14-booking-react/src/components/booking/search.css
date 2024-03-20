@@ -1,0 +1,13 @@
+.search{
+    Border:solid;
+    border-color: black;
+    padding: 5px;
+    margin: 5px;
+    width: 300px;
+    display: flex;
+}
+.toggle-details{
+    cursor: pointer;
+    font-size:xx-large;
+    font-weight: 300;
+}

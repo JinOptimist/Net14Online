@@ -120,6 +120,15 @@
   <data name="LayoutBooking" xml:space="preserve">
     <value>Букинг</value>
   </data>
+  <data name="LayoutCurrency" xml:space="preserve">
+    <value>Евро</value>
+  </data>
+  <data name="LayoutHelp" xml:space="preserve">
+    <value>Помощь</value>
+  </data>
+  <data name="LayoutLogin" xml:space="preserve">
+    <value>Зарегистироваться</value>
+  </data>
   <data name="NavbarCarRentals" xml:space="preserve">
     <value>Аренда машин</value>
   </data>
