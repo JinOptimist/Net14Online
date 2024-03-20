@@ -13,6 +13,25 @@ namespace Net14Web.Services.LifeScore
             _repository = repository;
         }
 
+        public List<Team> GetTeams()
+        {
+            var teams = _repository.GetAllTeams();
+
+            return teams;
+        }
+
+        public List<Team> GetTeamsByLiga(string liga)
+        {
+            var teams = _repository.GetTeamsByLiga(liga);
+            return teams;
+        }
+
+        public Team GetTeamByIdWithGames(int id)
+        {
+            var team = _repository.GetTeamByIdWithGames(id);
+            return team;
+        }
+
         public int CreateTeam(CreateTeamViewModel teamModel)
         {
             var newTeam = new Team
@@ -25,6 +44,11 @@ namespace Net14Web.Services.LifeScore
 
             var newTeamId = _repository.Add(newTeam);
             return newTeamId;
+        }
+
+        public void DeleteTeam(int teamId)
+        {
+            _repository.Delete(teamId);
         }
     }
 }

@@ -26,7 +26,26 @@ public class LifeScoreController : Controller
 
     public IActionResult TeamsTable()
     {
-        return View();
+        var teams = _teamService.GetTeams();
+
+        lifeScoreViewModel.Teams = teams.Select(t => new TeamViewModel
+        {
+             Country = t.Country,
+             Liga = t.Liga,
+             //Players = t.Players.Select(p=> new PlayerViewModel
+             //{
+             //    Assists = p.Assists,
+             //    FirstName = p.FirstName,
+             //    LastName = p.LastName,
+             //    Goals = p.Goals,
+             //    Id = p.Id,
+             //    Team = p.Team.Name
+             //}).ToList(),
+             ShortName = t.ShortName,
+             Name = t.Name,
+        }).ToList();
+
+        return View(lifeScoreViewModel);
     }
 
     public IActionResult Calendar()

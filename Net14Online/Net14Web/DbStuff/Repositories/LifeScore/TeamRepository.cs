@@ -12,6 +12,16 @@ namespace Net14Web.DbStuff.Repositories.LifeScore
             return _entyties.Include(t => t.Games).ToList();
         }
 
+        public List<Team> GetTeamsByLiga(string liga)
+        {
+            return _entyties.Include(t => t.Games).Where(t => t.Liga == liga).ToList();
+        }
+
+        public Team GetTeamByIdWithGames(int id)
+        {
+            return _entyties.Include(t => t.Games).First(t => t.Id == id);
+        }
+
         public void UpdateTeam(int id, Team updatedTeam)
         {
             var team = GetById(id);
