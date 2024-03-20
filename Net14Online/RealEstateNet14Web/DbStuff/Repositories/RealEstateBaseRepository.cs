@@ -33,4 +33,11 @@ public abstract class RealEstateBaseRepository<DbModel> where DbModel : BaseMode
         var apartmentOwner = _entyties.SingleOrDefault(x => x.Id == id);
         return apartmentOwner;
     }
+    
+    public virtual async Task DeleteAsync(int id)
+    {
+        var entity = await _entyties.FirstAsync(x => x.Id == id);
+        _entyties.Remove(entity);
+        await _webRealEstateDbContext.SaveChangesAsync();
+    }
 }

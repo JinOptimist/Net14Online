@@ -1,0 +1,7 @@
+.heroes{
+	display: flex;
+}
+.remove{
+	color: red;
+	cursor: pointer;
+}

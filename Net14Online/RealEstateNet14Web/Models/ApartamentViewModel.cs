@@ -1,5 +1,4 @@
 using RealEstateNet14Web.DbStuff.Models;
-using BaseModel = Net14Web.DbStuff.ManagmentCompany.Models.BaseModel;
 
 namespace RealEstateNet14Web.Models;
 

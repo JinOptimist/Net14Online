@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Models.Movies;
 using Net14Web.Models.Movies;
 using Net14Web.Services.Movies;
@@ -35,6 +34,12 @@ namespace Net14Web.DbStuff.Repositories.Movies
         {
             return await _entyties
                 .FirstOrDefaultAsync(user => user.Login == login && user.Password!.Equals(password));
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            var user = _entyties.FirstOrDefault(x => x.Email == email);
+            return user;
         }
 
         public User? GetUserWithComments(int userId)
@@ -73,6 +78,13 @@ namespace Net14Web.DbStuff.Repositories.Movies
             user!.AvatarUrl = avatarUrl;
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public void SwitchLocal(int userId, string locale)
+        {
+            var user = GetById(userId);
+            user.PreferLocale = locale;
+            _context.SaveChanges();
         }
     }
 }

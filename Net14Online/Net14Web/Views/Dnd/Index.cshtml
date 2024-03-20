@@ -19,10 +19,10 @@
 <div class="hero-content">
     <div>Привет @Model.UserName</div>
     <div>
-        <a href="/Dnd/AddHero">AddHero</a>
+        <a href="/Dnd/AddHero">@Net14Web.LocalizationFiles.Dnd.AddHeroLink</a>
     </div>
     <div>
-        <a href="/Dnd/AddRandomHero">AddRandomHero</a>
+        <a href="/Dnd/AddRandomHero">@Net14Web.LocalizationFiles.Dnd.AddRandomHeroLink</a>
     </div>
     @if (Model.CanChooseFavoriteWeapon)
     {
@@ -36,10 +36,11 @@
             <input type="hidden" name="heroId" value="0" />
             <div>
                 <input type="number" name="coin" />
-                set coins for hero <span class="hero-id"></span>
+                @Net14Web.LocalizationFiles.Dnd.SetCoins
+                <span class="hero-id"></span>
             </div>
             <div>
-                <input type="submit" value="Upd" />
+                <input type="submit" value="@Net14Web.LocalizationFiles.Dnd.UpdateCoinButton" />
             </div>
         </form>
     </div>

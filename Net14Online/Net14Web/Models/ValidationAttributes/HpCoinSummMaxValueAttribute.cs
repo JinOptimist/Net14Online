@@ -13,7 +13,7 @@ namespace Net14Web.Models.ValidationAttributes
             }
 
             var addHeroViewModel = (AddHeroViewModel)validationContext.ObjectInstance;
-            if (addHeroViewModel.Hp + addHeroViewModel.Coin > 10)
+            if (addHeroViewModel.Hp + addHeroViewModel.Coins > 10)
             {
                 return new ValidationResult("Слишком много Хп и Денег");
             }

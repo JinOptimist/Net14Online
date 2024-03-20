@@ -16,3 +16,10 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.lang
+{
+  cursor: pointer;
+  border: 1px red solid;
+  background-color: #e7e7e7;
+}

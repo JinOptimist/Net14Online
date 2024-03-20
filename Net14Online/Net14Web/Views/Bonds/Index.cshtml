@@ -1,12 +1,20 @@
 ﻿@using Net14Web.Models.Bonds
 @model BondsIndexViewMode
+
 @{
     Layout = "_LayoutBonds";
 }
+
 @section Style
 {
     <link href="~/css/Bonds/Bonds.css" rel="stylesheet" />
 }
+
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/Bond/index.js"></script>
+}
+
 <div>
     User: @Model.UserName
 </div>
@@ -14,35 +22,57 @@
     <table>
         <thead>
             <tr>
-                <th>Владелец</th>
-                <th>Название облигации</th>
-                <th>Цена</th>
+                <th>@Net14Web.LocalizationFiles.Bond.Owner</th>
+                <th>@Net14Web.LocalizationFiles.Bond.TheNameOfTheBond</th>
+                <th>@Net14Web.LocalizationFiles.Bond.Price</th>
             </tr>
         </thead>
     </table>
     <div class="scroll-table-body">
         <table>
-            <tbody>               
+            <tbody>
                 @foreach (var bond in Model.Bonds)
                 {
-                    <tr>
+                    <tr class="chapter-bond">
+
                         <td>
-                            @bond.OwnerName                           
+                            @bond.OwnerName
                         </td>
+
                         <td>
-                            @bond.Name 
-                            <a href="/Bonds/Remove?id=@bond.Id">
-                                <img src="/images/Bonds/logo_delete.webp"
-                                     width="17"
-                                     height="17">
-                            </a>
+
+                            <div class="bond-name">
+                                @bond.Name
+                            </div>
+
+                            @if (@bond.CanDelete)
+                            {
+                                <a class="delete-bond short" href="/Bonds/Remove?id=@bond.Id">
+                                    <img src="/images/Bonds/logo_delete.webp"
+                                         width="17"
+                                         height="17">
+                                </a>
+                            }
                         </td>
-                        <td>@bond.Price рублей
-                            <form action="/Bonds/UpdatePrice" method="post">
-                                <input type="hidden" name="id" value="@bond.Id" />
-                                <input type="number" name="price"/>
-                                <input type="submit" value="Обновить" />
-                            </form>
+
+                        <td>
+
+                            <div class="bond-price">
+                                @bond.Price @Net14Web.LocalizationFiles.Bond.Rubles
+                            </div>
+
+                            @if (@bond.CanDelete)
+                            {
+                                <div class="price-change-field short">
+                                    <form action="/Bonds/UpdatePrice" method="post">
+                                        <input type="hidden" name="id" value="@bond.Id" />
+                                        <input type="number" name="price" />
+                                        <input type="submit" value="Обновить" />
+                                    </form>
+                                </div>
+
+                            }
+
                         </td>
                     </tr>
                 }

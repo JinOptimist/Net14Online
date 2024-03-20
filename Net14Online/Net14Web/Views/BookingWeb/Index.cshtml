@@ -7,51 +7,58 @@
 @section Style
 {
     <link href="~/css/booking.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/switchLang.js"></script>
 }
+
 <head>
     <title>voyager</title>
 </head>
 <body>
     <div class="options">
         <ul class="opt">
-            <li> <a href="Index">Stays</a> </li>
-            <li> <a href="#">Flights</a> </li>
-            <li> <a href="#">Car rent</a> </li>
-            <li> <a href="UserCountrySearch">My searches</a> </li>
+            <li> <a href="Index">@Net14Web.LocalizationFiles.Booking.NavbarStays</a> </li>
+            <li> <a href="Flights">@Net14Web.LocalizationFiles.Booking.NavbarFlights</a> </li>
+            <li> <a href="CarRental">@Net14Web.LocalizationFiles.Booking.NavbarCarRentals</a> </li>
+            <li> <a href="UserCountrySearch">@Net14Web.LocalizationFiles.Booking.NavbarMySearches</a> </li>
+            <li> <a href="UserChat"></a>@Net14Web.LocalizationFiles.Booking.NavbarUserChat </li>
         </ul>
     </div>
     <div class="searchBlock">
             <div class="bg-image">
-                <div class="search">Search:</div>
+            <div class="search">@Net14Web.LocalizationFiles.Booking.Search</div>
     <form method="post">
         <div class="searchfields">
-            <div class="field">
-            <input placeholder="Country" name="country" />
+                <div class="field">
+                        <input placeholder="@Net14Web.LocalizationFiles.Booking.SearchCountry" name="country" />
+                </div>
+                <div class="field">
+                        <input placeholder="@Net14Web.LocalizationFiles.Booking.SearchCity" name="city" />
+                </div>
+                <div class="field">
+                        <input placeholder="@Net14Web.LocalizationFiles.Booking.SearchCheckin" type="datetime" name="checkin" />
+                </div>
+                <div class="field">
+                        <input placeholder="@Net14Web.LocalizationFiles.Booking.SearchCheckout" type="datetime" name="checkout" />
+                </div>
+                <div>
+                <input type="submit" value="Search" />
+                </div>
             </div>
-            <div class="field">
-            <input placeholder="City" name="city" />
-            </div>
-            <div class="field">
-            <input placeholder="Checkin" type="datetime "name="checkin" />
-            </div>
-            <div class="field">
-            <input placeholder="Checkout" type="datetime" name="checkout" />
-            </div>
-            <div>
-            <input type="submit" value="Search" />
-            </div>
-        </div>
     </form>
     </div>
-    </div>
-        <div class="offer">
+    </div> 
+        <div class="offer"> Popular places
             <div class="offerbox"></div>
             <div class="offerbox"></div>
             <div class="offerbox"></div>
             <div class="offerbox"></div>
-            <div class="city">France, Paris</div>
-            <div class="city">Italy, Rome</div>
-            <div class="city">Brasil, Rio-De-Janeiro</div>
-            <div class="city">Georgia, Tiflis</div>
-        </div>
+             <div class="city">France, Paris</div>
+             <div class="city">Italy, Rome</div>
+             <div class="city">Brasil, Rio-De-Janeiro</div>
+             <div class="city">Georgia, Tiflis</div>
+         </div>
+         <div class="stays-offer">Best stays
+
+         </div>
 </body>

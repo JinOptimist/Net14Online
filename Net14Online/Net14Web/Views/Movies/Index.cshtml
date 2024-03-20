@@ -23,19 +23,19 @@
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     @if (Model.CanAccessToAdminPanel)
                     {
-                        <li><a href="/movies/adminpanel" class="nav-link px-2 text-white">Админ панель</a></li>
+                        <li><a href="/movies/adminpanel" class="nav-link px-2 text-white">@Net14Web.LocalizationFiles.Movies.AdminPanel</a></li>
                     }
                 </ul>
 
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post">
-                    <input type="search" class="form-control form-control-dark" placeholder="Поиск..." aria-label="Search">
+                    <input type="search" class="form-control form-control-dark" placeholder="@Net14Web.LocalizationFiles.Movies.Search..." aria-label="Search">
                 </form>
                 
                 @if ((!User?.Identity?.IsAuthenticated) ?? true)
                 {
                     <div class="text-end">
-                        <button type="button" class="btn btn-outline-light me-2"><a class="navbar-a" href="/auth/login">Войти</a></button>
-                        <button type="button" class="btn btn-warning"><a class="navbar-a" href="/registration">Зарегистрироваться</a></button>
+                        <button type="button" class="btn btn-outline-light me-2"><a class="navbar-a" href="/auth/login">@Net14Web.LocalizationFiles.Movies.Login</a></button>
+                        <button type="button" class="btn btn-warning"><a class="navbar-a" href="/registration">@Net14Web.LocalizationFiles.Movies.Registration</a></button>
                     </div>
                 }
                 else
@@ -43,7 +43,7 @@
                     <div class="text-end">
                         <button type="button" class="btn btn-outline-light me-2"><a class="navbar-a" href="/movies/user/@Model.UserId">Профиль</a></button>
                         <form action="/auth/logout" method="post">
-                            <button type="submit" class="btn btn-warning"><a class="navbar-a" >Выйти</a></button>
+                            <button type="submit" class="btn btn-warning"><a class="navbar-a">@Net14Web.LocalizationFiles.Movies.Logout</a></button>
                         </form>
                     </div>
                 }
@@ -97,7 +97,7 @@
                                                                         <p class="card-text">
                                                                             @movie.Description
                                                                         </p>
-                                                                        <a href="/movies/movie/@movie.Id" class="btn btn-primary">Посмотреть</a>
+                                                                        <a href="/movies/movie/@movie.Id" class="btn btn-primary movie-page">@Net14Web.LocalizationFiles.Movies.OpenMovie</a>
                                                                     </div>
                                                                 </div>
                                                             </div>

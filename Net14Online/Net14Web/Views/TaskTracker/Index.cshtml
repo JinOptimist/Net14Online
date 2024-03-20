@@ -8,13 +8,17 @@
 {
     <link href="~/css/tasktracker.css" rel="stylesheet" />
 }
-<button class="navigation-button"><a href="/TaskTracker/AddTask">Add Task</a></button>
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/TaskTracker/index.js"></script>
+}
+<button class="navigation-button"><a href="/TaskTracker/AddTask">@Net14Web.LocalizationFiles.TaskTracker.AddTaskButtonText</a></button>
 <section class="photo-grid">
     <div class="photo-grid__container">
         <article class="photo-grid__card">
             <div class="photo-grid__text">
-                <h3 class="photo-grid__title">Ты, как всегда, вовремя!</h3>
-                <h4 class="photo-grid__description">Даже путь в тысячу ли начинается с первого шага.</h4>
+                <h3 class="photo-grid__title">@Net14Web.LocalizationFiles.TaskTracker.GreetingCardTitle</h3>
+                <h4 class="photo-grid__description">@Net14Web.LocalizationFiles.TaskTracker.GreetingCardDescription</h4>
             </div>
         </article>
         @foreach (var card in Model)

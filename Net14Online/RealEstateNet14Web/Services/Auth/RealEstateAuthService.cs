@@ -27,4 +27,9 @@ public class RealEstateAuthService
         var id = int.Parse(idStr);
         return id;
     }
+
+    public string GetCurrentUserName()
+    {
+        return _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Гость";
+    }
 }

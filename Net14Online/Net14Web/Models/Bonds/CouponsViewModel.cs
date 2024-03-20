@@ -7,5 +7,6 @@
         public int CouponSize { get; set; }
         public string Bond { get; set; }
         public int Id { get; set; }
+        public bool CanDelete { get; set; }
     }
 }

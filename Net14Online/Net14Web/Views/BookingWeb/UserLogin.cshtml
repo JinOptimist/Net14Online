@@ -8,28 +8,46 @@
 {
     <link href="~/css/booking.css" rel="stylesheet" />
 }
+
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/booking/index.js"></script>
+}
+
 <button><a href="Login">Login</a></button>
-@foreach(var user in Model)
-{
-    @if (user.CanDelete)
-    {
-    <a href="Remove?id=@user.Id">Remove</a>
-    }
-    <div>
-        Owner: @user.Owner
-    </div>
+
 <div>
-    Your Name: @user.Name
-</div>
-<div>
-    Your E-mail: @user.Email
-    <form action="UpdateEmail" method="post">
-        <input type="hidden" name="loginId" value="@user.Id" />
+    <form action="UpdateEmail" method="post" class="update-user-email"> 
+        <input type="hidden" name="loginId" value=0 />
         <input type="email" name="email" />
+        set new email for user <span class="login-id"></span>
         <input type="submit" value="update" />
     </form>
 </div>
-<div>
-    Your Password: @user.Password
-</div>
+@foreach(var user in Model)
+{
+    <div class="user" data-id="@user.Id">
+        <div class="name-only">
+            @user.Name
+        </div>
+        <div class="full-info">
+            @if (user.CanDelete)
+            {
+                <a href="Remove?id=@user.Id">Remove</a>
+            }
+            <div>
+                Owner: @user.Owner
+            </div>
+            <div class="user-name">
+                Your Name: @user.Name
+            </div>
+            <div>
+                Your E-mail: @user.Email
+            </div>
+         <div>
+     </div>
+            Your Password: @user.Password
+        </div>
+    </div>
 }
+    

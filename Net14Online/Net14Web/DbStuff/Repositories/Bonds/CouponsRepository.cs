@@ -15,5 +15,12 @@ namespace Net14Web.DbStuff.Repositories
                 .Take(maxCount)
                 .ToList();
         }
+        public Coupon GetByIdWithOwner(int couponId)
+        {
+            return _entyties
+                .Include(x => x.Bond)
+                .Include(x => x.Bond.Owner)
+                .First(x => x.Id == couponId);
+        }
     }
 }

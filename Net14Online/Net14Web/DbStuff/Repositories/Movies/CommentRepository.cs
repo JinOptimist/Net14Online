@@ -20,5 +20,20 @@ namespace Net14Web.DbStuff.Repositories.Movies
                 .Include(c => c.Movie)
                 .FirstAsync(c => c.Id == commentId);
         }
+
+        public Comment GetByIdCommentWithMovieAndUser(int commentId)
+        {
+            return _entyties
+                .Include(c => c.Movie)
+                .Include(c => c.User)
+                .First(c => c.Id == commentId);
+        }
+
+        public Comment GetByIdCommentWithUser(int commentId)
+        {
+            return _entyties
+                .Include(c => c.User)
+                .First(c => c.Id == commentId);
+        }
     }
 }

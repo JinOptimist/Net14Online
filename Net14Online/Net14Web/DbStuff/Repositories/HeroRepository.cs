@@ -12,6 +12,7 @@ namespace Net14Web.DbStuff.Repositories
             return _entyties
                 .Include(x => x.FavoriteWeapon)
                 .Include(x => x.Owner)
+                .OrderByDescending(x => x.Coins)
                 .Take(maxCount)
                 .ToList();
         }
@@ -49,7 +50,7 @@ namespace Net14Web.DbStuff.Repositories
             var hero = GetById(heroId);
             hero.Coins++;
             _context.SaveChanges();
-         
+
             return hero.Coins;
         }
     }

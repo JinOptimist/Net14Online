@@ -1,0 +1,172 @@
+Index: ../net-14-real-estate-react/src/components/owners.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { useState } from \"react\"\nimport IOwner from \"../models/IOwner\"\nimport './Owner.css'\nimport Owner from \"./Owner/owner\"\n\n\nfunction Owners() {\n\n  const [OwnerName,setOwner] = useState<IOwner[]>([\n    {\n      id: 1,\n      name: 'Mikola'\n    },\n    {\n      id: 2,\n      name: 'Sveta'\n    }\n  ])\n\n  const onClickName = () => {\n   const newOwner = (\n    {\n      id:3,\n      name: 'Jack'\n    }\n   )\n\n   setOwner(oldData =>[...oldData,newOwner]);\n  }\n\n  function removeOwner(id:number): void {\n     setOwner(oldData => oldData.filter(x=> x.id !== id))\n  }\n\n  return (\n       <div>\n         <button onClick={onClickName}>Add Owner</button>\n          {OwnerName.map(owner => (\n           <Owner owner={owner} onRemove={removeOwner}></Owner>\n          ))}\n      </div>\n    );\n  }\n  \nexport default Owners
+===================================================================
+diff --git a/../net-14-real-estate-react/src/components/owners.tsx b/../net-14-real-estate-react/src/components/owners.tsx
+--- a/../net-14-real-estate-react/src/components/owners.tsx	
++++ b/../net-14-real-estate-react/src/components/owners.tsx	
+@@ -2,6 +2,7 @@
+ import IOwner from "../models/IOwner"
+ import './Owner.css'
+ import Owner from "./Owner/owner"
++import { Link } from "react-router-dom"
+ 
+ 
+ function Owners() {
+@@ -33,7 +34,11 @@
+   }
+ 
+   return (
++
+        <div>
++        <div>
++        <Link to="AddOwner">AddOwner</Link>
++        </div>
+          <button onClick={onClickName}>Add Owner</button>
+           {OwnerName.map(owner => (
+            <Owner owner={owner} onRemove={removeOwner}></Owner>
+Index: ../net-14-real-estate-react/src/App.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\nimport logo from './logo.svg';\nimport './App.css';\nimport Owners  from './components/owners';\n\nfunction App() {\n  return (\n    <div className=\"App\">\n       <Owners></Owners>\n    </div>\n  );\n}\nexport default App;\n
+===================================================================
+diff --git a/../net-14-real-estate-react/src/App.tsx b/../net-14-real-estate-react/src/App.tsx
+--- a/../net-14-real-estate-react/src/App.tsx	
++++ b/../net-14-real-estate-react/src/App.tsx	
+@@ -1,12 +1,17 @@
+ import React from 'react';
+ import logo from './logo.svg';
+ import './App.css';
+-import Owners  from './components/owners';
++import Owners from './components/owners';
++import { BrowserRouter, Route, Routes } from 'react-router-dom';
++import Apartaments from './components/Apartaments/apartaments';
++import Layout from './components/Layout/Layout';
++
++
+ 
+ function App() {
+   return (
+     <div className="App">
+-       <Owners></Owners>
++      <Layout/>
+     </div>
+   );
+ }
+Index: ../net-14-real-estate-react/package.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n  \"name\": \"net-14-real-estate-react\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"dependencies\": {\n    \"@testing-library/jest-dom\": \"^5.17.0\",\n    \"@testing-library/react\": \"^13.4.0\",\n    \"@testing-library/user-event\": \"^13.5.0\",\n    \"@types/jest\": \"^27.5.2\",\n    \"@types/node\": \"^16.18.89\",\n    \"@types/react\": \"^18.2.66\",\n    \"@types/react-dom\": \"^18.2.22\",\n    \"react\": \"^18.2.0\",\n    \"react-dom\": \"^18.2.0\",\n    \"react-scripts\": \"5.0.1\",\n    \"typescript\": \"^4.9.5\",\n    \"web-vitals\": \"^2.1.4\"\n  },\n  \"scripts\": {\n    \"start\": \"react-scripts start\",\n    \"build\": \"react-scripts build\",\n    \"test\": \"react-scripts test\",\n    \"eject\": \"react-scripts eject\"\n  },\n  \"eslintConfig\": {\n    \"extends\": [\n      \"react-app\",\n      \"react-app/jest\"\n    ]\n  },\n  \"browserslist\": {\n    \"production\": [\n      \">0.2%\",\n      \"not dead\",\n      \"not op_mini all\"\n    ],\n    \"development\": [\n      \"last 1 chrome version\",\n      \"last 1 firefox version\",\n      \"last 1 safari version\"\n    ]\n  }\n}\n
+===================================================================
+diff --git a/../net-14-real-estate-react/package.json b/../net-14-real-estate-react/package.json
+--- a/../net-14-real-estate-react/package.json	
++++ b/../net-14-real-estate-react/package.json	
+@@ -12,6 +12,7 @@
+     "@types/react-dom": "^18.2.22",
+     "react": "^18.2.0",
+     "react-dom": "^18.2.0",
++    "react-router-dom": "^6.22.3",
+     "react-scripts": "5.0.1",
+     "typescript": "^4.9.5",
+     "web-vitals": "^2.1.4"
+Index: ../net-14-real-estate-react/package-lock.json
+===================================================================
+diff --git a/../net-14-real-estate-react/package-lock.json b/../net-14-real-estate-react/package-lock.json
+--- a/../net-14-real-estate-react/package-lock.json	
++++ b/../net-14-real-estate-react/package-lock.json	
+@@ -17,6 +17,7 @@
+         "@types/react-dom": "^18.2.22",
+         "react": "^18.2.0",
+         "react-dom": "^18.2.0",
++        "react-router-dom": "^6.22.3",
+         "react-scripts": "5.0.1",
+         "typescript": "^4.9.5",
+         "web-vitals": "^2.1.4"
+@@ -3338,6 +3339,14 @@
+         }
+       }
+     },
++    "node_modules/@remix-run/router": {
++      "version": "1.15.3",
++      "resolved": "https://registry.npmjs.org/@remix-run/router/-/router-1.15.3.tgz",
++      "integrity": "sha512-Oy8rmScVrVxWZVOpEF57ovlnhpZ8CCPlnIIumVcV9nFdiSIrus99+Lw78ekXyGvVDlIsFJbSfmSovJUhCWYV3w==",
++      "engines": {
++        "node": ">=14.0.0"
++      }
++    },
+     "node_modules/@rollup/plugin-babel": {
+       "version": "5.3.1",
+       "resolved": "https://registry.npmjs.org/@rollup/plugin-babel/-/plugin-babel-5.3.1.tgz",
+@@ -14827,6 +14836,36 @@
+         "node": ">=0.10.0"
+       }
+     },
++    "node_modules/react-router": {
++      "version": "6.22.3",
++      "resolved": "https://registry.npmjs.org/react-router/-/react-router-6.22.3.tgz",
++      "integrity": "sha512-dr2eb3Mj5zK2YISHK++foM9w4eBnO23eKnZEDs7c880P6oKbrjz/Svg9+nxqtHQK+oMW4OtjZca0RqPglXxguQ==",
++      "dependencies": {
++        "@remix-run/router": "1.15.3"
++      },
++      "engines": {
++        "node": ">=14.0.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.8"
++      }
++    },
++    "node_modules/react-router-dom": {
++      "version": "6.22.3",
++      "resolved": "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.22.3.tgz",
++      "integrity": "sha512-7ZILI7HjcE+p31oQvwbokjk6OA/bnFxrhJ19n82Ex9Ph8fNAq+Hm/7KchpMGlTgWhUxRHMMCut+vEtNpWpowKw==",
++      "dependencies": {
++        "@remix-run/router": "1.15.3",
++        "react-router": "6.22.3"
++      },
++      "engines": {
++        "node": ">=14.0.0"
++      },
++      "peerDependencies": {
++        "react": ">=16.8",
++        "react-dom": ">=16.8"
++      }
++    },
+     "node_modules/react-scripts": {
+       "version": "5.0.1",
+       "resolved": "https://registry.npmjs.org/react-scripts/-/react-scripts-5.0.1.tgz",
+Index: ../net-14-real-estate-react/src/components/Owner/owner.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { FC } from \"react\";\nimport IOwner from \"../../models/IOwner\";\n\ninterface OwnerProps{\n    owner: IOwner\n    onRemove?: (id: number) => void\n} \n\nconst Owner: FC<OwnerProps> = ({owner,onRemove}) => {\n    return(\n        <div>\n            {owner.name} ({owner.id})\n            <span onClick={() => onRemove?.(owner.id)} className=\"remove\">X</span>\n        </div>\n    );\n}\n\nexport default Owner;
+===================================================================
+diff --git a/../net-14-real-estate-react/src/components/Owner/owner.tsx b/../net-14-real-estate-react/src/components/Owner/owner.tsx
+--- a/../net-14-real-estate-react/src/components/Owner/owner.tsx	
++++ b/../net-14-real-estate-react/src/components/Owner/owner.tsx	
+@@ -1,16 +1,20 @@
+ import { FC } from "react";
+ import IOwner from "../../models/IOwner";
++import { Link } from "react-router-dom";
+ 
+-interface OwnerProps{
++interface OwnerProps {
+     owner: IOwner
+     onRemove?: (id: number) => void
+-} 
++}
+ 
+-const Owner: FC<OwnerProps> = ({owner,onRemove}) => {
+-    return(
++const Owner: FC<OwnerProps> = ({ owner, onRemove }) => {
++    return (
+         <div>
+-            {owner.name} ({owner.id})
+-            <span onClick={() => onRemove?.(owner.id)} className="remove">X</span>
++            <div className="owners">
++                {owner.name} ({owner.id})
++                <span onClick={() => onRemove?.(owner.id)} className="remove">X</span>
++                <Link to={`/owner/profile/${owner.id}`}>Profile</Link>
++            </div>
+         </div>
+     );
+ }
