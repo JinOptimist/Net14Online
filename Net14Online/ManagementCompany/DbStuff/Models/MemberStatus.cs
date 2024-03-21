@@ -2,7 +2,7 @@
 {
     public class MemberStatus : BaseModel
     {
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         public virtual List<Company>? Companies { get; set; } = new List<Company>();
 

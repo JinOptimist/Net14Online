@@ -1,0 +1,15 @@
+.link-lay {
+    display: flex;
+    justify-content: center;
+}
+
+.link-lay a{
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    background: rgb(0, 255, 0);
+}
+
+.link-lay a:hover{
+    background: rgb(0, 200, 0, 0.8);
+}

@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat", "Chat\Chat.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendboxForReflection", "SendboxForReflection\SendboxForReflection.csproj", "{A61E056A-4E5C-45FD-A14D-9E594E97E555}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagementCompanyChatService", "ManagementCompanyChatService\ManagementCompanyChatService.csproj", "{91DA1323-5356-44B1-BA60-68422A4A9AC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{A61E056A-4E5C-45FD-A14D-9E594E97E555}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A61E056A-4E5C-45FD-A14D-9E594E97E555}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A61E056A-4E5C-45FD-A14D-9E594E97E555}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91DA1323-5356-44B1-BA60-68422A4A9AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91DA1323-5356-44B1-BA60-68422A4A9AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91DA1323-5356-44B1-BA60-68422A4A9AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91DA1323-5356-44B1-BA60-68422A4A9AC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
