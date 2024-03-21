@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import mcApi from "../../../services/mcApi";
 
 const Users = () => {
-  const { getUsers } = mcApi;
+  const { getUsers, deleteExecutor } = mcApi;
   const [Users, setUsers] = useState<IUser[]>([]);
 
   useEffect(() => {

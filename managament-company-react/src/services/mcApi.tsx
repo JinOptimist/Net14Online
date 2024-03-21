@@ -11,14 +11,19 @@ const getUserProfile = (id: string): Promise<IUser[]> => {
     return axios.get(`${BASE_URL}ManagementCompany/UserProfile/${id}`);
 }
 
-const AddExecutor = (user: IUser) => {
+const addExecutor = (user: IUser) => {
     return axios.post(`${BASE_URL}ManagementCompany/AddExecutor/`, user)
+}
+
+const deleteExecutor = () => {
+    return axios.get(`${BASE_URL}ManagementCompany/DeleteExecutor`);
 }
 
 const mcApi = {
     getUsers,
     getUserProfile,
-    AddExecutor
+    addExecutor, 
+    deleteExecutor
 }
 
 export default mcApi;

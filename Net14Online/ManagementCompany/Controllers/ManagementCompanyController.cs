@@ -716,8 +716,6 @@ namespace ManagementCompany.Controllers
                 .Select(x => new SelectListItem(x.Status, x.Id.ToString()))
                 .ToList();
 
-
-
             _userBusinessService.AddExecutor(executorViewModel);
 
             return RedirectToAction("AdminPanel");

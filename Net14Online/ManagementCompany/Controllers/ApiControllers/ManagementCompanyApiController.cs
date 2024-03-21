@@ -37,5 +37,10 @@ namespace ManagementCompany.Controllers.ApiControllers
         {
             return _userBusinessService.AddExecutor(viewModel);
         }
+
+        public void DeleteExecutor(int id)
+        {
+            _userBusinessService.DeleteExecutor(id);
+        }
     }
 }

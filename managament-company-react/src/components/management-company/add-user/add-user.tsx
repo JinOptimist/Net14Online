@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function AddUser() {
     const navigate = useNavigate();
-    const{ AddExecutor } = mcApi
+    const{ addExecutor } = mcApi
     const [UserData, setUserData] = useState<IUser>({} as IUser);
 
     function onChangeUserNickName(event: any) {
@@ -43,7 +43,7 @@ function AddUser() {
     }
 
     function onCreateUserClick(): void {
-        AddExecutor(UserData)
+        addExecutor(UserData)
             .then(({data}) => {
                 navigate(`/user/profile/${data}`)
         })

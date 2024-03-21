@@ -67,5 +67,11 @@ namespace ManagementCompany.BusinessServices
 
             return _userRepository.Add(executor);
         }
+
+        public void DeleteExecutor(int id)
+        {
+            _userRepository.Delete(id);
+        }
+        
     }
 }
