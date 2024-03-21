@@ -102,6 +102,7 @@ namespace Net14Web.Controllers
                 new Claim("name", user.Login ?? "user"),
                 new Claim("email", user.Email ?? ""),
                 new Claim(AuthService.LOCALE_TYPE, user.PreferLocale),
+                new Claim("avatar", user.AvatarUrl ?? ""),
                 new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims", user.Email ?? ""),
             };
 

@@ -1,11 +1,8 @@
+using CommentMoviesMicroService.DbStuff;
+using CommentMoviesMicroService.DbStuff.Repositories;
+using CommentMoviesMicroService.Services;
+using CommentMoviesMicroService.SignalRHubs;
 using Microsoft.EntityFrameworkCore;
-using MoviesMicroService.SignalRHubs;
-using Net14Web.DbStuff;
-using Net14Web.DbStuff.Repositories;
-using Net14Web.DbStuff.Repositories.Movies;
-using Net14Web.Services;
-using Net14Web.Services.Movies;
-using Net14Web.Services.Movies.Permissions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,18 +20,11 @@ builder.Services.AddCors(option =>
 });
 builder.Services.AddSignalR();
 
-builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(connectionString));
 
-builder.Services.AddScoped<UserRepository>();
+builder.Services.AddDbContext<CommentWebDbContext>(x => x.UseSqlServer(connectionString));
+
 builder.Services.AddScoped<CommentRepository>();
-builder.Services.AddScoped<MoviesRepository>();
 builder.Services.AddScoped<CommentBuilder>();
-builder.Services.AddScoped<MovieEditHelper>();
-builder.Services.AddScoped<PermissionRepository>();
-builder.Services.AddScoped<CommentPermissions>();
-builder.Services.AddScoped<UserEditHelper>();
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<RoleRepository>();
 
 builder.Services.AddHttpContextAccessor();
 
@@ -44,6 +34,6 @@ app.UseCors();
 
 app.MapHub<CommentHub>("/commentsMovie");
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Micro Sevice movies comment start!");
 
 app.Run();

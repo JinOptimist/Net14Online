@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RealEstateNet14Web.BuisnessService;
 using RealEstateNet14Web.DbStuff.Models;
 using RealEstateNet14Web.DbStuff.Repositories;
 using RealEstateNet14Web.Models;
@@ -17,14 +18,15 @@ public class RealEstateController : Controller
     private ApartmentOwnerRepository _apartmentOwnerRepository;
     private RealEstateAuthService _realEstateAuthService;
     private ApartamentRepository _apartamentRepository;
-        
-    public static List<UserViewModel> userViewModels = new();
+    private ApartmentOwnerBuisnessService _apartmentOwnerBuisnessService;
+    
 
     public RealEstateController(DeleteUser deleteUser,
         UpdateUser updateUser,
         ApartmentOwnerRepository apartmentOwnerRepository,
         RealEstateAuthService realEstateAuthService,
-        ApartamentRepository apartamentRepository)
+        ApartamentRepository apartamentRepository,
+        ApartmentOwnerBuisnessService apartmentOwnerBuisnessService)
     {
        // _userBuilder = userBuilder;
         _deleteUser = deleteUser;
@@ -32,6 +34,7 @@ public class RealEstateController : Controller
         _apartmentOwnerRepository = apartmentOwnerRepository;
         _realEstateAuthService = realEstateAuthService;
         _apartamentRepository = apartamentRepository;
+        _apartmentOwnerBuisnessService = apartmentOwnerBuisnessService;
     }
    
     public IActionResult Main()
@@ -45,18 +48,9 @@ public class RealEstateController : Controller
     [Authorize]
     public IActionResult DataBase()
     {
-        var dbApartmentOwners = _apartmentOwnerRepository.GetApartamentOwners(10);
+        var viewModels = _apartmentOwnerBuisnessService.GetApartamentOwners();
 
-        var viewModels = dbApartmentOwners
-            .Select(dbUser => new UserViewModel()
-            {
-                Age = dbUser.Age,
-                Name = dbUser.Name,
-                KindOfActivity = dbUser.KindOfActivity,
-            })
-            .ToList();
-
-        return View(dbApartmentOwners);
+        return View(viewModels);
     }
     
     [ HttpGet]
@@ -92,22 +86,14 @@ public class RealEstateController : Controller
     [Authorize]
     public IActionResult Delete(int id)
     {
-        _apartmentOwnerRepository.Delete(id);
+         _apartmentOwnerRepository.Delete(id);
         return RedirectToAction("DataBase");
     }
     
     [HttpPost]
     public IActionResult AddUser(AddUserViewModel addUser)
     {
-       // var newUser = _userBuilder.BuilderUser(user);
-       var newUser = new ApartmentOwner()
-       {
-           Name = addUser.Name,
-           Age = addUser.Age,
-           KindOfActivity = addUser.KindOfActivity,
-       };
-      // _apartmentOwnerRepository.Add(newUser);
-        _apartmentOwnerRepository.Add(newUser);
+        _apartmentOwnerBuisnessService.AddApartmentOwner(addUser);
         
         return RedirectToAction("DataBase");
     }

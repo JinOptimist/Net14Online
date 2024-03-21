@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@font-face {
+  font-family: 'Versus';
+  src: url('./fonts/versus-ultra_RUS_BY_LYAJKA.woff') format('woff'),
+      url('./fonts/versus-ultra_RUS_BY_LYAJKA.otf') format('otf');
+}
+
+@font-face {
+  font-family: 'Riffic';
+  src: url('./fonts/RifficFree-Bold.ttf');
+}
+
+:root {
+  --window-width: 100vw;
+  --window-height: 100vh;
+  --font-size-default: 1em;
+  --font-family-default: "Versus", "Riffic";
+  --font-family-lower: "Riffic";
+}
+
+::placeholder {
+  color: #e5e5e5;
+}
+
+* {
+  font-family: var(--font-family-default);
+}
+
+body {
+  background-color: black !important;
+}
+
+@layer {
+  .d-none:not(.show) {
+      display: none !important;
+  }
+}

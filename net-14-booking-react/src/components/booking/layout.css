@@ -1,0 +1,10 @@
+.header{
+    height: 50px;
+    display: flex;
+}
+.header a{
+padding: 10px, 10px, 10px,10px;
+background-color: rgb(190, 201, 210);
+height: 50px;
+margin: 10px;
+}

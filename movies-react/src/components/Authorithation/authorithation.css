@@ -1,0 +1,75 @@
+div.autorithation {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+div.autorithation>form {
+    min-width: 35vw;
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0.593);
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 10px 35px;
+}
+
+div.autorithation>form * {
+    font-family: var(--font-family-lower);
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+
+div.autorithation>form h3 {
+    line-height: 42px;
+    text-align: center;
+}
+
+div.autorithation>form label {
+    display: block;
+    margin-top: 5px;
+}
+
+div.autorithation>form input {
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.button-close {
+    background-color: rgba(0, 0, 0, 0.938) !important;
+    --bs-btn-close-color: white m !important;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+}
+
+.button-auth {
+    margin-top: 50px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.759);
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-auth:hover {
+    background-color: rgba(255, 255, 255, 0.395);
+    color: white;
+}

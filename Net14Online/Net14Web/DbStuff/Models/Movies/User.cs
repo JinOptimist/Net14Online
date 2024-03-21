@@ -17,8 +17,8 @@ namespace Net14Web.DbStuff.Models.Movies
         public virtual List<Comment>? Comments { get; set; }
         public virtual List<Hero>? MyHeroes { get; set; }
         public virtual List<TaskInfo> TaskInfos { get; set; }
-        public virtual List<ClientBooking> ClientsBooking { get; set; }
-        public virtual List<Search> Searches { get; set; }
+        public virtual List<ClientBooking>? ClientsBooking { get; set; }
+        public virtual List<Search>? Searches { get; set; }
 
         public virtual List<Bond> Bonds { get; set; }
     }
