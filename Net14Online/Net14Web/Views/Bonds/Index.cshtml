@@ -1,16 +1,20 @@
 ﻿@using Net14Web.Models.Bonds
 @model BondsIndexViewMode
+
 @{
     Layout = "_LayoutBonds";
 }
+
 @section Style
 {
     <link href="~/css/Bonds/Bonds.css" rel="stylesheet" />
 }
+
 @section Script {
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/Bond/index.js"></script>
 }
+
 <div>
     User: @Model.UserName
 </div>
@@ -18,9 +22,9 @@
     <table>
         <thead>
             <tr>
-                <th>Владелец</th>
-                <th>Название облигации</th>
-                <th>Цена</th>
+                <th>@Net14Web.LocalizationFiles.Bond.Owner</th>
+                <th>@Net14Web.LocalizationFiles.Bond.TheNameOfTheBond</th>
+                <th>@Net14Web.LocalizationFiles.Bond.Price</th>
             </tr>
         </thead>
     </table>
@@ -54,7 +58,7 @@
                         <td>
 
                             <div class="bond-price">
-                                @bond.Price рублей
+                                @bond.Price @Net14Web.LocalizationFiles.Bond.Rubles
                             </div>
 
                             @if (@bond.CanDelete)

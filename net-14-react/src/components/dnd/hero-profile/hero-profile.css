@@ -1,0 +1,7 @@
+.avatar-container {
+	margin: 5px;
+}
+.avatar-container img {
+	max-width: 200px;
+	max-height: 200px;
+}

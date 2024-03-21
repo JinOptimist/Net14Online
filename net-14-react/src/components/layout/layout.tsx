@@ -7,6 +7,7 @@ import Header from "./header";
 
 function Layout() {
 	return (
+
 		<BrowserRouter>
 			<Header />
 			<Routes>
