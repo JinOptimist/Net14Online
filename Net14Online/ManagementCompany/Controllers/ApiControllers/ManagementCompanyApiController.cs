@@ -1,17 +1,21 @@
-﻿using ManagementCompany.DbStuff.Repositories;
+﻿using ManagementCompany.BusinessServices;
+using ManagementCompany.DbStuff.Repositories;
+using ManagementCompany.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ManagementCompany.Controllers.ApiControllers
 {
     [ApiController]
-    [Route("/ManagementCompany/{action}")]
+    [Route("/api/ManagementCompany/{action}")]
     public class ManagementCompanyApiController : Controller
     {
         private ArticleRepository _articleRepository;
+        private UserBusinessService _userBusinessService;
 
-        public ManagementCompanyApiController(ArticleRepository articleRepository)
+        public ManagementCompanyApiController(ArticleRepository articleRepository, UserBusinessService userBusinessService)
         {
             _articleRepository = articleRepository;
+            _userBusinessService = userBusinessService;
         }
 
         public int? AddLike(int articleId)
@@ -22,6 +26,16 @@ namespace ManagementCompany.Controllers.ApiControllers
         public int? AddDislike(int articleId)
         {
             return _articleRepository.AddDislike(articleId);
+        }
+
+        public List<UserViewModel> GetUsers()
+        {
+            return _userBusinessService.GetUsers();
+        }
+
+        public int AddExecutor(ExecutorViewModel viewModel)
+        {
+            return _userBusinessService.AddExecutor(viewModel);
         }
     }
 }

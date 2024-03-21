@@ -101,13 +101,13 @@ namespace ManagementCompany.DbStuff.Repositories
             //var project = _context.Projects.Include(x => x.Executors).Single(x => x.Id == projectId);
 
             executor.Id = id;
-            executor.FirstName = viewModel.ExecutorFirstName;
-            executor.LastName = viewModel.ExecutorLastName;
-            executor.NickName = viewModel.ExecutorNickName;
-            executor.Email = viewModel.ExecutorEmail;
-            executor.PhoneNumber = viewModel.ExecutorPhoneNumber;
-            executor.Password = viewModel.ExecutorPassword;
-            executor.ExpireDate = viewModel.ExecutorExpireDate;
+            executor.FirstName = viewModel.FirstName;
+            executor.LastName = viewModel.LastName;
+            executor.NickName = viewModel.NickName;
+            executor.Email = viewModel.Email;
+            executor.PhoneNumber = viewModel.PhoneNumber;
+            executor.Password = viewModel.Password;
+            executor.ExpireDate = viewModel.ExpireDate;
             executor.MemberPermission = _context.MemberPermissions.Single(x => x.Id == permissionId);
             executor.Company = _context.Companies.Single(x => x.Id == companyId);
             executor.Status = _context.MemberStatuses.Single(x => x.Id == statusId);

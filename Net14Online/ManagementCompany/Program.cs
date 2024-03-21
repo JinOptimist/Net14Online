@@ -1,3 +1,4 @@
+using ManagementCompany.BusinessServices;
 using ManagementCompany.Controllers;
 using ManagementCompany.DbStuff;
 using ManagementCompany.DbStuff.Repositories;
@@ -14,6 +15,18 @@ builder.Services
         option.AccessDeniedPath = "/auth/deny";
         option.LoginPath = "/Auth/Login";
     });
+
+builder.Services.AddCors(option =>
+{
+    option.AddDefaultPolicy(policy =>
+    {
+        //policy.WithHeaders("Smile", "Credential");
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.SetIsOriginAllowed(url => true);
+        policy.AllowCredentials();
+    });
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -37,10 +50,13 @@ builder.Services.AddScoped<MemberStatusRepository>();
 builder.Services.AddScoped<CreateFilePathHelper>();
 builder.Services.AddScoped<UploadFileHelper>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<UserBusinessService>();
 
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
+
+app.UseCors();
 
 SeedExtention.Seed(app);
 
