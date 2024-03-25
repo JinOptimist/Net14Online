@@ -70,6 +70,33 @@ namespace Net14Web.LocalizationFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EUR.
+        /// </summary>
+        public static string LayoutCurrency {
+            get {
+                return ResourceManager.GetString("LayoutCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        public static string LayoutHelp {
+            get {
+                return ResourceManager.GetString("LayoutHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string LayoutLogin {
+            get {
+                return ResourceManager.GetString("LayoutLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Car rentals.
         /// </summary>
         public static string NavbarCarRentals {

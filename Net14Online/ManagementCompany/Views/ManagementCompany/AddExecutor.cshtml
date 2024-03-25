@@ -51,32 +51,32 @@
             <h2>Добавить исполнителя</h2>
             <form method="post" action="/ManagementCompany/AddExecutor">
                 <label for="firstName"> Имя:</label>
-                @Html.TextBoxFor(x => x.ExecutorFirstName)
-                @Html.ValidationMessageFor(x => x.ExecutorFirstName)
+                @Html.TextBoxFor(x => x.FirstName)
+                @Html.ValidationMessageFor(x => x.FirstName)
 
                 <label for="lastName"> Фамилия:</label>
-                @Html.TextBoxFor(x => x.ExecutorLastName)
-                @Html.ValidationMessageFor(x => x.ExecutorLastName)
+                @Html.TextBoxFor(x => x.LastName)
+                @Html.ValidationMessageFor(x => x.LastName)
 
                 <label for="nickName"> Ник на сайте:</label>
-                @Html.TextBoxFor(x => x.ExecutorNickName)
-                @Html.ValidationMessageFor(x => x.ExecutorNickName)
+                @Html.TextBoxFor(x => x.NickName)
+                @Html.ValidationMessageFor(x => x.NickName)
 
                 <label for="email">Электронная почта:</label>
-                @Html.TextBoxFor(x => x.ExecutorEmail)
-                @Html.ValidationMessageFor(x => x.ExecutorEmail)
+                @Html.TextBoxFor(x => x.Email)
+                @Html.ValidationMessageFor(x => x.Email)
 
                 <label for="password">Пароль для пользователя:</label>
-                @Html.TextBoxFor(x => x.ExecutorPassword)
-                @Html.ValidationMessageFor(x => x.ExecutorPassword)
+                @Html.TextBoxFor(x => x.Password)
+                @Html.ValidationMessageFor(x => x.Password)
 
                 <label for="phoneNumber">Номер телефона:</label>
-                @Html.TextBoxFor(x => x.ExecutorPhoneNumber)
-                @Html.ValidationMessageFor(x => x.ExecutorPhoneNumber)
+                @Html.TextBoxFor(x => x.PhoneNumber)
+                @Html.ValidationMessageFor(x => x.PhoneNumber)
 
                 <label for="expireDate">Выберите дату:</label>
-                @Html.TextBoxFor(x => x.ExecutorExpireDate, new { type = "date" })
-                @Html.ValidationMessageFor(x => x.ExecutorExpireDate)
+                @Html.TextBoxFor(x => x.ExpireDate, new { type = "date" })
+                @Html.ValidationMessageFor(x => x.ExpireDate)
 
                 <label for="permission">Уровень доступа:</label>
                 @Html.DropDownList("permissionId", Model.Permissions)

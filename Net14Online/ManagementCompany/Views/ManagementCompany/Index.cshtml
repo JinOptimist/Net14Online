@@ -31,32 +31,42 @@
                 <img class="menu" src="icon.jpg" alt="Меню" id="menuIcon">
             </button>
             <div class="dropdown-content">
-                @if ((!User?.Identity?.IsAuthenticated) ?? true)
+                @* @if ((!User?.Identity?.IsAuthenticated) ?? true)
                 {
-                    foreach (var myPage in @Model.GuestPages)
-                    {
-                        <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
-                    }
-                    <a class="login" href="/Auth/Login">Войти</a>
-                    <a class="reg" href="/ManagementCompany/Registration">Зарегистрироваться</a>
+                foreach (var myPage in @Model.GuestPages)
+                {
+                <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                } *@
+                @if (Model.IsUser == true)
+                {
+                    <a class="login" href="/Auth/Login">>User</a>
                 }
-                else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
+                @if (Model.IsAdmin == true)
+                {
+                    <a class="reg" href="/ManagementCompany/Registration">Admin</a>
+                }
+                @* } *@
+                @* else if ((User?.Identity?.IsAuthenticated) ?? true && User?.Claims
                 .FirstOrDefault(x => x.Type == "permissionId")?.Value == ((int)MemberPermissionEnum.User).ToString())
                 {
-                    foreach (var myPage in @Model.UserPages)
-                    {
-                        <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
-                    }
-                    <a class="login" href="/Auth/Logout">Выйти</a>
-                }
-                else
+                foreach (var myPage in @Model.UserPages)
                 {
-                    foreach (var myPage in @Model.AdminPages)
-                    {
-                        <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
-                    }
-                    <a class="login" href="/Auth/Logout">Выйти</a>
+                <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                } *@
+                @if (Model.IsGuest == true)
+                {
+                    <a class="login" href="/Auth/Login">Guest</a>
                 }
+                @* } *@
+                @* else
+                {
+                foreach (var myPage in @Model.AdminPages)
+                {
+                <a href="/ManagementCompany/@myPage.Key">@myPage.Value</a>
+                } *@
+                <a class="login" href="/Auth/Logout">Выйти</a>
+                <a class="login" href="/ManagementCompany/Blog">Блог</a>
+                @* } *@
             </div>
         </div>
     </header>

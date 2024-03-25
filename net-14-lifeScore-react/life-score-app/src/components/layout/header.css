@@ -1,0 +1,17 @@
+.header{
+    height: 45px;
+    display: flex;
+}
+
+.header a{
+
+    padding: 7px 12px;
+    background: #f8f6f6;
+    margin: 3px;
+    border-radius: 5px;
+}
+
+.header a:hover{
+    padding: 7px 12px;
+    background: #e2dfdf;
+}

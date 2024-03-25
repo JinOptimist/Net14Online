@@ -1,26 +1,51 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Net14Web.Models.LifeScore;
+using Net14Web.Services.LifeScore;
 using GameViewModel = Net14Web.Models.LifeScore.GameViewModel;
 
 namespace Net14Web.Controllers;
 
 public class LifeScoreController : Controller
 {
-    public static LifeScoreViewModel lifeScoreViewModel = new LifeScoreViewModel
+    public static LifeScoreViewModel lifeScoreViewModel = new LifeScoreViewModel();
+    private readonly TeamService _teamService;
+
+    public LifeScoreController(TeamService teamService)
     {
-        Games = new List<GameViewModel>(),
-        Teams = new List<TeamViewModel>(),
-    };
+        _teamService = teamService;
+    }
 
     public IActionResult Index()
     {
-        var updatedLifeScoreViewModel = InitializeLifeScoreViewModel(lifeScoreViewModel);
-        return View(updatedLifeScoreViewModel);
+        if (lifeScoreViewModel == null)
+        {
+            lifeScoreViewModel = InitializeLifeScoreViewModel(lifeScoreViewModel);
+        }
+        return View(lifeScoreViewModel);
     }
 
     public IActionResult TeamsTable()
     {
-        return View();
+        var teams = _teamService.GetTeams();
+
+        lifeScoreViewModel.Teams = teams.Select(t => new TeamViewModel
+        {
+             Country = t.Country,
+             Liga = t.Liga,
+             //Players = t.Players.Select(p=> new PlayerViewModel
+             //{
+             //    Assists = p.Assists,
+             //    FirstName = p.FirstName,
+             //    LastName = p.LastName,
+             //    Goals = p.Goals,
+             //    Id = p.Id,
+             //    Team = p.Team.Name
+             //}).ToList(),
+             ShortName = t.ShortName,
+             Name = t.Name,
+        }).ToList();
+
+        return View(lifeScoreViewModel);
     }
 
     public IActionResult Calendar()
@@ -38,6 +63,18 @@ public class LifeScoreController : Controller
         return View();
     }
 
+    [HttpGet]
+    public IActionResult CreateTeam()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult CreateTeam(CreateTeamViewModel newTeam)
+    {
+        var newTeamId = _teamService.CreateTeam(newTeam);
+        return View();
+    }
     private LifeScoreViewModel InitializeLifeScoreViewModel(LifeScoreViewModel lifeScoreViewModel)
     {
         var player = new PlayerViewModel
@@ -70,7 +107,7 @@ public class LifeScoreController : Controller
             Liga = "BHL",
             ShortName = "LN",
             Players = new List<PlayerViewModel> { player },
-            CalendarOfGames = new List<GameViewModel>
+            Games = new List<GameViewModel>
             {
                 new GameViewModel
                 {
@@ -81,10 +118,7 @@ public class LifeScoreController : Controller
                     SecondTeamGoals = 3,
                     GameDate = new DateTime(2023, 12, 28),
                     Result = "Wolves"
-                }
-            },
-            ResultsOfGames = new List<GameViewModel>
-            {
+                },
                 new GameViewModel
                 {
                     Id = 1,
@@ -104,7 +138,7 @@ public class LifeScoreController : Controller
             Liga = "BHL",
             ShortName = "WLV",
             Players = new List<PlayerViewModel> { player2 },
-            CalendarOfGames = new List<GameViewModel>
+            Games = new List<GameViewModel>
             {
                 new GameViewModel
                 {
@@ -115,10 +149,7 @@ public class LifeScoreController : Controller
                     SecondTeamGoals = 3,
                     GameDate = new DateTime(2023, 12, 28),
                     Result = "Wolves"
-                }
-            },
-            ResultsOfGames = new List<GameViewModel>
-            {
+                },
                 new GameViewModel
                 {
                     Id = 1,
@@ -135,7 +166,7 @@ public class LifeScoreController : Controller
 
         lifeScoreViewModel.Teams.Add(team1);
         lifeScoreViewModel.Teams.Add(team2);
-        lifeScoreViewModel.Games.Add(team1.CalendarOfGames.First());
+        lifeScoreViewModel.Games.Add(team1.Games.First());
         return lifeScoreViewModel;
     }
 }
