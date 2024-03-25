@@ -3,7 +3,9 @@
     public enum UserType
     {
         None = 0,
-        Admin = 1,
-        User = 2,
+        AdminOnly = 1,
+        UserOnly = 2,
+        ManagerOnly = 3,
+        SuperAdminOnly = 4,
     }
 }

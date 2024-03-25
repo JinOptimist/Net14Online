@@ -117,7 +117,7 @@ namespace ManagementCompany.Services
             var attributes = methodInfo.GetCustomAttributes();
             if (attributes.Any(x => x is AdminOnlyAttribute))
             {
-                return UserType.Admin;
+                return UserType.AdminOnly;
             }
 
             return UserType.None;
