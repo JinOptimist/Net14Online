@@ -25,7 +25,7 @@ const User: FC<UserProps> = ({user, onRemove}) => {
             </div>
               <Link to={`/user/profile/${user.id}`}>Profile</Link>
               <div>
-                <span onClick={() => onRemove?.(user.id)} className="remove"> Remove</span>
+                <span onClick={() => onRemove?.(user.id)} className="remove"> Remove</span> 
               </div>
             </div>
      );

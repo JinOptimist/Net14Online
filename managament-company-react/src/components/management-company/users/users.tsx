@@ -25,7 +25,7 @@ const Users = () => {
     setUsers(oldUsersData => [...oldUsersData, newUser]);
   }
 
-  function removeUser(id: number): void {
+  function deleteUser(id: number): void {
     setUsers(oldUsersData => oldUsersData.filter(user => user.id !== id));
   }
 
@@ -39,7 +39,7 @@ const Users = () => {
         </div>
         <button onClick={onAddUserClick}>New user</button>
           {Users.map(user => (
-            <User user={user} onRemove={removeUser} key={user.id}></User>
+            <User user={user} onRemove={deleteExecutor} key={user.id}></User>
         ))}
       </div>
     );
