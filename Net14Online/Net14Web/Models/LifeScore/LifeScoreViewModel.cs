@@ -2,8 +2,8 @@
 {
     public class LifeScoreViewModel
     {
-        public List<TeamViewModel> Teams { get; set; }
-        public List<GameViewModel> Games { get; set; }
+        public List<TeamViewModel>? Teams { get; set; }
+        public List<GameViewModel>? Games { get; set; }
         
     }
 }
