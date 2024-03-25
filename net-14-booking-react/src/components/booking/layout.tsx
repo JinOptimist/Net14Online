@@ -1,6 +1,6 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Countries from "./countries";
-import AddSearch from "./AddSearch";
+import AddSearch from "./AddSearch"
 import SearchInfo from "./SearchInfo";
 import Searches from "./searches";
 import "/Repo/Net14Online/net-14-booking-react/src/components/booking/layout.css"

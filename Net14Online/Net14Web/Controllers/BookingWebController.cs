@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.VisualBasic;
+using Net14Web.BusinessServices;
 using Net14Web.Controllers.CustomAuthAttributes;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.BookingWeb;
@@ -28,16 +29,19 @@ namespace Net14Web.Controllers
         private LoginRepository _loginRepository;
         private AuthService _authService;
         private BookingPermission _bookingPermission;
+        public BookingBusinessService _bookingBusinessService;
         
         public BookingWebController (SearchRepository searchRepository, 
             LoginRepository loginRepository, 
             AuthService authService,
-            BookingPermission bookingPermission)
+            BookingPermission bookingPermission,
+            BookingBusinessService bookingBusinessService)
         {
             _searchRepository = searchRepository;
             _loginRepository = loginRepository;
             _authService = authService;
             _bookingPermission = bookingPermission;
+            _bookingBusinessService = bookingBusinessService;
         }
 
         public IActionResult CarRental()
@@ -169,17 +173,7 @@ namespace Net14Web.Controllers
         {
             var login = _loginRepository.GetFirst();
 
-            var search = new Search
-            {
-                Country = searchResultViewModel.Country,
-                City = searchResultViewModel.City,
-                Checkin = searchResultViewModel.CheckinDate,
-                Checkout = searchResultViewModel.CheckoutDate,
-                ClientBooking = login,
-                Owner = _authService.GetCurrentUser()
-            };
-
-            _searchRepository.Add(search);
+            _bookingBusinessService.AddSearch(searchResultViewModel);
 
             return RedirectToAction("SearchResult");
         }
