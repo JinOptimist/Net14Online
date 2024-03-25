@@ -19,6 +19,8 @@ namespace ManagementCompany.DbStuff
 
         public DbSet<UserTaskStatus> TaskStatuses { get; set; }
 
+        public DbSet<Article> Articles { get; set; }
+
         public ManagementCompanyDbContext(DbContextOptions<ManagementCompanyDbContext> options) : base(options) 
         {
             Database.EnsureCreated();
@@ -127,6 +129,13 @@ namespace ManagementCompany.DbStuff
                 .HasIndex(uts => uts.Status)
                 .IsUnique();
             #endregion
+
+            builder
+                .Entity<Article>()
+                .HasOne(a => a.Author)
+                .WithMany(u => u.Articles)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

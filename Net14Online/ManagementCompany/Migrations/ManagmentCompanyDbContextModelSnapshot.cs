@@ -17,12 +17,74 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.15")
+                .HasAnnotation("ProductVersion", "7.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Company", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.Article", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("ThumbsDown")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ThumbsUp")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Articles", (string)null);
+                });
+
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Guid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("Comment", (string)null);
+                });
+
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.Company", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,7 +132,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                     b.ToTable("Companies", (string)null);
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.MemberPermission", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.MemberPermission", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,18 +147,18 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Permission")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Permission")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Permission] IS NOT NULL");
 
                     b.ToTable("MemberPermissions", (string)null);
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.MemberStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -111,18 +173,18 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Status")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Status] IS NOT NULL");
 
                     b.ToTable("MemberStatuses", (string)null);
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Project", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.Project", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -165,13 +227,16 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                     b.ToTable("Projects", (string)null);
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.User", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ArticleId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("CompanyId")
                         .HasColumnType("int");
@@ -214,6 +279,8 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ArticleId");
+
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("Email")
@@ -226,7 +293,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.UserTask", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.UserTask", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -273,7 +340,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                     b.ToTable("UserTasks", (string)null);
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.UserTaskStatus", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.UserTaskStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -314,9 +381,27 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                     b.ToTable("ProjectUser", (string)null);
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Company", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.Article", b =>
                 {
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", "Status")
+                    b.HasOne("ManagementCompany.DbStuff.Models.User", "Author")
+                        .WithMany("Articles")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.Comment", b =>
+                {
+                    b.HasOne("ManagementCompany.DbStuff.Models.Article", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("ArticleId");
+                });
+
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.Company", b =>
+                {
+                    b.HasOne("ManagementCompany.DbStuff.Models.MemberStatus", "Status")
                         .WithMany("Companies")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -324,14 +409,14 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Project", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.Project", b =>
                 {
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.Company", "Company")
+                    b.HasOne("ManagementCompany.DbStuff.Models.Company", "Company")
                         .WithMany("Projects")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", "Status")
+                    b.HasOne("ManagementCompany.DbStuff.Models.MemberStatus", "Status")
                         .WithMany("Projects")
                         .HasForeignKey("StatusId");
 
@@ -340,18 +425,22 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.User", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.User", b =>
                 {
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.Company", "Company")
+                    b.HasOne("ManagementCompany.DbStuff.Models.Article", null)
+                        .WithMany("Watchers")
+                        .HasForeignKey("ArticleId");
+
+                    b.HasOne("ManagementCompany.DbStuff.Models.Company", "Company")
                         .WithMany("Executors")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberPermission", "MemberPermission")
+                    b.HasOne("ManagementCompany.DbStuff.Models.MemberPermission", "MemberPermission")
                         .WithMany("Users")
                         .HasForeignKey("MemberPermissionId");
 
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", "Status")
+                    b.HasOne("ManagementCompany.DbStuff.Models.MemberStatus", "Status")
                         .WithMany("Users")
                         .HasForeignKey("StatusId");
 
@@ -362,19 +451,19 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.UserTask", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.UserTask", b =>
                 {
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.User", "Author")
+                    b.HasOne("ManagementCompany.DbStuff.Models.User", "Author")
                         .WithMany("UserCreatedTasks")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.User", "Executor")
+                    b.HasOne("ManagementCompany.DbStuff.Models.User", "Executor")
                         .WithMany("UserExecutedTasks")
                         .HasForeignKey("ExecutorId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.UserTaskStatus", "Status")
+                    b.HasOne("ManagementCompany.DbStuff.Models.UserTaskStatus", "Status")
                         .WithMany("UserTasks")
                         .HasForeignKey("StatusId");
 
@@ -387,32 +476,39 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
             modelBuilder.Entity("ProjectUser", b =>
                 {
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.User", null)
+                    b.HasOne("ManagementCompany.DbStuff.Models.User", null)
                         .WithMany()
                         .HasForeignKey("ExecutorsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Net14Web.DbStuff.ManagmentCompany.Models.Project", null)
+                    b.HasOne("ManagementCompany.DbStuff.Models.Project", null)
                         .WithMany()
                         .HasForeignKey("ProjectsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.Company", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.Article", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Watchers");
+                });
+
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.Company", b =>
                 {
                     b.Navigation("Executors");
 
                     b.Navigation("Projects");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.MemberPermission", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.MemberPermission", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.MemberStatus", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.MemberStatus", b =>
                 {
                     b.Navigation("Companies");
 
@@ -421,14 +517,16 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.User", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.User", b =>
                 {
+                    b.Navigation("Articles");
+
                     b.Navigation("UserCreatedTasks");
 
                     b.Navigation("UserExecutedTasks");
                 });
 
-            modelBuilder.Entity("Net14Web.DbStuff.ManagmentCompany.Models.UserTaskStatus", b =>
+            modelBuilder.Entity("ManagementCompany.DbStuff.Models.UserTaskStatus", b =>
                 {
                     b.Navigation("UserTasks");
                 });

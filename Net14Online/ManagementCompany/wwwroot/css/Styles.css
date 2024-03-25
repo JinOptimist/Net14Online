@@ -15,9 +15,22 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-    .regContainer h2, .loginContainer h2 {
-        text-align: center;
-    }
+.like-container {
+    display: flex;
+    max-height: 300px;
+}
+
+.comment-container {
+    display: flex;
+}
+
+.thumbUp, .thumbDown, send-comment {
+    cursor: pointer;
+}
+
+.regContainer h2, .loginContainer h2 {
+    text-align: center;
+}
 
 h1 {
     color: #333;
@@ -115,4 +128,41 @@ button {
     padding: 8px;
     margin-bottom: 10px;
     box-sizing: border-box;
+}
+
+.template {
+    display: none;
+}
+
+.chat {
+    height: 150px;
+    max-width: 200px;
+    overflow-y: scroll;
+    background: #f2f2f2;
+    margin: 10px;
+}
+
+.comment-container {
+    max-width: 350px;
+}
+
+.new-comment {
+    max-width: 350px;
+    margin-left: 10px;
+}
+
+.send-comment {
+    margin-bottom: 10px;
+}
+
+.user-name {
+    color: forestgreen;
+}
+
+.like-container {
+    margin: 10px;
+}
+
+.article-text {
+    margin: 10px;
 }

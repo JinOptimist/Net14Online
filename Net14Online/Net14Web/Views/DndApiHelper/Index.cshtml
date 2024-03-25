@@ -1,0 +1,34 @@
+﻿@using Net14Web.Models.DndApiHelper
+@model ApiHelperViewModel
+
+@section Style
+{
+    <link href="~/css/dndApiHelper.css" rel="stylesheet" />
+}
+
+@section Script {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/dnd/dndApiHelper.js"></script>
+}
+
+<div class="controller-container">
+    <div class="controller-name">
+        @Model.Name
+    </div>
+
+    @foreach (var method in Model.Methods)
+    {
+        <div class="method @method.MethodType">
+            <span class="method-name">@method.Name [@method.MethodType]</span>
+            <div class="parameters">
+                @foreach (var parameter in method.Parameters)
+                {
+                    <div class="parameter">
+                        @parameter.Name [@parameter.TypeName]
+                        <textarea>@parameter.Exmaple</textarea>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

@@ -120,6 +120,15 @@
   <data name="LayoutBooking" xml:space="preserve">
     <value>BookingWeb</value>
   </data>
+  <data name="LayoutCurrency" xml:space="preserve">
+    <value>EUR</value>
+  </data>
+  <data name="LayoutHelp" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="LayoutLogin" xml:space="preserve">
+    <value>Login</value>
+  </data>
   <data name="NavbarCarRentals" xml:space="preserve">
     <value>Car rentals</value>
   </data>

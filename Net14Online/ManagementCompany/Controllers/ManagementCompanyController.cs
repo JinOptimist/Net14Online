@@ -1,4 +1,5 @@
-﻿using ManagementCompany.DbStuff.Models;
+﻿using ManagementCompany.BusinessServices;
+using ManagementCompany.DbStuff.Models;
 using ManagementCompany.DbStuff.Models.Enums;
 using ManagementCompany.DbStuff.Repositories;
 using ManagementCompany.Models;
@@ -13,11 +14,13 @@ namespace ManagementCompany.Controllers
         private CompanyRepository _companyRepository;
         private ProjectRepository _projectRepository;
         private UserRepository _userRepository;
+        private ArticleRepository _articleRepository;
         private UserTaskRepository _userTaskRepository;
         private MemberPermissionRepository _memberPermissionRepository;
         private MemberStatusRepository _memberStatusRepository;
         private TaskStatusRepository _taskStatusRepository;
         private AuthService _authService;
+        private UserBusinessService _userBusinessService;
 
         private IWebHostEnvironment _webHostEnvironment;
 
@@ -30,7 +33,9 @@ namespace ManagementCompany.Controllers
             MemberStatusRepository memberStatusRepository,
             AuthService authService,
             IWebHostEnvironment webHostEnvironment,
-            TaskStatusRepository taskStatusRepository)
+            TaskStatusRepository taskStatusRepository,
+            ArticleRepository articleRepository,
+            UserBusinessService userBusinessService)
         {
             _companyRepository = companyRepository;
             _projectRepository = projectRepository;
@@ -41,15 +46,13 @@ namespace ManagementCompany.Controllers
             _authService = authService;
             _webHostEnvironment = webHostEnvironment;
             _taskStatusRepository = taskStatusRepository;
+            _articleRepository = articleRepository;
+            _userBusinessService = userBusinessService;
         }
 
         public IActionResult Index()
         {
-            var dbUsers = _userRepository.GetUsers();
-
-            var dbManagers = _userRepository.GetManagers();
-
-            var dbAllUsers = dbUsers.Concat(dbManagers);
+            var user = _authService.GetCurrentUser();
 
             var dbAllTasks = _userTaskRepository.GetAll()
                 .ToList();
@@ -62,6 +65,8 @@ namespace ManagementCompany.Controllers
                 .GetAll();
 
             var viewModel = new IndexViewModel();
+
+            CheckUser(viewModel, user);
 
             viewModel.AllTasks = dbAllTasks
                 .Select(dbAllTask => new TaskViewModel
@@ -91,15 +96,7 @@ namespace ManagementCompany.Controllers
                 })
                 .ToList();
 
-            viewModel.Users =
-                dbAllUsers
-                .Select(dbUser => new UserViewModel
-                {
-                    Id = dbUser.Id,
-                    NickName = dbUser.NickName,
-                    MemberPermission = dbUser.MemberPermission?.Permission,
-                })
-                .ToList();
+            viewModel.Users = _userBusinessService.GetUsers();
 
             return View(viewModel);
         }
@@ -214,6 +211,30 @@ namespace ManagementCompany.Controllers
             return View(viewModel);
         }
 
+        public IActionResult Blog()
+        {
+            var dbArticles = _articleRepository.GetAll();
+
+            var blogViewModel = new BlogViewModel();
+            blogViewModel.UserNickName = _authService.GetCurrentUserNickName();
+
+            blogViewModel.Articles =
+                dbArticles
+                .Select(dbArticle => new ArticleViewModel
+                {
+                    Id = dbArticle.Id,
+                    Title = dbArticle.Title,
+                    Description = dbArticle.Description,
+                    ThumbsUp = dbArticle.ThumbsUp,
+                    ThumbsDown = dbArticle.ThumbsDown,
+                })
+                .ToList();
+
+            blogViewModel.Articles.Count();
+
+            return View(blogViewModel);
+        }
+
         public IActionResult About()
         {
             var model = new BaseViewModel();
@@ -292,15 +313,15 @@ namespace ManagementCompany.Controllers
                 .Select(dbExecuter => new ExecutorViewModel
                 {
                     Id = dbExecuter.Id,
-                    ExecutorFirstName = dbExecuter.FirstName,
-                    ExecutorLastName = dbExecuter.LastName,
-                    ExecutorNickName = dbExecuter.NickName,
-                    ExecutorEmail = dbExecuter.Email,
-                    ExecutorPhoneNumber = dbExecuter.PhoneNumber,
-                    ExecutorExpireDate = dbExecuter.ExpireDate,
+                    FirstName = dbExecuter.FirstName,
+                    LastName = dbExecuter.LastName,
+                    NickName = dbExecuter.NickName,
+                    Email = dbExecuter.Email,
+                    PhoneNumber = dbExecuter.PhoneNumber,
+                    ExpireDate = dbExecuter.ExpireDate,
                     //Company = dbExecuter.Company.Name,
-                    ExecutorMemberPermission = _memberPermissionRepository.GetById(dbExecuter.MemberPermission.Id).Permission,
-                    ExecutorMemberStatus = _memberStatusRepository.GetById(dbExecuter.Status.Id).Status
+                    MemberPermission = _memberPermissionRepository.GetById(dbExecuter.MemberPermission.Id).Permission,
+                    MemberStatus = _memberStatusRepository.GetById(dbExecuter.Status.Id).Status
                 })
                 .ToList();
 
@@ -334,6 +355,7 @@ namespace ManagementCompany.Controllers
                 CompletionDate = userTask.CompletionDate
             })
                 .ToList();
+
             return View(model);
         }
 
@@ -694,24 +716,7 @@ namespace ManagementCompany.Controllers
                 .Select(x => new SelectListItem(x.Status, x.Id.ToString()))
                 .ToList();
 
-            var project = _projectRepository.GetById(projectId);
-
-            var executor = new User
-            {
-                FirstName = executorViewModel.ExecutorFirstName,
-                LastName = executorViewModel.ExecutorLastName,
-                NickName = executorViewModel.ExecutorNickName,
-                Email = executorViewModel.ExecutorEmail,
-                PhoneNumber = executorViewModel.ExecutorPhoneNumber,
-                Password = executorViewModel.ExecutorPassword,
-                ExpireDate = executorViewModel.ExecutorExpireDate,
-                Company = _companyRepository.GetById(companyId),
-                MemberPermission = _memberPermissionRepository.GetById(permissionId),
-                Status = _memberStatusRepository.GetById((int)MemberStatusEnum.Active),
-            };
-            executor.Projects?.Add(project);
-
-            _userRepository.Add(executor);
+            _userBusinessService.AddExecutor(executorViewModel);
 
             return RedirectToAction("AdminPanel");
         }
@@ -726,15 +731,15 @@ namespace ManagementCompany.Controllers
                 var user = _userRepository.GetExecutor(id);
 
                 viewModel.Id = user.Id;
-                viewModel.ExecutorFirstName = user.FirstName;
-                viewModel.ExecutorLastName = user.LastName;
-                viewModel.ExecutorEmail = user.Email;
-                viewModel.ExecutorPhoneNumber = user.PhoneNumber;
-                viewModel.ExecutorExpireDate = user.ExpireDate;
-                viewModel.ExecutorPassword = user.Password;
-                viewModel.ExecutorMemberPermission = user.MemberPermission.Permission;
-                viewModel.ExecutorMemberStatus = user.Status.Status;
-                viewModel.ExecutorNickName = user.NickName;
+                viewModel.FirstName = user.FirstName;
+                viewModel.LastName = user.LastName;
+                viewModel.Email = user.Email;
+                viewModel.PhoneNumber = user.PhoneNumber;
+                viewModel.ExpireDate = user.ExpireDate;
+                viewModel.Password = user.Password;
+                viewModel.MemberPermission = user.MemberPermission.Permission;
+                viewModel.MemberStatus = user.Status.Status;
+                viewModel.NickName = user.NickName;
                 viewModel.Company = user.Company.Name;
                 viewModel.Companies = _companyRepository.GetAll()
                     .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
@@ -813,6 +818,25 @@ namespace ManagementCompany.Controllers
             _userTaskRepository.Add(task);
 
             return RedirectToAction("Profile", new {Id = task.Author.Id});
+        }
+
+        private void CheckUser(BaseViewModel model, User user)
+        {
+            if (user is not null)
+            {
+                if (user.MemberPermission.Id == 5)
+                {
+                    model.IsUser = true;
+                }
+                else
+                {
+                    model.IsAdmin = true;
+                }
+            }
+            else
+            {
+                model.IsGuest = true;
+            }
         }
     }
 }
