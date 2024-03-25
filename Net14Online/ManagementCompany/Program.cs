@@ -51,6 +51,7 @@ builder.Services.AddScoped<CreateFilePathHelper>();
 builder.Services.AddScoped<UploadFileHelper>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<UserBusinessService>();
+builder.Services.AddScoped<ReflectionService>();
 
 builder.Services.AddHttpContextAccessor();
 

@@ -1,4 +1,5 @@
 ﻿using ManagementCompany.BusinessServices;
+using ManagementCompany.Controllers.CustomAuthAttributes;
 using ManagementCompany.DbStuff.Models;
 using ManagementCompany.DbStuff.Models.Enums;
 using ManagementCompany.DbStuff.Repositories;
@@ -254,6 +255,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpGet]
+        [AdminOnly]
         public IActionResult AdminPanel()
         {
             var dbStatuses = _memberStatusRepository.GetAll();
@@ -418,12 +420,14 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpGet]
+        [AdminOnly]
         public IActionResult AddPermission()
         {
             return View();
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult AddPermission(PermissionViewModel viewModel)
         {
             var permission = new MemberPermission
@@ -437,6 +441,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpGet]
+        [AdminOnly]
         public IActionResult UpdatePermission(int permissionId)
         {
             if (permissionId > 0)
@@ -456,6 +461,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult UpdatePermission(PermissionViewModel viewModel, int id)
         {
             _memberPermissionRepository.UpdatePermission(viewModel, id);
@@ -464,6 +470,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult RemovePermission(int id)
         {
             _memberPermissionRepository.Delete(id);
@@ -472,12 +479,14 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpGet]
+        [AdminOnly]
         public IActionResult AddStatus()
         {
             return View();
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult AddStatus(StatusViewModel viewModel)
         {
             var status = new MemberStatus
@@ -491,6 +500,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpGet]
+        [AdminOnly]
         public IActionResult UpdateStatus(int statusId)
         {
             if (statusId > 0)
@@ -510,6 +520,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult UpdateStatus(StatusViewModel viewModel, int id)
         {
             _memberStatusRepository.UpdateStatus(viewModel, id);
@@ -518,6 +529,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult RemoveStatus(int id)
         {
             _memberStatusRepository.Delete(id);
@@ -526,12 +538,14 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpGet]
+        [AdminOnly]
         public IActionResult AddCompany()
         {
             return View();
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult AddCompany(CompanyViewModel companyViewModel)
         {
             companyViewModel.Companies = _companyRepository.GetAll()
@@ -566,6 +580,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpGet]
+        [AdminOnly]
         public IActionResult UpdateCompany(int companyId)
         {
             if (companyId > 0)
@@ -593,6 +608,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult UpdateCompany(CompanyViewModel companyViewModels, int id, int statusId)
         {
             _companyRepository.UpdateCompany(companyViewModels, id, statusId);
@@ -601,6 +617,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult RemoveCompany(int id)
         {
             _companyRepository.Delete(id);
@@ -609,6 +626,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpGet]
+        [AdminOnly]
         public IActionResult AddProject()
         {
             ProjectViewModel projectViewModel = new ProjectViewModel();
@@ -633,6 +651,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult AddProject(ProjectViewModel projectViewModel, int companyId)
         {
             projectViewModel.Companies = _companyRepository.GetAll()
@@ -666,6 +685,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult RemoveProject(int id)
         {
             _projectRepository.Delete(id);
@@ -674,6 +694,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpGet]
+        [AdminOnly]
         public IActionResult AddExecutor()
         {
             var executorViewModel = new ExecutorViewModel();
@@ -698,6 +719,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult AddExecutor(ExecutorViewModel executorViewModel, int companyId, int projectId, int permissionId)
         {
             executorViewModel.Companies = _companyRepository.GetAll()
@@ -722,6 +744,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpGet]
+        [AdminOnly]
         public IActionResult UpdateExecutor(int id)
         {
             var viewModel = new ExecutorViewModel();
@@ -759,6 +782,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult UpdateExecutor(ExecutorViewModel executorViewModels, int id, int statusId, int companyId, int projectId, int permissionId)
         {
             _userRepository.UpdateExecutor(executorViewModels, id, statusId, companyId, projectId, permissionId);
@@ -767,6 +791,7 @@ namespace ManagementCompany.Controllers
         }
 
         [HttpPost]
+        [AdminOnly]
         public IActionResult RemoveExecutor(int id)
         {
             _userRepository.Delete(id);

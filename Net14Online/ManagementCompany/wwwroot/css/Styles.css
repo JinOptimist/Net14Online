@@ -163,6 +163,19 @@ button {
     margin: 10px;
 }
 
+.article {
+    border: solid;
+    border-radius: 20px;
+    border-color: #00ff00;
+    margin: 10px;
+    padding: 10px;
+}
+
+.add-article {
+    margin: 5px;
+    padding: 10px;
+}
+
 .article-text {
     margin: 10px;
 }
