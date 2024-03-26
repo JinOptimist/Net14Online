@@ -121,6 +121,8 @@ builder.Services.AddScoped<MoviesBisinessService>();
 builder.Services.AddScoped<ReflectionService>();
 builder.Services.AddScoped<BookingBusinessService>();
 builder.Services.AddScoped<TeamService>();
+builder.Services.AddScoped<BookingHelperController>();
+builder.Services.AddScoped<BookingReflectionService>();
 
 builder.Services.AddScoped<HeroBusinessService>();
 

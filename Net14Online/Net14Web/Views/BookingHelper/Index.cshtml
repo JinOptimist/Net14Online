@@ -1,0 +1,19 @@
+﻿@using Net14Web.Models.BookingHelper
+@model BookingHelperViewModel;
+
+@foreach ( var method in Model.Methods){
+    <div>
+        @Model.Name
+    </div>
+    <div>
+     @method.Name
+     @method.MethodType
+     <div> 
+         @foreach (var parameters in method.Parameters ){
+                @parameters.Name
+                @parameters.TypeName
+            }
+        </div>
+
+    </div>
+};   

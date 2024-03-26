@@ -10,6 +10,7 @@ using Net14Web.Controllers.CustomAuthAttributes;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.BookingWeb;
 using Net14Web.DbStuff.Repositories.Booking;
+using Net14Web.Models.BookingHelper;
 using Net14Web.Models.BookingWeb;
 using Net14Web.Models.Dnd;
 using Net14Web.Services;
@@ -30,20 +31,24 @@ namespace Net14Web.Controllers
         private AuthService _authService;
         private BookingPermission _bookingPermission;
         public BookingBusinessService _bookingBusinessService;
+        private BookingHelperController _bookingHelperController;
         
         public BookingWebController (SearchRepository searchRepository, 
             LoginRepository loginRepository, 
             AuthService authService,
             BookingPermission bookingPermission,
             BookingBusinessService bookingBusinessService)
+            BookingPermission bookingPermission,
+            BookingHelperController bookingHelperController)
         {
             _searchRepository = searchRepository;
             _loginRepository = loginRepository;
             _authService = authService;
             _bookingPermission = bookingPermission;
             _bookingBusinessService = bookingBusinessService;
+            _bookingHelperController = bookingHelperController;
         }
-
+    
         public IActionResult CarRental()
         {
             return View();
