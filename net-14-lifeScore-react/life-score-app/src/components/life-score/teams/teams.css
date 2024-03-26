@@ -1,0 +1,7 @@
+.removeTeam{
+    color: red;
+}
+
+.teams{
+    display: flex;
+}

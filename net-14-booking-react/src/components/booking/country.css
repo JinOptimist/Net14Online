@@ -1,4 +1,11 @@
 .remove{
     color: red;
     cursor: pointer;
+    display: flex;
+}
+.country{
+    width: 300px;
+    display: flex;
+    border: solid;
+    border-color: darkgray;
 }

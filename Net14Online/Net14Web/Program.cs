@@ -6,11 +6,18 @@ using Net14Web.Controllers;
 using Net14Web.CustomMiddlewares;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Repositories;
+using Net14Web.DbStuff.Repositories.Booking;
+using Net14Web.DbStuff.Repositories.GameShop;
+using Net14Web.DbStuff.Repositories.LifeScore;
+using Net14Web.DbStuff.Repositories.Movies;
+using Net14Web.DbStuff.Repositories.PcShop;
+using Net14Web.DbStuff.Repositories.TaskTracker;
 using Net14Web.Services;
 using Net14Web.Services.BondServices;
 using Net14Web.Services.BookingPermissons;
 using Net14Web.Services.DndServices;
 using Net14Web.Services.GameShop;
+using Net14Web.Services.LifeScore;
 using Net14Web.Services.Movies;
 using Net14Web.Services.Movies.Permissions;
 using Net14Web.Services.Sattelite;
@@ -88,6 +95,7 @@ Assembly
         && x.BaseType.GetGenericTypeDefinition() == typeOfBaseRepository)
     .ToList()
     .ForEach(repositoryType => builder.Services.AddScoped(repositoryType));
+builder.Services.AddScoped<TeamRepository>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
@@ -112,6 +120,7 @@ builder.Services.AddScoped<CouponPermissions>();
 builder.Services.AddScoped<MoviesBisinessService>();
 builder.Services.AddScoped<ReflectionService>();
 builder.Services.AddScoped<BookingBusinessService>();
+builder.Services.AddScoped<TeamService>();
 builder.Services.AddScoped<BookingHelperController>();
 builder.Services.AddScoped<BookingReflectionService>();
 

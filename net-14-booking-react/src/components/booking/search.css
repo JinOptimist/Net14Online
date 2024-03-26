@@ -4,10 +4,26 @@
     padding: 5px;
     margin: 5px;
     width: 300px;
-    display: flex;
+    display: block;
+    justify-content: center;
 }
 .toggle-details{
     cursor: pointer;
     font-size:xx-large;
     font-weight: 300;
+    margin-left: 3px;
+}
+.id{
+    padding: 5px;
+    margin: 5px;
+    width: 300px;
+    display: block;
+    justify-content: center;  
+}
+.remove{
+    padding: 5px;
+    margin: 5px;
+    width: 300px;
+    display: block;
+    justify-content: center;
 }

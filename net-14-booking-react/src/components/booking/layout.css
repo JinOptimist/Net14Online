@@ -1,10 +1,11 @@
 .header{
     height: 50px;
-    display: flex;
+    background-color: rgb(175, 200, 220);
+    margin: 10px;
+    justify-content: center;
+    text-align: center;
+    font-size: large;
 }
 .header a{
-padding: 10px, 10px, 10px,10px;
-background-color: rgb(190, 201, 210);
-height: 50px;
-margin: 10px;
+    padding: 10px;
 }

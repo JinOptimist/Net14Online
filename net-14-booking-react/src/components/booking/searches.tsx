@@ -10,12 +10,14 @@ const Searches = () => {
         {
             id:1,
             country: 'Italy',
-            isFullDetails: false
+            isFullDetails: false,
+            city:'Rome'
         },
         {
             id:2,
             country: 'Spain',
-            isFullDetails: false
+            isFullDetails: false,
+            city: 'Madrid'
         }
     ]);    
     
@@ -28,8 +30,9 @@ const Searches = () => {
     const onClickAddSearch = () => {
 		const newSearch = {
 			id: 3,
-			country: 'mmmmn',
-            isFullDetails: false
+			country: 'Germany',
+            isFullDetails: false,
+            city: 'Berlin'
 		}
 
 		setSearch(currentSearches => [...currentSearches, newSearch]);

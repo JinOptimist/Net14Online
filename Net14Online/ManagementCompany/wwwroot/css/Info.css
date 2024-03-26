@@ -1,0 +1,32 @@
+.controller-name {
+    font-size: 30px;
+}
+
+.method {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+    .method.None .method-name {
+        color: black;
+    }
+
+    .method.Get .method-name {
+        color: green;
+    }
+
+    .method.Post .method-name {
+        color: red;
+    }
+
+.method-name {
+    cursor: pointer;
+}
+
+.parameters {
+    display: none;
+}
+
+.parameter {
+    margin-left: 10px;
+}

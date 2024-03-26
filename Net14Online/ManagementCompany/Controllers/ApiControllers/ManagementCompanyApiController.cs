@@ -33,12 +33,13 @@ namespace ManagementCompany.Controllers.ApiControllers
             return _userBusinessService.GetUsers();
         }
 
-        public int AddExecutor(ExecutorViewModel viewModel)
+        public int AddExecutor([FromBody]ExecutorViewModel viewModel)
         {
             return _userBusinessService.AddExecutor(viewModel);
         }
 
-        public void DeleteExecutor(int id)
+        [Route("{id}")]
+        public void DeleteExecutor([FromRoute] int id)
         {
             _userBusinessService.DeleteExecutor(id);
         }
