@@ -40,7 +40,7 @@ namespace Net14Web.Controllers
             };
             _alertRepository.Add(alert);
 
-            await _alertHub.Clients.All.PushAlert(alertMessage);
+            await _alertHub.Clients.All.PushAlert(alertMessage, alert.Id);
             return View();
         }
     }

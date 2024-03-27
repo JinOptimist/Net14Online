@@ -2,6 +2,6 @@
 {
     public interface IAlertHub
     {
-        Task PushAlert(string message);
+        Task PushAlert(string message, int alertId);
     }
 }

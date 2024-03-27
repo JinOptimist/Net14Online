@@ -4,8 +4,8 @@
         .withUrl("/signlar-hubs/alert")
         .build();
 
-    hub.on('PushAlert', function (alertMessage) {
-        addAlertToPage(alertMessage);
+    hub.on('PushAlert', function (alertMessage, alertId) {
+        addAlertToPage(alertMessage, alertId);
     })
 
     hub.start();
@@ -21,7 +21,7 @@
         $.get('/api/alert/GetExistedAlerts')
             .then(function (alerts) {
                 alerts.forEach((alert) => {
-                    addAlertToPage(alert)
+                    addAlertToPage(alert.message, alert.alertId)
                 })
             });
     }
@@ -36,15 +36,19 @@
         $('body').append(alerts);
     }
 
-    function addAlertToPage(message) {
+    function addAlertToPage(message, alertId) {
         const newAlert = $('.alert.template').clone();
         newAlert.removeClass('template');
         newAlert.text(message);
         newAlert.click(onAlertClick);
+        newAlert.attr('id', alertId);
         $('.alerts').append(newAlert);
     }
 
     const onAlertClick = function () {
+        const alertId = $(this).attr('id');
+        $.get(`/api/alert/MarkAsReaded?alertId=${alertId}`);
+
         $(this).remove();
     }
 });

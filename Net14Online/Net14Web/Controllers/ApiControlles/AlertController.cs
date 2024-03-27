@@ -4,6 +4,7 @@ using Net14Web.Controllers.CustomAuthAttributes;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Repositories;
 using Net14Web.Hubs;
+using Net14Web.Models.Alerts;
 using Net14Web.Services;
 
 namespace Net14Web.Controllers.ApiControlles
@@ -21,17 +22,22 @@ namespace Net14Web.Controllers.ApiControlles
             _authService = authService;
         }
 
-        public List<string> GetExistedAlerts()
+        public List<AlertShortInfoViewModel> GetExistedAlerts()
         {
-            if (!_authService.IsAuthenticated())
+            var userId = _authService.GetCurrentUserId();
+            if (!userId.HasValue)
             {
-                return new List<string>();
+                return new List<AlertShortInfoViewModel>();
             }
 
             return _alertRepository
-                .GetAll()
-                .Select(x => x.Message)
-                .ToList();
+                .GetUnseedAlerts(userId.Value);
+        }
+
+        public void MarkAsReaded(int alertId)
+        {
+            var user = _authService.GetCurrentUser();
+            _alertRepository.MarkAsReaded(alertId, user);
         }
     }
 }
