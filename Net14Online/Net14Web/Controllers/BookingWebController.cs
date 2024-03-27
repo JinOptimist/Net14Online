@@ -37,8 +37,7 @@ namespace Net14Web.Controllers
             LoginRepository loginRepository, 
             AuthService authService,
             BookingPermission bookingPermission,
-            BookingBusinessService bookingBusinessService)
-            BookingPermission bookingPermission,
+            BookingBusinessService bookingBusinessService,
             BookingHelperController bookingHelperController)
         {
             _searchRepository = searchRepository;
