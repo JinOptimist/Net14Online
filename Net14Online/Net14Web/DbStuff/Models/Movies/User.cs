@@ -21,5 +21,8 @@ namespace Net14Web.DbStuff.Models.Movies
         public virtual List<Search>? Searches { get; set; }
 
         public virtual List<Bond> Bonds { get; set; }
+
+        public virtual List<Alert> SeenAlerts { get; set; }
+        public virtual List<Alert> CreatedAlerts { get; set; }
     }
 }

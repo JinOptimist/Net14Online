@@ -42,6 +42,7 @@ namespace Net14Web.DbStuff
         public DbSet<Player> Players { get; set; }
 
         public DbSet<ObjectDict> Sattelite { get; set; }
+        public DbSet<Alert> Alerts { get; set; }
 
         public WebDbContext(DbContextOptions<WebDbContext> options) : base(options) { }
 
@@ -113,6 +114,15 @@ namespace Net14Web.DbStuff
                 .HasMany(user => user.Bonds)
                 .WithOne(bond => bond.Owner)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Alert>()
+                .HasMany(user => user.NotifiedUsers)
+                .WithMany(alert => alert.SeenAlerts);
+
+            builder.Entity<Alert>()
+               .HasOne(user => user.Creater)
+               .WithMany(alert => alert.CreatedAlerts)
+               .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

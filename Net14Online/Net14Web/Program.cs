@@ -12,6 +12,7 @@ using Net14Web.DbStuff.Repositories.LifeScore;
 using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.DbStuff.Repositories.PcShop;
 using Net14Web.DbStuff.Repositories.TaskTracker;
+using Net14Web.Hubs;
 using Net14Web.Services;
 using Net14Web.Services.BondServices;
 using Net14Web.Services.BookingPermissons;
@@ -59,13 +60,7 @@ builder.Services.AddCors(option =>
     });
 });
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-//})
-//    .AddCookie()
-
+builder.Services.AddSignalR();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -154,6 +149,8 @@ app.UseAuthentication(); // Who I am?
 app.UseAuthorization(); // May I?
 
 app.UseMiddleware<CustomLocalizationMiddleware>();
+
+app.MapHub<AlertHub>("/signlar-hubs/alert");
 
 app.MapControllerRoute(
     name: "default",

@@ -3,6 +3,8 @@
 <head>
     @RenderSection("Style", false)
     @RenderSection("Script", false)
+
+    @await Html.PartialAsync("_AlertPartial")
 </head>
 <body>
     <header>ONLY FOR DND</header>
