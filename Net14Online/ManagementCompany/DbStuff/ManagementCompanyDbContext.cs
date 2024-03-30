@@ -21,7 +21,9 @@ namespace ManagementCompany.DbStuff
 
         public DbSet<Article> Articles { get; set; }
 
-        public ManagementCompanyDbContext(DbContextOptions<ManagementCompanyDbContext> options) : base(options) 
+        public DbSet<Alert> Alerts { get; set; }
+
+        public ManagementCompanyDbContext(DbContextOptions<ManagementCompanyDbContext> options) : base(options)
         {
             Database.EnsureCreated();
         }
@@ -109,18 +111,30 @@ namespace ManagementCompany.DbStuff
                 .HasOne(u => u.Company)
                 .WithMany(p => p.Executors)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .Entity<User>()
+                .HasMany(u => u.CreatedTasks)
+                .WithOne(p => p.Author)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .Entity<User>()
+                .HasMany(u => u.ExecutedTasks)
+                .WithOne(p => p.Executor)
+                .OnDelete(DeleteBehavior.NoAction);
             #endregion
             #region Task
             builder
                 .Entity<UserTask>()
                 .HasOne(user => user.Author)
-                .WithMany(task => task.UserCreatedTasks)
+                .WithMany(task => task.CreatedTasks)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .Entity<UserTask>()
                 .HasOne(user => user.Executor)
-                .WithMany(task => task.UserExecutedTasks)
+                .WithMany(task => task.ExecutedTasks)
                 .OnDelete(DeleteBehavior.NoAction);
             #endregion
             #region TaskStatus
@@ -129,13 +143,25 @@ namespace ManagementCompany.DbStuff
                 .HasIndex(uts => uts.Status)
                 .IsUnique();
             #endregion
-
+            #region Article
             builder
                 .Entity<Article>()
                 .HasOne(a => a.Author)
                 .WithMany(u => u.Articles)
                 .OnDelete(DeleteBehavior.NoAction);
+            #endregion
+            #region Alerts
+            builder
+                .Entity<Alert>()
+                .HasMany(a => a.NotifiedUsers)
+                .WithMany(u => u.SeenAlerts);
 
+            builder
+                .Entity<Alert>()
+                .HasOne(a => a.Author)
+                .WithMany(u => u.CreatedAlerts)
+                .OnDelete(DeleteBehavior.NoAction);
+            #endregion
         }
     }
 }

@@ -2,6 +2,7 @@ using ManagementCompany.BusinessServices;
 using ManagementCompany.Controllers;
 using ManagementCompany.DbStuff;
 using ManagementCompany.DbStuff.Repositories;
+using ManagementCompany.Hubs;
 using ManagementCompany.Services;
 using ManagementCompany.SignalRHubs;
 using Microsoft.EntityFrameworkCore;
@@ -35,8 +36,9 @@ var connStringManagementCompany = builder.Configuration.GetConnectionString("Man
 
 builder.Services.AddDbContext<ManagementCompanyDbContext>(x => x.UseSqlServer(connStringManagementCompany));
 
-// Repositories
 builder.Services.AddSignalR();
+
+// Repositories
 builder.Services.AddScoped<TaskStatusRepository>();
 builder.Services.AddScoped<CompanyRepository>();
 builder.Services.AddScoped<ProjectRepository>();
@@ -45,6 +47,7 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserTaskRepository>();
 builder.Services.AddScoped<MemberPermissionRepository>();
 builder.Services.AddScoped<MemberStatusRepository>();
+builder.Services.AddScoped<AlertRepository>();
 
 // Services
 builder.Services.AddScoped<CreateFilePathHelper>();
@@ -78,6 +81,7 @@ app.UseAuthentication(); // Who I am?
 app.UseAuthorization(); // May I?
 
 app.MapHub<BlogHub>("/Blog");
+app.MapHub<AlertHub>("/signalr-hubs/alert");
 
 //app.MapGet("/", () => "Hello World!");
 

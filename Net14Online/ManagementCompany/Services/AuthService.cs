@@ -1,4 +1,5 @@
 ﻿using ManagementCompany.DbStuff.Models;
+using ManagementCompany.DbStuff.Models.Enums;
 using ManagementCompany.DbStuff.Repositories;
 
 namespace ManagementCompany.Services
@@ -55,7 +56,12 @@ namespace ManagementCompany.Services
 
         public bool IsAdmin()
         {
-            return GetCurrentUserName() == "admin";
+            return GetCurrentUserName() == MemberPermissionEnum.SuperAdmin.ToString();
+        }
+
+        public bool IsAuthenticated()
+        {
+            return GetCurrentUserId() != null;
         }
 
         public User GetCurrentMcUser()
