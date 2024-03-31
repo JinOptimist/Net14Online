@@ -34,7 +34,7 @@ namespace ManagementCompany.Controllers
             var lastAlerts = _alertRepository.GetLastAlerts();
 
             var viewModel = new AddAlertViewModel();
-            viewModel.IsSuperAdmin = _authService.IsAdmin();
+            viewModel.IsSuperAdmin = _authService.IsSuperAdmin();
 
             viewModel.LastAlerts = lastAlerts
                 .Select(lastAlert => new AlertViewModel
@@ -75,7 +75,7 @@ namespace ManagementCompany.Controllers
 
             await _alertHubContext.Clients.All.PushAlertAsync(message, date, alert.Id);
 
-            viewModel.IsSuperAdmin = _authService.IsAdmin();
+            viewModel.IsSuperAdmin = _authService.IsSuperAdmin();
 
             return View(viewModel);
         }
