@@ -32,9 +32,25 @@ namespace ManagementCompany.DbStuff.Repositories
 
         public void MarkAsRead(User user, int alertId)
         {
+            var nonValidAlerts = _entities
+                .Include(x => x.Author)
+                .Include(u => u.NotifiedUsers)
+                .Where(alert => !alert
+                .NotifiedUsers
+                .Any(notifiedUser => notifiedUser.Id == user.Id))
+                .Where(x => x.ExpireDate < DateTime.Now)
+                .ToList();
+
+            foreach (var nonValidAlert in nonValidAlerts)
+            {
+                nonValidAlert.NotifiedUsers.Add(user);
+                _context.SaveChanges();
+            }
+
             var alert = GetById(alertId);
             alert.NotifiedUsers.Add(user);
             alert.IsRead = true;
+
             _context.SaveChanges();
         }
 
@@ -58,20 +74,6 @@ namespace ManagementCompany.DbStuff.Repositories
                 })
                 .ToList();
 
-            //var nonValidAlerts = _entities
-            //    .Include(x => x.Author)
-            //    .Where(alert => !alert
-            //    .NotifiedUsers
-            //    .Any(notifiedUser => notifiedUser.Id == userId))
-            //    .Where(x => x.ExpireDate < DateTime.Now)
-            //    .Select(x => new AlertViewModel
-            //    {
-            //        AlertId = x.Id,
-            //        Message = x.Message,
-            //    })
-            //    .ToList();
-
-            //return alerts.Concat(nonValidAlerts).ToList*();
             return alerts;
         }
 

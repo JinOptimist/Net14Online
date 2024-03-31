@@ -44,3 +44,7 @@
     cursor: pointer;
     color: red;
 }
+
+.separator-info-alert {
+    color: forestgreen;
+}

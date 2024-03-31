@@ -7,11 +7,8 @@
             .attr('data-id');
         $.get(`/api/alert/DeleteAlert?alertId=${alertId}`);
 
-        const alertNotice = $(".alerts");
-        const alertById = alertNotice.find(`#${alertId}`);
+        const noticeAlert = $(".alerts").find(`#${alertId}`);
         alert.remove();
-        alertById.remove();
-
-        $.get(`/api/alert/DeleteAlert?alertId=${alertId}`);
+        noticeAlert.remove();
     });
 });

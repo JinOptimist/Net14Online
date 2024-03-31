@@ -39,11 +39,5 @@ namespace ManagementCompany.Controllers.ApiControllers
         {
             _alertRepository.Delete(alertId);
         }
-
-        //public List<AlertViewModel> GetLastAlerts()
-        //{
-
-        //    var lastAlerts = _alertRepository.GetLastAlerts();
-        //}
     }
 }
