@@ -1,0 +1,50 @@
+﻿@using ManagementCompany.Models.Alerts
+@model AddAlertViewModel
+
+@{
+    Layout = "_LayoutManagementCompany";
+}
+
+@section Style
+{
+    <link href="~/css/ManagementCompany.css" rel="stylesheet" />
+    <link href="~/css/alerts.css" rel="stylesheet" />
+}
+
+@section Script
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/alertManage.js"></script>
+}
+
+<div class="alert-container">
+    <div>
+        <h3>Add Alert</h3>
+        <form method="post">
+            <div>
+                <label for="message">Alert message: </label>
+                <input type="text" name="message" />
+            </div>
+            <div>
+                <label for="date">Expire date: </label>
+                <input type="date" name="date" />
+            </div>
+            <div>
+                <label for="push">Add alert: </label>
+                <input class="add-alert-button" name="push" type="submit" value="confirm" />
+            </div>
+        </form>
+        <div class="last-alerts-list">
+            @foreach (var alert in Model.LastAlerts)
+            {
+                <div class="last-alert-block" data-id="@alert.AlertId">
+                    @alert.Message <span class="separator-info-alert"> || </span> @alert.CreationDate  <span class="separator-info-alert"> |||| </span>
+                    @if (Model.IsSuperAdmin)
+                    {
+                        <span class="remove-alert">remove</span>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
