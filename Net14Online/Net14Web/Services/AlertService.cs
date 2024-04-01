@@ -81,10 +81,17 @@ namespace Net14Web.Services
                     var lastMounthDayForAlert = DateTime.DaysInMonth(alertCreateDate.Year, alertCreateDate.Month);
                     var lastMounthDay = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
 
+                    var days = lastMounthDayForAlert - alertCreateDate.Day;
+
+                    var numberOfDayEnd = alertDayOf - days;
+                    if(DateTime.Now.Day >= numberOfDayEnd)
+                    {
+                        return true;
+                    }
 
                 }
             }
-            return true;
+            return false;
         }
     }
 }
