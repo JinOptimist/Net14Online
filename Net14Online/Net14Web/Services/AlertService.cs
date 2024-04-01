@@ -20,10 +20,11 @@ namespace Net14Web.Services
         {
             var userAlerts = _alertRepository.GetUnseedAlerts(userId);
             var alertsForShow = new List<AlertShortInfoViewModel>();
+            var today = DateTime.Now.Day;
             foreach (var alert in userAlerts)
             {
                 var lastDay = alert.CreateDate.Day + alert.DaysOfLive;
-                var today = DateTime.Now.Day;
+                
 
                 if (lastDay >= today || alert.IsActualAlert)
                 {
