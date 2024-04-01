@@ -63,5 +63,24 @@ namespace Net14Web.Services
         {
             _alertRepository.MarkAsReaded(alertId, user);
         }
+
+        private bool CheckDate(DateTime alertCreateDate, int alertDayOf, int today)
+        {
+            if (DateTime.Now.Month == alertCreateDate.Month)
+            {
+                var lastDay = alertCreateDate.Day + alertDayOf;
+                if (lastDay >= today)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                var allMounthDayForAlert = DateTime.DaysInMonth(alertCreateDate.Year, alertCreateDate.Month);
+                var allMounthDay = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+
+            }
+            return true;
+        }
     }
 }
