@@ -23,7 +23,9 @@ namespace Net14Web.Services
             foreach (var alert in userAlerts)
             {
                 var lastDay = alert.CreateDate.Day + alert.DaysOfLive;
-                if (lastDay >= alert.CreateDate.Day)
+                var today = DateTime.Now.Day;
+
+                if (lastDay >= today || alert.IsActualAlert)
                 {
                     var alertViewModel = new AlertShortInfoViewModel
                     {
