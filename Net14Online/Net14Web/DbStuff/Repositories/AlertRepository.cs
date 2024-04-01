@@ -12,9 +12,11 @@ namespace Net14Web.DbStuff.Repositories
         public List<AlertShortInfoViewModel> GetUnseedAlerts(int userId)
         {
             return _entyties
+                .Where(x => x.IsActive)
                 .Where(alert => !alert
                     .NotifiedUsers
-                    .Any(notifiedUsers => notifiedUsers.Id == userId))
+                    .Any(notifiedUsers => notifiedUsers.Id == userId)
+                    )
                 .Select(x => new AlertShortInfoViewModel
                 {
                     AlertId = x.Id,
@@ -31,6 +33,22 @@ namespace Net14Web.DbStuff.Repositories
 
             alert.NotifiedUsers.Add(user);
             _context.SaveChanges();
+        }
+
+        public int MarkAsReadedAllExpiredAlerts()
+        {
+            var expiredAlerts = _entyties
+                .Where(x => x.ExpiredDate < DateTime.Now)
+                .ToList();
+
+            foreach (var alert in expiredAlerts)
+            {
+                alert.IsActive = false;
+            }
+
+            _context.SaveChanges();
+
+            return expiredAlerts.Count();
         }
     }
 }

@@ -14,6 +14,7 @@ using Net14Web.DbStuff.Repositories.PcShop;
 using Net14Web.DbStuff.Repositories.TaskTracker;
 using Net14Web.Hubs;
 using Net14Web.Services;
+using Net14Web.Services.BackgroundServices;
 using Net14Web.Services.BondServices;
 using Net14Web.Services.BookingPermissons;
 using Net14Web.Services.DndServices;
@@ -26,6 +27,8 @@ using Net14Web.Services.TaskTrackerServices;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHostedService<AlertHousekeeper>();
 
 builder.Services
     .AddAuthentication(options =>
@@ -90,7 +93,7 @@ Assembly
         && x.BaseType.GetGenericTypeDefinition() == typeOfBaseRepository)
     .ToList()
     .ForEach(repositoryType => builder.Services.AddScoped(repositoryType));
-builder.Services.AddScoped<TeamRepository>();
+//builder.Services.AddScoped<TeamRepository>();
 
 // Services
 builder.Services.AddScoped<CommentBuilder>();
