@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ITeam } from "../../../models/ITeam";
 import '../teams/teams.css';
 import Team from "../team/team";
 import { Link } from "react-router-dom";
+import lifeScoreApi from "../../../services/lifeScoreApi";
 
 const Teams = () => {
+    const { getTeams } = lifeScoreApi;
     const [Teams, setTeams] = useState<ITeam[]>([
         {
             id: 1,
@@ -15,6 +17,14 @@ const Teams = () => {
             name: 'Mogilev'
         }
     ]);
+
+    useEffect(() => {
+		getTeams()
+			.then(({ data }) => {
+				setTeams(data as ITeam[])
+			})
+	}, []);
+
     const onAddNewTeam = () => {
         const newTeam = {
             id: 4,
@@ -41,7 +51,7 @@ const Teams = () => {
            
             <div className="teams">
                 {Teams.map(team=>(
-                    <Team team = {team} isFullDetails={true} onRemove={removeTeam}></Team>
+                    <Team team = {team} isFullDetails={true} onRemove={removeTeam} key={team.id}></Team>
                 ))}
             </div>
         </div>
