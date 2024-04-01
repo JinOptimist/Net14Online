@@ -66,19 +66,23 @@ namespace Net14Web.Services
 
         private bool CheckDate(DateTime alertCreateDate, int alertDayOf, int today)
         {
-            if (DateTime.Now.Month == alertCreateDate.Month)
+            if (DateTime.Now.Year == alertCreateDate.Year)
             {
-                var lastDay = alertCreateDate.Day + alertDayOf;
-                if (lastDay >= today)
+                if (DateTime.Now.Month == alertCreateDate.Month)
                 {
-                    return true;
+                    var lastDay = alertCreateDate.Day + alertDayOf;
+                    if (lastDay >= today)
+                    {
+                        return true;
+                    }
                 }
-            }
-            else
-            {
-                var allMounthDayForAlert = DateTime.DaysInMonth(alertCreateDate.Year, alertCreateDate.Month);
-                var allMounthDay = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+                else
+                {
+                    var lastMounthDayForAlert = DateTime.DaysInMonth(alertCreateDate.Year, alertCreateDate.Month);
+                    var lastMounthDay = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
 
+
+                }
             }
             return true;
         }
