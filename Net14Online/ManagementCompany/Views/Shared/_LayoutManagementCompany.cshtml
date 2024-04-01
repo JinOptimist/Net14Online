@@ -3,6 +3,11 @@
 <head>
     @RenderSection("Style", false)
     @RenderSection("Script", false)
+    <link href="~/css/ManagementCompany.css" rel="stylesheet" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    @await Html.PartialAsync("_AlertPartial")
 </head>
 <body>
     <main>

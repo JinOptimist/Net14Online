@@ -1,0 +1,50 @@
+.alerts {
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+    width: 200px;
+    font-size:24px;
+}
+
+.alert {
+    border: solid;
+    border-color: green;
+    border-radius: 10px;
+    background-color: yellow;
+    margin: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+    .alert.template {
+        display: none;
+    }
+
+.alert-container{
+    margin: 10px;
+    padding: 10px;
+}
+
+.alert-container div {
+    margin: 10px;
+    padding: 10px;
+}
+.add-alert-button {
+    padding: 5px;
+    background-color: #2aff00;
+    font-size: 18px;
+    border-radius: 20px;
+}
+
+.last-alert-block {
+    display: flex;
+}
+
+.remove-alert{
+    cursor: pointer;
+    color: red;
+}
+
+.separator-info-alert {
+    color: forestgreen;
+}

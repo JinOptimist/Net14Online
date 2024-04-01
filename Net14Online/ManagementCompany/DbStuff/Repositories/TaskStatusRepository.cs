@@ -7,13 +7,13 @@ namespace ManagementCompany.DbStuff.Repositories
     {
         public TaskStatusRepository(ManagementCompanyDbContext context) : base(context) { }
 
-        public void UpdateStatus(StatusViewModel viewModel, int id)
-        {
-            var status = _context.TaskStatuses.Single(x => x.Id == id);
+        //public void UpdateStatus(StatusViewModel viewModel, int id)
+        //{
+        //    var status = _context.TaskStatuses.Single(x => x.Id == id);
 
-            status.Status = viewModel.Status;
+        //    status.Status = viewModel.Status;
 
-            _context.SaveChanges();
-        }
+        //    _context.SaveChanges();
+        //}
     }
 }
