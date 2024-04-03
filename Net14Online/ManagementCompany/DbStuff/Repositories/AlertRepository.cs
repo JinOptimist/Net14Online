@@ -51,7 +51,7 @@ namespace ManagementCompany.DbStuff.Repositories
         {
             var alerts = _entities
                 .Include(x => x.Author)
-                .Where(x => x.IsRead)
+                .Where(x => x.IsActive)
                 .Where(alert => !alert
                 .NotifiedUsers
                 .Any(notifiedUser => notifiedUser.Id == userId))
@@ -76,13 +76,13 @@ namespace ManagementCompany.DbStuff.Repositories
         public int MarkAsReadAllExpiredAlerts()
         {
             var markOnReadAlerts = _entities
-                .Where(x => x.IsRead)
+                .Where(x => x.IsActive)
                 .Where(x => x.ExpireDate < DateTime.Now)
                 .ToList();
 
             foreach (var alert in markOnReadAlerts)
             {
-                alert.IsRead = false;
+                alert.IsActive = false;
             }
             _context.SaveChanges();
 
