@@ -4,7 +4,9 @@
 @section Script {
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="~/js/home/chat.js"></script>
+    <script src="~/js/home/chart.js"></script>
 }
 
 @section Style
@@ -20,7 +22,20 @@
     <div>
         @Model.MathFactAboutNumber
     </div>
-    <img src="@Model.DogUrl" />
+    <img class="nice-dog" src="@Model.DogUrl" />
+    <div>
+        Погода для
+        <select class="place-for-weather">
+            <option value="">Там где я</option>
+            <option selected value="[53.53, 27.34]">Минск</option>
+            <option value="[52.05, 23.40]">Брест</option>
+            <option value="[52.26, 31.00]">Гомель</option>
+            <option value="[53.40, 23.49]">Гродно</option>
+            <option value="[35.42, 139.36]">Токио</option>
+            <option value="[59.57, 30.19]">Питер</option>
+        </select>
+    </div>
+    <div id="weatherChart"></div>
     <div>
         Сейчас @Model.WeatherViewModel.TemperatureNow градусов
        <div>

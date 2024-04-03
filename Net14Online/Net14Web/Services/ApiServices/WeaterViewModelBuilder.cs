@@ -8,7 +8,12 @@ namespace Net14Web.Services.ApiServices
         {
             var viewModel = new WeatherViewModel();
             viewModel.TemperatureNow = dto.current.temperature_2m;
-            viewModel.TemperaturesFor24Hours = dto.hourly.temperature_2m;
+            viewModel.TemperaturesFor24Hours = dto
+                .hourly
+                .temperature_2m
+                .Take(24)
+                .ToList();
+
             return viewModel;
         }
     }
