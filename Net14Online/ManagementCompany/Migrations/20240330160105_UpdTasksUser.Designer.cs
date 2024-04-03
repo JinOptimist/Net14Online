@@ -4,6 +4,7 @@ using ManagementCompany.DbStuff;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ManagementCompany.Migrations.ManagmentCompanyDb
 {
     [DbContext(typeof(ManagementCompanyDbContext))]
-    partial class ManagmentCompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240330160105_UpdTasksUser")]
+    partial class UpdTasksUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("SeenAlertsId");
 
-                    b.ToTable("AlertUser", (string)null);
+                    b.ToTable("AlertUser");
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.Alert", b =>
@@ -68,7 +71,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Alerts", (string)null);
+                    b.ToTable("Alerts");
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.Article", b =>
@@ -106,7 +109,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Articles", (string)null);
+                    b.ToTable("Articles");
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.Comment", b =>
@@ -130,7 +133,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("ArticleId");
 
-                    b.ToTable("Comment", (string)null);
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.Company", b =>
@@ -178,7 +181,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Companies", (string)null);
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.MemberPermission", b =>
@@ -204,7 +207,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                         .IsUnique()
                         .HasFilter("[Permission] IS NOT NULL");
 
-                    b.ToTable("MemberPermissions", (string)null);
+                    b.ToTable("MemberPermissions");
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.MemberStatus", b =>
@@ -230,7 +233,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                         .IsUnique()
                         .HasFilter("[Status] IS NOT NULL");
 
-                    b.ToTable("MemberStatuses", (string)null);
+                    b.ToTable("MemberStatuses");
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.Project", b =>
@@ -273,7 +276,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.User", b =>
@@ -339,7 +342,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.UserTask", b =>
@@ -386,7 +389,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("UserTasks", (string)null);
+                    b.ToTable("UserTasks");
                 });
 
             modelBuilder.Entity("ManagementCompany.DbStuff.Models.UserTaskStatus", b =>
@@ -412,7 +415,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
                     b.HasIndex("Status")
                         .IsUnique();
 
-                    b.ToTable("TaskStatuses", (string)null);
+                    b.ToTable("TaskStatuses");
                 });
 
             modelBuilder.Entity("ProjectUser", b =>
@@ -427,7 +430,7 @@ namespace ManagementCompany.Migrations.ManagmentCompanyDb
 
                     b.HasIndex("ProjectsId");
 
-                    b.ToTable("ProjectUser", (string)null);
+                    b.ToTable("ProjectUser");
                 });
 
             modelBuilder.Entity("AlertUser", b =>

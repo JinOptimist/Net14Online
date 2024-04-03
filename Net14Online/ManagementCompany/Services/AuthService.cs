@@ -1,4 +1,5 @@
 ﻿using ManagementCompany.DbStuff.Models;
+using ManagementCompany.DbStuff.Models.Enums;
 using ManagementCompany.DbStuff.Repositories;
 
 namespace ManagementCompany.Services
@@ -43,7 +44,7 @@ namespace ManagementCompany.Services
             return id;
         }
 
-        public string GetCurrentUserName()
+        public string GetCurrentPermissionName()
         {
             return _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "permissionName")?.Value ?? "Гость";
         }
@@ -53,9 +54,34 @@ namespace ManagementCompany.Services
             return _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "nickName")?.Value ?? "Гость";
         }
 
+        public bool IsSuperAdmin()
+        {
+            return GetCurrentPermissionName() == MemberPermissionEnum.SuperAdmin.ToString();
+        }
+
         public bool IsAdmin()
         {
-            return GetCurrentUserName() == "admin";
+            return GetCurrentPermissionName() == MemberPermissionEnum.Admin.ToString();
+        }
+
+        public bool IsExecutor()
+        {
+            return GetCurrentPermissionName() == MemberPermissionEnum.Executor.ToString();
+        }
+
+        public bool IsManager()
+        {
+            return GetCurrentPermissionName() == MemberPermissionEnum.Manager.ToString();
+        }
+
+        public bool IsUser()
+        {
+            return GetCurrentPermissionName() == MemberPermissionEnum.User.ToString();
+        }
+
+        public bool IsAuthenticated()
+        {
+            return GetCurrentUserId() != null;
         }
 
         public User GetCurrentMcUser()

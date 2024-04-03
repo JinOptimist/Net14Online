@@ -13,7 +13,23 @@
 }
 
 <div>
-    Smile!
+    Smile! Интересный факт о числе @Model.Number 
+    <div>
+        @Model.FactAboutNumber
+    </div>
+    <div>
+        @Model.MathFactAboutNumber
+    </div>
+    <img src="@Model.DogUrl" />
+    <div>
+        Сейчас @Model.WeatherViewModel.TemperatureNow градусов
+       <div>
+            @for (int i = 0; i < 24; i++)
+            {
+                <div class="temperature">В @i часов @Model.WeatherViewModel.TemperaturesFor24Hours[i]</div>
+            }
+       </div>
+    </div>
     @if (User.Identity.IsAuthenticated)
     {
         <text>

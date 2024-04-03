@@ -9,7 +9,7 @@ namespace ManagementCompany.Controllers.CustomAuthAttributes
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var authService = context.HttpContext.RequestServices.GetService<AuthService>();
-            if (!authService.IsAdmin())
+            if (!authService.IsSuperAdmin())
             {
                 context.Result = new ForbidResult(AuthController.AUTH_KEY_MC);
             }
