@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Net14Web.Models.LifeScore;
 using Net14Web.Services.LifeScore;
 using GameViewModel = Net14Web.Models.LifeScore.GameViewModel;
@@ -7,7 +8,7 @@ namespace Net14Web.Controllers;
 
 public class LifeScoreController : Controller
 {
-    public static LifeScoreViewModel lifeScoreViewModel = new LifeScoreViewModel();
+    public static LifeScoreViewModel lifeScoreViewModel = new LifeScoreViewModel() { Teams = new List<TeamViewModel>(), Countries = new List<string>() ,Games = new List<GameViewModel>()};
     private readonly TeamService _teamService;
 
     public LifeScoreController(TeamService teamService)
@@ -17,10 +18,8 @@ public class LifeScoreController : Controller
 
     public IActionResult Index()
     {
-        if (lifeScoreViewModel == null)
-        {
             lifeScoreViewModel = InitializeLifeScoreViewModel(lifeScoreViewModel);
-        }
+       
         return View(lifeScoreViewModel);
     }
 
@@ -30,19 +29,19 @@ public class LifeScoreController : Controller
 
         lifeScoreViewModel.Teams = teams.Select(t => new TeamViewModel
         {
-             Country = t.Country,
-             Liga = t.Liga,
-             //Players = t.Players.Select(p=> new PlayerViewModel
-             //{
-             //    Assists = p.Assists,
-             //    FirstName = p.FirstName,
-             //    LastName = p.LastName,
-             //    Goals = p.Goals,
-             //    Id = p.Id,
-             //    Team = p.Team.Name
-             //}).ToList(),
-             ShortName = t.ShortName,
-             Name = t.Name,
+            Country = t.Country,
+            Liga = t.Liga,
+            //Players = t.Players.Select(p=> new PlayerViewModel
+            //{
+            //    Assists = p.Assists,
+            //    FirstName = p.FirstName,
+            //    LastName = p.LastName,
+            //    Goals = p.Goals,
+            //    Id = p.Id,
+            //    Team = p.Team.Name
+            //}).ToList(),
+            ShortName = t.ShortName,
+            Name = t.Name,
         }).ToList();
 
         return View(lifeScoreViewModel);
@@ -60,7 +59,7 @@ public class LifeScoreController : Controller
 
     public IActionResult Teams()
     {
-        return View();
+        return View(lifeScoreViewModel);
     }
 
     [HttpGet]
@@ -163,10 +162,22 @@ public class LifeScoreController : Controller
 
         };
 
-
         lifeScoreViewModel.Teams.Add(team1);
         lifeScoreViewModel.Teams.Add(team2);
         lifeScoreViewModel.Games.Add(team1.Games.First());
+
+        var teams = _teamService.GetTeams().Select(x => new TeamViewModel
+        {
+            Id = x.Id,
+            Country = x.Country,
+            Name = x.Name,
+            Liga = x.Liga,
+            ShortName = x.ShortName,
+        });
+        foreach (var team in teams)
+        {
+            lifeScoreViewModel.Teams.Add(team);
+        }
         return lifeScoreViewModel;
     }
 }

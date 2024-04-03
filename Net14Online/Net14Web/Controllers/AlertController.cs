@@ -12,15 +12,15 @@ namespace Net14Web.Controllers
     public class AlertController : Controller
     {
         private IHubContext<AlertHub, IAlertHub> _alertHub;
-        private AlertService _alertService;
+        private AlertRepository _alertRepository;
         private AuthService _authService;
 
         public AlertController(IHubContext<AlertHub, IAlertHub> alertHub,
-            AlertService alertService,
+            AlertRepository alertRepository,
             AuthService authService)
         {
             _alertHub = alertHub;
-            _alertService = alertService;
+            _alertRepository = alertRepository;
             _authService = authService;
         }
 
@@ -33,9 +33,14 @@ namespace Net14Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAlert(string alertMessage, int alertDay)
         {
-           var alertId = _alertService.Create(alertMessage, alertDay);
+            var alert = new Alert()
+            {
+                Creater = _authService.GetCurrentUser(),
+                Message = alertMessage,
+            };
+            _alertRepository.Add(alert);
 
-            await _alertHub.Clients.All.PushAlert(alertMessage, alertId);
+            await _alertHub.Clients.All.PushAlert(alertMessage, alert.Id);
             return View();
         }
     }

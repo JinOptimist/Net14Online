@@ -13,12 +13,16 @@ namespace Net14Web.Controllers.ApiControlles
     [Route("/api/alert/{action}")]
     public class AlertController : Controller
     {
-        private AlertService _alertService;
+        private IHubContext<AlertHub, IAlertHub> _alertHub;
+        private AlertRepository _alertRepository;
         private AuthService _authService;
 
-        public AlertController(AlertService alertService, AuthService authService)
+        public AlertController(IHubContext<AlertHub, IAlertHub> alertHub,
+            AlertRepository alertRepository,
+            AuthService authService)
         {
-            _alertService = alertService;
+            _alertHub = alertHub;
+            _alertRepository = alertRepository;
             _authService = authService;
         }
 
@@ -30,14 +34,14 @@ namespace Net14Web.Controllers.ApiControlles
                 return new List<AlertShortInfoViewModel>();
             }
 
-            return _alertService
+            return _alertRepository
                 .GetUnseedAlerts(userId.Value);
         }
 
         public void MarkAsReaded(int alertId)
         {
             var user = _authService.GetCurrentUser();
-            _alertService.MarkAsReaded(alertId, user);
+            _alertRepository.MarkAsReaded(alertId, user);
         }
     }
 }

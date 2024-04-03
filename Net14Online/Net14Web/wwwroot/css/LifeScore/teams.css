@@ -1,13 +1,5 @@
-﻿.table-header {
+﻿@import url('content-table.css');
+.table-content-team {
     display: flex;
-    width: 80%;
-    justify-content: space-around;
-    background-color: #F0F0F0;
-    border-radius: 10px;
-}
-
-.table-body-team {
-    display: flex;
-    width: 100%;
-    margin: 5px;
+    margin-bottom: 5px;
 }

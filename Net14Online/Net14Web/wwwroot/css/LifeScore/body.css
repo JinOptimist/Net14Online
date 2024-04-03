@@ -2,83 +2,42 @@
     display: unset;
     width: 800px;
     background-color: #F8F8F8;
-    margin:10px;
-    border-radius:20px;
+    border-radius: 20px;
+    margin-left: 20px;
+    background: linear-gradient(#8abff9,#222935);
 }
 
 .content-header {
     display: flex;
-   
-    height: 30px;
-    
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.content-header a {
+    font-size: 25px;
+    text-decoration: none;
+    padding: 10px 0;
 }
 
-.content-header-teams-table {
+content-header-text {
     width: 25%;
     height: 100%;
     border: 1px black solid;
     border-radius: 20px;
-    margin-left: 5px;
-    justify-content: center;
+}
+
+.content-header-text a {
     display: flex;
     align-items: center;
 }
 
-.content-header-teams-table:hover {
-    background-color: aquamarine;
-    border: none;
-}
+    content-header-text:hover {
+        background-color: aquamarine;
+        border: none;
+    }
 
-.content-header-results {
-    width: 25%;
-    height: 100%;
-    border: 1px black solid;
-    border-radius: 20px;
-    margin-left: 5px;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-}
 
-.content-header-results:hover {
-    background-color: aquamarine;
-    border:none;
-}
-
-.content-header-calendar {
-    width: 25%;
-    height: 100%;
-    border: 1px black solid;
-    border-radius: 20px;
-    margin-left: 5px;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-}
-
-.content-header-calendar:hover {
-    background-color: aquamarine;
-    border: none;
-}
-
-.content-header-teams {
-    width: 25%;
-    height: 100%;
-    border: 1px black solid;
-    border-radius: 20px;
-    margin-left: 5px;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-}
-
-.content-header-teams:hover {
-    background-color: aquamarine;
-    border: none;
-}
 
 .content-table {
-    margin: 20px;
     background-color: #F8F8F8;
 }
 

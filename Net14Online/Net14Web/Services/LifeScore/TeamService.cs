@@ -20,6 +20,12 @@ namespace Net14Web.Services.LifeScore
             return teams;
         }
 
+        public Team GetTeamByName(string name)
+        {
+            var team = _repository.GetTeamByName(name);
+            return team;
+        }
+
         public List<Team> GetTeamsByLiga(string liga)
         {
             var teams = _repository.GetTeamsByLiga(liga);

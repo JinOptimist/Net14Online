@@ -9,15 +9,18 @@ namespace Net14Web.DbStuff.Repositories
     {
         public AlertRepository(WebDbContext context) : base(context) { }
 
-        public List<Alert> GetUnseedAlerts(int userId)
+        public List<AlertShortInfoViewModel> GetUnseedAlerts(int userId)
         {
-            var alerts = _entyties
+            return _entyties
                 .Where(alert => !alert
                     .NotifiedUsers
-                    .Any(notifiedUsers => notifiedUsers.Id == userId) && alert.IsActualAlert == true)
-                    .ToList();
-
-            return alerts;
+                    .Any(notifiedUsers => notifiedUsers.Id == userId))
+                .Select(x => new AlertShortInfoViewModel
+                {
+                    AlertId = x.Id,
+                    Message = x.Message,
+                })
+                .ToList();
         }
 
         public void MarkAsReaded(int alertId, User user)

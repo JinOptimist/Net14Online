@@ -1,17 +1,19 @@
 ﻿@using Net14Web.Models.LifeScore
 @model LifeScoreViewModel
 
-
 @section Style
 {
     <link href="~/css/LifeScore/lifeScore.css" rel="stylesheet" />
-    <link href="~/css/LifeScore/header.css" rel="stylesheet" />
-    <link href="~/css/LifeScore/body.css" rel="stylesheet"/>
+    <link href="~/css/LifeScore/dropdown.css" rel="stylesheet" />
 }
 
-<div>
+@section Script {
+    <script src="~/js/lifeScore/dropdownList.js"></script>
+}
+
+<div class="main">
     <div class="header">
-        
+
         <div class="game1">
             <div class="game-head">
                 <div class="team-first-name">
@@ -19,7 +21,7 @@
                 </div>
                 <div class="game-score">
                     2 : 1
-                </div> 
+                </div>
                 <div class="team-second-name">
                     SLT
                 </div>
@@ -41,7 +43,7 @@
                     AVG
                 </div>
                 <div class="game-score">
-                    2 : 1   
+                    2 : 1
                 </div>
                 <div class="team-second-name">
                     SLT
@@ -58,59 +60,59 @@
             </div>
         </div>
         <div class="game3">
-
         </div>
     </div>
 
     <div class="body">
 
         <div class="countries">
-            список стран
         </div>
 
         <div class="sport-content">
             <div class="content-header">
-                <div class="content-header-teams-table">
+                <div class="content-header-text">
                     <a href="/LifeScore/TeamsTable">Таблица</a>
                 </div>
-                <div class="content-header-calendar">
+                <div class="content-header-text">
                     <a href="/LifeScore/Calendar">Календарь</a>
                 </div>
-                <div class="content-header-results">
+                <div class="content-header-text">
                     <a href="/LifeScore/Results">Результаты</a>
                 </div>
-                <div class="content-header-teams">
+                <div class="content-header-text">
                     <a href="/LifeScore/Teams">Команды</a>
                 </div>
             </div>
             <div class="content-table">
                 <div class="table-header">
-                    <div class="table-header-date">
+                    <div class="table-info">
                         Дата
                     </div>
-                    <div class="table-header-time">
+                    <div class="table-info">
                         Время
                     </div>
-                    <div class="table-header-teams">
+                    <div class="table-info">
                         Команды
                     </div>
-                    <div class="table-header-score">
+                    <div class="table-info">
                         Счет
                     </div>
                 </div>
                 <div class="table-body">
-                    <div class="game">
-                        <div class="game-date">
-                            28.04.2023
-                        </div>
-                        <div class="game-time">
-                            19.00
-                        </div>
-                        <div class="game-teams">
-                            Lions - Wolves
-                        </div>
-                        <div class="game-score">
-                            2 : 1
+                    <div class="table-content">
+                        <div class="table-content-team">
+                            <div class="table-content-data">
+                                28.04.2023
+                            </div>
+                            <div class="table-content-data">
+                                19.00
+                            </div>
+                            <div class="table-content-data">
+                                Lions - Wolves
+                            </div>
+                            <div class="table-content-data">
+                                2 : 1
+                            </div>
                         </div>
                     </div>
                 </div>

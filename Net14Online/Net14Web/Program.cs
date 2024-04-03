@@ -118,7 +118,7 @@ builder.Services.AddScoped<BookingBusinessService>();
 builder.Services.AddScoped<TeamService>();
 builder.Services.AddScoped<BookingHelperController>();
 builder.Services.AddScoped<BookingReflectionService>();
-builder.Services.AddScoped<AlertService>();
+builder.Services.AddScoped<SportGameService>();
 
 builder.Services.AddScoped<HeroBusinessService>();
 
@@ -149,7 +149,7 @@ app.UseRouting();
 app.UseAuthentication(); // Who I am?
 app.UseAuthorization(); // May I?
 
-app.UseMiddleware<CustomLocalizationMiddleware>();
+//app.UseMiddleware<CustomLocalizationMiddleware>();
 
 app.MapHub<AlertHub>("/signlar-hubs/alert");
 
