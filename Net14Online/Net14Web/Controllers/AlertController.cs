@@ -31,7 +31,7 @@ namespace Net14Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAlert(string alertMessage, int alertDay)
+        public async Task<IActionResult> CreateAlert(string alertMessage)
         {
             var alert = new Alert()
             {
