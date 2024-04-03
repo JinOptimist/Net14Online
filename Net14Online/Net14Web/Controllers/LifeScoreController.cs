@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Net14Web.Models.LifeScore;
+using Net14Web.Services.ApiServices;
 using Net14Web.Services.LifeScore;
 using GameViewModel = Net14Web.Models.LifeScore.GameViewModel;
 
@@ -10,16 +11,20 @@ public class LifeScoreController : Controller
 {
     public static LifeScoreViewModel lifeScoreViewModel = new LifeScoreViewModel() { Teams = new List<TeamViewModel>(), Countries = new List<string>() ,Games = new List<GameViewModel>()};
     private readonly TeamService _teamService;
+    private readonly LifeScoreApi _lifeScoreApi;
 
-    public LifeScoreController(TeamService teamService)
+    public LifeScoreController(TeamService teamService,
+        LifeScoreApi lifeScoreApi)
     {
         _teamService = teamService;
+        _lifeScoreApi = lifeScoreApi;
     }
 
     public IActionResult Index()
     {
             lifeScoreViewModel = InitializeLifeScoreViewModel(lifeScoreViewModel);
-       
+       var leagues = _lifeScoreApi.GetLeagues();
+            Task.WaitAll(leagues);
         return View(lifeScoreViewModel);
     }
 

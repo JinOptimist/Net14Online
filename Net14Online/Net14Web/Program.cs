@@ -144,6 +144,11 @@ builder.Services.AddHttpClient<WeatherApi>(client =>
     client.BaseAddress = new Uri("https://api.open-meteo.com");
 });
 
+builder.Services.AddHttpClient<LifeScoreApi>(client =>
+{
+    client.BaseAddress = new Uri("https://v1.hockey.api-sports.io");
+    client.DefaultRequestHeaders.Add("x-rapidapi-key", "0302ca66bc9ca7147423c17662465066");
+});
 
 builder.Services.AddHttpContextAccessor();
 
