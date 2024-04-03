@@ -1,3 +1,4 @@
+using ManagementCompany.BackgroundServices;
 using ManagementCompany.BusinessServices;
 using ManagementCompany.Controllers;
 using ManagementCompany.DbStuff;
@@ -28,6 +29,8 @@ builder.Services.AddCors(option =>
         policy.AllowCredentials();
     });
 });
+
+builder.Services.AddHostedService<AlertMaintenance>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

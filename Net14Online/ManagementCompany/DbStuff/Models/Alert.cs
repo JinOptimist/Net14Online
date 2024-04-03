@@ -6,7 +6,7 @@
 
         public DateTime ExpireDate { get; set; }
 
-        public bool IsRead { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual User? Author { get; set; }
 
