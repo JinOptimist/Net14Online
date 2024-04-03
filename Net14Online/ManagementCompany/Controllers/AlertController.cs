@@ -56,6 +56,7 @@ namespace ManagementCompany.Controllers
             {
                 Message = message,
                 ExpireDate = date,
+                IsRead = true,
                 Author = _authService.GetCurrentMcUser()
             };
 
