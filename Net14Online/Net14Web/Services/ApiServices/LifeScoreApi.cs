@@ -12,13 +12,12 @@ namespace Net14Web.Services.ApiServices
             _httpClient = httpClient;
         }
 
-        public async Task<List<LeagueDto?>> GetLeagues()
+        public async Task<string> GetLeagues()
         {
 
-             var res = await _httpClient.GetAsync("https://v1.hockey.api-sports.io/leagues");
+             var res = await _httpClient.GetFromJsonAsync<RootDto>($"/leagues");
 
-              // var leagues = JsonArray.Parse<List<LeagueDto>>(res.["response"]);
-            return new List<LeagueDto?>();
+            return "";
         }
     }
 }
