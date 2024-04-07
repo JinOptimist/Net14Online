@@ -1,4 +1,4 @@
-@model ApartamentsViewModel
+@model RealEstatesViewModel
 
 @{
     Layout = null;
@@ -6,10 +6,10 @@
 <div>
     <form method="post">
         <div>
-            @Html.DropDownList("apartmentOwnerId",Model.ApartamentOwners)
+            @Html.DropDownList("apartmentOwnerId",Model.RealEstateOwners)
         </div>
         <div>
-            @Html.DropDownList("apartamanetId",Model.Apartaments)
+            @Html.DropDownList("apartamanetId",Model.RealEstate)
         </div>
         <input type="submit" value="Связать"/>
     </form>

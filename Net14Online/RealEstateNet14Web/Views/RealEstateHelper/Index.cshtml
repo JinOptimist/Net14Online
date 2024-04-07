@@ -1,0 +1,24 @@
+@model RealEstateNet14Web.Models.RealEstateHelper.RealEstateHelperViewModels
+
+<div class="controller-container">
+    <div class="controller-name">
+        @Model.Name
+    </div>
+    
+    @foreach (var method in Model.Methods)
+    {
+        <div class="method-name">
+            @method.Name
+            @foreach (var parametr in method.Parameters)
+            {
+                <span class="parametr">
+                    @parametr.Name [@parametr.TypeName]
+                </span>
+            }
+        </div>
+    }
+</div>
+
+
+
+

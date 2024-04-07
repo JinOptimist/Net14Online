@@ -11,11 +11,11 @@ namespace RealEstateNet14Web.Controllers.Auth;
 public class AuthRealEstateController : Controller
 {
     public  const string AUTH_KEY_REAL_ESTATE = "RealEstateKey";
-    private ApartmentOwnerRepository _apartmentOwnerRepository;
+    private RealEstateOwnerRepository _realEstateOwnerRepository;
 
-    public AuthRealEstateController(ApartmentOwnerRepository apartmentOwnerRepository)
+    public AuthRealEstateController(RealEstateOwnerRepository realEstateOwnerRepository)
     {
-        _apartmentOwnerRepository = apartmentOwnerRepository;
+        _realEstateOwnerRepository = realEstateOwnerRepository;
     }
     [HttpGet]
     public IActionResult RealEstateLogin()
@@ -26,10 +26,10 @@ public class AuthRealEstateController : Controller
     [HttpPost]
     public IActionResult RealEstateLogin(AuthViewModel authViewModel)
     {
-        var apartmentOwner =
-            _apartmentOwnerRepository.GetUserByLoginAndPassword(authViewModel.UserName, authViewModel.Password);
+        var realEstateOwner =
+            _realEstateOwnerRepository.GetUserByLoginAndPassword(authViewModel.UserName, authViewModel.Password);
 
-        if (apartmentOwner == null)
+        if (realEstateOwner == null)
         {
             ModelState.AddModelError(nameof(AuthViewModel.UserName), "Wrong name or passwrod");
             return View(authViewModel);
@@ -37,9 +37,9 @@ public class AuthRealEstateController : Controller
 
         var claims = new List<Claim>
         {
-            new("id", apartmentOwner.Id.ToString()),
-            new("name", apartmentOwner.Login),
-            new("email", apartmentOwner.Email)
+            new("id", realEstateOwner.Id.ToString()),
+            new("name", realEstateOwner.Login),
+            new("email", realEstateOwner.Email)
         };
         
         var identity = new ClaimsIdentity(claims, AUTH_KEY_REAL_ESTATE);
@@ -48,12 +48,12 @@ public class AuthRealEstateController : Controller
             .SignInAsync(AUTH_KEY_REAL_ESTATE, principal)
             .Wait();
         
-        return RedirectToAction("DataBase","RealEstate");
+        return RedirectToAction("Main","RealEstate");
     }
 
     public IActionResult RealEstateLogout()
     {
         HttpContext.SignOutAsync().Wait();
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Main", "RealEstate");
     }
 }

@@ -4,7 +4,7 @@ namespace RealEstateNet14Web.Services;
 
 public class DeleteUser
 {
-    public ApartmentOwner UserDelete(List<ApartmentOwner> userViewModelsApartmentOwners,int id)
+    public RealEstateOwner UserDelete(List<RealEstateOwner> userViewModelsApartmentOwners,int id)
     {
         var deleteUser = userViewModelsApartmentOwners.First(x => x.Id == id);
         return deleteUser;

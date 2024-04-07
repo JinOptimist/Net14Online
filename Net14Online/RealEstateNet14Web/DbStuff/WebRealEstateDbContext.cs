@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using RealEstateNet14Web.DbStuff.Models;
 
 namespace RealEstateNet14Web.DbStuff;
@@ -18,7 +19,23 @@ public class WebRealEstateDbContext : DbContext
         options.UseNpgsql(Configuration.GetConnectionString("Net14WebRE"));
     }
     
-    public DbSet<ApartmentOwner> ApartmentOwners { get; set; } 
+    public DbSet<RealEstateOwner> RealEstateOwners { get; set; } 
     
-    public DbSet<Apartament> Apartaments { get; set; }
+    public DbSet<RealEstate> RealEstates { get; set; }
+    
+    public DbSet<Alert> Alerts { get; set; }
+    
+     protected override void OnModelCreating(ModelBuilder builder)
+     {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Alert>()
+                .HasMany(user => user.NotificatedRealEstateOwners)
+                .WithMany(alert => alert.SeenAlerts);
+
+            builder.Entity<Alert>()
+                .HasOne(user => user.Creator)
+                .WithMany(alert => alert.CreatedAlerts)
+                .OnDelete(DeleteBehavior.NoAction);
+     }
 }

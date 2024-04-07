@@ -4,8 +4,10 @@ using RealEstateNet14Web.CustomMiddlewares;
 using RealEstateNet14Web.Controllers.Auth;
 using RealEstateNet14Web.DbStuff;
 using RealEstateNet14Web.DbStuff.Repositories;
+using RealEstateNet14Web.Hubs;
 using RealEstateNet14Web.Services;
 using RealEstateNet14Web.Services.Auth;
+using RealEstateNet14Web.Services.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,7 @@ builder.Services.AddLocalization(options => options.ResourcesPath = "Resources")
 builder.Services.AddControllersWithViews()
     .AddViewLocalization();
 
+builder.Services.AddSignalR();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -38,15 +41,19 @@ var connectionStringRealEsate = builder.Configuration.GetConnectionString("Net14
 builder.Services.AddDbContext<WebRealEstateDbContext>(x => x.UseSqlServer(connectionStringRealEsate));
 
 // Repositories
-builder.Services.AddScoped<ApartmentOwnerRepository>();
-builder.Services.AddScoped<ApartamentRepository>();
+builder.Services.AddScoped<RealEstateOwnerRepository>();
+builder.Services.AddScoped<RealEstateRepository>();
+builder.Services.AddScoped<AlertRepository>();
 
 
 // Services
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<UpdateUser>();
 builder.Services.AddScoped<RealEstateAuthService>();
-builder.Services.AddScoped<ApartmentOwnerBuisnessService>();
+builder.Services.AddScoped<RealEstateOwnerBuisnessService>();
+builder.Services.AddScoped<ReflectionService>();
+builder.Services.AddScoped<GetRealEstate>();
+
 
 
 builder.Services.AddHttpContextAccessor();
@@ -63,8 +70,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseMiddleware<CustomLocalizationMiddleware>();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -72,6 +77,10 @@ app.UseRouting();
 
 app.UseAuthentication(); // Who I am?
 app.UseAuthorization(); // May I?
+
+app.UseMiddleware<CustomLocalizationMiddleware>();
+
+app.MapHub<AlertHub>("/hubs/alert");
 
 app.MapControllerRoute(
     name: "default",

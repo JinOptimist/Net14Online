@@ -1,0 +1,17 @@
+.alerts{
+    position: fixed;
+    bottom: 150px;
+    right: 150px;
+}
+
+.alert{
+    background-color: #e438d6;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
+.alert.template{
+    display: none;
+}
