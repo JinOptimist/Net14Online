@@ -2,18 +2,20 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RealEstateNet14Web.DbStuff;
 
 #nullable disable
 
-namespace Net14Web.MigrationsRealEstate
+namespace RealEstateNet14Web.MigrationsRealEstate
 {
     [DbContext(typeof(WebRealEstateDbContext))]
-    partial class WebDbContextRealEstateModelSnapshot : ModelSnapshot
+    [Migration("20240404093126_UpdateTableApartaments")]
+    partial class UpdateTableApartaments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,19 +24,19 @@ namespace Net14Web.MigrationsRealEstate
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AlertRealEstateOwner", b =>
+            modelBuilder.Entity("AlertApartmentOwner", b =>
                 {
-                    b.Property<int>("NotificatedRealEstateOwnersId")
+                    b.Property<int>("NotificatedApartmentOwnersId")
                         .HasColumnType("integer");
 
                     b.Property<int>("SeenAlertsId")
                         .HasColumnType("integer");
 
-                    b.HasKey("NotificatedRealEstateOwnersId", "SeenAlertsId");
+                    b.HasKey("NotificatedApartmentOwnersId", "SeenAlertsId");
 
                     b.HasIndex("SeenAlertsId");
 
-                    b.ToTable("AlertRealEstateOwner");
+                    b.ToTable("AlertApartmentOwner");
                 });
 
             modelBuilder.Entity("RealEstateNet14Web.DbStuff.Models.Alert", b =>
@@ -59,7 +61,7 @@ namespace Net14Web.MigrationsRealEstate
                     b.ToTable("Alerts");
                 });
 
-            modelBuilder.Entity("RealEstateNet14Web.DbStuff.Models.RealEstate", b =>
+            modelBuilder.Entity("RealEstateNet14Web.DbStuff.Models.Apartament", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,14 +69,14 @@ namespace Net14Web.MigrationsRealEstate
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("ApartmentOwnerId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("RealEstateOwnerId")
+                    b.Property<int?>("NumberApartament")
                         .HasColumnType("integer");
 
                     b.Property<int?>("Size")
@@ -88,18 +90,14 @@ namespace Net14Web.MigrationsRealEstate
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("TypeRealEstate")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("RealEstateOwnerId");
+                    b.HasIndex("ApartmentOwnerId");
 
-                    b.ToTable("RealEstates");
+                    b.ToTable("Apartaments");
                 });
 
-            modelBuilder.Entity("RealEstateNet14Web.DbStuff.Models.RealEstateOwner", b =>
+            modelBuilder.Entity("RealEstateNet14Web.DbStuff.Models.ApartmentOwner", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -129,14 +127,14 @@ namespace Net14Web.MigrationsRealEstate
 
                     b.HasKey("Id");
 
-                    b.ToTable("RealEstateOwners");
+                    b.ToTable("ApartmentOwners");
                 });
 
-            modelBuilder.Entity("AlertRealEstateOwner", b =>
+            modelBuilder.Entity("AlertApartmentOwner", b =>
                 {
-                    b.HasOne("RealEstateNet14Web.DbStuff.Models.RealEstateOwner", null)
+                    b.HasOne("RealEstateNet14Web.DbStuff.Models.ApartmentOwner", null)
                         .WithMany()
-                        .HasForeignKey("NotificatedRealEstateOwnersId")
+                        .HasForeignKey("NotificatedApartmentOwnersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -149,7 +147,7 @@ namespace Net14Web.MigrationsRealEstate
 
             modelBuilder.Entity("RealEstateNet14Web.DbStuff.Models.Alert", b =>
                 {
-                    b.HasOne("RealEstateNet14Web.DbStuff.Models.RealEstateOwner", "Creator")
+                    b.HasOne("RealEstateNet14Web.DbStuff.Models.ApartmentOwner", "Creator")
                         .WithMany("CreatedAlerts")
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -158,20 +156,20 @@ namespace Net14Web.MigrationsRealEstate
                     b.Navigation("Creator");
                 });
 
-            modelBuilder.Entity("RealEstateNet14Web.DbStuff.Models.RealEstate", b =>
+            modelBuilder.Entity("RealEstateNet14Web.DbStuff.Models.Apartament", b =>
                 {
-                    b.HasOne("RealEstateNet14Web.DbStuff.Models.RealEstateOwner", "RealEstateOwner")
-                        .WithMany("RealEstates")
-                        .HasForeignKey("RealEstateOwnerId");
+                    b.HasOne("RealEstateNet14Web.DbStuff.Models.ApartmentOwner", "ApartmentOwner")
+                        .WithMany("Apartaments")
+                        .HasForeignKey("ApartmentOwnerId");
 
-                    b.Navigation("RealEstateOwner");
+                    b.Navigation("ApartmentOwner");
                 });
 
-            modelBuilder.Entity("RealEstateNet14Web.DbStuff.Models.RealEstateOwner", b =>
+            modelBuilder.Entity("RealEstateNet14Web.DbStuff.Models.ApartmentOwner", b =>
                 {
-                    b.Navigation("CreatedAlerts");
+                    b.Navigation("Apartaments");
 
-                    b.Navigation("RealEstates");
+                    b.Navigation("CreatedAlerts");
                 });
 #pragma warning restore 612, 618
         }

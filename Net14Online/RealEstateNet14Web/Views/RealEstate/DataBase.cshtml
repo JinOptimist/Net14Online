@@ -1,5 +1,5 @@
 
-@model List<RealEstateNet14Web.DbStuff.Models.ApartmentOwner>
+@model List<RealEstateNet14Web.DbStuff.Models.RealEstateOwner>
 
 <div>
     <a href="/RealEstate/AddUser">AddUser</a>
@@ -18,7 +18,7 @@
                 Вид деятельности @user.KindOfActivity
             </div>
             <div>
-                Количество квартир @user.Apartaments.Count
+                Количество квартир @user.RealEstates.Count
             </div>
             <div class="delete-block">
                 <a href="/realestate/delete?id=@user.Id">X</a>

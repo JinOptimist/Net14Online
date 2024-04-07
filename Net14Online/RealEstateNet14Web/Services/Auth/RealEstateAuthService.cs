@@ -5,19 +5,19 @@ namespace RealEstateNet14Web.Services.Auth;
 
 public class RealEstateAuthService
 {
-    private ApartmentOwnerRepository _apartmentOwnerRepository;
+    private RealEstateOwnerRepository _realEstateOwnerRepository;
     private IHttpContextAccessor _httpContextAccessor;
 
-    public RealEstateAuthService(ApartmentOwnerRepository apartmentOwnerRepository, 
+    public RealEstateAuthService(RealEstateOwnerRepository realEstateOwnerRepository, 
         IHttpContextAccessor httpContextAccessor)
     {
-        _apartmentOwnerRepository = apartmentOwnerRepository;
+        _realEstateOwnerRepository = realEstateOwnerRepository;
         _httpContextAccessor = httpContextAccessor;// HttpContext == null
     }
-    public ApartmentOwner GetCurrentUser()
+    public RealEstateOwner GetCurrentUser()
     {
         var id = GetCurrentUserId();
-        return _apartmentOwnerRepository.GetById(id);
+        return _realEstateOwnerRepository.GetById(id);
     }
 
     public int GetCurrentUserId()

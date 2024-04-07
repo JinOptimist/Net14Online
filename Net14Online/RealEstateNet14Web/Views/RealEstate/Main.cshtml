@@ -1,32 +1,18 @@
 @model RealEstateNet14Web.Models.ChatModels.ChatViewModel
+@section Script
+{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+     <script src="~/js/signalr/dist/browser/signalr.js"></script>
+     <script src="~/js/SwitchLanguage.js"></script> 
+     <script src="~/js/Chat.js"></script>
+}
 @section Style
 {
     <link href="~/css/RealEstate/RealEstate.css" rel="stylesheet"/>
-     <link href="~/css/site.css" rel="stylesheet"/>
+    <link href="~/css/site.css" rel="stylesheet"/>
+    <link href="~/css/RealEstate/alerts.css" rel="stylesheet"/>
+    <link href="~/css/RealEstate/chat.css" rel="stylesheet"/>
 }
-
-@section Script
-{
-     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-     <script src="~/js/signalr/dist/browser/signalr.js"></script>
-      <script src="~/js/SwitchLanguage.js"></script> 
-     <script src="~/js/Chat.js"></script>
-}           
-
-<div class="chat">
-    <input type="hidden" class="user-name" value="@Model.UserName"/>
-    <div class="messages">
-        <div class="message template">
-            <span class="user-name">@RealEstateNet14Web.Localization.RealEstate.Assistent</span>
-            <span class="message-text">@RealEstateNet14Web.Localization.RealEstate.ICanHelpYou_</span>
-        </div>
-    </div>
-    <div>
-        <input class="new-message-text"/>
-        <button class="send-message-button">@RealEstateNet14Web.Localization.RealEstate.Send</button>
-    </div>
-</div>
-
 <div class="block-right">
     <select class="button-right" name="Money">
         <option value="Money">BYN</option>
@@ -35,17 +21,29 @@
         <option value="Money">RUB</option>
 
     </select>
-    <button class="button-right">@RealEstateNet14Web.Localization.RealEstate.AddAnnouncement</button>
+    
+    <form action="/RealEstate/CheckAllRealEstate">
+        <button class="button-right">@RealEstateNet14Web.Localization.RealEstate.AllAnnouncement</button>
+    </form>
+    
 
     @if ((!User?.Identity?.IsAuthenticated) ?? true)
     {
-        <a class="button-right" href="/AuthRealEstate/RealEstateLogin">@RealEstateNet14Web.Localization.RealEstate.Login</a>
+        <form action="/AuthRealEstate/RealEstateLogin">
+            <button class="button-right">@RealEstateNet14Web.Localization.RealEstate.Login</button>
+        </form>
     }
     else
     {
-        <a href="/AuthRealEstate/RealEstateLogout">@RealEstateNet14Web.Localization.RealEstate.Logout</a>
-        <a href="/RealEstate/AddApartament">@RealEstateNet14Web.Localization.RealEstate.AddAnnouncement</a>
-        <a href="/RealEstate/CheckAllApartaments">@RealEstateNet14Web.Localization.RealEstate.AllAnnouncement</a>
+        <form action="/RealEstate/AddRealEstate">
+            <button class="button-right">@RealEstateNet14Web.Localization.RealEstate.AddAnnouncement</button>
+        </form>
+        <form action="/Alert/CreateAlert">
+            <button class="button-right">CreateAlert</button>
+        </form>
+        <form action="/AuthRealEstate/RealEstateLogout">
+            <button class="button-right">@RealEstateNet14Web.Localization.RealEstate.Logout</button>
+        </form>
     }
 </div>
 
@@ -53,24 +51,48 @@
     <div class="dropdown-block-center">
         <button class="dropbtn-center">@RealEstateNet14Web.Localization.RealEstate.Sale</button>
         <div class="dropdown-content">
-            <a href="#">@RealEstateNet14Web.Localization.RealEstate.Apartament</a>
-            <a href="#">@RealEstateNet14Web.Localization.RealEstate.House</a>
-            <a href="#">@RealEstateNet14Web.Localization.RealEstate.Garages</a>
+            <form action="/RealEstate/GetRealEstateByType">
+                <input type="hidden" name="Type" value="Квартира"/>
+                <button class="dropdown-button">@RealEstateNet14Web.Localization.RealEstate.Apartament</button>
+            </form>
+            <form action="/RealEstate/GetRealEstateByType">
+                <input type="hidden" name="Type" value="Дом"/>
+                <button class="dropdown-button">@RealEstateNet14Web.Localization.RealEstate.House</button>
+            </form>
+            <form action="/RealEstate/GetRealEstateByType">
+                <input type="hidden" name="Type" value="Гараж"/>
+                <button class="dropdown-button">@RealEstateNet14Web.Localization.RealEstate.Garages</button>
+            </form>
         </div>
     </div>
     <div class="dropdown-block-center">
         <button class="dropbtn-center">@RealEstateNet14Web.Localization.RealEstate.Rent</button>
         <div class="dropdown-content">
-            <a href="#">@RealEstateNet14Web.Localization.RealEstate.ForALongTime</a>
-            <a href="#">@RealEstateNet14Web.Localization.RealEstate.ForADay</a>
+            <form action="/RealEstate/CheckRealEstateWithStatus">
+                <input type="hidden" name="Status" value="Аренда"/>
+                <button class="dropdown-button">@RealEstateNet14Web.Localization.RealEstate.ForALongTime</button>
+            </form>
+            <form action="/RealEstate/CheckRealEstateWithStatus">
+                <input type="hidden" name="Status" value="Посуточно"/>
+                <button class="dropdown-button">@RealEstateNet14Web.Localization.RealEstate.ForADay</button>
+            </form>
         </div>
     </div>
     <div class="dropdown-block-center">
         <button class="dropbtn-center">@RealEstateNet14Web.Localization.RealEstate.NewBuildings</button>
         <div class="dropdown-content">
-            <a href="#">@RealEstateNet14Web.Localization.RealEstate.Apartament</a>
-            <a href="#">@RealEstateNet14Web.Localization.RealEstate.NewBuildings</a>
-            <a href="#">@RealEstateNet14Web.Localization.RealEstate.ResidentialComplexes</a>
+            <form action="/RealEstate/GetRealEstateByType">
+                <input type="hidden" name="Type" value="Квартира"/>
+                <button class="dropdown-button">@RealEstateNet14Web.Localization.RealEstate.Apartament</button>
+            </form>
+            <form action="/RealEstate/GetRealEstateByType">
+                <input type="hidden" name="Type" value="Новостройки"/>
+                <button class="dropdown-button">@RealEstateNet14Web.Localization.RealEstate.NewBuildings</button>
+            </form>
+            <form action="/RealEstate/GetRealEstateByType">
+                <input type="hidden" name="Type" value="Жилой комплекс"/>
+                <button class="dropdown-button">@RealEstateNet14Web.Localization.RealEstate.ResidentialComplexes</button>
+            </form>
         </div>
     </div>
 
@@ -79,46 +101,74 @@
     <div class="center size">@RealEstateNet14Web.Localization.RealEstate.SearchForRealEstateInMinsk</div>
     <div class="quick-choice">
         <div class="block button">
-            @RealEstateNet14Web.Localization.RealEstate.Buy
+             <form action="/RealEstate/CheckRealEstateWithStatus">
+                 <input type="hidden" name="Status" value="Продажа"/>
+                 <button class="block button">@RealEstateNet14Web.Localization.RealEstate.Buy</button>
+             </form>
         </div>
         <div class="block button">
-            @RealEstateNet14Web.Localization.RealEstate.Rent
+            <form action="/RealEstate/CheckRealEstateWithStatus">
+                <input type="hidden" name="Status" value="Аренда"/>
+                <button class="block button">@RealEstateNet14Web.Localization.RealEstate.Rent</button>
+            </form>
         </div>
         <div class="block button">
-           @RealEstateNet14Web.Localization.RealEstate.ForADay
+            <form action="/RealEstate/CheckRealEstateWithStatus">
+                <input type="hidden" name="Status" value="Посуточно"/>
+                <button class="block button"> @RealEstateNet14Web.Localization.RealEstate.ForADay</button>
+            </form>
         </div>
         <div class="block button">
-           @RealEstateNet14Web.Localization.RealEstate.NewBuildings
+            <form action="/RealEstate/CheckRealEstateByType">
+                <input type="hidden" name="Status" value="Новостройки"/>
+                <button class="block button">@RealEstateNet14Web.Localization.RealEstate.NewBuildings</button>
+            </form>
         </div>
     </div>
 
-    <div class="choice">
-        <div class="dropdown-block">
-            <button class="dropbtn">@RealEstateNet14Web.Localization.RealEstate.PropertyType</button>
-            <div class="dropdown-content">
-                <a href="#">@RealEstateNet14Web.Localization.RealEstate.Apartament</a>
-                <a href="#">@RealEstateNet14Web.Localization.RealEstate.House</a>
-                <a href="#">@RealEstateNet14Web.Localization.RealEstate.Garages</a>
+    <form method="post">
+        <div class="choice">
+                <div class="dropdown-block">
+                    <button class="dropbtn">@RealEstateNet14Web.Localization.RealEstate.PropertyType</button>
+                    <div class="dropdown-content">
+                        <a href="#">@RealEstateNet14Web.Localization.RealEstate.Apartament</a>
+                        <a href="#">@RealEstateNet14Web.Localization.RealEstate.House</a>
+                        <a href="#">@RealEstateNet14Web.Localization.RealEstate.Garages</a>
+                    </div>
+                </div>
+                <div class="dropdown-block">
+                    <button class="dropbtn">@RealEstateNet14Web.Localization.RealEstate.HowManyRooms_</button>
+                    <div class="dropdown-content">
+                        <a href="#">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                    </div>
+                </div>
+                <div class="dropdown-block">
+                    <button class="dropbtn">@RealEstateNet14Web.Localization.RealEstate.AtWhatCost_</button>
+                    <div class="dropdown-content">
+                        <a href="#">0-15000</a>
+                        <a href="#">15000-30000</a>
+                        <a href="#">30000-45000</a>
+                    </div>
+                </div>
+                <div class="dropdown-block">
+                    <input class="style" placeholder="@RealEstateNet14Web.Localization.RealEstate.InWhatCity_" type="text">
+                </div>
+            </div>
+    </form>
+    
+    <div class="chat">
+        <input type="hidden" class="user-name" value="@Model.UserName"/>
+        <div class="messages">
+            <div class="message template">
+                <span class="user-name">@RealEstateNet14Web.Localization.RealEstate.Assistent</span>
+                <span class="message-text">@RealEstateNet14Web.Localization.RealEstate.ICanHelpYou_</span>
             </div>
         </div>
-        <div class="dropdown-block">
-            <button class="dropbtn">@RealEstateNet14Web.Localization.RealEstate.HowManyRooms_</button>
-            <div class="dropdown-content">
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-            </div>
-        </div>
-        <div class="dropdown-block">
-            <button class="dropbtn">@RealEstateNet14Web.Localization.RealEstate.AtWhatCost_</button>
-            <div class="dropdown-content">
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-            </div>
-        </div>
-        <div class="dropdown-block">
-            <input class="style" placeholder="@RealEstateNet14Web.Localization.RealEstate.InWhatCity_" type="text">
+        <div>
+            <input class="new-message-text"/>
+            <button class="send-message-button">@RealEstateNet14Web.Localization.RealEstate.Send</button>
         </div>
     </div>
      <div class="footer">

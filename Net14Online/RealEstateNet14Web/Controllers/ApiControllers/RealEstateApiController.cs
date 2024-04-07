@@ -11,29 +11,29 @@ namespace RealEstateNet14Web.Controllers.ApiControlers;
 
 public class RealEstateApiController : Controller
 {
-   private ApartmentOwnerBuisnessService _apartmentOwnerBuisnessService;
-   private ApartmentOwnerRepository _apartmentOwnerRepository;
+   private RealEstateOwnerBuisnessService _realEstateOwnerBuisnessService;
+   private RealEstateOwnerRepository _realEstateOwnerRepository;
 
-   public RealEstateApiController(ApartmentOwnerBuisnessService apartmentOwnerBuisnessService,
-      ApartmentOwnerRepository apartmentOwnerRepository)
+   public RealEstateApiController(RealEstateOwnerBuisnessService realEstateOwnerBuisnessService,
+      RealEstateOwnerRepository realEstateOwnerRepository)
    {
-      _apartmentOwnerBuisnessService = apartmentOwnerBuisnessService;
-      _apartmentOwnerRepository = apartmentOwnerRepository;
+      _realEstateOwnerBuisnessService = realEstateOwnerBuisnessService;
+      _realEstateOwnerRepository = realEstateOwnerRepository;
    }
 
-   public List<ApartmentOwner> ApartmentOwners()
+   public List<RealEstateOwner> RealEstateOwners()
    {
-      return _apartmentOwnerBuisnessService.GetApartamentOwners();
+      return _realEstateOwnerBuisnessService.GetRealEstateOwners();
    }
    
-   public int AddApartmentOwner(AddUserViewModel hero)
+   public int AddRealEstateOwner(AddUserViewModel hero)
    {
-      return _apartmentOwnerBuisnessService.AddApartmentOwner(hero);
+      return _realEstateOwnerBuisnessService.AddRealEstateOwner(hero);
    }
    
    [Route("{id}"), HttpDelete("{id}")]
    public async Task Delete([FromRoute] int id)
    {
-      await _apartmentOwnerBuisnessService.Delete(id);
+      await _realEstateOwnerBuisnessService.Delete(id);
    }
 }

@@ -20,7 +20,7 @@ namespace RealEstateNet14Web.CustomMiddlewares
             if (localFromCulture == null)
             {
                 string acceptLanguage = context.Request.Headers.AcceptLanguage;
-                var locale = acceptLanguage.Substring(0, 2);
+                var locale = acceptLanguage.Substring(0, 5);
                 culture = new CultureInfo(locale);
             }
             else

@@ -5,9 +5,10 @@
 }
 
 .block-right{
-    display: inline-block;
+    display: flex;
     text-align: center;
-    margin-left: 1100px;
+    margin-left: 1050px;
+    padding: 2px;
 }
 
 .block-center{
@@ -31,6 +32,7 @@
 
 .button{
     border-radius: 25px;
+    cursor: pointer;
 }
 
 .quick-choice
@@ -41,7 +43,13 @@
 
 .choice{
     margin-left: 75px;
+    border: 2px solid;
+    border-radius: 10px;
+    height: 53px;
+    width: 1072px;
+    margin-top: 35px;
 }
+
 
 .dropbtn{
     color: white;
@@ -91,8 +99,6 @@
 
 .dropdown-block{
     display: inline-block;
-    width: 18.6em;
-    margin-top: 35px;
 }
 
 .input{
@@ -122,4 +128,23 @@
     display:inline-block;
     width: 12.6em;
     margin-top: 35px;
+}
+
+.alerts{
+    position: fixed;
+    bottom: 150px;
+    right: 150px;
+}
+
+.alert{
+    background-color: #e438d6;
+    border-radius: 4px;
+    margin: 5px;
+    padding: 5px 20px;
+    cursor: pointer;
+}
+.dropdown-button{
+    height: 40px;
+    width: 200px;
+    border-radius: 5px;
 }

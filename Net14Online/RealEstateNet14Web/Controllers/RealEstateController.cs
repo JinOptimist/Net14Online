@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateNet14Web.BuisnessService;
@@ -12,31 +13,26 @@ namespace RealEstateNet14Web.Controllers;
 
 public class RealEstateController : Controller
 {
-   //  public readonly UserBuilder _userBuilder;
-    public readonly DeleteUser _deleteUser;
-    public readonly UpdateUser _updateUser;
-    private ApartmentOwnerRepository _apartmentOwnerRepository;
+  
+    private RealEstateOwnerRepository _realEstateOwnerRepository;
     private RealEstateAuthService _realEstateAuthService;
-    private ApartamentRepository _apartamentRepository;
-    private ApartmentOwnerBuisnessService _apartmentOwnerBuisnessService;
-    
+    private RealEstateRepository _realEstateRepository;
+    private RealEstateOwnerBuisnessService _realEstateOwnerBuisnessService;
+    private GetRealEstate _getRealEstate;
 
-    public RealEstateController(DeleteUser deleteUser,
-        UpdateUser updateUser,
-        ApartmentOwnerRepository apartmentOwnerRepository,
+    public RealEstateController(RealEstateOwnerRepository realEstateOwnerRepository,
         RealEstateAuthService realEstateAuthService,
-        ApartamentRepository apartamentRepository,
-        ApartmentOwnerBuisnessService apartmentOwnerBuisnessService)
+        RealEstateRepository realEstateRepository,
+        RealEstateOwnerBuisnessService realEstateOwnerBuisnessService,
+        GetRealEstate getRealEstates)
     {
-       // _userBuilder = userBuilder;
-        _deleteUser = deleteUser;
-        _updateUser = updateUser;
-        _apartmentOwnerRepository = apartmentOwnerRepository;
+        _realEstateOwnerRepository = realEstateOwnerRepository;
         _realEstateAuthService = realEstateAuthService;
-        _apartamentRepository = apartamentRepository;
-        _apartmentOwnerBuisnessService = apartmentOwnerBuisnessService;
+        _realEstateRepository = realEstateRepository;
+        _realEstateOwnerBuisnessService = realEstateOwnerBuisnessService;
+        _getRealEstate = getRealEstates;
     }
-   
+
     public IActionResult Main()
     {
         var viewModel = new ChatViewModel();
@@ -48,7 +44,7 @@ public class RealEstateController : Controller
     [Authorize]
     public IActionResult DataBase()
     {
-        var viewModels = _apartmentOwnerBuisnessService.GetApartamentOwners();
+        var viewModels = _realEstateOwnerBuisnessService.GetRealEstateOwners();
 
         return View(viewModels);
     }
@@ -69,7 +65,7 @@ public class RealEstateController : Controller
     [Authorize]
     public IActionResult Update(int id)
     {
-        var user = _apartmentOwnerRepository.GetById(id);
+        var user = _realEstateOwnerRepository.GetById(id);
         return View(user);
     }
     
@@ -77,8 +73,8 @@ public class RealEstateController : Controller
     [Authorize]
     public IActionResult Update(int id,string name,int age,string kindOfActivity)
     {
-        var user = _apartmentOwnerRepository.GetById(id);
-        _apartmentOwnerRepository.Update(user,name, age, kindOfActivity);
+        var user = _realEstateOwnerRepository.GetById(id);
+        _realEstateOwnerRepository.Update(user,name, age, kindOfActivity);
         return RedirectToAction("DataBase");
     }
 
@@ -86,56 +82,88 @@ public class RealEstateController : Controller
     [Authorize]
     public IActionResult Delete(int id)
     {
-         _apartmentOwnerRepository.Delete(id);
+         _realEstateOwnerRepository.Delete(id);
         return RedirectToAction("DataBase");
     }
     
     [HttpPost]
     public IActionResult AddUser(AddUserViewModel addUser)
     {
-        _apartmentOwnerBuisnessService.AddApartmentOwner(addUser);
+        _realEstateOwnerBuisnessService.AddRealEstateOwner(addUser);
         
         return RedirectToAction("DataBase");
     }
 
     [HttpGet]
-    public IActionResult AddApartament()
+    public IActionResult AddRealEstate()
     {
         return View();
     }
 
     [HttpPost]
-    public IActionResult AddApartament(ApartamentViewModel apartamentViewModel)
+    public IActionResult AddRealEstate(RealEstateViewModel realEstateViewModel)
     {
-        var newApartament = new Apartament
+        var realEstate = new RealEstate
         {
-            City = apartamentViewModel.City,
-            Street = apartamentViewModel.Street,
-            NumberApartament = apartamentViewModel.NumberApartament,
-            Size = apartamentViewModel.Size,
-            ApartmentOwner = _realEstateAuthService.GetCurrentUser()
+            City = realEstateViewModel.City,
+            Street = realEstateViewModel.Street,
+            Size = realEstateViewModel.Size,
+            Status = realEstateViewModel.Status,
+            RealEstateOwner = _realEstateAuthService.GetCurrentUser()
         };
-        _apartamentRepository.Add(newApartament);
+        _realEstateRepository.Add(realEstate);
 
         return RedirectToAction("Main");
     }
 
     [HttpGet]
-    public IActionResult CheckAllApartaments()
+    public IActionResult CheckAllRealEstate()
     {
-        var dbApartaments = _apartamentRepository.GetApartamentsAndApartmentOwner(10);
+        var realEstates = _realEstateRepository.GetRealEstatesAndRealEstateOwner(10);
 
-        var viewModel = dbApartaments.
-            Select(dbApartament => new ApartamentViewModel
+        var viewModel = realEstates.
+            Select(realEstate => new RealEstateViewModel
         {
-            City = dbApartament.City,
-            Street = dbApartament.Street,
-            NumberApartament = dbApartament.NumberApartament,
-            Size = dbApartament.Size,
-            OwnerName = dbApartament.ApartmentOwner?.Login ?? "---"
+            City = realEstate.City,
+            Street = realEstate.Street,
+            Size = realEstate.Size,
+            Status = realEstate.Status,
+            OwnerName = realEstate.RealEstateOwner?.Login ?? "---"
         }).ToList();
 
         return View(viewModel);
     }
+
+    [HttpGet]
+    public IActionResult CheckRealEstateWithStatus(string status)
+    {
+        var realEstates = _realEstateRepository.GetRealEstatesAndRealEstateOwner(10);
+
+        var viewModel = _getRealEstate.GetRealEstatesWithStatus(status,realEstates);
+
+        return View(viewModel);
+    }
+
+    [HttpGet]
+    public IActionResult GetRealEstateByType(string type)
+    {
+        var realEstates = _realEstateRepository.GetRealEstatesAndRealEstateOwner(10);
+
+        var viewModel = _getRealEstate.GetRealEstatesByType(realEstates, type);
+
+        return View(viewModel);
+    }
+
+ //   [HttpGet]
+ //   public IActionResult SearchRealEstate(string type, int countRoom, int price, string city)
+ //   {
+ //       var realEstates = _realEstateRepository.GetRealEstatesAndRealEstateOwner(10);
+//
+ //       var viewModel = _getRealEstate.GetRealEstatesByData(realEstates,type, countRoom, price, city);
+//
+ //       return View(viewModel);
+//
+ //   }
+    
     
 }

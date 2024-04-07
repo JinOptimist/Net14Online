@@ -6,23 +6,23 @@ using RealEstateNet14Web.Models;
 
 namespace RealEstateNet14Web.BuisnessService;
 
-public class ApartmentOwnerBuisnessService
+public class RealEstateOwnerBuisnessService
 {
-    private ApartmentOwnerRepository _apartmentOwnerRepository;
+    private RealEstateOwnerRepository _realEstateOwnerRepository;
     
 
-    public ApartmentOwnerBuisnessService(ApartmentOwnerRepository apartmentOwnerRepository)
+    public RealEstateOwnerBuisnessService(RealEstateOwnerRepository realEstateOwnerRepository)
     {
-        _apartmentOwnerRepository = apartmentOwnerRepository;
+        _realEstateOwnerRepository = realEstateOwnerRepository;
     }
-    public List<ApartmentOwner> GetApartamentOwners()
+    public List<RealEstateOwner> GetRealEstateOwners()
     {
-        var dbApartmentOwners = _apartmentOwnerRepository
+        var dbApartmentOwners = _realEstateOwnerRepository
             .GetApartamentOwners(10);
 
         var viewModels = dbApartmentOwners.Select(dbApartmentOwner =>
         {
-            return new ApartmentOwner
+            return new RealEstateOwner
             {
                 Id = dbApartmentOwner.Id,
                 Name = dbApartmentOwner.Name,
@@ -34,21 +34,21 @@ public class ApartmentOwnerBuisnessService
         
         return viewModels;
     }
-    public int AddApartmentOwner(AddUserViewModel addUserViewModel)
+    public int AddRealEstateOwner(AddUserViewModel addUserViewModel)
     {
-        var hero = new ApartmentOwner()
+        var hero = new RealEstateOwner()
         {
             Name = addUserViewModel.Name,
             Age = addUserViewModel.Age,
             KindOfActivity = addUserViewModel.KindOfActivity
         };
 
-        return _apartmentOwnerRepository.Add(hero);
+        return _realEstateOwnerRepository.Add(hero);
     }
 
     [Route("{id}"), HttpDelete("{id}")]
     public async Task Delete([FromRoute] int id)
     {
-        await _apartmentOwnerRepository.DeleteAsync(id);
+        await _realEstateOwnerRepository.DeleteAsync(id);
     }
 }

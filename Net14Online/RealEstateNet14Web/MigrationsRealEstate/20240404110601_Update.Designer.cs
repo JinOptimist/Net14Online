@@ -2,18 +2,20 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RealEstateNet14Web.DbStuff;
 
 #nullable disable
 
-namespace Net14Web.MigrationsRealEstate
+namespace RealEstateNet14Web.MigrationsRealEstate
 {
     [DbContext(typeof(WebRealEstateDbContext))]
-    partial class WebDbContextRealEstateModelSnapshot : ModelSnapshot
+    [Migration("20240404110601_Update")]
+    partial class Update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,13 +26,13 @@ namespace Net14Web.MigrationsRealEstate
 
             modelBuilder.Entity("AlertRealEstateOwner", b =>
                 {
-                    b.Property<int>("NotificatedRealEstateOwnersId")
+                    b.Property<int>("NotificatedApartmentOwnersId")
                         .HasColumnType("integer");
 
                     b.Property<int>("SeenAlertsId")
                         .HasColumnType("integer");
 
-                    b.HasKey("NotificatedRealEstateOwnersId", "SeenAlertsId");
+                    b.HasKey("NotificatedApartmentOwnersId", "SeenAlertsId");
 
                     b.HasIndex("SeenAlertsId");
 
@@ -71,7 +73,7 @@ namespace Net14Web.MigrationsRealEstate
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Price")
+                    b.Property<int?>("NumberApartament")
                         .HasColumnType("integer");
 
                     b.Property<int?>("RealEstateOwnerId")
@@ -85,10 +87,6 @@ namespace Net14Web.MigrationsRealEstate
                         .HasColumnType("text");
 
                     b.Property<string>("Street")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TypeRealEstate")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -136,7 +134,7 @@ namespace Net14Web.MigrationsRealEstate
                 {
                     b.HasOne("RealEstateNet14Web.DbStuff.Models.RealEstateOwner", null)
                         .WithMany()
-                        .HasForeignKey("NotificatedRealEstateOwnersId")
+                        .HasForeignKey("NotificatedApartmentOwnersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

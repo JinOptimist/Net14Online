@@ -3,10 +3,14 @@
 <head>
     @RenderSection("Style", false)
     @RenderSection("Script", false)
+    @await Html.PartialAsync("_AlertPartial")
 </head>
 <body>
 <div>
     <a href="/realEstate/Main">RealEstate</a>
+</div>
+<div class="alerts">
+    <div class="alert template"></div>
 </div>
  @RenderBody()
     <div>

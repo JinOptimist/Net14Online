@@ -2,18 +2,20 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RealEstateNet14Web.DbStuff;
 
 #nullable disable
 
-namespace Net14Web.MigrationsRealEstate
+namespace RealEstateNet14Web.MigrationsRealEstate
 {
     [DbContext(typeof(WebRealEstateDbContext))]
-    partial class WebDbContextRealEstateModelSnapshot : ModelSnapshot
+    [Migration("20240405043437_UpdateTableRealEstate")]
+    partial class UpdateTableRealEstate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,7 +73,7 @@ namespace Net14Web.MigrationsRealEstate
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Price")
+                    b.Property<int?>("NumberApartament")
                         .HasColumnType("integer");
 
                     b.Property<int?>("RealEstateOwnerId")
@@ -85,10 +87,6 @@ namespace Net14Web.MigrationsRealEstate
                         .HasColumnType("text");
 
                     b.Property<string>("Street")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TypeRealEstate")
                         .IsRequired()
                         .HasColumnType("text");
 
