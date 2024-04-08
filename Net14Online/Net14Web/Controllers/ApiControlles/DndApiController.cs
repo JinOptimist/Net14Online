@@ -28,9 +28,9 @@ namespace Net14Web.Controllers.ApiControlles
         }
 
         [HttpGet]
-        public List<HeroViewModel> Heroes()
+        public PaginatorViewModel<HeroViewModel> Heroes(int page = 1)
         {
-            return _heroBusinessService.GetHeroesForMainPage();
+            return _heroBusinessService.GetHeroesForMainPage(page);
         }
 
         [HttpPost]

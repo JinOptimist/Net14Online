@@ -15,9 +15,9 @@ namespace Net14Web.BusinessServices
         private IWebHostEnvironment _webHostEnvironment;
 
 
-        public HeroBusinessService(HeroRepository heroRepository, 
+        public HeroBusinessService(HeroRepository heroRepository,
             HeroPermissions heroPermissions,
-            AuthService authService, 
+            AuthService authService,
             IWebHostEnvironment webHostEnvironment)
         {
             _heroRepository = heroRepository;
@@ -26,14 +26,28 @@ namespace Net14Web.BusinessServices
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public List<HeroViewModel> GetHeroesForMainPage()
+        public PaginatorViewModel<HeroViewModel> GetHeroesForMainPage(int page, int perPage = 5)
         {
-            var dbHeroes = _heroRepository.GetHeroesWithWeaponAndOwner(5);
-            var viewModels = dbHeroes
+            var data = _heroRepository.GetHeroesWithWeaponAndOwner(page, perPage);
+            var viewModel = new PaginatorViewModel<HeroViewModel>();
+            viewModel.Items = data
+                .Heroes
                 .Select(BuildHeroViewModel)
                 .ToList();
 
-            return viewModels;
+            var pagesCount = data.HeroesCount % perPage == 0
+                ? data.HeroesCount / perPage
+                : data.HeroesCount / perPage + 1;
+            var paginatorOptions = new PaginatorOptionsViewModel();
+            
+            paginatorOptions.CurrentPage = page;
+            paginatorOptions.AvailablePages = Enumerable.Range(1, pagesCount).ToList();
+            
+            paginatorOptions.PerPage = perPage;
+
+            viewModel.Options = paginatorOptions;
+
+            return viewModel;
         }
 
         public int AddHero(AddHeroViewModel heroViewModel)

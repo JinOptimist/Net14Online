@@ -33,15 +33,15 @@ namespace Net14Web.Controllers
             _heroBusinessService = heroBusinessService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1, int perPage = 5)
         {
             var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Гость";
 
-            var viewModels = _heroBusinessService.GetHeroesForMainPage();
+            var paginatorViewModel = _heroBusinessService.GetHeroesForMainPage(page, perPage);
 
             var dndIndexViewModel = new DndIndexViewModel()
             {
-                Heroes = viewModels,
+                PaginatorViewModel = paginatorViewModel,
                 Weapons = new List<WeaponViewModel> { new WeaponViewModel { Name = "Кинжал", Damadge = 3 } },
                 UserName = userName,
                 CanChooseFavoriteWeapon = _heroPermissions.CanChooseFavoriteWeapon(),

@@ -1,0 +1,23 @@
+﻿@using Net14Web.Models.Dnd
+@model PaginatorOptionsViewModel
+
+<script src="~/js/paginator.js"></script>
+<link href="~/css/paginator.css" rel="stylesheet" />
+
+<div>
+    @foreach (var availablePage in Model.AvailablePages)
+    {
+        <a data-page='@(availablePage)'
+           class="page @(Model.CurrentPage == availablePage ? "active" : "")">
+            @(availablePage)
+        </a>
+    }
+
+    <select class="perPage">
+        @foreach (var perPageOption in Model.AvailablePerPage)
+        {
+            <option selected=@(Model.PerPage == perPageOption ? "selected" : null)
+                    value="@perPageOption">@perPageOption</option>
+        }
+    </select>
+</div>

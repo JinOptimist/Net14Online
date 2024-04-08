@@ -1,0 +1,18 @@
+.page {
+    padding: 5px;
+    border: 1px #ccc solid;
+    display: inline-block;
+    margin: 3px;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: 2px 2px 4px #b9b9b9;
+    cursor: pointer;
+}
+
+    .page:hover {
+        background: #e5e5e5;
+    }
+
+    .page.active {
+        background: #c8e1c3;
+    }

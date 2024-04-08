@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Net14Web.DbStuff.DataModels.Dnd;
 using Net14Web.DbStuff.Models;
 
 namespace Net14Web.DbStuff.Repositories
@@ -7,14 +8,18 @@ namespace Net14Web.DbStuff.Repositories
     {
         public HeroRepository(WebDbContext context) : base(context) { }
 
-        public IEnumerable<Hero> GetHeroesWithWeaponAndOwner(int maxCount = 10)
+        public HeroPaginatorData GetHeroesWithWeaponAndOwner(int page, int perPage = 10)
         {
-            return _entyties
+            var data = new HeroPaginatorData();
+            data.Heroes = _entyties
                 .Include(x => x.FavoriteWeapon)
                 .Include(x => x.Owner)
                 .OrderByDescending(x => x.Coins)
-                .Take(maxCount)
+                .Skip((page - 1) * perPage)
+                .Take(perPage)
                 .ToList();
+            data.HeroesCount = _entyties.Count();
+            return data;
         }
 
         public Hero GetByIdWithOwner(int heroId)
