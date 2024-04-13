@@ -34,7 +34,7 @@ public class AlertController : Controller
     [HttpPost]
     public async Task<IActionResult> CreateAlert(string alertMessage)
     {
-        var alert = new Alert()
+        var alert = new Alert
         {
             Creator = _realEstateAuthService.GetCurrentUser(),
             Message = alertMessage
@@ -42,7 +42,7 @@ public class AlertController : Controller
         
         _alertRepository.Add(alert);
         
-       await _alertHub.Clients.All.PushAlert(alertMessage);
+       await _alertHub.Clients.All.PushAlert(alertMessage,alert.Id);
        
         return View();
     }

@@ -43,7 +43,5 @@ public class GetRealEstate
             }).ToList();
 
         return viewModel;
-
     }
-    
 }

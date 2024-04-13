@@ -10,7 +10,6 @@
 {
     <link href="~/css/RealEstate/RealEstate.css" rel="stylesheet"/>
     <link href="~/css/site.css" rel="stylesheet"/>
-    <link href="~/css/RealEstate/alerts.css" rel="stylesheet"/>
     <link href="~/css/RealEstate/chat.css" rel="stylesheet"/>
 }
 <div class="block-right">
@@ -125,15 +124,23 @@
             </form>
         </div>
     </div>
-
-    <form method="post">
+    <form method="get">
         <div class="choice">
                 <div class="dropdown-block">
                     <button class="dropbtn">@RealEstateNet14Web.Localization.RealEstate.PropertyType</button>
                     <div class="dropdown-content">
-                        <a href="#">@RealEstateNet14Web.Localization.RealEstate.Apartament</a>
-                        <a href="#">@RealEstateNet14Web.Localization.RealEstate.House</a>
-                        <a href="#">@RealEstateNet14Web.Localization.RealEstate.Garages</a>
+                        <div>
+                            <input type="hidden" value="Квартира"/>
+                            <button>@RealEstateNet14Web.Localization.RealEstate.Apartament</button>
+                        </div>
+                        <div>
+                            <input type="hidden" value="Дом"/>
+                            <button>@RealEstateNet14Web.Localization.RealEstate.House</button>
+                        </div>
+                        <div>
+                            <input type="hidden" value="Гараж"/>
+                            <button>@RealEstateNet14Web.Localization.RealEstate.Garages</button>
+                        </div>
                     </div>
                 </div>
                 <div class="dropdown-block">
@@ -152,12 +159,16 @@
                         <a href="#">30000-45000</a>
                     </div>
                 </div>
-                <div class="dropdown-block">
-                    <input class="style" placeholder="@RealEstateNet14Web.Localization.RealEstate.InWhatCity_" type="text">
-                </div>
+            <div class="dropdown-block">
+                <input class="style" placeholder="@RealEstateNet14Web.Localization.RealEstate.InWhatCity_" type="text">
             </div>
+            <div class="dropdown-block">
+                 <form action="/RealEstate/SearchRealEstate">
+                     <button class="block button">Найти</button>
+                 </form>
+            </div>
+        </div>
     </form>
-    
     <div class="chat">
         <input type="hidden" class="user-name" value="@Model.UserName"/>
         <div class="messages">

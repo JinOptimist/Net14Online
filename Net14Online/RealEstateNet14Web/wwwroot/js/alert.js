@@ -4,21 +4,28 @@ $(document).ready(function () {
         .withUrl("/hubs/alert")
         .build();
 
-    hub.on('PushAlert',function (alertMessage){
-       const newAlert = $('.alert.template').clone();
-       newAlert.removeClass('template');
-       newAlert.text(alertMessage);
-       newAlert.click(onRemoveAlert);
-       $('.alerts').append(newAlert);
-    });
-     
+    hub.on('PushAlert', function (alertMessage, alertId) {
+        addAlertToPage(alertMessage, alertId);
+    })
+
     hub.start();
-    
+
     init();
 
-    function init(){
+    function init() {
         createAlertsBlock();
-    };
+        getExistedAlerts();
+    }
+
+    function getExistedAlerts() {
+        $.get('/api/alert/GetExistedAlerts')
+            .then(function (alerts) {
+                alerts.forEach((alert) => {
+                    addAlertToPage(alert.message, alert.alertId)
+                })
+            });
+    }
+
     function createAlertsBlock() {
         const alerts = $(`
         <div class="alerts">
@@ -28,12 +35,20 @@ $(document).ready(function () {
 
         $('body').append(alerts);
     }
-    
-    $('.alert').click(function () {
-       $(this).remove();
-   })
-    
-    const onRemoveAlert = function () {
+
+    function addAlertToPage(message, alertId) {
+        const newAlert = $('.alert.template').clone();
+        newAlert.removeClass('template');
+        newAlert.text(message);
+        newAlert.click(onAlertClick);
+        newAlert.attr('id', alertId);
+        $('.alerts').append(newAlert);
+    }
+
+    const onAlertClick = function () {
+        const alertId = $(this).attr('id');
+        $.get(`/api/alert/MarkAsReaded?alertId=${alertId}`);
+
         $(this).remove();
     }
 });
