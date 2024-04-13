@@ -40,4 +40,10 @@ public abstract class RealEstateBaseRepository<DbModel> where DbModel : BaseMode
         _entyties.Remove(entity);
         await _webRealEstateDbContext.SaveChangesAsync();
     }
+    
+    public virtual IEnumerable<DbModel> GetAll()
+    {
+        return _entyties
+            .ToList();
+    }
 }

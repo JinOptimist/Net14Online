@@ -154,16 +154,15 @@ public class RealEstateController : Controller
         return View(viewModel);
     }
 
- //   [HttpGet]
- //   public IActionResult SearchRealEstate(string type, int countRoom, int price, string city)
- //   {
- //       var realEstates = _realEstateRepository.GetRealEstatesAndRealEstateOwner(10);
-//
- //       var viewModel = _getRealEstate.GetRealEstatesByData(realEstates,type, countRoom, price, city);
-//
- //       return View(viewModel);
-//
- //   }
+    [HttpGet]
+    public IActionResult SearchRealEstate(string type, int countRoom, int price, string city)
+    {
+        var realEstates = _realEstateRepository.GetRealEstatesAndRealEstateOwner(10);
+
+        var viewModel = _getRealEstate.GetRealEstatesByData(realEstates,type, countRoom, price, city);
+
+        return View(viewModel);
+    }
     
     
 }
