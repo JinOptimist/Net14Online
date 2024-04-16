@@ -6,6 +6,7 @@ using RealEstateNet14Web.DbStuff;
 using RealEstateNet14Web.DbStuff.Repositories;
 using RealEstateNet14Web.Hubs;
 using RealEstateNet14Web.Services;
+using RealEstateNet14Web.Services.ApiServices;
 using RealEstateNet14Web.Services.Auth;
 using RealEstateNet14Web.Services.Reflection;
 
@@ -54,7 +55,12 @@ builder.Services.AddScoped<RealEstateOwnerBuisnessService>();
 builder.Services.AddScoped<ReflectionService>();
 builder.Services.AddScoped<GetRealEstate>();
 
+builder.Services.AddSingleton<ExchangeRatesViewBuilder>();
 
+builder.Services.AddHttpClient<ExchangeRatesApi>(client =>
+{
+    client.BaseAddress = new Uri("https://api.nbrb.by");
+});
 
 builder.Services.AddHttpContextAccessor();
 

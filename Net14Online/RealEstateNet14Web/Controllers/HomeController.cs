@@ -1,21 +1,32 @@
 ﻿using System.Diagnostics;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateNet14Web.Models;
+using RealEstateNet14Web.Models.Home;
+using RealEstateNet14Web.Services.ApiServices;
 
 namespace RealEstateNet14Web.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private ExchangeRatesApi _exchangeRatesApi;
+    private ExchangeRatesViewBuilder _exchangeRatesViewBuilder;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ExchangeRatesViewBuilder exchangeRatesViewBuilder,
+        ExchangeRatesApi exchangeRatesApi)
     {
-        _logger = logger;
+        _exchangeRatesViewBuilder = exchangeRatesViewBuilder;
+        _exchangeRatesApi = exchangeRatesApi;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var viewModel = new HomeIndexViewModel();
+        var exchangeRates =  _exchangeRatesApi.GetExchangeRates("431");
+
+        Task.WaitAll(exchangeRates);
+        viewModel.ExchangeRatesViewModel = _exchangeRatesViewBuilder.Build(exchangeRates.Result);
+        return View(viewModel);
     }
 
     public IActionResult Privacy()
