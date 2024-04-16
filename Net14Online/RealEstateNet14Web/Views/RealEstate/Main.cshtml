@@ -1,4 +1,4 @@
-@model RealEstateNet14Web.Models.ChatModels.ChatViewModel
+@model RealEstateNet14Web.Models.Home.HomeIndexViewModel
 @section Script
 {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -12,6 +12,23 @@
     <link href="~/css/site.css" rel="stylesheet"/>
     <link href="~/css/RealEstate/chat.css" rel="stylesheet"/>
 }
+<div>
+   <div>
+       Курсы валют:
+   </div>
+    <div>
+        USD: @Model.ExchangeRatesViewModel.USD 
+    </div>
+    <div>
+        EUR: @Model.ExchangeRatesViewModel.EUR 
+    </div>
+    <div>
+        RUB: @Model.ExchangeRatesViewModel.RUB 
+    </div>
+    
+</div>
+
+
 <div class="block-right">
     <select class="button-right" name="Money">
         <option value="Money">BYN</option>

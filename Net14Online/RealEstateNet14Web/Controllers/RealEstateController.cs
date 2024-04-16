@@ -6,7 +6,9 @@ using RealEstateNet14Web.DbStuff.Models;
 using RealEstateNet14Web.DbStuff.Repositories;
 using RealEstateNet14Web.Models;
 using RealEstateNet14Web.Models.ChatModels;
+using RealEstateNet14Web.Models.Home;
 using RealEstateNet14Web.Services;
+using RealEstateNet14Web.Services.ApiServices;
 using RealEstateNet14Web.Services.Auth;
 
 namespace RealEstateNet14Web.Controllers;
@@ -19,24 +21,34 @@ public class RealEstateController : Controller
     private RealEstateRepository _realEstateRepository;
     private RealEstateOwnerBuisnessService _realEstateOwnerBuisnessService;
     private GetRealEstate _getRealEstate;
+    private ExchangeRatesApi _exchangeRatesApi;
+    private ExchangeRatesViewBuilder _exchangeRatesViewBuilder;
 
     public RealEstateController(RealEstateOwnerRepository realEstateOwnerRepository,
         RealEstateAuthService realEstateAuthService,
         RealEstateRepository realEstateRepository,
         RealEstateOwnerBuisnessService realEstateOwnerBuisnessService,
-        GetRealEstate getRealEstates)
+        GetRealEstate getRealEstate, ExchangeRatesApi exchangeRatesApi,
+        ExchangeRatesViewBuilder exchangeRatesViewBuilder)
     {
         _realEstateOwnerRepository = realEstateOwnerRepository;
         _realEstateAuthService = realEstateAuthService;
         _realEstateRepository = realEstateRepository;
         _realEstateOwnerBuisnessService = realEstateOwnerBuisnessService;
-        _getRealEstate = getRealEstates;
+        _getRealEstate = getRealEstate;
+        _exchangeRatesApi = exchangeRatesApi;
+        _exchangeRatesViewBuilder = exchangeRatesViewBuilder;
     }
+    
 
-    public IActionResult Main()
+    public async Task<IActionResult> Main()
     {
-        var viewModel = new ChatViewModel();
+        var viewModel = new HomeIndexViewModel();
         viewModel.UserName = _realEstateAuthService.GetCurrentUserName();
+        var exchangeRates =  _exchangeRatesApi.GetExchangeRates("431");
+
+        Task.WaitAll(exchangeRates);
+        viewModel.ExchangeRatesViewModel = _exchangeRatesViewBuilder.Build(exchangeRates.Result);
         return View(viewModel);
     }
    
