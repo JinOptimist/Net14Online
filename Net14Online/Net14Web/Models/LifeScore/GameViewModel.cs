@@ -2,7 +2,7 @@
 {
     public class GameViewModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string FirstTeam { get; set; }
         public string SecondTeam { get; set; }
         public int? FirstTeamGoals { get; set; }

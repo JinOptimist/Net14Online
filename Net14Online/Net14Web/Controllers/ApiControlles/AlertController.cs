@@ -13,11 +13,15 @@ namespace Net14Web.Controllers.ApiControlles
     [Route("/api/alert/{action}")]
     public class AlertController : Controller
     {
+        private IHubContext<AlertHub, IAlertHub> _alertHub;
         private AlertRepository _alertRepository;
         private AuthService _authService;
 
-        public AlertController(AlertRepository alertRepository, AuthService authService)
+        public AlertController(IHubContext<AlertHub, IAlertHub> alertHub,
+            AlertRepository alertRepository,
+            AuthService authService)
         {
+            _alertHub = alertHub;
             _alertRepository = alertRepository;
             _authService = authService;
         }

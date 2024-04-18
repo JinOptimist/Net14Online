@@ -1,0 +1,31 @@
+﻿.table-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    background-color: #F0F0F0;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.table-info {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+}
+
+.table-content {
+   
+    background-color: #FFFFFF;
+   
+}
+
+.table-content-team {
+    justify-content: space-evenly;
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.table-content-data {
+    width: 25%;
+    text-align: center;
+}

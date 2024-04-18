@@ -122,6 +122,7 @@ builder.Services.AddScoped<BookingBusinessService>();
 builder.Services.AddScoped<TeamService>();
 builder.Services.AddScoped<BookingHelperController>();
 builder.Services.AddScoped<BookingReflectionService>();
+builder.Services.AddScoped<SportGameService>();
 
 builder.Services.AddScoped<HeroBusinessService>();
 
@@ -144,6 +145,11 @@ builder.Services.AddHttpClient<WeatherApi>(client =>
     client.BaseAddress = new Uri("https://api.open-meteo.com");
 });
 
+builder.Services.AddHttpClient<LifeScoreApi>(client =>
+{
+    client.BaseAddress = new Uri("https://v1.hockey.api-sports.io");
+    client.DefaultRequestHeaders.Add("x-rapidapi-key", "0302ca66bc9ca7147423c17662465066");
+});
 
 builder.Services.AddHttpContextAccessor();
 
@@ -169,7 +175,7 @@ app.UseRouting();
 app.UseAuthentication(); // Who I am?
 app.UseAuthorization(); // May I?
 
-app.UseMiddleware<CustomLocalizationMiddleware>();
+//app.UseMiddleware<CustomLocalizationMiddleware>();
 
 app.MapHub<AlertHub>("/signlar-hubs/alert");
 

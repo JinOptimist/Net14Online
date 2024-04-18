@@ -1,4 +1,23 @@
-﻿
+﻿@import url('header.css');
+@import url('body.css');
+@import url('teams.css');
+@import url('results.css');
+@import url('teams-table.css');
+@import url('calendar.css');
+@import url('index.css');
+
+
+.main {
+    background: linear-gradient(#141e30, #243b55);
+}
+
+.main .header {
+    display: flex;
+    margin: 0px 0px 20px 0px;
+    justify-content: center;
+    background: linear-gradient(#435b76, #222935);
+    width: 100%;
+}
 
 .body{
     display: flex;
@@ -10,8 +29,9 @@
     height: 100vh;
     border-radius: 5px;
     padding: 10px;
-    background-color: #E6EBF2;
-    margin: 10px;
+    background: linear-gradient(#435b76,#222935);
+    
+    margin-left: 20px;
 }
 
 .teams-table {
