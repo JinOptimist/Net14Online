@@ -14,7 +14,9 @@ using Net14Web.Models.BookingHelper;
 using Net14Web.Models.BookingWeb;
 using Net14Web.Models.Dnd;
 using Net14Web.Services;
+using Net14Web.Services.ApiServices;
 using Net14Web.Services.BookingPermissons;
+using RESTCountries.NET.Services;
 using System.ComponentModel.Design;
 using System.Linq;
 
@@ -32,13 +34,15 @@ namespace Net14Web.Controllers
         private BookingPermission _bookingPermission;
         public BookingBusinessService _bookingBusinessService;
         private BookingHelperController _bookingHelperController;
+        public CountryApiViewModelBuilder _countryApiViewModelBuilder;
         
         public BookingWebController (SearchRepository searchRepository, 
             LoginRepository loginRepository, 
             AuthService authService,
             BookingPermission bookingPermission,
             BookingBusinessService bookingBusinessService,
-            BookingHelperController bookingHelperController)
+            BookingHelperController bookingHelperController,
+            CountryApiViewModelBuilder countryApiViewModelBuilder)
         {
             _searchRepository = searchRepository;
             _loginRepository = loginRepository;
@@ -46,6 +50,7 @@ namespace Net14Web.Controllers
             _bookingPermission = bookingPermission;
             _bookingBusinessService = bookingBusinessService;
             _bookingHelperController = bookingHelperController;
+            _countryApiViewModelBuilder = countryApiViewModelBuilder;
         }
     
         public IActionResult CarRental()
@@ -167,9 +172,17 @@ namespace Net14Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var viewModel = new IndexViewModel();
+            var random = new Random();
+            var allCountries =  RestCountriesService.GetAllCountries().ToList();
+
+            var randomCountry = allCountries[random.Next(allCountries.Count)];
+            var countryViewModel = _countryApiViewModelBuilder.Build(randomCountry);
+            viewModel.CountryApiViewModel = countryViewModel;
+            return View(viewModel);
+
         }
 
         [HttpPost]
