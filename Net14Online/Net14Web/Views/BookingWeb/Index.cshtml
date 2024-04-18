@@ -48,7 +48,8 @@
     </form>
     </div>
     </div> 
-        <div class="offer"> Trending Destinations
+    <div>Trending destinations:</div>
+        <div class="offer"> 
             <div class="offerbox"></div>
             <div class="offerbox"></div>
             <div class="offerbox"></div>
@@ -61,4 +62,10 @@
          <div class="stays-offer">Best stays
 
          </div>
+        <div>
+             Don't know where to go? Try this direction!
+             @Model.CountryApiViewModel.Name
+             @Model.CountryApiViewModel.Region
+            <a href="@Model.CountryApiViewModel.Map">See on GoogleMaps</a>
+    </div> 
 </body>

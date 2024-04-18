@@ -127,6 +127,7 @@ builder.Services.AddScoped<HeroBusinessService>();
 
 builder.Services.AddScoped<GamesService>();
 builder.Services.AddScoped<GameCommentService>();
+builder.Services.AddScoped<CountryApiViewModelBuilder>();
 
 builder.Services.AddSingleton<WeaterViewModelBuilder>();
 
