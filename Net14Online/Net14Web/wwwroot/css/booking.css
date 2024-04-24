@@ -177,4 +177,28 @@
     border-color: darkslategray;
 }
 
+.api {
+    height: 100px;
+    background-color: rgb(150, 161, 181);
+    align-content: center;
+}
 
+.api-random-country {
+    align-content: center;
+    margin-left: 5px;
+    padding: 5px;
+    font-size: large;
+    font-weight: 500;
+}
+
+.api-map {
+    margin-left: 5px;
+    padding: 5px;
+}
+
+.userName{
+height: 30px;
+margin-left:20px;
+align-content:center;
+font-weight: 500;
+}
