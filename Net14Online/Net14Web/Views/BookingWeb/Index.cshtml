@@ -25,47 +25,48 @@
         </ul>
     </div>
     <div class="searchBlock">
-            <div class="bg-image">
+        <div class="bg-image">
             <div class="search">@Net14Web.LocalizationFiles.Booking.Search</div>
-    <form method="post">
-        <div class="searchfields">
-                <div class="field">
+            <form method="post">
+                <div class="searchfields">
+                    <div class="field">
                         <input placeholder="@Net14Web.LocalizationFiles.Booking.SearchCountry" name="country" />
-                </div>
-                <div class="field">
+                    </div>
+                    <div class="field">
                         <input placeholder="@Net14Web.LocalizationFiles.Booking.SearchCity" name="city" />
+                    </div>
+                    <div class="field">
+                        <input placeholder="@Net14Web.LocalizationFiles.Booking.SearchCheckin" type="date" name="CheckinDate" />
+                    </div>
+                    <div class="field">
+                        <input placeholder="@Net14Web.LocalizationFiles.Booking.SearchCheckout" type="date" name="CheckoutDate" />
+                    </div>
+                    <div>
+                        <input type="submit" value="Search" />
+                    </div>
                 </div>
-                <div class="field">
-                        <input placeholder="@Net14Web.LocalizationFiles.Booking.SearchCheckin" type="datetime" name="checkin" />
-                </div>
-                <div class="field">
-                        <input placeholder="@Net14Web.LocalizationFiles.Booking.SearchCheckout" type="datetime" name="checkout" />
-                </div>
-                <div>
-                <input type="submit" value="Search" />
-                </div>
-            </div>
-    </form>
+            </form>
+        </div>
     </div>
-    </div> 
     <div>Trending destinations:</div>
-        <div class="offer"> 
-            <div class="offerbox"></div>
-            <div class="offerbox"></div>
-            <div class="offerbox"></div>
-            <div class="offerbox"></div>
-             <div class="city">France, Paris</div>
-             <div class="city">Italy, Rome</div>
-             <div class="city">Brasil, Rio-De-Janeiro</div>
-             <div class="city">Georgia, Tiflis</div>
-         </div>
-         <div class="stays-offer">Best stays
-
-         </div>
-        <div>
-             Don't know where to go? Try this direction!
-             @Model.CountryApiViewModel.Name
-             @Model.CountryApiViewModel.Region
-            <a href="@Model.CountryApiViewModel.Map">See on GoogleMaps</a>
-    </div> 
+    <div class="offer">
+        <div class="offerbox"></div>
+        <div class="offerbox"></div>
+        <div class="offerbox"></div>
+        <div class="offerbox"></div>
+        <div class="city">France, Paris</div>
+        <div class="city">Italy, Rome</div>
+        <div class="city">Brasil, Rio-De-Janeiro</div>
+        <div class="city">Georgia, Tiflis</div>
+    </div>
+    <div>
+        Don't know where to go? Try this direction!
+        <div class="api">
+            <div class="api-random-country">
+                @Model.CountryApiViewModel.Name
+                @Model.CountryApiViewModel.Region
+            </div>
+            <a class="api-map" href="@Model.CountryApiViewModel.Map">See on GoogleMaps</a>
+        </div>
+    </div>
 </body>

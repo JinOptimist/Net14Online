@@ -92,7 +92,7 @@ namespace Net14Web.Controllers
         public IActionResult SearchResult()
         {
             var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Guest";
-            var searches = _searchRepository.GetSearchLoginConnection(10);
+            var searches = _searchRepository.GetSearchLoginConnection(100);
 
             var viewModels = searches.Select(search => new SearchResultViewModel
             {
@@ -102,12 +102,15 @@ namespace Net14Web.Controllers
                 CheckinDate = search.Checkin,
                 CheckoutDate = search.Checkout,
                 LoginEmail = search.ClientBooking.Email,
-                UserName = userName,
                 Owner = search.Owner?.Login ?? "Unknown",
                 CanDelete = _bookingPermission.CanDelete(search)
             }).ToList();
 
-            return View(viewModels);
+            return View(new SearchResultPageViewModel
+            {
+                SearchResults = viewModels,
+                UserName = userName
+            });
         }
 
         [Authorize]

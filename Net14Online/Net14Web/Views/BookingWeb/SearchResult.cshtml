@@ -1,5 +1,5 @@
 ﻿@using Net14Web.Models.BookingWeb
-@model List<SearchResultViewModel>
+@model SearchResultPageViewModel
 
 @{
     Layout = "_LayoutBookingWeb";
@@ -8,12 +8,11 @@
 {
     <link href="~/css/booking.css" rel="stylesheet" />
 }
-
-@foreach (var search in Model)
+<div class="userName">
+    Hi @Model.UserName
+</div>
+@foreach (var search in Model.SearchResults)
 {
-    <div>
-        User: @search.UserName
-    </div>
     @if (search.CanDelete)
     {
         <a href="RemoveSearch?id=@search.Id">Remove</a>
@@ -29,11 +28,11 @@
             <input type="submit" value="Update" />
         </form>
     </div>
-    <div> 
-        Check-in Date: @search.CheckinDate
+    <div>
+        Check-in Date: @search.CheckinDate.ToShortDateString()
     </div>
     <div>
-        Check-out Date: @search.CheckoutDate
+        Check-out Date: @search.CheckoutDate.ToShortDateString()
     </div>
     <div>
         Email: @search.LoginEmail
