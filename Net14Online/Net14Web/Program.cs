@@ -143,6 +143,10 @@ builder.Services.AddHttpClient<WeatherApi>(client =>
 {
     client.BaseAddress = new Uri("https://api.open-meteo.com");
 });
+builder.Services.AddHttpClient<CatApi>(client =>
+{
+    client.BaseAddress = new Uri("https://api.thecatapi.com");
+});
 
 
 builder.Services.AddHttpContextAccessor();
