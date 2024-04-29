@@ -35,6 +35,7 @@ namespace Net14Web.Controllers
         public BookingBusinessService _bookingBusinessService;
         private BookingHelperController _bookingHelperController;
         public CountryApiViewModelBuilder _countryApiViewModelBuilder;
+        public CatApi _catApi;
         
         public BookingWebController (SearchRepository searchRepository, 
             LoginRepository loginRepository, 
@@ -42,7 +43,8 @@ namespace Net14Web.Controllers
             BookingPermission bookingPermission,
             BookingBusinessService bookingBusinessService,
             BookingHelperController bookingHelperController,
-            CountryApiViewModelBuilder countryApiViewModelBuilder)
+            CountryApiViewModelBuilder countryApiViewModelBuilder,
+            CatApi catApi)
         {
             _searchRepository = searchRepository;
             _loginRepository = loginRepository;
@@ -51,6 +53,7 @@ namespace Net14Web.Controllers
             _bookingBusinessService = bookingBusinessService;
             _bookingHelperController = bookingHelperController;
             _countryApiViewModelBuilder = countryApiViewModelBuilder;
+            _catApi = catApi;
         }
     
         public IActionResult CarRental()
@@ -180,10 +183,12 @@ namespace Net14Web.Controllers
             var viewModel = new IndexViewModel();
             var random = new Random();
             var allCountries =  RestCountriesService.GetAllCountries().ToList();
+            var catDtoTask = _catApi.GetRandomImageUrl();
 
             var randomCountry = allCountries[random.Next(allCountries.Count)];
             var countryViewModel = _countryApiViewModelBuilder.Build(randomCountry);
             viewModel.CountryApiViewModel = countryViewModel;
+            viewModel.catUrl = catDtoTask.Result.url;
             return View(viewModel);
 
         }

@@ -34,7 +34,6 @@ namespace Net14Web.DbStuff
         public DbSet<RetroUser> RetroUsers { get; set; }
         public DbSet<Bond> Bonds { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
-
         public DbSet<ClientBooking> ClientsBooking { get; set; }
         // LifeScore
         public DbSet<SportGame> SportGames { get; set; }
@@ -103,7 +102,7 @@ namespace Net14Web.DbStuff
 
             builder.Entity<User>()
               .HasMany(user => user.Searches)
-              .WithOne(comment => comment.Owner)
+              .WithOne(search => search.Owner)
               .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<Bond>()
