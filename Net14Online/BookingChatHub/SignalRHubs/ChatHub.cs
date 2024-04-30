@@ -8,5 +8,10 @@ namespace BookingChatHub.SignalRHubs
         {
             Clients.All.SendAsync("newMessage", userName, message).Wait();
         }
+
+        public void NewUserEntered(string userName)
+        {
+            Clients.All.SendAsync("userEnteredChat", userName).Wait();
+        }
     }
 }
