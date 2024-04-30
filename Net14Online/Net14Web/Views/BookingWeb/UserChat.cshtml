@@ -1,28 +1,29 @@
 ﻿@using Net14Web.Models.BookingWeb
-@model UserChatViewModel
+@model UserChatViewModel 
 
 @{
     Layout = "_LayoutBookingWeb";
-}
+} 
 @section Style
 {
     <link href="~/css/bookingChat.css" rel="stylesheet" />
-}
+    <link href="~/css/booking.css" rel="stylesheet" />
+} 
 @section Script {
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/booking/userChat.js"></script>
+    <script src="~/js/booking/chat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
 }
 <div class="chat">
-    <input type="hidden"  class="user-name" value ="@Model.UserName"/>
+    <input type="hidden"  class="user-name" value = @Model.UserName:> 
     <div class="messages">
         <div class="message template">
             <span class="user-name">Sasha</span>
             <span class="message-text">Hi</span>
         </div>
     </div>
-    <div>
-        <input class="new-message-text" />
+    <div class="send-message">
+        <input class="new-message-text"/>
         <button class="send-message-button">Send</button>
     </div>
 </div>
