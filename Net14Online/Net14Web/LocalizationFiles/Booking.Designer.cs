@@ -61,6 +61,78 @@ namespace Net14Web.LocalizationFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About company.
+        /// </summary>
+        public static string AboutCompany {
+            get {
+                return ResourceManager.GetString("AboutCompany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brazil, Rio-de-Janeiro.
+        /// </summary>
+        public static string Brazil {
+            get {
+                return ResourceManager.GetString("Brazil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cookies.
+        /// </summary>
+        public static string Cookies {
+            get {
+                return ResourceManager.GetString("Cookies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to France, Paris.
+        /// </summary>
+        public static string France {
+            get {
+                return ResourceManager.GetString("France", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Georgia, Tiflis.
+        /// </summary>
+        public static string Georgia {
+            get {
+                return ResourceManager.GetString("Georgia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See on Google Maps.
+        /// </summary>
+        public static string GoogleMap {
+            get {
+                return ResourceManager.GetString("GoogleMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        public static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Italy, Rome.
+        /// </summary>
+        public static string Italy {
+            get {
+                return ResourceManager.GetString("Italy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BookingWeb.
         /// </summary>
         public static string LayoutBooking {
@@ -142,11 +214,38 @@ namespace Net14Web.LocalizationFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Privacy.
+        /// </summary>
+        public static string Privacy {
+            get {
+                return ResourceManager.GetString("Privacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t know where to go? Try this direction!.
+        /// </summary>
+        public static string Recommendation {
+            get {
+                return ResourceManager.GetString("Recommendation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search:.
         /// </summary>
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string SearchButton {
+            get {
+                return ResourceManager.GetString("SearchButton", resourceCulture);
             }
         }
         
@@ -183,6 +282,15 @@ namespace Net14Web.LocalizationFiles {
         public static string SearchCountry {
             get {
                 return ResourceManager.GetString("SearchCountry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trending destinations:.
+        /// </summary>
+        public static string TrendingDestinations {
+            get {
+                return ResourceManager.GetString("TrendingDestinations", resourceCulture);
             }
         }
     }

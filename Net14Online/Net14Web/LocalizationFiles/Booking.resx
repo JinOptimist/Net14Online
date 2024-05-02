@@ -117,6 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutCompany" xml:space="preserve">
+    <value>About company</value>
+  </data>
+  <data name="Brazil" xml:space="preserve">
+    <value>Brazil, Rio-de-Janeiro</value>
+  </data>
+  <data name="Cookies" xml:space="preserve">
+    <value>Cookies</value>
+  </data>
+  <data name="France" xml:space="preserve">
+    <value>France, Paris</value>
+  </data>
+  <data name="Georgia" xml:space="preserve">
+    <value>Georgia, Tiflis</value>
+  </data>
+  <data name="GoogleMap" xml:space="preserve">
+    <value>See on Google Maps</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="Italy" xml:space="preserve">
+    <value>Italy, Rome</value>
+  </data>
   <data name="LayoutBooking" xml:space="preserve">
     <value>BookingWeb</value>
   </data>
@@ -144,8 +168,17 @@
   <data name="NavbarUserChat" xml:space="preserve">
     <value>UserChat</value>
   </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="Recommendation" xml:space="preserve">
+    <value>Don't know where to go? Try this direction!</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Search:</value>
+  </data>
+  <data name="SearchButton" xml:space="preserve">
+    <value>Search</value>
   </data>
   <data name="SearchCheckin" xml:space="preserve">
     <value>Checkin</value>
@@ -158,5 +191,8 @@
   </data>
   <data name="SearchCountry" xml:space="preserve">
     <value>Country</value>
+  </data>
+  <data name="TrendingDestinations" xml:space="preserve">
+    <value>Trending destinations:</value>
   </data>
 </root>

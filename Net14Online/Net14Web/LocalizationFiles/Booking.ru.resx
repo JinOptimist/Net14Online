@@ -117,6 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutCompany" xml:space="preserve">
+    <value>О компании</value>
+  </data>
+  <data name="Brazil" xml:space="preserve">
+    <value>Бразилия, Рио-де-Жанейро</value>
+  </data>
+  <data name="Cookies" xml:space="preserve">
+    <value>Куки</value>
+  </data>
+  <data name="France" xml:space="preserve">
+    <value>Франция, Париж</value>
+  </data>
+  <data name="Georgia" xml:space="preserve">
+    <value>Грузия, Тбилиси</value>
+  </data>
+  <data name="GoogleMap" xml:space="preserve">
+    <value>Посмотреть на Гугл Картах</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Помощь</value>
+  </data>
+  <data name="Italy" xml:space="preserve">
+    <value>Италия, Рим</value>
+  </data>
   <data name="LayoutBooking" xml:space="preserve">
     <value>Букинг</value>
   </data>
@@ -144,8 +168,17 @@
   <data name="NavbarUserChat" xml:space="preserve">
     <value>Чат</value>
   </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Политика конфеденциальности</value>
+  </data>
+  <data name="Recommendation" xml:space="preserve">
+    <value>Не знаете куда направиться? Попробуйте это направление!</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Поиск:</value>
+  </data>
+  <data name="SearchButton" xml:space="preserve">
+    <value>Поиск</value>
   </data>
   <data name="SearchCheckin" xml:space="preserve">
     <value>Заезд</value>
@@ -158,5 +191,8 @@
   </data>
   <data name="SearchCountry" xml:space="preserve">
     <value>Страна</value>
+  </data>
+  <data name="TrendingDestinations" xml:space="preserve">
+    <value>Популярные направления:</value>
   </data>
 </root>

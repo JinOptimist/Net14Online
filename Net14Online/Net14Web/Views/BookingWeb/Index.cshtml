@@ -42,31 +42,31 @@
                         <input placeholder="@Net14Web.LocalizationFiles.Booking.SearchCheckout" type="date" name="CheckoutDate" />
                     </div>
                     <div>
-                        <input type="submit" value="Search" />
+                        <input type="submit" value="@Net14Web.LocalizationFiles.Booking.SearchButton" />
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <div>Trending destinations:</div>
+    <div>@Net14Web.LocalizationFiles.Booking.TrendingDestinations</div>
     <div class="offer">
         <div class="offerbox"></div>
         <div class="offerbox"></div>
         <div class="offerbox"></div>
         <div class="offerbox"></div>
-        <div class="city">France, Paris</div>
-        <div class="city">Italy, Rome</div>
-        <div class="city">Brasil, Rio-De-Janeiro</div>
-        <div class="city">Georgia, Tiflis</div>
+        <div class="city">@Net14Web.LocalizationFiles.Booking.France</div>
+        <div class="city">@Net14Web.LocalizationFiles.Booking.Italy</div>
+        <div class="city">@Net14Web.LocalizationFiles.Booking.Brazil</div>
+        <div class="city">@Net14Web.LocalizationFiles.Booking.Georgia</div>
     </div>
     <div>
-        Don't know where to go? Try this direction!
+        @Net14Web.LocalizationFiles.Booking.Recommendation
         <div class="api">
             <div class="api-random-country">
                 @Model.CountryApiViewModel.Name
                 @Model.CountryApiViewModel.Region
             </div>
-            <a class="api-map" href="@Model.CountryApiViewModel.Map">See on GoogleMaps</a>
+            <a class="api-map" href="@Model.CountryApiViewModel.Map">@Net14Web.LocalizationFiles.Booking.GoogleMap</a>
         </div>
     </div>
     <img class="ipInfo-Api" src="@Model.catUrl"/>
