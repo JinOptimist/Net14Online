@@ -1,6 +1,9 @@
+using BookingChatHub.DbStaff;
 using BookingChatHub.SignalRHubs;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<FakeChatDb>();
 
 builder.Services.AddCors(option =>
 {

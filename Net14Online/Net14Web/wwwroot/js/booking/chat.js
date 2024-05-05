@@ -11,16 +11,26 @@
     hub.on('userEnteredChat', function (user) {
         AddMessage('', user + ' entered the chat')
     })
+    hub.on('LastMessages', function (messages) {
+        messages.forEach(function (message) {
+            AddMessage(message.userName, message.messageText);
+        })
+    });
 
     $('.send-message-button').click(function () {
-        const message = $('.new-message-text').val();
+        SendMessage();
+    });
 
-    hub.invoke('SendMessage', userName, message);
+    $('.new-message-text').keyup(function (event) {
+        if (event.which == 13) {
+            SendMessage();
+        }
     });
 
     hub.start()
         .then(function () {
-        hub.invoke('NewUserEntered', userName)
+            hub.invoke('NewUserEntered', userName)
+            hub.invoke('GetLastMessages');
         });
 
     function AddMessage(user, message) {
@@ -30,6 +40,12 @@
         newMessageBlock.find('.message-text').text(message);
 
         $('.messages').append(newMessageBlock);
+    }
+    function SendMessage() {
+        const message = $('.new-message-text').val();
+
+        hub.invoke('SendMessage', userName, message);
+        $('.new-message-text').val('');
     }
  });
 
