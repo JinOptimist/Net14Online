@@ -1,24 +1,18 @@
-﻿using Azure.Identity;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.VisualBasic;
 using Net14Web.BusinessServices;
 using Net14Web.Controllers.CustomAuthAttributes;
 using Net14Web.DbStuff;
 using Net14Web.DbStuff.Models.BookingWeb;
 using Net14Web.DbStuff.Repositories.Booking;
-using Net14Web.Models.BookingHelper;
+using Net14Web.DbStuff.Repositories.Movies;
 using Net14Web.Models.BookingWeb;
-using Net14Web.Models.Dnd;
 using Net14Web.Services;
 using Net14Web.Services.ApiServices;
 using Net14Web.Services.BookingPermissons;
+using RESTCountries.NET.Models;
 using RESTCountries.NET.Services;
-using System.ComponentModel.Design;
-using System.Linq;
 
 namespace Net14Web.Controllers
 {
@@ -29,16 +23,22 @@ namespace Net14Web.Controllers
         public static List<SearchResultViewModel> searchResultViewModel = new List<SearchResultViewModel>();
 
         private SearchRepository _searchRepository;
-        private LoginRepository _loginRepository;
+        private ClientBookingRepository _loginRepository;
+        private FavouritePlaceRepository _favouritePlaceRepository;
+        private WebDbContext _webDbContext;
+        private UserRepository _userRepository;
         private AuthService _authService;
         private BookingPermission _bookingPermission;
         public BookingBusinessService _bookingBusinessService;
         private BookingHelperController _bookingHelperController;
         public CountryApiViewModelBuilder _countryApiViewModelBuilder;
         public CatApi _catApi;
-        
-        public BookingWebController (SearchRepository searchRepository, 
-            LoginRepository loginRepository, 
+
+        public BookingWebController(SearchRepository searchRepository,
+            ClientBookingRepository loginRepository,
+            FavouritePlaceRepository favouritePlaceRepository,
+            UserRepository userRepository,
+            WebDbContext webDbContext,
             AuthService authService,
             BookingPermission bookingPermission,
             BookingBusinessService bookingBusinessService,
@@ -48,6 +48,9 @@ namespace Net14Web.Controllers
         {
             _searchRepository = searchRepository;
             _loginRepository = loginRepository;
+            _favouritePlaceRepository = favouritePlaceRepository;
+            _webDbContext = webDbContext;
+            _userRepository = userRepository;
             _authService = authService;
             _bookingPermission = bookingPermission;
             _bookingBusinessService = bookingBusinessService;
@@ -55,7 +58,7 @@ namespace Net14Web.Controllers
             _countryApiViewModelBuilder = countryApiViewModelBuilder;
             _catApi = catApi;
         }
-    
+
         public IActionResult CarRental()
         {
             return View();
@@ -76,7 +79,7 @@ namespace Net14Web.Controllers
         }
         public IActionResult UserLogin()
         {
-            var logins = _loginRepository.GetLogin(10);
+            var logins = _loginRepository.GetLoginWithOwner(100);
 
             var viewModel = logins.Select(login => new UserLoginViewModel
             {
@@ -84,7 +87,7 @@ namespace Net14Web.Controllers
                 Name = login.Name,
                 Email = login.Email,
                 Password = login.Password,
-                Owner = _authService.GetCurrentUser().Login,
+                Owner = login.Owner?.Login ?? "Unknown",
                 CanDelete = login.Owner is null || login.Owner.Id == _authService.GetCurrentUserId()
             })
                 .ToList();
@@ -104,7 +107,7 @@ namespace Net14Web.Controllers
                 City = search.City,
                 CheckinDate = search.Checkin,
                 CheckoutDate = search.Checkout,
-                LoginEmail = search.ClientBooking.Email,
+                ClientEmail = search.ClientBooking.Email,
                 Owner = search.Owner?.Login ?? "Unknown",
                 CanDelete = _bookingPermission.CanDelete(search)
             }).ToList();
@@ -116,7 +119,6 @@ namespace Net14Web.Controllers
             });
         }
 
-        [Authorize]
         [AdminOnly]
         public IActionResult Remove(int id)
         {
@@ -182,7 +184,7 @@ namespace Net14Web.Controllers
         {
             var viewModel = new IndexViewModel();
             var random = new Random();
-            var allCountries =  RestCountriesService.GetAllCountries().ToList();
+            var allCountries = RestCountriesService.GetAllCountries().ToList();
             var catDtoTask = _catApi.GetRandomImageUrl();
 
             var randomCountry = allCountries[random.Next(allCountries.Count)];
@@ -206,7 +208,7 @@ namespace Net14Web.Controllers
         [HttpGet]
         public IActionResult UserCountrySearch()
         {
-            var userName = HttpContext.User.Claims.FirstOrDefault(x=> x.Type =="name")?.Value ?? "Guest";
+            var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "name")?.Value ?? "Guest";
 
             var viewModel = new UserSearchViewModel();
 
@@ -220,6 +222,36 @@ namespace Net14Web.Controllers
         public IActionResult UserCountrySearch(int loginId, int searchId)
         {
             return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult FavouritePlaces()
+        {
+            var user = _authService.GetCurrentUser();
+            var viewModel = new FavouritePlacesViewModel();
+
+            viewModel.AllPlaces = _favouritePlaceRepository
+                .GetAll()
+                .Select(x => new SelectListItem(x.City, x.Id.ToString()))
+                .ToList();
+            viewModel.UserName = user?.Login ?? "Guest";
+            viewModel.Id = user.Id;
+
+            viewModel.UserFavouritePlaces = _favouritePlaceRepository.GetFavouritePlacesByUserId(user.Id);
+
+            return View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult FavouritePlaces(int userId, int favPlaceId)
+        {
+            var user = _authService.GetCurrentUser();
+            _userRepository.AddFavouritePlace(userId, favPlaceId);
+           
+
+            return RedirectToAction(nameof(FavouritePlaces));
         }
     }
 }

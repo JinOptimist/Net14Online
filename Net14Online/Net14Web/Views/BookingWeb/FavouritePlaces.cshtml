@@ -1,0 +1,45 @@
+﻿@using Net14Web.Models.BookingWeb
+@using Net14Web.Controllers
+@model FavouritePlacesViewModel
+
+@{
+    Layout = "_LayoutBookingWeb";
+}
+@section Style
+{
+    <link href="~/css/booking.css" rel="stylesheet" />
+}
+
+<div>
+    Hi @Model.UserName !
+</div>
+<form action="@nameof(BookingWebController.FavouritePlaces)" method="post">
+        <input type="hidden" name="userId" value=@Model.Id />
+
+        @Html.DropDownList("favPlaceId", Model.AllPlaces, "Select a favorite place", new { @class = "form-control", @name = "favPlaceId" })
+        <input type="submit" value="Choose" />
+    </form>
+<div>
+    <div>
+        @if (Model.UserFavouritePlaces.Any())
+        {
+            <p>Your favourite places are:</p>
+        }
+        else
+        {
+            <p>You have no favourite places yet</p>
+        }
+        @foreach (var favPlace in Model.UserFavouritePlaces)
+        {
+            <div>
+                City: @favPlace.City
+            </div>
+            <div>
+                Country: @favPlace.Country
+            </div>
+            <br/>
+        }
+    </div>
+
+
+

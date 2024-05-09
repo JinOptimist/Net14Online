@@ -1,0 +1,27 @@
+﻿@using Net14Web.Models.BookingWeb
+@model FavouritePlacesViewModel
+
+@{
+    Layout = "_LayoutBookingWeb";
+}
+@section Style
+{
+    <link href="~/css/booking.css" rel="stylesheet" />
+}
+
+<div>
+    Hi @Model.UserName!
+</div>
+<div>
+    @foreach (var favPlace in Model.UserFavouritePlaces)
+    {
+        <div>
+            You favourite city: @favPlace.City
+        </div>
+        <div>
+            Country: @favPlace.Country
+        </div>
+    }
+</div>
+
+
