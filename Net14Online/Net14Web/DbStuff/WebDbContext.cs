@@ -35,6 +35,7 @@ namespace Net14Web.DbStuff
         public DbSet<Bond> Bonds { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<ClientBooking> ClientsBooking { get; set; }
+        public DbSet<FavouritePlace> FavouritePlaces { get; set; }
         // LifeScore
         public DbSet<SportGame> SportGames { get; set; }
         public DbSet<Team> Teams { get; set; }
@@ -122,6 +123,10 @@ namespace Net14Web.DbStuff
                .HasOne(user => user.Creater)
                .WithMany(alert => alert.CreatedAlerts)
                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<FavouritePlace>()
+                .HasMany(favouritePlace => favouritePlace.Users)
+                .WithMany(user => user.FavouritePlaces);
         }
     }
 }

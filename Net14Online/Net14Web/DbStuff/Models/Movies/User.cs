@@ -20,6 +20,8 @@ namespace Net14Web.DbStuff.Models.Movies
         public virtual List<ClientBooking>? ClientsBooking { get; set; }
         public virtual List<Search>? Searches { get; set; }
 
+        public virtual List<FavouritePlace> FavouritePlaces { get; set; }
+
         public virtual List<Bond> Bonds { get; set; }
 
         public virtual List<Alert> SeenAlerts { get; set; }

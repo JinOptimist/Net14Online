@@ -1,6 +1,10 @@
-﻿using Net14Web.DbStuff.Models;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Net14Web.DbStuff.Models;
+using Net14Web.DbStuff.Models.BookingWeb;
 using Net14Web.DbStuff.Repositories;
+using Net14Web.DbStuff.Repositories.Booking;
 using Net14Web.DbStuff.Repositories.Movies;
+using System;
 
 namespace Net14Web.DbStuff
 {
@@ -20,6 +24,7 @@ namespace Net14Web.DbStuff
                 SeedRolePermissions(serviceScope.ServiceProvider);
                 SeedAddPermissionToRoles(serviceScope.ServiceProvider);
                 SeedUser(serviceScope.ServiceProvider);
+                SeedFavouritePlaces(serviceScope.ServiceProvider);
             }
         }
 
@@ -216,6 +221,23 @@ namespace Net14Web.DbStuff
             {
                 var permission = permissionRepository.GetPermissionByType(aPerm);
                 roleRepository.AddPermissionToRole(permission, role);
+            }
+        }
+
+        private static void SeedFavouritePlaces(IServiceProvider serviceProvider)
+        {
+            var repository = serviceProvider.GetService<FavouritePlaceRepository>();
+
+            if (!repository.Any())
+            {
+                var places = new List<FavouritePlace>
+                {
+                    new FavouritePlace { City = "Madrid", Country = "Spain" },
+                    new FavouritePlace {City = "Warsaw", Country = "Poland" },
+                    new FavouritePlace {City = "Paris", Country = "France" },
+                    new FavouritePlace {City = "Rome", Country = "Italy" }
+                };
+                places.ForEach(place => { repository?.Add(place); });
             }
         }
     }

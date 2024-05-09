@@ -6,6 +6,7 @@ using Net14Web.Services.BookingPermissons;
 using static System.Net.Mime.MediaTypeNames;
 using System.Drawing;
 using Net14Web.DbStuff.Models.BookingWeb;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Net14Web.BusinessServices
@@ -14,16 +15,19 @@ namespace Net14Web.BusinessServices
     {
         private SearchRepository _searchRepository;
         private BookingPermission _bookingPermission;
+        private FavouritePlaceRepository _favouritePlaceRepository;
         public AuthService _authService;
-        public LoginRepository _loginRepository;
+        public ClientBookingRepository _loginRepository;
 
         public BookingBusinessService(SearchRepository searchRepository, 
             BookingPermission bookingPermission, 
+            FavouritePlaceRepository favouritePlaceRepository,
             AuthService authService,
-            LoginRepository loginRepository)
+            ClientBookingRepository loginRepository)
         {
             _searchRepository = searchRepository;
             _bookingPermission = bookingPermission;
+            _favouritePlaceRepository = favouritePlaceRepository;
             _authService = authService;
             _loginRepository = loginRepository;
         }
@@ -41,7 +45,7 @@ namespace Net14Web.BusinessServices
                     City = search.City,
                     CheckinDate = search.Checkin,
                     CheckoutDate = search.Checkout,
-                    LoginEmail = search.ClientBooking.Email,
+                    ClientEmail = search.ClientBooking.Email,
                     Owner = search.Owner?.Login ?? "Unknown",
                     CanDelete = _bookingPermission.CanDelete(search)
                 };

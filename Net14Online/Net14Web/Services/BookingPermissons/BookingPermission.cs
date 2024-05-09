@@ -7,9 +7,9 @@ namespace Net14Web.Services.BookingPermissons
         private AuthService _authService;
 
         public BookingPermission(AuthService authService)
-            {
+        {
             _authService = authService;
-            }
+        }
         public bool IsCurrentUserAdmin => _authService.IsAdmin();
         public bool CanDelete(Search search)
          => search.Owner is null

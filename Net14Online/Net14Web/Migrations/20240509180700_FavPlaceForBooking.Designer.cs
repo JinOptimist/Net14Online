@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Net14Web.DbStuff;
 
@@ -11,9 +12,11 @@ using Net14Web.DbStuff;
 namespace Net14Web.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240509180700_FavPlaceForBooking")]
+    partial class FavPlaceForBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,32 +194,6 @@ namespace Net14Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FavouritePlaces");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "Madrid",
-                            Country = "Spain"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Warsaw",
-                            Country = "Poland"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Paris",
-                            Country = "France"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            City = "Rome",
-                            Country = "Italy"
-                        });
                 });
 
             modelBuilder.Entity("Net14Web.DbStuff.Models.BookingWeb.Search", b =>

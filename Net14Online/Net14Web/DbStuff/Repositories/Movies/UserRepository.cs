@@ -86,5 +86,13 @@ namespace Net14Web.DbStuff.Repositories.Movies
             user.PreferLocale = locale;
             _context.SaveChanges();
         }
+        public void AddFavouritePlace(int userId, int favPlaceId)
+        {
+            var user = _context.Users.Include(x => x.FavouritePlaces).First(u => u.Id == userId);
+            var favPlace = _context.FavouritePlaces.First(x => x.Id == favPlaceId);
+            user.FavouritePlaces.Add(favPlace);
+            favPlace.Users.Add(user);
+            _context.SaveChanges();
+        }
     }
 }

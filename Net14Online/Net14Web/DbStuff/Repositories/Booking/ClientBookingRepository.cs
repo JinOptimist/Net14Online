@@ -4,19 +4,20 @@ using Net14Web.DbStuff.Models.BookingWeb;
 
 namespace Net14Web.DbStuff.Repositories.Booking
 {
-    public class LoginRepository: BaseRepository<ClientBooking>
+    public class ClientBookingRepository: BaseRepository<ClientBooking>
     {
-        public LoginRepository(WebDbContext context): base(context) { }
+        public ClientBookingRepository(WebDbContext context): base(context) { }
 
-        public IEnumerable<ClientBooking> GetLogin(int maxCount = 10)
+        public IEnumerable<ClientBooking> GetLoginWithOwner(int maxCount = 10)
         {
             return _context.ClientsBooking
+                .Include(x => x.Owner)
                 .Take(maxCount)
                 .ToList();
         }
-        public void UpdateEmail(int loginId, string email)
+        public void UpdateEmail(int clientId, string email)
         {
-            var searches = _context.ClientsBooking.First(x => x.Id == loginId);
+            var searches = _context.ClientsBooking.First(x => x.Id == clientId);
             searches.Email = email;
             _context.SaveChanges();
         }

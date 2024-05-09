@@ -14,6 +14,10 @@
             </div>
             <div class="navinfo">
                 <ul class="navinfo">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <button> <a href="/BookingWeb/FavouritePlaces">FavouritePlaces</a> </button>
+                    }
                     <button> <a href="#">@Net14Web.LocalizationFiles.Booking.LayoutCurrency</a> </button>
                     <button><span class="lang">EN</span></button>
                     <button><span class="lang">RU</span></button>
