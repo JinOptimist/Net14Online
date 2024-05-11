@@ -1,4 +1,6 @@
-﻿namespace Net14Web.Models.BookingWeb
+﻿using Net14Web.DbStuff.Models.BookingWeb;
+
+namespace Net14Web.Models.BookingWeb
 {
     public class UserLoginViewModel
     {
@@ -10,5 +12,7 @@
         public bool CanDelete { get; set; }
 
         public string? Owner { get; set; }
+
+        public string? PromoCode { get; set; }
     }
 }

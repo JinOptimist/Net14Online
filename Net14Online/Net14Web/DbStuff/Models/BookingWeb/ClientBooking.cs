@@ -9,5 +9,6 @@ namespace Net14Web.DbStuff.Models.BookingWeb
         public string Password { get; set; }
         public virtual User? Owner { get; set; }
         public virtual List<Search>? Searches { get; set; }
+        public virtual PromoCode? PromoCode { get; set; }
     }
 }
