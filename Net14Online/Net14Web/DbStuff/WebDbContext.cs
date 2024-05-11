@@ -36,6 +36,7 @@ namespace Net14Web.DbStuff
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<ClientBooking> ClientsBooking { get; set; }
         public DbSet<FavouritePlace> FavouritePlaces { get; set; }
+        public DbSet<PromoCode> PromoCodes { get; set; }
         // LifeScore
         public DbSet<SportGame> SportGames { get; set; }
         public DbSet<Team> Teams { get; set; }
@@ -127,6 +128,12 @@ namespace Net14Web.DbStuff
             builder.Entity<FavouritePlace>()
                 .HasMany(favouritePlace => favouritePlace.Users)
                 .WithMany(user => user.FavouritePlaces);
+
+            builder.Entity<ClientBooking>()
+            .HasOne(clientBooking => clientBooking.PromoCode)
+            .WithOne(promocode => promocode.ClientBooking)
+            .HasForeignKey<PromoCode>(promocode => promocode.ClientBookingId)
+            .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

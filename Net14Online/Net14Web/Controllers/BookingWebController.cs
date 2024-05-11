@@ -25,7 +25,7 @@ namespace Net14Web.Controllers
         private SearchRepository _searchRepository;
         private ClientBookingRepository _loginRepository;
         private FavouritePlaceRepository _favouritePlaceRepository;
-        private WebDbContext _webDbContext;
+        private PromoCodeRepository _promoCodeRepository;
         private UserRepository _userRepository;
         private AuthService _authService;
         private BookingPermission _bookingPermission;
@@ -37,8 +37,8 @@ namespace Net14Web.Controllers
         public BookingWebController(SearchRepository searchRepository,
             ClientBookingRepository loginRepository,
             FavouritePlaceRepository favouritePlaceRepository,
+            PromoCodeRepository promoCodeRepository,
             UserRepository userRepository,
-            WebDbContext webDbContext,
             AuthService authService,
             BookingPermission bookingPermission,
             BookingBusinessService bookingBusinessService,
@@ -49,7 +49,7 @@ namespace Net14Web.Controllers
             _searchRepository = searchRepository;
             _loginRepository = loginRepository;
             _favouritePlaceRepository = favouritePlaceRepository;
-            _webDbContext = webDbContext;
+            _promoCodeRepository = promoCodeRepository;
             _userRepository = userRepository;
             _authService = authService;
             _bookingPermission = bookingPermission;
@@ -77,10 +77,9 @@ namespace Net14Web.Controllers
         {
             return View();
         }
-        public IActionResult UserLogin()
+        public IActionResult UserLogin(string promoCode)
         {
             var logins = _loginRepository.GetLoginWithOwner(100);
-
             var viewModel = logins.Select(login => new UserLoginViewModel
             {
                 Id = login.Id,
@@ -88,10 +87,10 @@ namespace Net14Web.Controllers
                 Email = login.Email,
                 Password = login.Password,
                 Owner = login.Owner?.Login ?? "Unknown",
-                CanDelete = login.Owner is null || login.Owner.Id == _authService.GetCurrentUserId()
+                CanDelete = login.Owner is null || login.Owner.Id == _authService.GetCurrentUserId(),
+                PromoCode = promoCode ?? (login.PromoCode?.UniquePromoCode ?? "")
             })
                 .ToList();
-
             return View(viewModel);
         }
 
@@ -119,7 +118,6 @@ namespace Net14Web.Controllers
             });
         }
 
-        [AdminOnly]
         public IActionResult Remove(int id)
         {
             _loginRepository.Delete(id);
@@ -167,7 +165,6 @@ namespace Net14Web.Controllers
             {
                 return View();
             }
-
             var login = new ClientBooking
             {
                 Name = userLoginViewModel.Name,
@@ -250,8 +247,21 @@ namespace Net14Web.Controllers
             var user = _authService.GetCurrentUser();
             _userRepository.AddFavouritePlace(userId, favPlaceId);
            
-
             return RedirectToAction(nameof(FavouritePlaces));
         }
+
+        public IActionResult CreatePromoCode(int id)
+        {
+            var promoCode = _promoCodeRepository.GeneratePromoCode();
+            var code = new PromoCode
+            {
+                UniquePromoCode = promoCode,
+                ClientBookingId = id,
+                ClientBooking = _loginRepository.GetById(id),
+            };
+            _promoCodeRepository.Add(code);
+            return RedirectToAction(nameof(UserLogin), new { promoCode = promoCode });
+        }
+  
     }
 }
