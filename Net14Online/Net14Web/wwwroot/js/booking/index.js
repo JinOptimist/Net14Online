@@ -9,9 +9,9 @@
         $(this).closest('.user')
             .toggleClass('full-info name-only');
 
-        const loginId = userInfo.attr('data-id');
-        $('.update-user-email').find('name=loginId')
-            .val(loginId);
+  
+        const loginId = $(this).closest('.user').attr('data-id'); 
+        $('.update-user-email').find('input[name="loginId"]').val(loginId); 
         $('.login-id').text(loginId);
     })
 });

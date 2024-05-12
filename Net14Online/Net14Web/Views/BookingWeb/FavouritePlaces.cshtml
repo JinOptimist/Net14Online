@@ -13,12 +13,17 @@
 <div>
     Hi @Model.UserName !
 </div>
-<form action="@nameof(BookingWebController.FavouritePlaces)" method="post">
+@if (Model.CanChooseFavouritePlaces)
+{
+    <form action="@nameof(BookingWebController.FavouritePlaces)" method="post">
         <input type="hidden" name="userId" value=@Model.Id />
 
         @Html.DropDownList("favPlaceId", Model.AllPlaces, "Select a favorite place", new { @class = "form-control", @name = "favPlaceId" })
         <input type="submit" value="Choose" />
     </form>
+}
+else {<p>Sorry, you cant choose favourite places yet:(</p>}
+
 <div>
     <div>
         @if (Model.UserFavouritePlaces.Any())

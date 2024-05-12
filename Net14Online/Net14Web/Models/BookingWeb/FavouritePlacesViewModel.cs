@@ -9,8 +9,9 @@ namespace Net14Web.Models.BookingWeb
     {
         public int Id { get; set; }
 
-        public int ChosenPlaceId { get; set; }
         public string UserName { get; set; }
+
+        public bool CanChooseFavouritePlaces { get; set; }  
 
         public List<SelectListItem> AllPlaces { get; set; }
 

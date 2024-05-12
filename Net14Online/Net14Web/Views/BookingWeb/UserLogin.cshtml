@@ -16,46 +16,47 @@
 
 <button><a href="Login">Login</a></button>
 
-<div>
     <form action="UpdateEmail" method="post" class="update-user-email">
         <input type="hidden" name="loginId" value=0 />
         <input type="email" name="email" />
         set new email for user <span class="login-id"></span>
         <input type="submit" value="update" />
     </form>
-</div>
-@foreach (var client in Model)
+@foreach (var user in Model)
 {
-    <div class="user" data-id="@client.Id">
+    <div class="user" data-id="@user.Id">
         <div class="name-only">
-            @client.Name
+            @user.Name
             <div>
                 <form action="CreatePromoCode" method="post">
-                    <input type="hidden" name="id" value=@client.Id />
+                    <input type="hidden" name="id" value=@user.Id />
                     <input type="submit" value="Create PromoCode"></input>
                 </form>
             </div>
             <div>
-                Your PromoCode Is : @client.PromoCode
+                @if (user.PromoCode != null)
+                {
+                    <span>Your PromoCode Is: @user.PromoCode</span>
+                }
             </div>
         </div>
         <div class="full-info">
-            @if (client.CanDelete)
+            @if (user.CanDelete)
             {
-                <a href="Remove?id=@client.Id">Remove</a>
+                <a href="Remove?id=@user.Id">Remove</a>
             }
             <div>
-                Owner: @client.Owner
+                Owner: @user.Owner
             </div>
             <div class="user-name">
-                Your Name: @client.Name
+                Your Name: @user.Name
             </div>
             <div>
-                Your E-mail: @client.Email
+                Your E-mail: @user.Email
             </div>
             <div>
             </div>
-            Your Password: @client.Password
+            Your Password: @user.Password
         </div>
     </div>
 
