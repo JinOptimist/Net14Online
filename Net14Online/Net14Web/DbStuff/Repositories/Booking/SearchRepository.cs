@@ -35,5 +35,12 @@ namespace Net14Web.DbStuff.Repositories.Booking
                 Include(x => x.Owner)
                 .First(x => x.Id == searchId);
         }
+        public List<Search> GetSearchWithUser(int userId)
+        {
+            return _context.Searches
+                .Include(s => s.Owner)
+                .Where(u=> u.Owner.Id == userId)
+                .ToList();
+        }
     }
 }

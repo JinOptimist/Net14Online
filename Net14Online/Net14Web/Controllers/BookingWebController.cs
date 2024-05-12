@@ -63,6 +63,8 @@ namespace Net14Web.Controllers
         {
             return View();
         }
+
+        [UserRestriction]
         public IActionResult Flights()
         {
             return View();
@@ -77,9 +79,9 @@ namespace Net14Web.Controllers
         {
             return View();
         }
-        public IActionResult UserLogin(string promoCode)
+        public IActionResult UserLogin(int? userId)
         {
-            var logins = _loginRepository.GetLoginWithOwner(100);
+            var logins = _loginRepository.GetLoginWithOwner(10);
             var viewModel = logins.Select(login => new UserLoginViewModel
             {
                 Id = login.Id,
@@ -88,7 +90,7 @@ namespace Net14Web.Controllers
                 Password = login.Password,
                 Owner = login.Owner?.Login ?? "Unknown",
                 CanDelete = login.Owner is null || login.Owner.Id == _authService.GetCurrentUserId(),
-                PromoCode = promoCode ?? (login.PromoCode?.UniquePromoCode ?? "")
+                PromoCode = login.Id == userId ? login.PromoCode.UniquePromoCode : null
             })
                 .ToList();
             return View(viewModel);
@@ -234,6 +236,7 @@ namespace Net14Web.Controllers
                 .ToList();
             viewModel.UserName = user?.Login ?? "Guest";
             viewModel.Id = user.Id;
+            viewModel.CanChooseFavouritePlaces = _bookingPermission.CanChooseFavouritePlaces();
 
             viewModel.UserFavouritePlaces = _favouritePlaceRepository.GetFavouritePlacesByUserId(user.Id);
 
@@ -252,15 +255,13 @@ namespace Net14Web.Controllers
 
         public IActionResult CreatePromoCode(int id)
         {
-            var promoCode = _promoCodeRepository.GeneratePromoCode();
-            var code = new PromoCode
+            var user = _loginRepository.GetUserWithPromocodeById(id);
+            if (user?.PromoCode == null)
             {
-                UniquePromoCode = promoCode,
-                ClientBookingId = id,
-                ClientBooking = _loginRepository.GetById(id),
-            };
-            _promoCodeRepository.Add(code);
-            return RedirectToAction(nameof(UserLogin), new { promoCode = promoCode });
+                _loginRepository.GeneratePromoCode(user);
+            }
+
+            return RedirectToAction(nameof(UserLogin), new { userId = id});
         }
   
     }

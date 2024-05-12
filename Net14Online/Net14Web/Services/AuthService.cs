@@ -57,6 +57,11 @@ namespace Net14Web.Services
             return GetCurrentUserName() == "admin";
         }
 
+        public bool IsUser()
+        {
+            return GetCurrentUserName() == "user";
+        }
+
         public string GetCurrentUserLocale()
         {
             return _httpContextAccessor.HttpContext.User

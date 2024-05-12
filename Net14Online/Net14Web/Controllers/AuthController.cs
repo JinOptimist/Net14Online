@@ -89,6 +89,11 @@ namespace Net14Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult Deny()
+        {
+            return View();
+        }
+
         private string GetInfoFromClaims(IEnumerable<Claim> claims, string claimType)
         {
             return claims.First(x => x.Type == claimType).Value;

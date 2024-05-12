@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Net14Web.DbStuff.Models;
 using Net14Web.DbStuff.Models.BookingWeb;
 using System.Text;
@@ -13,12 +14,19 @@ namespace Net14Web.DbStuff.Repositories.Booking
         {
             return _context.ClientsBooking
                 .Include(x => x.Owner)
+                .Include(x => x.PromoCode)
                 .Take(maxCount)
                 .ToList();
         }
-        public void UpdateEmail(int clientId, string email)
+
+        public ClientBooking? GetUserWithPromocodeById(int id)
         {
-            var searches = _context.ClientsBooking.First(x => x.Id == clientId);
+            return _context.ClientsBooking.Include(x => x.PromoCode).FirstOrDefault(x => x.Id == id);
+        }
+
+        public void UpdateEmail(int loginId, string email)
+        {
+            var searches = _context.ClientsBooking.First(x => x.Id == loginId);
             searches.Email = email;
             _context.SaveChanges();
         }
@@ -35,6 +43,27 @@ namespace Net14Web.DbStuff.Repositories.Booking
         public bool AnyUserWithName(string name)
         {
             return _entyties.Any(x => x.Name == name);
+        }
+
+        public void GeneratePromoCode(ClientBooking? user)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var random = new Random();
+            var codeBuilder = new StringBuilder();
+
+            for (int i = 0; i < 5; i++)
+            {
+                int index = random.Next(chars.Length);
+                char randomChar = chars[index];
+                codeBuilder.Append(randomChar);
+            }
+            var code = new PromoCode
+            {
+                UniquePromoCode = codeBuilder.ToString(),
+                ClientBooking = user,
+            };
+            user.PromoCode = code;
+            _context.SaveChanges();
         }
     }
 }

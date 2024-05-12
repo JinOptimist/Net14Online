@@ -133,7 +133,7 @@ namespace Net14Web.DbStuff
             .HasOne(clientBooking => clientBooking.PromoCode)
             .WithOne(promocode => promocode.ClientBooking)
             .HasForeignKey<PromoCode>(promocode => promocode.ClientBookingId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
